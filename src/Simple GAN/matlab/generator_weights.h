@@ -1,0 +1,41 @@
+#ifndef GENERATOR_WEIGHTS_H
+#define GENERATOR_WEIGHTS_H
+
+// Generator Weights for 3x3 O+ GAN
+// Fixed-Point Format: Q16.16
+#include <stdint.h>
+
+#define FRAC_BITS 16
+#define SCALE_FACTOR (1 << FRAC_BITS)
+
+// Layer 1 Weight: 3x2
+const int32_t Wg2[3][2] = {
+    {0x0000074A, 0x000010AF},
+    {0x00002B28, 0x0000070C},
+    {0xFFFFC832, 0xFFFFDF68}
+};
+
+// Layer 1 Bias: 3x1
+const int32_t bg2[3] = {
+    0x000070F6, 0x00003285, 0xFFFFE3D4
+};
+
+// Layer 2 Weight: 9x3
+const int32_t Wg3[9][3] = {
+    {0xFFFFF45B, 0xFFFFFA79, 0x00000CD7},
+    {0x00002C06, 0x00000C80, 0x0000118C},
+    {0x000058A3, 0x000024C7, 0x00001354},
+    {0x000064EB, 0x000030A3, 0xFFFFF1E8},
+    {0xFFFFDBB4, 0x0000237C, 0x0000080B},
+    {0x00006BF9, 0x00001DDF, 0xFFFFE581},
+    {0x000013A0, 0xFFFFE18F, 0x00001683},
+    {0x000021E1, 0x0000213A, 0xFFFFDB03},
+    {0x0000112F, 0x00002945, 0xFFFFE4D6}
+};
+
+// Layer 2 Bias: 9x1
+const int32_t bg3[9] = {
+    0xFFFFE20B, 0x000091E0, 0x0000055F, 0x00008EEF, 0xFFFFF061, 0x0000965F, 0xFFFFFA36, 0x0000B25C, 0xFFFFFF43
+};
+
+#endif // GENERATOR_WEIGHTS_H
