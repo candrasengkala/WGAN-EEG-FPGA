@@ -1,0 +1,5 @@
+
+*** Running vivado
+    with args -log top_lvl.vds -m64 -product Vivado -mode batch -messageDb vivado.pb -notrace -source top_lvl.tcl
+
+
