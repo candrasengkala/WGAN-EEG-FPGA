@@ -2,9 +2,14 @@
 verilog xil_defaultlib  --include "C:/Xilinx/2025.1/Vivado/data/rsb/busdef" \
 "../../../../project_1.srcs/sources_1/new/PE_D.V" \
 "../../../../project_1.srcs/sources_1/new/PE_H.v" \
+"../../../../project_1.srcs/sources_1/new/counter_input.v" \
+"../../../../project_1.srcs/sources_1/new/counter_output.v" \
 "../../../../project_1.srcs/sources_1/new/counter_top_lvl.v" \
+"../../../../project_1.srcs/sources_1/new/matrix_mult_control.v" \
+"../../../../project_1.srcs/sources_1/new/shift_reg_input.v" \
 "../../../../project_1.srcs/sources_1/new/top_lvl.v" \
-"../../../../project_1.srcs/sim_1/new/top_lvl_tb.v" \
+"../../../../project_1.srcs/sources_1/new/top_lvl_complete.v" \
+"../../../../project_1.srcs/sim_1/new/top_level_complete_tb.v" \
 
 # compile glbl module
 verilog xil_defaultlib "glbl.v"

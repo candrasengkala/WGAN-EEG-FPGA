@@ -4,7 +4,7 @@
 // For-loop based template
 // File: shift_registers_1.v
 
-module shift_register
+module shift_reg_input
 #(
     parameter DW = 16,
     parameter Depth_added = 16
@@ -21,10 +21,10 @@ module shift_register
     integer i;
     always @(posedge clk)begin
         if (!rst) begin
-            for (i = 0; i < Depth_added-1; i = i + 1) shreg[i] <= 0;
+            for (i = 0; i < Depth_added; i = i + 1) shreg[i] <= 0;
         end
         else if (clken) begin
-            for (i = 0; i < Depth_added-1; i = i+1)
+            for (i = 0; i < Depth_added; i = i+1)
                 shreg[i+1] <= shreg[i];
                 shreg[0] <= SI;
             end

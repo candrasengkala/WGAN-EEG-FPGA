@@ -11,7 +11,7 @@ module counter_input #(
 );
 
     // counter width: enough bits for 2*Dimension_added_added
-    localparam CNT_W = $clog2(Dimension_added);
+    localparam CNT_W = $clog2(Dimension_added+1);
     reg [CNT_W-1:0] cnt = 0;
 
     always @(posedge clk) begin
@@ -20,7 +20,7 @@ module counter_input #(
             done <= 1'b0;
         end
         else if (en) begin
-            if (cnt == (Dimension_added - 1)) begin
+            if (cnt == (Dimension_added)) begin
                 done <= 1'b1;   // raise done
                 cnt  <= 0;      // stop counting // Recount.
             end

@@ -9,7 +9,7 @@ module counter_top_lvl #(
 );
 
     // counter width: enough bits for 2*Dimension
-    localparam CNT_W = $clog2(Dimension + 1);
+    localparam CNT_W = $clog2(2*Dimension + 1);
     reg [CNT_W-1:0] cnt = 0;
 
     always @(posedge clk) begin

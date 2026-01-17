@@ -40,7 +40,13 @@ wire signed [DW-1:0] output_selected;
 //Multiplexer for output selection
 assign output_selected = output_eject_ctrl ? output_in : psum_reg_out;
 //Pipelining registers for ifmaps, psum, and weights. Here describing reset.
-
+// From ChatGPT:
+// 4. Why simulators don’t warn you
+// Verilog makes this worse because:
+// @(posedge clk);
+// en = 1;
+// looks like it happens at the edge, but it actually happens after the edge in simulation time.
+// In hardware, there is no “after the edge” — the decision is already made.
 always @(posedge clk) begin
     if (!rst) begin
         ifmap_reg <= {DW{1'b0}};

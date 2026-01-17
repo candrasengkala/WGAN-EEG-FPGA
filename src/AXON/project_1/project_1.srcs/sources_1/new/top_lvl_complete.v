@@ -3,25 +3,65 @@ module top_lvl_io_control #( // Tanpa FSM untuk memasukkan data ke shift registe
     parameter Dimension = 16
 )
 (
-    input wire clk,
-    input wire rst,
-    input wire start,
-    input wire output_val,
+    input  wire clk,
+    input  wire rst,
+    input  wire start,
+    input  wire output_val,
 
-    input  wire signed [DW-1:0] weight_serial_in,       //Serial Inputs 
-    input  wire signed [DW-1:0] ifmap_serial_in,        //Serial Inputs
-    input  wire en_shift_reg_ifmap_input, // Start signal to begin shiftin
-    input  wire en_shift_reg_weight_input,
-    
-    output wire out_new_val, // From counter
-    output wire done_count,
-    output wire done_all,
+    input  wire signed [Dimension*DW-1:0] weight_brams_in,
+    input  wire signed [DW-1:0] ifmap_serial_in,
 
+    input  wire [Dimension-1:0]  en_shift_reg_ifmap_input,
+    input  wire [Dimension-1:0]  en_shift_reg_weight_input,
+    input  wire mode, // 0: input phase, 1: compute phase
 
-    output wire signed [DW*Dimension-1:0] output_out    // Output Value
+    output wire out_new_val, // This is to output register that a new output value is available.
+    output wire done_count,  // Counting done signal from systolic array.
+    output wire done_all,    // All operation done signal.
+
+    output wire signed [DW*Dimension-1:0] output_out
 );
-    wire en_cntr;
 
+    /* ============================================================
+     * Internal wires
+     * ============================================================ */
+    wire en_cntr;
+    wire [Dimension*Dimension-1:0] en_in;
+    wire [Dimension*Dimension-1:0] en_out;
+    wire [Dimension*Dimension-1:0] en_psum;
+    wire [Dimension-1:0] ifmaps_sel;
+    wire [Dimension-1:0] output_eject_ctrl;
+
+    wire output_val_count;
+
+    wire [Dimension-1:0]  en_shift_reg_ifmap_control;
+    wire [Dimension-1:0]  en_shift_reg_weight_control;
+
+    wire [Dimension-1:0]  en_shift_reg_ifmap;
+    wire [Dimension-1:0]  en_shift_reg_weight;
+
+    wire en_weight_counter;
+    wire en_ifmap_counter;
+
+    wire done_ifmap;
+    wire done_weight;
+
+    /* ============================================================
+     * Mode MUX
+     * ============================================================ */
+    assign en_shift_reg_ifmap  = mode ? en_shift_reg_ifmap_control
+                                      : en_shift_reg_ifmap_input;
+
+    assign en_shift_reg_weight = mode ? en_shift_reg_weight_control
+                                      : en_shift_reg_weight_input;
+
+    /* ============================================================
+     * Done logic
+     * ============================================================ */
+
+    /* ============================================================
+     * Top Level With Memory
+     * ============================================================ */
     top_lvl_with_mem #(
         .DW(DW),
         .Dimension(Dimension)
@@ -29,29 +69,36 @@ module top_lvl_io_control #( // Tanpa FSM untuk memasukkan data ke shift registe
         .clk                    (clk),
         .rst                    (rst),
 
-        .en_shift_reg_ifmap     (), // Start signal to begin shifting
-        .en_shift_reg_weight    (),
+        .en_shift_reg_ifmap     (en_shift_reg_ifmap),
+        .en_shift_reg_weight    (en_shift_reg_weight),
 
-        .en_cntr                (1'b1), // Always enable counting when shifting is happening
-        .en_in                  (), // Always enable inputs
-        .en_out                 (), // Always enable outputs
-        .en_psum                (), // Always enable psum registers
+        .en_cntr                (en_cntr),
+        .en_in                  (en_in),
+        .en_out                 (en_out),
+        .en_psum                (en_psum),
 
-        .ifmaps_sel             (), // Always select all ifmaps
-        .output_eject_ctrl      (), // Always eject all outputs
+        .ifmaps_sel             (ifmaps_sel),
+        .output_eject_ctrl      (output_eject_ctrl),
 
-        .weight_serial_in       (),
-        .ifmap_serial_in        (),
+        .en_ifmap_counter      (en_ifmap_counter),
+        .en_weight_counter     (en_weight_counter),
 
-        .output_val_count       (),
-        .out_new_val            (),
+        .weight_brams_in       (weight_brams_in),
+        .ifmap_serial_in        (ifmap_serial_in),
 
-        .done_ifmap             (), // Not used here
-        .done_weight            (), // Not used here
+        .output_val_count       (output_val_count),
+        .out_new_val            (out_new_val),
 
-        .done_count             (),
-        .output_out             ()
+        .done_ifmap             (done_ifmap),
+        .done_weight            (done_weight),
+
+        .done_count             (done_count),
+        .output_out             (output_out)
     );
+
+    /* ============================================================
+     * Matrix Multiply Controller (FSM)
+     * ============================================================ */
     matrix_mult_control #(
         .DW(DW),
         .Dimension(Dimension)
@@ -60,27 +107,30 @@ module top_lvl_io_control #( // Tanpa FSM untuk memasukkan data ke shift registe
         .rst                    (rst),
         .start                  (start),
 
-        .done_ifmap             (), // Not used here
-        .done_weight            (), // Not used here
+        .done_ifmap             (done_ifmap),
+        .done_weight            (done_weight),
 
-        .done_count             (),
-        .output_val             (),
-        .out_new_val            (),
+        .done_count             (done_count),
+        .output_val             (output_val),
+        .out_new_val            (out_new_val),
 
-        .en_shift_reg_ifmap     (), // Not used here
-        .en_shift_reg_weight    (), // Not used here
+        .en_ifmap_counter     (en_ifmap_counter),
+        .en_weight_counter    (en_weight_counter),
 
-        .en_cntr                (), // Not used here
-        .en_in                  (), // Not used here
-        .en_out                 (), // Not used here
-        .en_psum                (), // Not used here
+        .en_shift_reg_ifmap     (en_shift_reg_ifmap_control),
+        .en_shift_reg_weight    (en_shift_reg_weight_control),
 
-        .ifmaps_sel             (), // Not used here
-        .output_val_count       (), // Not used here
-        .output_eject_ctrl      ()  // Not used here
+        .en_cntr                (en_cntr),
+        .en_in                  (en_in),
+        .en_out                 (en_out),
+        .en_psum                (en_psum),
+
+        .ifmaps_sel             (ifmaps_sel),
+        .output_val_count       (output_val_count),
+        .done_all               (done_all),
+        .output_eject_ctrl      (output_eject_ctrl)
     );
 endmodule
-
 module top_lvl_with_mem
 #(
     parameter DW        = 16,
@@ -90,8 +140,8 @@ module top_lvl_with_mem
     input  wire clk,
     input  wire rst,
     /* ---------------- Control Shift Register---------------- */
-    input wire en_shift_reg_ifmap,                      // Input From Controller
-    input wire en_shift_reg_weight,                     // Input From Controller
+    input wire [Dimension-1:0]  en_shift_reg_ifmap,                      // Input From Controller
+    input wire [Dimension-1:0]  en_shift_reg_weight,                     // Input From Controller
     /* ---------------- Control Systolic Array---------------- */
     input  wire en_cntr,                                // Input From Controller
     input  wire [Dimension*Dimension-1:0] en_in,        // Input From Controller
@@ -99,11 +149,14 @@ module top_lvl_with_mem
     input  wire [Dimension*Dimension-1:0] en_psum,      // Input From Controller
     input  wire [Dimension-1:0] ifmaps_sel,             // Input From Controller
     input  wire [Dimension-1:0] output_eject_ctrl,      // Input From Controller
+    /* ---------------- Input Counters Control ---------------- */
+    input wire en_ifmap_counter,                        // To Input Counter
+    input wire en_weight_counter,                       // To Input Counter
     /* ------------- Serial Inputs ------------- */
-    input  wire signed [DW-1:0] weight_serial_in,       //Serial Inputs 
+    input  wire signed [Dimension*DW-1:0] weight_brams_in,       //Serial Inputs 
     input  wire signed [DW-1:0] ifmap_serial_in,        //Serial Inputs
     /* ------------- Output Control ------------- */
-    input wire output_val_count,                        // Signal from controller
+    input wire output_val_count,                        // Signal from controller. Done to 
     output wire out_new_val,                            // Signal to controller that a new output value is available.
     /* ---------------- Outputs Dones (Inputs)---------------- */
     output wire done_ifmap,                             // To Controller
@@ -121,19 +174,19 @@ module top_lvl_with_mem
         counter_input #(.Dimension_added(Dimension + 1)) counter_ifmap_inst ( //Count sampai Dimension + 1;
             .clk(neg_clk),
             .rst(rst),
-            .en(en_shift_reg_ifmap), // Digunakan untuk menghitung shifting.
+            .en(en_ifmap_counter), // Digunakan untuk menghitung shifting.
             .done(done_ifmap)
         );
         counter_input #(.Dimension_added(Dimension + 1)) counter_weight_inst (
             .clk(neg_clk),
             .rst(rst),
-            .en(en_shift_reg_weight),
+            .en(en_weight_counter),
             .done(done_weight)
         );
         counter_output #(.Dimension(Dimension)) counter_output_inst (
             .clk(clk),
             .rst(rst),
-            .en(output_val_count), // 
+            .en(output_val_count),      // 
             .done(out_new_val)
         );
     endgenerate
@@ -152,8 +205,8 @@ module top_lvl_with_mem
             ) weight_shift (
                 .clk   (neg_clk),
                 .rst   (rst),
-                .clken (en_shift_reg_weight),
-                .SI    (weight_serial_in),
+                .clken (en_shift_reg_weight[i]),
+                .SI    (weight_brams_in[DW*(i+1)-1 -: DW]),
                 .SO    (weight_sr[i])
             );
             /* ---- IFMAP shift register ---- */
@@ -161,9 +214,9 @@ module top_lvl_with_mem
                 .DW(DW),
                 .Depth_added(Dimension + 1)
             ) ifmap_shift (
-                .clk   (clk), // Sesuai dengan yang mengeluarkannya
+                .clk   (neg_clk), // Sesuai dengan yang mengeluarkannya
                 .rst   (rst),
-                .clken (en_shift_reg_ifmap),
+                .clken (en_shift_reg_ifmap[i]),
                 .SI    (ifmap_serial_in),
                 .SO    (ifmap_sr[i])
             );
