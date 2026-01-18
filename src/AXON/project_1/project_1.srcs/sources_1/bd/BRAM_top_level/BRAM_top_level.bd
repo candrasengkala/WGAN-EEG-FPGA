@@ -96,7 +96,7 @@
         "has_run_ip_tcl": "true",
         "parameters": {
           "Memory_Type": {
-            "value": "True_Dual_Port_RAM"
+            "value": "Simple_Dual_Port_RAM"
           },
           "Write_Width_A": {
             "value": "16"
