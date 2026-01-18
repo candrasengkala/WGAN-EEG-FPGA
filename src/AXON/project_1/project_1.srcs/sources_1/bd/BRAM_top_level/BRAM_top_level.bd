@@ -1,0 +1,167 @@
+{
+  "design": {
+    "design_info": {
+      "boundary_crc": "0x0",
+      "device": "xc7z020clg400-1",
+      "gen_directory": "../../../../project_1.gen/sources_1/bd/BRAM_top_level",
+      "name": "BRAM_top_level",
+      "rev_ctrl_bd_flag": "RevCtrlBdOff",
+      "synth_flow_mode": "Hierarchical",
+      "tool_version": "2025.1"
+    },
+    "design_tree": {
+      "top_lvl_io_control_0": "",
+      "blk_mem_gen_0": "",
+      "ilconcat_0": ""
+    },
+    "components": {
+      "top_lvl_io_control_0": {
+        "vlnv": "xilinx.com:module_ref:top_lvl_io_control:1.0",
+        "ip_revision": "1",
+        "xci_name": "BRAM_top_level_top_lvl_io_control_0_0",
+        "xci_path": "ip\\BRAM_top_level_top_lvl_io_control_0_0\\BRAM_top_level_top_lvl_io_control_0_0.xci",
+        "inst_hier_path": "top_lvl_io_control_0",
+        "has_run_ip_tcl": "true",
+        "reference_info": {
+          "ref_type": "hdl",
+          "ref_name": "top_lvl_io_control",
+          "boundary_crc": "0x0"
+        },
+        "ports": {
+          "clk": {
+            "type": "clk",
+            "direction": "I",
+            "parameters": {
+              "ASSOCIATED_RESET": {
+                "value": "rst",
+                "value_src": "constant"
+              }
+            }
+          },
+          "rst": {
+            "type": "rst",
+            "direction": "I"
+          },
+          "start": {
+            "direction": "I"
+          },
+          "output_val": {
+            "direction": "I"
+          },
+          "weight_brams_in": {
+            "direction": "I",
+            "left": "255",
+            "right": "0"
+          },
+          "ifmap_serial_in": {
+            "direction": "I",
+            "left": "15",
+            "right": "0"
+          },
+          "en_shift_reg_ifmap_input": {
+            "direction": "I",
+            "left": "15",
+            "right": "0"
+          },
+          "en_shift_reg_weight_input": {
+            "direction": "I",
+            "left": "15",
+            "right": "0"
+          },
+          "mode": {
+            "direction": "I"
+          },
+          "out_new_val": {
+            "direction": "O"
+          },
+          "done_count": {
+            "direction": "O"
+          },
+          "done_all": {
+            "direction": "O"
+          },
+          "output_out": {
+            "direction": "O",
+            "left": "255",
+            "right": "0"
+          }
+        }
+      },
+      "blk_mem_gen_0": {
+        "vlnv": "xilinx.com:ip:blk_mem_gen:8.4",
+        "ip_revision": "11",
+        "xci_name": "BRAM_top_level_blk_mem_gen_0_0",
+        "xci_path": "ip\\BRAM_top_level_blk_mem_gen_0_0\\BRAM_top_level_blk_mem_gen_0_0.xci",
+        "inst_hier_path": "blk_mem_gen_0",
+        "has_run_ip_tcl": "true",
+        "parameters": {
+          "Memory_Type": {
+            "value": "True_Dual_Port_RAM"
+          },
+          "Write_Width_A": {
+            "value": "16"
+          },
+          "use_bram_block": {
+            "value": "Stand_Alone"
+          }
+        }
+      },
+      "ilconcat_0": {
+        "vlnv": "xilinx.com:inline_hdl:ilconcat:1.0",
+        "parameters": {
+          "IN0_WIDTH": {
+            "value": "16"
+          },
+          "IN10_WIDTH": {
+            "value": "16"
+          },
+          "IN11_WIDTH": {
+            "value": "16"
+          },
+          "IN12_WIDTH": {
+            "value": "16"
+          },
+          "IN13_WIDTH": {
+            "value": "16"
+          },
+          "IN14_WIDTH": {
+            "value": "16"
+          },
+          "IN15_WIDTH": {
+            "value": "16"
+          },
+          "IN1_WIDTH": {
+            "value": "16"
+          },
+          "IN2_WIDTH": {
+            "value": "16"
+          },
+          "IN3_WIDTH": {
+            "value": "16"
+          },
+          "IN4_WIDTH": {
+            "value": "16"
+          },
+          "IN5_WIDTH": {
+            "value": "16"
+          },
+          "IN6_WIDTH": {
+            "value": "16"
+          },
+          "IN7_WIDTH": {
+            "value": "16"
+          },
+          "IN8_WIDTH": {
+            "value": "16"
+          },
+          "IN9_WIDTH": {
+            "value": "16"
+          },
+          "NUM_PORTS": {
+            "value": "16"
+          }
+        }
+      }
+    }
+  }
+}

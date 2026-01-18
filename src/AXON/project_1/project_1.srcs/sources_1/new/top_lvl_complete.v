@@ -1,3 +1,16 @@
+//////////////////////////////////////////////////////////////////////////////////
+// Engineer: Rizmi Ahmad Raihan
+// Create Date: 01/18/2026 10:18:45 AM
+// Design Name: TOP_LVL_IO_CONTROL: A top level module for matrix multiplication.
+// Module Name: TOP_LVL_IO_CONTROL
+// Project Name: AXON
+// Target Devices: PYNQ-Z1
+// Tool Versions: 2025.1
+// Description: Top level module including input/output control logic for AXON architecture, matrix multiplication, and output control logic.
+// Revision 0.01 - File Created
+// Additional Comments:
+//////////////////////////////////////////////////////////////////////////////////
+
 module top_lvl_io_control #( // Tanpa FSM untuk memasukkan data ke shift register.
     parameter DW = 16,
     parameter Dimension = 16
