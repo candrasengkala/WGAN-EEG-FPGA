@@ -19,7 +19,7 @@ module shift_reg_input
     // Between 16 ifmaps, a zero must be placed.
     reg [DW - 1 : 0] shreg [0:Depth_added-1];
     integer i;
-    always @(posedge clk)begin
+    always @(negedge clk)begin
         if (!rst) begin
             for (i = 0; i < Depth_added; i = i + 1) shreg[i] <= 0;
         end

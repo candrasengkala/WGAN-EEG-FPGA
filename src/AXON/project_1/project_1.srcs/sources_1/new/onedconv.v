@@ -37,14 +37,11 @@ module onedconv #(
     // Done Signals and Output
     input wire read_mode_output_result, //Reading Externally
     input wire [Dimension-1:0] enb_output_result,
-    input wire signed [ADDRESS_LENGTH-1:0] output_result_bram_addr, // FOR EXTERNAL ADDRESSING. Used in output PROCESS
+    input wire [ADDRESS_LENGTH-1:0] output_result_bram_addr, // FOR EXTERNAL ADDRESSING. Used in output PROCESS
 
     output wire done_all,
     output wire signed [DW*Dimension-1:0] output_result    
 );
-    // Negclocks for counters
-    wire negclk;
-    assign negclk = ~clk;
     // ...........................................
     // Counter DECLARATION
     // ...........................................
@@ -62,9 +59,9 @@ module onedconv #(
         .ADDRESS_LENGTH(ADDRESS_LENGTH),
         .MAX_COUNT(MAX_COUNT)
     ) ifmap_counter_inst (
-        .clk(negclk),
+        .clk(clk),
         .rst(ifmap_counter_rst),
-        .en(en_ifmap_counter),
+        .en(ifmap_counter_en),
         .flag_1per16(ifmap_flag_1per16),
         .addr_out(inputdata_addr_out),
         .done(ifmap_counter_done)
@@ -84,7 +81,7 @@ module onedconv #(
         .ADDRESS_LENGTH(ADDRESS_LENGTH),
         .MAX_COUNT(MAX_COUNT)
     ) weight_counter_inst (
-        .clk(negclk),
+        .clk(clk),
         .rst(weight_counter_rst),
         .en(en_weight_counter),
         .flag_1per16(weight_flag_1per16),
@@ -103,7 +100,7 @@ module onedconv #(
     .ADDRESS_LENGTH(ADDRESS_LENGTH),
     .MAX_COUNT(MAX_COUNT)
     ) output_counter_inst_a (
-        .clk(negclk),
+        .clk(clk),
         .rst(output_counter_rst_a),
         .en(en_output_counter_a),
         .flag_1per16(output_flag_1per16_a),
@@ -122,7 +119,7 @@ module onedconv #(
     .ADDRESS_LENGTH(ADDRESS_LENGTH),
     .MAX_COUNT(MAX_COUNT)
     ) output_counter_inst_b (
-        .clk(negclk),
+        .clk(clk),
         .rst(output_counter_rst_b),
         .en(en_output_counter_b),
         .flag_1per16(output_flag_1per16_b),
@@ -145,7 +142,7 @@ module onedconv #(
             simple_dual_two_clocks #(
                 .DW(DW),
                 .ADDRESS_LENGTH(ADDRESS_LENGTH),
-                .DEPT(BRAM_Depth)
+                .DEPTH(BRAM_Depth)
             )(
                 .clka(clk),
                 .clkb(clk),
@@ -183,8 +180,9 @@ module onedconv #(
     // ----------------------------------------
     wire [Dimension-1:0] enb_weight_input_bram; // OUTPUT CONTROL
     wire [Dimension*DW-1:0] dob_weight_input_bram; 
+    genvar j;
     generate
-        for (i = 0; i < Dimension; i = i + 1) begin : gen_weight_bram
+        for (j = 0; j < Dimension; j = j + 1) begin : gen_weight_bram
             simple_dual_two_clocks #(
                 .DW(DW),
                 .ADDRESS_LENGTH(ADDRESS_LENGTH),
@@ -192,13 +190,13 @@ module onedconv #(
             )(
                 .clka(clk),
                 .clkb(clk),
-                .ena(ena_weight_input_bram[i]),
-                .enb(enb_weight_input_bram[i]),
-                .wea(wea_weight_input_bram[i]),
+                .ena(ena_weight_input_bram[j]),
+                .enb(enb_weight_input_bram[j]),
+                .wea(wea_weight_input_bram[j]),
                 .addra(weight_bram_addr),
                 .addrb(weight_addr_out),
-                .dia(weight_input_bram[DW*(i+1)-1:DW*i]),
-                .dob(dob_weight_input_bram[DW*(i+1)-1:DW*i])
+                .dia(weight_input_bram[DW*(j+1)-1:DW*j]),
+                .dob(dob_weight_input_bram[DW*(j+1)-1:DW*j])
             );
         end
     endgenerate
@@ -217,8 +215,9 @@ module onedconv #(
     assign output_result_addr_chosen_b = read_mode_output_result ? output_result_bram_addr : output_addr_out_b;
     //                                  External    
     wire [Dimension-1:0] wea_output_result; // OUTPUT CONTROL
+    genvar r;
     generate
-        for (i = 0; i < Dimension; i = i + 1) begin : gen_output_result_bram
+        for (r = 0; r < Dimension; r = r + 1) begin : gen_output_result_bram
             simple_dual_two_clocks #(
                 .DW(DW),
                 .ADDRESS_LENGTH(ADDRESS_LENGTH),
@@ -226,13 +225,13 @@ module onedconv #(
             )(
                 .clka(clk),
                 .clkb(clk),
-                .ena(ena_output_result_control[i]), // Writing is done internally
-                .enb(enb_output_result_chosen[i]), // Reading is done externally
-                .wea(wea_output_result[i]), // Writing is done internally
+                .ena(ena_output_result_control[r]), // Writing is done internally
+                .enb(enb_output_result_chosen[r]), // Reading is done externally
+                .wea(wea_output_result[r]), // Writing is done internally
                 .addra(output_addr_out_a),
                 .addrb(output_result_addr_chosen_b),
-                .dia(systolic_output_after_adder[DW*(i+1)-1:DW*i]),
-                .dob(dob_output_result_bram[DW*(i+1)-1:DW*i])
+                .dia(systolic_output_after_adder[DW*(r+1)-1:DW*r]),
+                .dob(dob_output_result_bram[DW*(r+1)-1:DW*r])
             );
         end
     endgenerate
@@ -243,6 +242,14 @@ module onedconv #(
     // ----------------------------------------
     wire output_bram_destination; //CONTROL OUTPUT
     wire [DW*Dimension - 1 : 0] output_result_bram_to_adder;
+    // ----------------------------------------
+    // Demux + registered top-level output
+    // ----------------------------------------
+
+    wire [Dimension*DW-1:0] output_result_int;
+    reg  [Dimension*DW-1:0] output_result_reg;
+
+    // Demultiplex: either feed adder or external output
     dmux_out #(
         .DW(DW),
         .Dimension(Dimension)
@@ -250,8 +257,20 @@ module onedconv #(
         .sel(output_bram_destination),
         .in(dob_output_result_bram),
         .out_a(output_result_bram_to_adder),
-        .out_b(output_result)
-    );    
+        .out_b(output_result_int)
+    );
+
+    // Register the output before driving top-level pin
+    always @(posedge clk) begin
+        if (rst) begin
+            output_result_reg <= {Dimension*DW{1'b0}};
+        end
+        else begin
+            output_result_reg <= output_result_int;
+        end
+    end
+
+    assign output_result = output_result_reg;
     systolic_out_adder #(
         .DW(DW),
         .Dimension(Dimension)

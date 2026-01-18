@@ -14,7 +14,7 @@ module counter_axon_addr #(
     reg [ADDRESS_LENGTH-1:0] count;
     reg reached_end;
 
-    always @(posedge clk) begin
+    always @(negedge clk) begin
         if (!rst) begin
             count        <= {ADDRESS_LENGTH{1'b0}};
             addr_out     <= {ADDRESS_LENGTH{1'b0}};

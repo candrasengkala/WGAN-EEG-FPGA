@@ -178,20 +178,19 @@ module top_lvl_with_mem
     output wire done_count,                             // To Controller and External
     output wire signed [DW*Dimension-1:0] output_out    // Output Value
 );
-    wire neg_clk = ~clk;
     /* ============================================================
      * Input counter and output counters.
      * ============================================================ */
     // For the sake of good practice, do make counters only recieve inputs from control logic, except necassary
     generate
         counter_input #(.Dimension_added(Dimension + 1)) counter_ifmap_inst ( //Count sampai Dimension + 1;
-            .clk(neg_clk),
+            .clk(clk),
             .rst(rst),
             .en(en_ifmap_counter), // Digunakan untuk menghitung shifting.
             .done(done_ifmap)
         );
         counter_input #(.Dimension_added(Dimension + 1)) counter_weight_inst (
-            .clk(neg_clk),
+            .clk(clk),
             .rst(rst),
             .en(en_weight_counter),
             .done(done_weight)
@@ -216,7 +215,7 @@ module top_lvl_with_mem
                 .DW(DW),
                 .Depth_added(Dimension + 1) // Added depth for zero padding. For first shifting, fill it with zero (Logic developed later)
             ) weight_shift (
-                .clk   (neg_clk),
+                .clk   (clk),
                 .rst   (rst),
                 .clken (en_shift_reg_weight[i]),
                 .SI    (weight_brams_in[DW*(i+1)-1 -: DW]),
@@ -227,7 +226,7 @@ module top_lvl_with_mem
                 .DW(DW),
                 .Depth_added(Dimension + 1)
             ) ifmap_shift (
-                .clk   (neg_clk), // Sesuai dengan yang mengeluarkannya
+                .clk   (clk), // Sesuai dengan yang mengeluarkannya
                 .rst   (rst),
                 .clken (en_shift_reg_ifmap[i]),
                 .SI    (ifmap_serial_in),

@@ -14,7 +14,7 @@ module counter_input #(
     localparam CNT_W = $clog2(Dimension_added+1);
     reg [CNT_W-1:0] cnt = 0;
 
-    always @(posedge clk) begin
+    always @(negedge clk) begin
         if (!rst) begin
             cnt  <= {CNT_W{1'b0}};
             done <= 1'b0;
