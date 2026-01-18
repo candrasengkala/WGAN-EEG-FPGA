@@ -1,0 +1,28 @@
+Time resolution is 1 ps
+=== INPUT PHASE ===
+=== COMPUTE PHASE ===
+---- OUTPUT ROWS @ t=365000 ----
+Row 0 : 59
+Row 1 : 81
+Row 2 : 63
+Row 3 : 75
+-----------------------------
+---- OUTPUT ROWS @ t=415000 ----
+Row 0 : 65
+Row 1 : 90
+Row 2 : 77
+Row 3 : 78
+-----------------------------
+---- OUTPUT ROWS @ t=465000 ----
+Row 0 : 50
+Row 1 : 72
+Row 2 : 68
+Row 3 : 72
+-----------------------------
+---- OUTPUT ROWS @ t=515000 ----
+Row 0 : 30
+Row 1 : 44
+Row 2 : 44
+Row 3 : 46
+-----------------------------
+$finish called at time : 525 ns : File "D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sim_1/new/top_level_complete_tb.v" Line 243
