@@ -77,7 +77,7 @@ module tb_top_lvl_io_control;
 
         .en_shift_reg_ifmap_input (en_shift_reg_ifmap_input),
         .en_shift_reg_weight_input(en_shift_reg_weight_input),
-        .mode                   (mode),
+        .mode                   (mode), // NOL UNTUK MENULIS DARI LUAR.
 
         .out_new_val            (out_new_val),
         .done_count             (done_count),
@@ -163,7 +163,7 @@ module tb_top_lvl_io_control;
         // COUNTER-DATA-INPUT MODEL.
         // Remember that clock for shift register is negative edge.
         fork 
-            begin : WEIGHT_IN_BRAM
+            begin : WEIGHT_IN_BRAM // PADDING TERJADI DI SINI.
                 integer i;
                 for (i = 0; i < Dimension; i = i + 1) begin
                     @(posedge clk);
@@ -233,7 +233,7 @@ module tb_top_lvl_io_control;
         start = 1;
         @(posedge clk);
         start = 0;
-
+//lihat nilai ke6.
         /* ========================================================
          * WAIT FOR COMPLETION. Then, eject output.
          * ======================================================== */

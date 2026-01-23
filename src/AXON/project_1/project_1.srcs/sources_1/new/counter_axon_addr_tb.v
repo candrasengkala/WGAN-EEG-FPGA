@@ -22,7 +22,7 @@ module tb_counter_axon_addr;
     // ----------------------------------------
     // DUT
     // ----------------------------------------
-    counter_axon_addr #(
+    counter_axon_addr_inputdata #(
         .ADDRESS_LENGTH(ADDRESS_LENGTH),
         .MAX_COUNT(MAX_COUNT)
     ) dut (

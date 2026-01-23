@@ -1,0 +1,24 @@
+#-----------------------------------------------------------
+# Vivado v2025.1 (64-bit)
+# SW Build 6140274 on Thu May 22 00:12:29 MDT 2025
+# IP Build 6138677 on Thu May 22 03:10:11 MDT 2025
+# SharedData Build 6139179 on Tue May 20 17:58:58 MDT 2025
+# Start of session at: Fri Jan 23 22:46:02 2026
+# Process ID         : 6392
+# Current directory  : D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.runs/impl_1
+# Command line       : vivado.exe -log onedconv.vdi -applog -product Vivado -messageDb vivado.pb -mode batch -source onedconv.tcl -notrace
+# Log file           : D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.runs/impl_1/onedconv.vdi
+# Journal file       : D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.runs/impl_1\vivado.jou
+# Running On         : DESKTOP-5CNS49D
+# Platform           : Windows Server 2016 or Windows 10
+# Operating System   : 22631
+# Processor Detail   : 12th Gen Intel(R) Core(TM) i5-1235U
+# CPU Frequency      : 2496 MHz
+# CPU Physical cores : 10
+# CPU Logical cores  : 12
+# Host memory        : 16890 MB
+# Swap memory        : 27343 MB
+# Total Virtual      : 44233 MB
+# Available Virtual  : 10001 MB
+#-----------------------------------------------------------
+source onedconv.tcl -notrace

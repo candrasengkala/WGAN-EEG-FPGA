@@ -19,7 +19,7 @@ module top_lvl_io_control #( // Tanpa FSM untuk memasukkan data ke shift registe
     input  wire clk,
     input  wire rst,
     input  wire start,
-    input  wire output_val,
+    input  wire output_val, // Digunakan untuk mengeluarkan data dari matrix multiplicator
 
     input  wire signed [Dimension*DW-1:0] weight_brams_in,
     input  wire signed [DW-1:0] ifmap_serial_in,
@@ -67,7 +67,6 @@ module top_lvl_io_control #( // Tanpa FSM untuk memasukkan data ke shift registe
 
     assign en_shift_reg_weight = mode ? en_shift_reg_weight_control
                                       : en_shift_reg_weight_input;
-
     /* ============================================================
      * Done logic
      * ============================================================ */

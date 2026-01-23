@@ -43,9 +43,9 @@ module top_lvl #(
     wire signed [DW-1:0] ifmap_wires  [0:Dimension-1][0:Dimension-1];
     wire signed [DW-1:0] output_wires [0:Dimension-1][0:Dimension-1];
 
-    wire signed [DW-1:0] en_in_wires [0:Dimension-1][0:Dimension-1];
-    wire signed [DW-1:0] en_psum_wires [0:Dimension-1][0:Dimension-1];
-    wire signed [DW-1:0] en_out_wires [0:Dimension-1][0:Dimension-1];
+    wire signed en_in_wires [0:Dimension-1][0:Dimension-1];
+    wire signed en_psum_wires [0:Dimension-1][0:Dimension-1];
+    wire signed en_out_wires [0:Dimension-1][0:Dimension-1];
 
     genvar i, j;
     counter_top_lvl #(.Dimension(Dimension)) counter_inst (

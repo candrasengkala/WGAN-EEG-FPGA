@@ -39,10 +39,22 @@ with torch.no_grad():
 output = conv(ifmap)
 
 # -----------------------------
-# 5) Print results for comparison
+# 5) Print results per output channel
 # -----------------------------
 print("Input:", ifmap)
-print("Weights:", weight_values)
-print("Conv1d Output (batch, channels, length):")
+print("\nWeights:", weight_values)
+print("\nOutput shape:", output.shape)
+print("\n" + "="*50)
+print("Output per channel:")
+print("="*50)
+
+# Extract and display each output channel separately
+for channel_idx in range(output.shape[1]):
+    channel_output = output[0, channel_idx, :]
+    print(f"\nChannel {channel_idx} (Filter {channel_idx+1}):")
+    print(f"  Values: {channel_output.tolist()}")
+    print(f"  Tensor: {channel_output}")
+
+print("\n" + "="*50)
+print("Complete output tensor:")
 print(output)
-print("Output shape:", output.shape)

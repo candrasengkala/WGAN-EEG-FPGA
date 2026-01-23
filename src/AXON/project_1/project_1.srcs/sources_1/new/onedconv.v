@@ -1,24 +1,24 @@
 // Dibuat untuk sekali Convolution 1D
-
 module onedconv #(
     parameter DW = 16,
     parameter Dimension = 16,
-    parameter ADDRESS_LENGTH = 13,
-    parameter BRAM_Depth = 8192,
-    parameter MAX_COUNT = 512,
+    parameter ADDRESS_LENGTH = 9,
+    parameter BRAM_Depth = 512,
+    //parameter MAX_COUNT = 512,
     parameter MUX_SEL_WIDTH = 4 // 16 BRAM PADA INPUT//
 )
 (
     input wire clk,
     input wire rst, 
 
-    input wire start_whole,    
+    input wire start_whole,    // INPUT CONTROL
     //1D Convolution Parameters for central control unit.
-    input wire stride, // 1 bit is enough for stride 1 and 2
-    input wire padding,  // 1 bit is enough for padding of 7 (0) and 3 (1)
-    input wire kernel_size, // 1 bit is enough for kernel size 16 (0) and 7 (1)
-    input wire [2:0] input_channels, //1 input channel (000), 32 input channels (001), 64 input channels (010), 128 input channels (100), 256 input channels (111).
-    input wire [2:0] temporal_length, // Temporal length of input data.
+    input wire [1:0] stride, // 0, 1, 2, 3 of stride. INPUT CONTROL
+    input wire [2:0] padding,  // LIMITED TO 15. UNSIGNED. INPUT CONTROL
+    input wire [4:0] kernel_size, // LIMITED TO 0 to 16. UNSIGNED NUMBER. INPUT CONTROL
+    input wire [9:0] input_channels,    //INPUT CONTROL
+    input wire [9:0] temporal_length,   //INPUT CONTROL
+    input wire [9:0] filter_number,
     // For inputs (i.e. inpudata and weights), writing is done externally 
     // Interfacing with AXI controller
     // External BRAM inputs
@@ -35,7 +35,7 @@ module onedconv #(
     input wire [DW*Dimension-1:0] inputdata_input_bram,
     // For outputs, reading can be done externally OR interally, whereas writing is done internally.
     // Done Signals and Output
-    input wire read_mode_output_result, //Reading Externally
+    input wire read_mode_output_result, //Reading Externally // KEEP 0 DURING PROCESS.
     input wire [Dimension-1:0] enb_output_result,
     input wire [ADDRESS_LENGTH-1:0] output_result_bram_addr, // FOR EXTERNAL ADDRESSING. Used in output PROCESS
 
@@ -54,14 +54,17 @@ module onedconv #(
     wire ifmap_flag_1per16;     //INPUT CONTROL
     wire ifmap_counter_rst;     //OUTPUT CONTROL
     wire [ADDRESS_LENGTH-1:0] inputdata_addr_out;
-
-    counter_axon_addr #(
-        .ADDRESS_LENGTH(ADDRESS_LENGTH),
-        .MAX_COUNT(MAX_COUNT)
+    wire [ADDRESS_LENGTH-1:0] ifmap_counter_start_val; //OUTPUT CONTROL
+    wire [ADDRESS_LENGTH-1:0] ifmap_counter_end_val; //OUTPUT CONTROL
+    counter_axon_addr_inputdata #(
+        .ADDRESS_LENGTH(ADDRESS_LENGTH)
+        // .MAX_COUNT(MAX_COUNT)
     ) ifmap_counter_inst (
         .clk(clk),
         .rst(ifmap_counter_rst),
         .en(ifmap_counter_en),
+        .start_val(ifmap_counter_start_val),
+        .end_val(ifmap_counter_end_val),
         .flag_1per16(ifmap_flag_1per16),
         .addr_out(inputdata_addr_out),
         .done(ifmap_counter_done)
@@ -75,15 +78,21 @@ module onedconv #(
 
     wire weight_flag_1per16; //INPUT CONTROL
     wire weight_counter_done; //INPUT CONTROL
+    wire weight_rst_min_16;
     wire [ADDRESS_LENGTH-1:0] weight_addr_out;
+    wire [ADDRESS_LENGTH-1:0] weight_counter_start_val; //OUTPUT CONTROL
+    wire [ADDRESS_LENGTH-1:0] weight_counter_end_val; //OUTPUT CONTROL
 
-    counter_axon_addr #(
-        .ADDRESS_LENGTH(ADDRESS_LENGTH),
-        .MAX_COUNT(MAX_COUNT)
+    counter_axon_addr_weight #(
+        .ADDRESS_LENGTH(ADDRESS_LENGTH)
+        // .MAX_COUNT(MAX_COUNT)
     ) weight_counter_inst (
         .clk(clk),
         .rst(weight_counter_rst),
+        .rst_min_16(weight_rst_min_16),
         .en(en_weight_counter),
+        .start_val(weight_counter_start_val),
+        .end_val(weight_counter_end_val),
         .flag_1per16(weight_flag_1per16),
         .addr_out(weight_addr_out),
         .done(weight_counter_done)
@@ -96,13 +105,18 @@ module onedconv #(
     wire output_flag_1per16_a; //INPUT CONTROL
     wire output_counter_done_a; //INPUT CONTROL
     wire [ADDRESS_LENGTH-1:0] output_addr_out_a;
-    counter_axon_addr #(
-    .ADDRESS_LENGTH(ADDRESS_LENGTH),
-    .MAX_COUNT(MAX_COUNT)
+    wire [ADDRESS_LENGTH-1:0] output_counter_start_val_a; //OUTPUT CONTROL
+    wire [ADDRESS_LENGTH-1:0] output_counter_end_val_a; //OUTPUT CONTROL
+
+    counter_axon_addr_inputdata #(
+    .ADDRESS_LENGTH(ADDRESS_LENGTH)
+    // .MAX_COUNT(MAX_COUNT)
     ) output_counter_inst_a (
         .clk(clk),
         .rst(output_counter_rst_a),
         .en(en_output_counter_a),
+        .start_val(output_counter_start_val_a),
+        .end_val(output_counter_end_val_a),
         .flag_1per16(output_flag_1per16_a),
         .addr_out(output_addr_out_a),
         .done(output_counter_done_a)
@@ -115,13 +129,18 @@ module onedconv #(
     wire output_flag_1per16_b; //INPUT CONTROL
     wire output_counter_done_b; //INPUT CONTROL
     wire [ADDRESS_LENGTH-1:0] output_addr_out_b;
-    counter_axon_addr #(
-    .ADDRESS_LENGTH(ADDRESS_LENGTH),
-    .MAX_COUNT(MAX_COUNT)
+    wire [ADDRESS_LENGTH-1:0] output_counter_start_val_b; //OUTPUT CONTROL
+    wire [ADDRESS_LENGTH-1:0] output_counter_end_val_b; //OUTPUT CONTROL
+
+    counter_axon_addr_inputdata #(
+    .ADDRESS_LENGTH(ADDRESS_LENGTH)
+    // .MAX_COUNT(MAX_COUNT)
     ) output_counter_inst_b (
         .clk(clk),
         .rst(output_counter_rst_b),
         .en(en_output_counter_b),
+        .start_val(output_counter_start_val_b),
+        .end_val(output_counter_end_val_b),
         .flag_1per16(output_flag_1per16_b),
         .addr_out(output_addr_out_b),
         .done(output_counter_done_b)
@@ -134,6 +153,7 @@ module onedconv #(
     // ----------------------------------------
     // a is used to write.
     // b is used to read.
+    wire zero_or_data_weight;
     wire [Dimension-1:0] enb_inputdata_input_bram; // OUTPUT CONTROL
     wire [Dimension*DW-1:0] dob_inputdata_input_bram; 
     genvar i;
@@ -143,7 +163,9 @@ module onedconv #(
                 .DW(DW),
                 .ADDRESS_LENGTH(ADDRESS_LENGTH),
                 .DEPTH(BRAM_Depth)
-            )(
+            )
+            bram_input
+            (
                 .clka(clk),
                 .clkb(clk),
                 .ena(ena_inputdata_input_bram[i]),
@@ -157,24 +179,27 @@ module onedconv #(
         end
     endgenerate
     //Zero multiplexer for padding
-    wire [DW-1:0] input_data_stream_memory; 
     wire [DW-1:0] input_data_stream_zero;
     assign input_data_stream_zero = {DW{1'b0}};
     wire [DW-1:0] input_data_stream;
     wire zero_or_data; //OUTPUT CONTROL
-    wire [MUX_SEL_WIDTH-1:0] sel_input_data_mem;
-    assign input_data_stream = zero_or_data ? input_data_stream_memory : input_data_stream_zero;
-    //MUX for selecting input data from multiple BRAMs
-    wire [DW-1:0] sel_input_data_stream;
+    wire [MUX_SEL_WIDTH-1:0] sel_input_data_mem; //OUTPUT CONTROL
+    // CORRECT - Need intermediate signal:
+    wire [DW-1:0] input_data_stream_from_mux;
+    assign input_data_stream = zero_or_data ? input_data_stream_from_mux : input_data_stream_zero;
+
+    // MUX outputs to intermediate signal:
     mux_between_channels #(
         .DW(DW),
         .Inputs(Dimension),
         .Sel_Width(MUX_SEL_WIDTH)
-    ) inputdata_mux_inst (
+    )
+    inputdata_mux_inst (
         .sel(sel_input_data_mem),
-        .in_data(dob_inputdata_input_bram),
-        .out_data(input_data_stream)
+        .data_in(dob_inputdata_input_bram),
+        .data_out(input_data_stream_from_mux)  // Not input_data_stream!
     );
+
     // ----------------------------------------
     // WEIGHT BRAMs (ADA 16)
     // ----------------------------------------
@@ -187,7 +212,9 @@ module onedconv #(
                 .DW(DW),
                 .ADDRESS_LENGTH(ADDRESS_LENGTH),
                 .DEPTH(BRAM_Depth)
-            )(
+            )
+            bram_filter
+            (
                 .clka(clk),
                 .clkb(clk),
                 .ena(ena_weight_input_bram[j]),
@@ -200,6 +227,11 @@ module onedconv #(
             );
         end
     endgenerate
+    wire [Dimension*DW-1:0] dob_weight_input_bram_zero = {{Dimension*DW}{1'b0}};
+    wire [Dimension*DW-1:0] dob_weight_input_bram_choosen;
+
+    assign dob_weight_input_bram_choosen = (zero_or_data_weight)? dob_weight_input_bram : dob_weight_input_bram_zero;
+
     // ----------------------------------------
     // OUTPUT BRAMs (ADA 16)
     // ----------------------------------------
@@ -209,11 +241,12 @@ module onedconv #(
     wire [Dimension*DW-1:0] dob_output_result_bram;  // Keluaran BRAM.
     wire [Dimension-1:0] enb_output_result_chosen; 
     wire [Dimension-1:0] enb_output_result_control; // OUTPUT CONTROL
+    // I advise against doing this. Let us see, though.
     assign enb_output_result_chosen = read_mode_output_result ? enb_output_result : enb_output_result_control; //Control
     //                                  External
     wire [ADDRESS_LENGTH-1:0] output_result_addr_chosen_b; 
     assign output_result_addr_chosen_b = read_mode_output_result ? output_result_bram_addr : output_addr_out_b;
-    //                                  External    
+    //                                 External    
     wire [Dimension-1:0] wea_output_result; // OUTPUT CONTROL
     genvar r;
     generate
@@ -222,7 +255,9 @@ module onedconv #(
                 .DW(DW),
                 .ADDRESS_LENGTH(ADDRESS_LENGTH),
                 .DEPTH(BRAM_Depth)
-            )(
+            )
+            bram_output
+            (
                 .clka(clk),
                 .clkb(clk),
                 .ena(ena_output_result_control[r]), // Writing is done internally
@@ -245,7 +280,19 @@ module onedconv #(
     // ----------------------------------------
     // Demux + registered top-level output
     // ----------------------------------------
-
+    wire [DW*Dimension-1:0] output_result_bram_to_adder_reg;
+    wire en_reg_adder; // CONTROL OUTPUT
+    wire output_result_reg_rst; //CONTROL OUTPUT
+    reg_en_rst #(
+        .WIDTH(DW * Dimension)
+    ) output_result_bram_to_adder_reg_inst (
+        .clk(clk), 
+        .rst(output_result_reg_rst), //Active low reset
+        .en(en_reg_adder), // control from FSM
+        .d(output_result_bram_to_adder), // D Input
+        .q(output_result_bram_to_adder_reg) // Q output
+    );
+    
     wire [Dimension*DW-1:0] output_result_int;
     reg  [Dimension*DW-1:0] output_result_reg;
 
@@ -260,9 +307,10 @@ module onedconv #(
         .out_b(output_result_int)
     );
 
+
     // Register the output before driving top-level pin
     always @(posedge clk) begin
-        if (rst) begin
+        if (!rst) begin
             output_result_reg <= {Dimension*DW{1'b0}};
         end
         else begin
@@ -270,31 +318,168 @@ module onedconv #(
         end
     end
 
+    wire out_new_val_sign; // CONTROL INPUT
+    wire [Dimension*DW-1:0] systolic_output_before_adder_after_reg;
+    wire rst_top;   //CONTROL OUTPUT
+    reg_en_rst #(
+        .WIDTH(DW * Dimension)
+    ) output_systolic_reg (
+        .clk(clk), 
+        .rst(rst_top), //Active low reset
+        .en(out_new_val_sign), // control from FSM
+        .d(systolic_output_before_adder), // D Input
+        .q(systolic_output_before_adder_after_reg) // Q output
+    );
+
     assign output_result = output_result_reg;
     systolic_out_adder #(
         .DW(DW),
         .Dimension(Dimension)
     ) systolic_out_adder_inst(
-        .in_a(output_result_bram_to_adder),
-        .in_b(systolic_output_before_adder),
+        .in_a(output_result_bram_to_adder_reg),
+        .in_b(systolic_output_before_adder_after_reg),
         .out_val(systolic_output_after_adder)
     );
-    wire rst_top;   //CONTROL OUTPUT
     wire start_top; //CONTROL OUTPUT
     wire done_top;  //CONTROL OUTPUT 
+    wire [Dimension-1 : 0] en_shift_reg_ifmap_input_ctrl; // CONTROL OUTPUT
+    wire [Dimension-1 : 0] en_shift_reg_weight_input_ctrl; // CONTROL OUTPUT
+    wire output_val_top; //CONTROL INPUT
+    wire mode_top; // CONTROL INPUT
+    wire done_count_top;
     top_lvl_io_control #(   
          .DW(DW),
          .Dimension(Dimension)
     ) top_lvl_io_control_inst (
          .clk                    (clk),         
-         .rst                    (rst_top),         //OUTPUT CONTROL
-         .start                  (start_top), //OUTPUT CONTROL
-
-         .weight_brams_in       (dob_weight_input_bram),
+         .rst                    (rst_top),         
+         .start                  (start_top), 
+         .output_val            (output_val_top),
+         .weight_brams_in       (dob_weight_input_bram_choosen),
          .ifmap_serial_in        (input_data_stream),
 
+         .en_shift_reg_ifmap_input(en_shift_reg_ifmap_input_ctrl),
+         .en_shift_reg_weight_input(en_shift_reg_weight_input_ctrl),
+
+         .mode(mode_top),
+         .out_new_val(out_new_val_sign),
+         .done_count            (done_count_top),
          .done_all               (done_top), //INPUT CONTROL
 
          .output_out             (systolic_output_before_adder)
     );
+    onedconv_ctrl #(
+    .DW(DW),
+    .Dimension(Dimension),
+    .ADDRESS_LENGTH(ADDRESS_LENGTH),
+    .MUX_SEL_WIDTH(MUX_SEL_WIDTH)
+    ) onedconv_ctrl_inst (
+        .clk(clk),
+        .rst(rst),
+
+        // ----------------------------------------------------
+        // Global control
+        // ----------------------------------------------------
+        .start_whole(start_whole),
+        .done_all(done_all),
+
+        // ----------------------------------------------------
+        // Convolution parameters
+        // ----------------------------------------------------
+        .stride(stride),
+        .padding(padding),
+        .kernel_size(kernel_size),
+        .input_channels(input_channels),
+        .temporal_length(temporal_length),
+        .filter_number(filter_number),
+
+        // ----------------------------------------------------
+        // Counter status inputs
+        // ----------------------------------------------------
+        .ifmap_counter_done(ifmap_counter_done),
+        .ifmap_flag_1per16(ifmap_flag_1per16),
+
+        .weight_counter_done(weight_counter_done),
+        .weight_flag_1per16(weight_flag_1per16),
+
+        .output_counter_done_a(output_counter_done_a),
+        .output_flag_1per16_a(output_flag_1per16_a),
+
+        .output_counter_done_b(output_counter_done_b),
+        .output_flag_1per16_b(output_flag_1per16_b),
+
+        // ----------------------------------------------------
+        // Datapath status inputs
+        // ----------------------------------------------------
+        .done_count_top(done_count_top),
+        .done_top(done_top),
+        .out_new_val_sign(out_new_val_sign),
+
+        // ----------------------------------------------------
+        // Counter control outputs
+        // ----------------------------------------------------
+        .ifmap_counter_en(ifmap_counter_en),
+        .ifmap_counter_rst(ifmap_counter_rst),
+
+        .en_weight_counter(en_weight_counter),
+        .weight_rst_min_16(weight_rst_min_16),
+        .weight_counter_rst(weight_counter_rst),
+
+        .en_output_counter_a(en_output_counter_a),
+        .output_counter_rst_a(output_counter_rst_a),
+
+        .en_output_counter_b(en_output_counter_b),
+        .output_counter_rst_b(output_counter_rst_b),
+        // ----------------------------------------------------
+        // Counter control address
+        // ----------------------------------------------------
+
+        .ifmap_counter_start_val(ifmap_counter_start_val),
+        .ifmap_counter_end_val(ifmap_counter_end_val),
+
+        .weight_counter_start_val(weight_counter_start_val),
+        .weight_counter_end_val(weight_counter_end_val),
+
+        .output_counter_start_val_a(output_counter_start_val_a),
+        .output_counter_end_val_a(output_counter_end_val_a),
+
+        .output_counter_start_val_b(output_counter_start_val_b),
+        .output_counter_end_val_b(output_counter_end_val_b),
+        // ----------------------------------------------------
+        // BRAM control outputs
+        // ----------------------------------------------------
+        .enb_inputdata_input_bram(enb_inputdata_input_bram),
+        .enb_weight_input_bram(enb_weight_input_bram),
+
+        .ena_output_result_control(ena_output_result_control),
+        .wea_output_result(wea_output_result),
+        .enb_output_result_control(enb_output_result_control),
+
+        // ----------------------------------------------------
+        // Shift-register & datapath control
+        // ----------------------------------------------------
+        .en_shift_reg_ifmap_input_ctrl(en_shift_reg_ifmap_input_ctrl),
+        .en_shift_reg_weight_input_ctrl(en_shift_reg_weight_input_ctrl),
+
+        .zero_or_data(zero_or_data),
+        .zero_or_data_weight(zero_or_data_weight),
+        .sel_input_data_mem(sel_input_data_mem),
+
+        .output_bram_destination(output_bram_destination),
+
+        // ----------------------------------------------------
+        // Adder-side register control
+        // ----------------------------------------------------
+        .en_reg_adder(en_reg_adder),
+        .output_result_reg_rst(output_result_reg_rst),
+
+        // ----------------------------------------------------
+        // Top-level IO control
+        // ----------------------------------------------------
+        .rst_top(rst_top),
+        .mode_top(mode_top),
+        .output_val_top(output_val_top),
+        .start_top(start_top)
+    );
+
 endmodule

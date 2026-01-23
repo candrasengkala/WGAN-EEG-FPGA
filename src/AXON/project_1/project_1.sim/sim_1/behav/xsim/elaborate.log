@@ -1,33 +1,36 @@
 Vivado Simulator v2025.1.0
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
 Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
-Running: C:/Xilinx/2025.1/Vivado/bin/unwrapped/win64.o/xelab.exe --incr --debug typical --relax --mt 2 -L xil_defaultlib -L unisims_ver -L unimacro_ver -L secureip --snapshot tb_top_lvl_io_control_behav xil_defaultlib.tb_top_lvl_io_control xil_defaultlib.glbl -log elaborate.log 
+Running: C:/Xilinx/2025.1/Vivado/bin/unwrapped/win64.o/xelab.exe --incr --debug typical --relax --mt 2 -L xil_defaultlib -L unisims_ver -L unimacro_ver -L secureip --snapshot onedconv_tb_behav xil_defaultlib.onedconv_tb xil_defaultlib.glbl -log elaborate.log 
 Using 2 slave threads.
 Starting static elaboration
 Pass Through NonSizing Optimizer
-WARNING: [VRFC 10-3091] actual bit length 16 differs from formal bit length 1 for port 'en_in' [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/top_lvl.v:66]
-WARNING: [VRFC 10-3091] actual bit length 16 differs from formal bit length 1 for port 'en_psum' [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/top_lvl.v:67]
-WARNING: [VRFC 10-3091] actual bit length 16 differs from formal bit length 1 for port 'en_out' [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/top_lvl.v:68]
-WARNING: [VRFC 10-3091] actual bit length 16 differs from formal bit length 1 for port 'en_in' [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/top_lvl.v:99]
-WARNING: [VRFC 10-3091] actual bit length 16 differs from formal bit length 1 for port 'en_out' [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/top_lvl.v:100]
-WARNING: [VRFC 10-3091] actual bit length 16 differs from formal bit length 1 for port 'en_psum' [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/top_lvl.v:101]
-WARNING: [VRFC 10-3091] actual bit length 16 differs from formal bit length 1 for port 'en_in' [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/top_lvl.v:136]
-WARNING: [VRFC 10-3091] actual bit length 16 differs from formal bit length 1 for port 'en_out' [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/top_lvl.v:137]
-WARNING: [VRFC 10-3091] actual bit length 16 differs from formal bit length 1 for port 'en_psum' [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/top_lvl.v:138]
 Completed static elaboration
 Starting simulation data flow analysis
 Completed simulation data flow analysis
 Time Resolution for simulation is 1ps
-Compiling module xil_defaultlib.counter_input(Dimension_added=5)
-Compiling module xil_defaultlib.counter_output(Dimension=4)
-Compiling module xil_defaultlib.shift_reg_input(Depth_added=5)
-Compiling module xil_defaultlib.counter_top_lvl(Dimension=4)
+Compiling module xil_defaultlib.counter_axon_addr_inputdata(ADDR...
+Compiling module xil_defaultlib.counter_axon_addr_weight(ADDRESS...
+Compiling module xil_defaultlib.simple_dual_two_clocks(ADDRESS_L...
+Compiling module xil_defaultlib.mux_between_channels(Inputs=16,S...
+Compiling module xil_defaultlib.reg_en_rst(WIDTH=256)
+Compiling module xil_defaultlib.dmux_out
+Compiling module xil_defaultlib.systolic_out_adder_default
+Compiling module xil_defaultlib.counter_input_default
+Compiling module xil_defaultlib.counter_output_default
+Compiling module xil_defaultlib.shift_reg_input(Depth_added=17)
+Compiling module xil_defaultlib.counter_top_lvl_default
 Compiling module xil_defaultlib.PE_H
 Compiling module xil_defaultlib.PE_D
-Compiling module xil_defaultlib.top_lvl(Dimension=4)
-Compiling module xil_defaultlib.top_lvl_with_mem(Dimension=4)
-Compiling module xil_defaultlib.matrix_mult_control(Dimension=4)
-Compiling module xil_defaultlib.top_lvl_io_control(Dimension=4)
-Compiling module xil_defaultlib.tb_top_lvl_io_control
+Compiling module xil_defaultlib.top_lvl_default
+Compiling module xil_defaultlib.top_lvl_with_mem_default
+Compiling module xil_defaultlib.matrix_mult_control
+Compiling module xil_defaultlib.top_lvl_io_control
+Compiling module xil_defaultlib.input_microsequencer
+Compiling module xil_defaultlib.filter_microsequencer
+Compiling module xil_defaultlib.output_microsequencer
+Compiling module xil_defaultlib.onedconv_ctrl
+Compiling module xil_defaultlib.onedconv_default
+Compiling module xil_defaultlib.onedconv_tb
 Compiling module xil_defaultlib.glbl
-Built simulation snapshot tb_top_lvl_io_control_behav
+Built simulation snapshot onedconv_tb_behav
