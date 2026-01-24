@@ -1,10 +1,9 @@
 `timescale 1ns/1ps
 
 // ============================================================
-// Filter Microsequencer
-// Controls feeding filter weights to systolic array via shift registers
-// Supports arbitrary kernel sizes (1-16)
-// Done stays HIGH until restart is asserted
+// Filter Microsequencer - CORRECTED
+// Fix: Enabled shift register during S_LOAD_LAST_VAL to capture
+//      the final weight value from BRAM latency.
 // ============================================================
 module filter_microsequencer #(
     parameter DW = 16,
@@ -33,93 +32,24 @@ module filter_microsequencer #(
     // --------------------------------------------------------
     // State encoding
     // --------------------------------------------------------
-    localparam S_IDLE           = 3'd0;
-    localparam S_INIT           = 3'd1;
-    localparam S_SHIFT_WEIGHTS  = 3'd2;
-    localparam S_ZERO_PAD_1     = 3'd3;
-    localparam S_ZERO_PAD_2     = 3'd4;
-    localparam S_DONE           = 3'd5;    
-    localparam S_LOAD_LAST_VAL           = 3'd6;
-    localparam S_FILL_ZERO  = 3'd7;
+    localparam S_IDLE           = 4'd0;
+    localparam S_INIT           = 4'd1;
+    localparam S_SHIFT_WEIGHTS  = 4'd2;
+    localparam S_ZERO_PAD_1     = 4'd3;
+    localparam S_ZERO_PAD_2     = 4'd4;
+    localparam S_DONE           = 4'd5;    
+    localparam S_LOAD_LAST_VAL  = 4'd6;
+    localparam S_FILL_ZERO      = 4'd7;
+    localparam S_PRE_INIT       = 4'd8;
+    localparam S_CONSUME_LAST_VAL   = 4'd9;
 
-    reg [2:0] state, next_state;
-
-    // --------------------------------------------------------
-    // Internal counter
-    // --------------------------------------------------------
-    reg [4:0] shift_count;          // Count shifts (0 to kernel_size-1)
+    reg [3:0] state, next_state;
 
     // --------------------------------------------------------
     // Helper signals
     // --------------------------------------------------------
     wire all_brams_active;
-    
-    // Shift until counter says stop.
-
-    // Generate mask for active BRAMs based on kernel_size
-    // If kernel_size=7, enable BRAMs 0-6 (7 BRAMs)
-    // If kernel_size=16, enable all 16 BRAMs
     assign all_brams_active = (kernel_size >= Dimension);
-
-    // --------------------------------------------------------
-    // State register
-    // --------------------------------------------------------
-    always @(posedge clk or negedge rst) begin
-        if (!rst)
-            state <= S_IDLE;
-        else
-            state <= next_state;
-    end
-    reg signed [Dimension-1 : 0] fill_zero_count = 0;
-
-    // --------------------------------------------------------
-    // Next-state logic
-    // --------------------------------------------------------
-    always @(*) begin
-        next_state = state;
-        
-        case (state)
-            S_IDLE: begin
-                if (en)
-                    next_state = S_INIT;
-                // Note: restart is handled in S_DONE, not here
-            end
-            
-            S_INIT: begin
-                next_state = S_SHIFT_WEIGHTS;
-            end
-            
-            S_SHIFT_WEIGHTS: begin
-                if (weight_counter_done)
-                    next_state = S_LOAD_LAST_VAL;
-            end
-            S_LOAD_LAST_VAL: begin
-                next_state = S_FILL_ZERO;
-            end
-            
-            S_ZERO_PAD_1: begin
-                next_state = S_ZERO_PAD_2;
-            end
-            
-            S_ZERO_PAD_2: begin
-                next_state = S_FILL_ZERO;
-            end
-            S_FILL_ZERO: begin
-                if (fill_zero_count >= $signed(Dimension - kernel_size - 1)) next_state = S_DONE;
-            end
-            
-            S_DONE: begin
-                // Stay in DONE until restart is asserted
-                if (restart)
-                    next_state = S_INIT;  // Go directly to INIT on restart
-                // Otherwise stay in S_DONE
-            end
-            
-            default: begin
-                next_state = S_IDLE;
-            end
-        endcase
-    end
 
     // --------------------------------------------------------
     // BRAM Enable Mask Generation
@@ -135,6 +65,68 @@ module filter_microsequencer #(
                 bram_enable_mask[i] = 1'b0;
         end
     end
+
+    // --------------------------------------------------------
+    // State register
+    // --------------------------------------------------------
+    always @(posedge clk or negedge rst) begin
+        if (!rst)
+            state <= S_IDLE;
+        else
+            state <= next_state;
+    end
+    
+    reg signed [Dimension-1 : 0] fill_zero_count = 0;
+
+    // --------------------------------------------------------
+    // Next-state logic
+    // --------------------------------------------------------
+    always @(*) begin
+        next_state = state;
+        
+        case (state)
+            S_IDLE: begin
+                if (en) next_state = S_PRE_INIT;
+            end
+            S_PRE_INIT: begin
+                next_state = S_INIT;
+            end
+            S_INIT: begin
+                next_state = S_SHIFT_WEIGHTS;
+            end
+            S_SHIFT_WEIGHTS: begin
+                if (weight_counter_done)
+                    next_state = S_LOAD_LAST_VAL;
+            end
+            S_LOAD_LAST_VAL: begin
+                next_state = S_CONSUME_LAST_VAL;
+            end
+            S_CONSUME_LAST_VAL: begin
+                next_state = S_ZERO_PAD_1;
+            end
+            
+            S_ZERO_PAD_1: begin
+                next_state = S_FILL_ZERO;
+            end
+            
+            S_ZERO_PAD_2: begin
+                next_state = S_FILL_ZERO;
+            end
+            S_FILL_ZERO: begin
+                if (fill_zero_count >= $signed(Dimension - kernel_size - 2)) next_state = S_DONE;
+            end
+            
+            S_DONE: begin
+                if (restart)
+                    next_state = S_INIT;
+            end
+            
+            default: begin
+                next_state = S_IDLE;
+            end
+        endcase
+    end
+
     // --------------------------------------------------------
     // Output logic
     // --------------------------------------------------------
@@ -145,40 +137,42 @@ module filter_microsequencer #(
         en_shift_reg_weight_input_ctrl = {Dimension{1'b0}};
         done = 1'b0;
         zero_or_data_weight = 1'b1;
+        
         case (state)
             S_IDLE: begin
                 // All outputs at default
             end
-            
-            S_INIT: begin
-                // Enable all shift registers at once (like i==0 in testbench)
-                en_shift_reg_weight_input_ctrl = {Dimension{1'b1}};
-                // Enable only the BRAMs needed for this kernel_size
+            S_PRE_INIT: begin
                 enb_weight_input_bram = bram_enable_mask;
-                en_weight_counter = 1'b1; //Must be done since INIT. Ini karena clocknya agak telat.
+                en_weight_counter = 1'b1; 
+            end
+            S_INIT: begin
+                en_shift_reg_weight_input_ctrl = {Dimension{1'b1}};
+                enb_weight_input_bram = bram_enable_mask;
+                en_weight_counter = 1'b1; 
             end
             
             S_SHIFT_WEIGHTS: begin
-                // Keep all shift registers enabled for uniform shifting
                 en_shift_reg_weight_input_ctrl = {Dimension{1'b1}};
-                // Keep only necessary BRAMs enabled for reading
                 enb_weight_input_bram = bram_enable_mask;
-                // Enable counter to advance through weight memory
                 en_weight_counter = 1'b1;
             end
+            
             S_LOAD_LAST_VAL: begin
-                en_shift_reg_weight_input_ctrl = {Dimension{1'b1}};
+                // [FIX] Enable shift register here to capture the last data!
+            //    en_shift_reg_weight_input_ctrl = {Dimension{1'b1}};
+                enb_weight_input_bram = bram_enable_mask; // Keep enabled if latency requires
+            end
+            
+            S_CONSUME_LAST_VAL: begin
+                en_shift_reg_weight_input_ctrl = {Dimension{1'b1}};                
             end
             S_ZERO_PAD_1: begin
-                // Keep shift registers enabled for zero padding
-                // This shifts in zeros for positions beyond kernel_size
                 zero_or_data_weight = 1'b0;
                 en_shift_reg_weight_input_ctrl = {Dimension{1'b1}};
-                // Disable BRAMs (external logic sets weight_brams_in = 0)
                 enb_weight_input_bram = {Dimension{1'b0}};
             end
             S_ZERO_PAD_2: begin
-                // Disable shift registers (final padding cycle)
                 zero_or_data_weight = 1'b0;
                 en_shift_reg_weight_input_ctrl = {Dimension{1'b0}};
                 enb_weight_input_bram = {Dimension{1'b0}};
@@ -188,12 +182,12 @@ module filter_microsequencer #(
                 en_shift_reg_weight_input_ctrl = {Dimension{1'b1}};
             end
             S_DONE: begin
-                done = 1'b1;  // Stay HIGH until restart
+                done = 1'b1;
                 zero_or_data_weight <= 1'b0;
             end
             
             default: begin
-                // Safe defaults already set
+                // Safe defaults
             end
         endcase
     end
@@ -203,38 +197,17 @@ module filter_microsequencer #(
     // --------------------------------------------------------
     always @(posedge clk or negedge rst) begin
         if (!rst) begin
-            shift_count <= 5'd0;
+            // Reset logic
+            fill_zero_count <= 0;
         end
         else begin
             case (state)
                 S_IDLE: begin
-                    if (en) begin
-                        shift_count <= 5'd0;
-                    end
                     fill_zero_count <= 0;
-                end
-                
-                S_INIT: begin
-                    // Reset counter when starting/restarting
-                    shift_count <= 5'd0;
-                end
-                S_LOAD_LAST_VAL: begin
-                    
-                end
-                S_SHIFT_WEIGHTS: begin
-                end
-                
-                S_ZERO_PAD_1, S_ZERO_PAD_2: begin
-                    // Hold counter during padding
                 end
                 S_FILL_ZERO: begin
                     fill_zero_count <= fill_zero_count + 1;
                 end
-                S_DONE: begin
-                    // Hold counter in done state
-                    // Will reset when restart takes us back to INIT
-                end
-                
                 default: begin
                     // Keep current values
                 end

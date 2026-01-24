@@ -11,15 +11,15 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="5.108333 us"></ZoomStartTime>
-      <ZoomEndTime time="12.448334 us"></ZoomEndTime>
-      <Cursor1Time time="11.225000 us"></Cursor1Time>
+      <ZoomStartTime time="0.000 ns"></ZoomStartTime>
+      <ZoomEndTime time="80.001 ns"></ZoomEndTime>
+      <Cursor1Time time="0.000 ns"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
       <NameColumnWidth column_width="262"></NameColumnWidth>
-      <ValueColumnWidth column_width="865"></ValueColumnWidth>
+      <ValueColumnWidth column_width="332"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="47" />
+   <WVObjectSize size="46" />
    <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/\INPUT_SHIFT_REGS[0].ifmap_shift /shreg" type="array">
       <obj_property name="ElementShortName">shreg[0:16][15:0]</obj_property>
       <obj_property name="ObjectShortName">shreg[0:16][15:0]</obj_property>
@@ -90,8 +90,8 @@
       <obj_property name="Radix">BINARYRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/onedconv_tb/dut/ifmap_counter_inst/count" type="array">
-      <obj_property name="ElementShortName">count[8:0]</obj_property>
-      <obj_property name="ObjectShortName">count[8:0]</obj_property>
+      <obj_property name="ElementShortName">count[12:0]</obj_property>
+      <obj_property name="ObjectShortName">count[12:0]</obj_property>
    </wvobject>
    <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/input_microsequencer_inst/one_clock" type="logic">
       <obj_property name="ElementShortName">one_clock</obj_property>
@@ -144,8 +144,8 @@
       <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/onedconv_tb/dut/ifmap_counter_inst/addr_out" type="array">
-      <obj_property name="ElementShortName">addr_out[8:0]</obj_property>
-      <obj_property name="ObjectShortName">addr_out[8:0]</obj_property>
+      <obj_property name="ElementShortName">addr_out[12:0]</obj_property>
+      <obj_property name="ObjectShortName">addr_out[12:0]</obj_property>
       <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/state" type="array">
@@ -206,10 +206,6 @@
    <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/\INPUT_SHIFT_REGS[0].weight_shift /SI" type="array">
       <obj_property name="ElementShortName">SI[15:0]</obj_property>
       <obj_property name="ObjectShortName">SI[15:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/\INPUT_SHIFT_REGS[0].weight_shift /SO" type="array">
-      <obj_property name="ElementShortName">SO[15:0]</obj_property>
-      <obj_property name="ObjectShortName">SO[15:0]</obj_property>
    </wvobject>
    <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/\INPUT_SHIFT_REGS[0].weight_shift /shreg" type="array">
       <obj_property name="ElementShortName">shreg[0:16][15:0]</obj_property>

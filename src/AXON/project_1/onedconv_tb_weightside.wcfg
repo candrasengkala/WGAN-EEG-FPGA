@@ -11,106 +11,170 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="0.395000 us"></ZoomStartTime>
-      <ZoomEndTime time="30.095001 us"></ZoomEndTime>
-      <Cursor1Time time="25.145000 us"></Cursor1Time>
+      <ZoomStartTime time="0.000000 us"></ZoomStartTime>
+      <ZoomEndTime time="26.220001 us"></ZoomEndTime>
+      <Cursor1Time time="8.000000 us"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
-      <NameColumnWidth column_width="256"></NameColumnWidth>
-      <ValueColumnWidth column_width="120"></ValueColumnWidth>
+      <NameColumnWidth column_width="460"></NameColumnWidth>
+      <ValueColumnWidth column_width="90"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="41" />
+   <WVObjectSize size="57" />
    <wvobject fp_name="/onedconv_tb/dut/\gen_weight_bram[0].bram_filter /addra" type="array">
-      <obj_property name="ElementShortName">addra[8:0]</obj_property>
-      <obj_property name="ObjectShortName">addra[8:0]</obj_property>
+      <obj_property name="ElementShortName">addra[12:0]</obj_property>
+      <obj_property name="ObjectShortName">addra[12:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/onedconv_tb/dut/\gen_weight_bram[0].bram_filter /addrb" type="array">
-      <obj_property name="ElementShortName">addrb[8:0]</obj_property>
-      <obj_property name="ObjectShortName">addrb[8:0]</obj_property>
+      <obj_property name="ElementShortName">addrb[12:0]</obj_property>
+      <obj_property name="ObjectShortName">addrb[12:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/onedconv_tb/dut/\gen_weight_bram[0].bram_filter /dia" type="array">
       <obj_property name="ElementShortName">dia[15:0]</obj_property>
       <obj_property name="ObjectShortName">dia[15:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/onedconv_tb/dut/\gen_weight_bram[0].bram_filter /ram" type="array">
-      <obj_property name="ElementShortName">ram[511:0][15:0]</obj_property>
-      <obj_property name="ObjectShortName">ram[511:0][15:0]</obj_property>
+      <obj_property name="ElementShortName">ram[8191:0][15:0]</obj_property>
+      <obj_property name="ObjectShortName">ram[8191:0][15:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/onedconv_tb/dut/\gen_weight_bram[1].bram_filter /addra" type="array">
-      <obj_property name="ElementShortName">addra[8:0]</obj_property>
-      <obj_property name="ObjectShortName">addra[8:0]</obj_property>
+      <obj_property name="ElementShortName">addra[12:0]</obj_property>
+      <obj_property name="ObjectShortName">addra[12:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/onedconv_tb/dut/\gen_weight_bram[1].bram_filter /addrb" type="array">
-      <obj_property name="ElementShortName">addrb[8:0]</obj_property>
-      <obj_property name="ObjectShortName">addrb[8:0]</obj_property>
+      <obj_property name="ElementShortName">addrb[12:0]</obj_property>
+      <obj_property name="ObjectShortName">addrb[12:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/onedconv_tb/dut/\gen_weight_bram[1].bram_filter /dia" type="array">
       <obj_property name="ElementShortName">dia[15:0]</obj_property>
       <obj_property name="ObjectShortName">dia[15:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/onedconv_tb/dut/\gen_weight_bram[1].bram_filter /ram" type="array">
-      <obj_property name="ElementShortName">ram[511:0][15:0]</obj_property>
-      <obj_property name="ObjectShortName">ram[511:0][15:0]</obj_property>
+      <obj_property name="ElementShortName">ram[8191:0][15:0]</obj_property>
+      <obj_property name="ObjectShortName">ram[8191:0][15:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_inputdata_bram[0].bram_input /dob" type="array">
+      <obj_property name="ElementShortName">dob[15:0]</obj_property>
+      <obj_property name="ObjectShortName">dob[15:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/onedconv_tb/dut/\gen_weight_bram[1].bram_filter /dob" type="array">
       <obj_property name="ElementShortName">dob[15:0]</obj_property>
       <obj_property name="ObjectShortName">dob[15:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/onedconv_tb/dut/\gen_weight_bram[2].bram_filter /addra" type="array">
-      <obj_property name="ElementShortName">addra[8:0]</obj_property>
-      <obj_property name="ObjectShortName">addra[8:0]</obj_property>
+      <obj_property name="ElementShortName">addra[12:0]</obj_property>
+      <obj_property name="ObjectShortName">addra[12:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/onedconv_tb/dut/\gen_weight_bram[2].bram_filter /addrb" type="array">
-      <obj_property name="ElementShortName">addrb[8:0]</obj_property>
-      <obj_property name="ObjectShortName">addrb[8:0]</obj_property>
+      <obj_property name="ElementShortName">addrb[12:0]</obj_property>
+      <obj_property name="ObjectShortName">addrb[12:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/onedconv_tb/dut/\gen_weight_bram[2].bram_filter /dia" type="array">
       <obj_property name="ElementShortName">dia[15:0]</obj_property>
       <obj_property name="ObjectShortName">dia[15:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/onedconv_tb/dut/\gen_weight_bram[2].bram_filter /ram" type="array">
-      <obj_property name="ElementShortName">ram[511:0][15:0]</obj_property>
-      <obj_property name="ObjectShortName">ram[511:0][15:0]</obj_property>
+      <obj_property name="ElementShortName">ram[8191:0][15:0]</obj_property>
+      <obj_property name="ObjectShortName">ram[8191:0][15:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/onedconv_tb/dut/\gen_weight_bram[2].bram_filter /dob" type="array">
       <obj_property name="ElementShortName">dob[15:0]</obj_property>
       <obj_property name="ObjectShortName">dob[15:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/onedconv_tb/dut/\gen_weight_bram[2].bram_filter /addra" type="array">
-      <obj_property name="ElementShortName">addra[8:0]</obj_property>
-      <obj_property name="ObjectShortName">addra[8:0]</obj_property>
+      <obj_property name="ElementShortName">addra[12:0]</obj_property>
+      <obj_property name="ObjectShortName">addra[12:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/onedconv_tb/dut/\gen_weight_bram[2].bram_filter /addrb" type="array">
-      <obj_property name="ElementShortName">addrb[8:0]</obj_property>
-      <obj_property name="ObjectShortName">addrb[8:0]</obj_property>
+      <obj_property name="ElementShortName">addrb[12:0]</obj_property>
+      <obj_property name="ObjectShortName">addrb[12:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_weight_bram[0].bram_filter /enb" type="logic">
+      <obj_property name="ElementShortName">enb</obj_property>
+      <obj_property name="ObjectShortName">enb</obj_property>
    </wvobject>
    <wvobject fp_name="/onedconv_tb/dut/\gen_weight_bram[2].bram_filter /dia" type="array">
       <obj_property name="ElementShortName">dia[15:0]</obj_property>
       <obj_property name="ObjectShortName">dia[15:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/onedconv_tb/dut/\gen_weight_bram[2].bram_filter /ram" type="array">
-      <obj_property name="ElementShortName">ram[511:0][15:0]</obj_property>
-      <obj_property name="ObjectShortName">ram[511:0][15:0]</obj_property>
+      <obj_property name="ElementShortName">ram[8191:0][15:0]</obj_property>
+      <obj_property name="ObjectShortName">ram[8191:0][15:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/\INPUT_SHIFT_REGS[0].weight_shift /shreg" type="array">
       <obj_property name="ElementShortName">shreg[0:16][15:0]</obj_property>
       <obj_property name="ObjectShortName">shreg[0:16][15:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/dut/\GEN_DIAG[0].pe_d /base_design/weight_reg" type="array">
+      <obj_property name="ElementShortName">weight_reg[15:0]</obj_property>
+      <obj_property name="ObjectShortName">weight_reg[15:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/state" type="array">
+      <obj_property name="ElementShortName">state[4:0]</obj_property>
+      <obj_property name="ObjectShortName">state[4:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/done_inputmicrosequencer" type="logic">
+      <obj_property name="ElementShortName">done_inputmicrosequencer</obj_property>
+      <obj_property name="ObjectShortName">done_inputmicrosequencer</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/dut/\GEN_DIAG[0].pe_d /base_design/ifmap_reg" type="array">
+      <obj_property name="ElementShortName">ifmap_reg[15:0]</obj_property>
+      <obj_property name="ObjectShortName">ifmap_reg[15:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/\INPUT_SHIFT_REGS[1].weight_shift /shreg" type="array">
       <obj_property name="ElementShortName">shreg[0:16][15:0]</obj_property>
       <obj_property name="ObjectShortName">shreg[0:16][15:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/filter_microsequencer_inst/state" type="array">
+      <obj_property name="ElementShortName">state[3:0]</obj_property>
+      <obj_property name="ObjectShortName">state[3:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/\INPUT_SHIFT_REGS[1].weight_shift /SI" type="array">
+      <obj_property name="ElementShortName">SI[15:0]</obj_property>
+      <obj_property name="ObjectShortName">SI[15:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/\INPUT_SHIFT_REGS[0].ifmap_shift /shreg" type="array">
       <obj_property name="ElementShortName">shreg[0:16][15:0]</obj_property>
       <obj_property name="ObjectShortName">shreg[0:16][15:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/restart_filtermicrosequencer" type="logic">
+      <obj_property name="ElementShortName">restart_filtermicrosequencer</obj_property>
+      <obj_property name="ObjectShortName">restart_filtermicrosequencer</obj_property>
    </wvobject>
    <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/\INPUT_SHIFT_REGS[1].ifmap_shift /shreg" type="array">
       <obj_property name="ElementShortName">shreg[0:16][15:0]</obj_property>
       <obj_property name="ObjectShortName">shreg[0:16][15:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/\INPUT_SHIFT_REGS[2].ifmap_shift /shreg" type="array">
       <obj_property name="ElementShortName">shreg[0:16][15:0]</obj_property>
       <obj_property name="ObjectShortName">shreg[0:16][15:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/\INPUT_SHIFT_REGS[6].weight_shift /clk" type="logic">
       <obj_property name="ElementShortName">clk</obj_property>
@@ -127,26 +191,32 @@
    <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/\INPUT_SHIFT_REGS[6].weight_shift /SI" type="array">
       <obj_property name="ElementShortName">SI[15:0]</obj_property>
       <obj_property name="ObjectShortName">SI[15:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/\INPUT_SHIFT_REGS[6].weight_shift /SO" type="array">
       <obj_property name="ElementShortName">SO[15:0]</obj_property>
       <obj_property name="ObjectShortName">SO[15:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/\INPUT_SHIFT_REGS[6].weight_shift /shreg" type="array">
       <obj_property name="ElementShortName">shreg[0:16][15:0]</obj_property>
       <obj_property name="ObjectShortName">shreg[0:16][15:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/\INPUT_SHIFT_REGS[6].weight_shift /i" type="array">
       <obj_property name="ElementShortName">i[31:0]</obj_property>
       <obj_property name="ObjectShortName">i[31:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/\INPUT_SHIFT_REGS[6].weight_shift /DW" type="array">
       <obj_property name="ElementShortName">DW[31:0]</obj_property>
       <obj_property name="ObjectShortName">DW[31:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/\INPUT_SHIFT_REGS[6].weight_shift /Depth_added" type="array">
       <obj_property name="ElementShortName">Depth_added[31:0]</obj_property>
       <obj_property name="ObjectShortName">Depth_added[31:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/\INPUT_SHIFT_REGS[6].ifmap_shift /clk" type="logic">
       <obj_property name="ElementShortName">clk</obj_property>
@@ -163,25 +233,60 @@
    <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/\INPUT_SHIFT_REGS[6].ifmap_shift /SI" type="array">
       <obj_property name="ElementShortName">SI[15:0]</obj_property>
       <obj_property name="ObjectShortName">SI[15:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/\INPUT_SHIFT_REGS[6].ifmap_shift /SO" type="array">
       <obj_property name="ElementShortName">SO[15:0]</obj_property>
       <obj_property name="ObjectShortName">SO[15:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/\INPUT_SHIFT_REGS[6].ifmap_shift /shreg" type="array">
       <obj_property name="ElementShortName">shreg[0:16][15:0]</obj_property>
       <obj_property name="ObjectShortName">shreg[0:16][15:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/\INPUT_SHIFT_REGS[6].ifmap_shift /i" type="array">
       <obj_property name="ElementShortName">i[31:0]</obj_property>
       <obj_property name="ObjectShortName">i[31:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/\INPUT_SHIFT_REGS[6].ifmap_shift /DW" type="array">
       <obj_property name="ElementShortName">DW[31:0]</obj_property>
       <obj_property name="ObjectShortName">DW[31:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/\INPUT_SHIFT_REGS[6].ifmap_shift /Depth_added" type="array">
       <obj_property name="ElementShortName">Depth_added[31:0]</obj_property>
       <obj_property name="ObjectShortName">Depth_added[31:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_weight_bram[0].bram_filter /clka" type="logic">
+      <obj_property name="ElementShortName">clka</obj_property>
+      <obj_property name="ObjectShortName">clka</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_weight_bram[0].bram_filter /clkb" type="logic">
+      <obj_property name="ElementShortName">clkb</obj_property>
+      <obj_property name="ObjectShortName">clkb</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_weight_bram[0].bram_filter /ena" type="logic">
+      <obj_property name="ElementShortName">ena</obj_property>
+      <obj_property name="ObjectShortName">ena</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_weight_bram[0].bram_filter /enb" type="logic">
+      <obj_property name="ElementShortName">enb</obj_property>
+      <obj_property name="ObjectShortName">enb</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_weight_bram[0].bram_filter /wea" type="logic">
+      <obj_property name="ElementShortName">wea</obj_property>
+      <obj_property name="ObjectShortName">wea</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/\INPUT_SHIFT_REGS[1].weight_shift /SI" type="array">
+      <obj_property name="ElementShortName">SI[15:0]</obj_property>
+      <obj_property name="ObjectShortName">SI[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_inputdata_bram[0].bram_input /dob" type="array">
+      <obj_property name="ElementShortName">dob[15:0]</obj_property>
+      <obj_property name="ObjectShortName">dob[15:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
    </wvobject>
 </wave_config>

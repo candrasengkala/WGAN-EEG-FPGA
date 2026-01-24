@@ -11,15 +11,15 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="0.000000 us"></ZoomStartTime>
-      <ZoomEndTime time="11.322222 us"></ZoomEndTime>
-      <Cursor1Time time="21.945000 us"></Cursor1Time>
+      <ZoomStartTime time="9.565000 us"></ZoomStartTime>
+      <ZoomEndTime time="11.385001 us"></ZoomEndTime>
+      <Cursor1Time time="11.905000 us"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
-      <NameColumnWidth column_width="376"></NameColumnWidth>
+      <NameColumnWidth column_width="358"></NameColumnWidth>
       <ValueColumnWidth column_width="90"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="16" />
+   <WVObjectSize size="20" />
    <wvobject fp_name="/onedconv_tb/dut/\gen_inputdata_bram[0].bram_input /ram" type="array">
       <obj_property name="ElementShortName">ram[511:0][15:0]</obj_property>
       <obj_property name="ObjectShortName">ram[511:0][15:0]</obj_property>
@@ -28,9 +28,17 @@
       <obj_property name="ElementShortName">ram[511:0][15:0]</obj_property>
       <obj_property name="ObjectShortName">ram[511:0][15:0]</obj_property>
    </wvobject>
+   <wvobject fp_name="/onedconv_tb/input_bias" type="logic">
+      <obj_property name="ElementShortName">input_bias</obj_property>
+      <obj_property name="ObjectShortName">input_bias</obj_property>
+   </wvobject>
    <wvobject fp_name="/onedconv_tb/dut/ifmap_counter_inst/clk" type="logic">
       <obj_property name="ElementShortName">clk</obj_property>
       <obj_property name="ObjectShortName">clk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/input_bias" type="logic">
+      <obj_property name="ElementShortName">input_bias</obj_property>
+      <obj_property name="ObjectShortName">input_bias</obj_property>
    </wvobject>
    <wvobject fp_name="/onedconv_tb/dut/ifmap_counter_inst/rst" type="logic">
       <obj_property name="ElementShortName">rst</obj_property>
@@ -83,5 +91,14 @@
    <wvobject fp_name="/onedconv_tb/dut/inputdata_mux_inst/data_out" type="array">
       <obj_property name="ElementShortName">data_out[15:0]</obj_property>
       <obj_property name="ObjectShortName">data_out[15:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_inputdata_bram[1].bram_input /enb" type="logic">
+      <obj_property name="ElementShortName">enb</obj_property>
+      <obj_property name="ObjectShortName">enb</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_inputdata_bram[1].bram_input /addrb" type="array">
+      <obj_property name="ElementShortName">addrb[8:0]</obj_property>
+      <obj_property name="ObjectShortName">addrb[8:0]</obj_property>
    </wvobject>
 </wave_config>

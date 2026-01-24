@@ -42,6 +42,7 @@ module input_microsequencer #(
     localparam FILL_ZERO    = 4'd5;
     localparam PRE_INIT     = 4'd6;
     localparam PRE_INIT_WAIT_SETTLE     = 4'd7;
+    localparam PRE_INIT_PADDING_ZERO_FIRST     = 4'd8;    
 
 
 
@@ -107,7 +108,11 @@ module input_microsequencer #(
     always @(*) begin
         next_state = state;
         case (state)
-            IDLE:       if (en) next_state = INIT;
+            IDLE:       
+            if (en) begin
+                if (padding > 0) next_state = INIT;
+                else next_state = PRE_INIT_PADDING_ZERO_FIRST;
+            end
             INIT:               next_state = STREAMING;
             STREAMING: if (N_in_count >= N_in - 1) next_state = FILL_ZERO;
             FILL_ZERO: if (fill_zero_count >= $signed((Dimension - kernel_size - 1))) next_state = COMPLETE;
@@ -115,6 +120,7 @@ module input_microsequencer #(
             COMPLETE:  if (restart) next_state = PRE_INIT;
             PRE_INIT: next_state = PRE_INIT_WAIT_SETTLE;
             PRE_INIT_WAIT_SETTLE: next_state = INIT;
+            PRE_INIT_PADDING_ZERO_FIRST: next_state = INIT;
             default:            next_state = IDLE;
         endcase
     end
@@ -153,6 +159,10 @@ module input_microsequencer #(
                     stride_count <= 0;
                     N_in_count <= 0;
                     en_shift_reg_ifmap_input_shadow <= 0;
+                end
+                PRE_INIT_PADDING_ZERO_FIRST: begin
+                    enb_inputdata_input_bram <= {Dimension{1'b1}};
+                    counter_bram_en <= 1'b1;
                 end
 
                 INIT: begin

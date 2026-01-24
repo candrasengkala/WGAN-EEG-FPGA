@@ -1,587 +1,825 @@
 Time resolution is 1 ps
-=======================================================
-         1D CONVOLUTION TESTBENCH
-=======================================================
-Configuration:
-  Input Channels:  2
-  Temporal Length: 7
-  Kernel Size:     4
-  Filters:         1
-  Stride:          2
-  Padding:         7
-=======================================================
 
-Loading Input Data...
-  Channel 0: 1 2 3 4 5 6 7 
-  Channel 1: 11 12 13 14 15 16 17 
+>>> TEST 1: Basic (S=1, P=1) - No Bias (Zeroing Memory)
+--- Initializing Output BRAMs to Zero ---
+[Monitor] Filter 0[0] =      0
+[Monitor] Filter 0[1] =      0
+[Monitor] Filter 0[2] =      0
+[Monitor] Filter 0[3] =      0
+[Monitor] Filter 0[4] =      0
+[Monitor] Filter 0[5] =      0
+[Monitor] Filter 0[6] =      0
+[Monitor] Filter 0[7] =      0
+[Monitor] Filter 0[0] =      2
+[Monitor] Filter 1[0] =      0
+[Monitor] Filter 2[0] =      0
+[Monitor] Filter 3[0] =      0
+[Monitor] Filter 4[0] =      0
+[Monitor] Filter 5[0] =      0
+[Monitor] Filter 6[0] =      0
+[Monitor] Filter 7[0] =      0
+[Monitor] Filter 8[0] =      0
+[Monitor] Filter 9[0] =      0
+[Monitor] Filter 10[0] =      0
+[Monitor] Filter 11[0] =      0
+[Monitor] Filter 12[0] =      0
+[Monitor] Filter 13[0] =      0
+[Monitor] Filter 14[0] =      0
+[Monitor] Filter 15[0] =      0
+[Monitor] Filter 0[1] =      3
+[Monitor] Filter 1[1] =      0
+[Monitor] Filter 2[1] =      0
+[Monitor] Filter 3[1] =      0
+[Monitor] Filter 4[1] =      0
+[Monitor] Filter 5[1] =      0
+[Monitor] Filter 6[1] =      0
+[Monitor] Filter 7[1] =      0
+[Monitor] Filter 8[1] =      0
+[Monitor] Filter 9[1] =      0
+[Monitor] Filter 10[1] =      0
+[Monitor] Filter 11[1] =      0
+[Monitor] Filter 12[1] =      0
+[Monitor] Filter 13[1] =      0
+[Monitor] Filter 14[1] =      0
+[Monitor] Filter 15[1] =      0
+[Monitor] Filter 0[2] =      3
+[Monitor] Filter 1[2] =      0
+[Monitor] Filter 2[2] =      0
+[Monitor] Filter 3[2] =      0
+[Monitor] Filter 4[2] =      0
+[Monitor] Filter 5[2] =      0
+[Monitor] Filter 6[2] =      0
+[Monitor] Filter 7[2] =      0
+[Monitor] Filter 8[2] =      0
+[Monitor] Filter 9[2] =      0
+[Monitor] Filter 10[2] =      0
+[Monitor] Filter 11[2] =      0
+[Monitor] Filter 12[2] =      0
+[Monitor] Filter 13[2] =      0
+[Monitor] Filter 14[2] =      0
+[Monitor] Filter 15[2] =      0
+[Monitor] Filter 0[3] =      3
+[Monitor] Filter 1[3] =      0
+[Monitor] Filter 2[3] =      0
+[Monitor] Filter 3[3] =      0
+[Monitor] Filter 4[3] =      0
+[Monitor] Filter 5[3] =      0
+[Monitor] Filter 6[3] =      0
+[Monitor] Filter 7[3] =      0
+[Monitor] Filter 8[3] =      0
+[Monitor] Filter 9[3] =      0
+[Monitor] Filter 10[3] =      0
+[Monitor] Filter 11[3] =      0
+[Monitor] Filter 12[3] =      0
+[Monitor] Filter 13[3] =      0
+[Monitor] Filter 14[3] =      0
+[Monitor] Filter 15[3] =      0
+[Monitor] Filter 0[4] =      3
+[Monitor] Filter 1[4] =      0
+[Monitor] Filter 2[4] =      0
+[Monitor] Filter 3[4] =      0
+[Monitor] Filter 4[4] =      0
+[Monitor] Filter 5[4] =      0
+[Monitor] Filter 6[4] =      0
+[Monitor] Filter 7[4] =      0
+[Monitor] Filter 8[4] =      0
+[Monitor] Filter 9[4] =      0
+[Monitor] Filter 10[4] =      0
+[Monitor] Filter 11[4] =      0
+[Monitor] Filter 12[4] =      0
+[Monitor] Filter 13[4] =      0
+[Monitor] Filter 14[4] =      0
+[Monitor] Filter 15[4] =      0
+[Monitor] Filter 0[5] =      3
+[Monitor] Filter 1[5] =      0
+[Monitor] Filter 2[5] =      0
+[Monitor] Filter 3[5] =      0
+[Monitor] Filter 4[5] =      0
+[Monitor] Filter 5[5] =      0
+[Monitor] Filter 6[5] =      0
+[Monitor] Filter 7[5] =      0
+[Monitor] Filter 8[5] =      0
+[Monitor] Filter 9[5] =      0
+[Monitor] Filter 10[5] =      0
+[Monitor] Filter 11[5] =      0
+[Monitor] Filter 12[5] =      0
+[Monitor] Filter 13[5] =      0
+[Monitor] Filter 14[5] =      0
+[Monitor] Filter 15[5] =      0
+[Monitor] Filter 0[6] =      3
+[Monitor] Filter 1[6] =      0
+[Monitor] Filter 2[6] =      0
+[Monitor] Filter 3[6] =      0
+[Monitor] Filter 4[6] =      0
+[Monitor] Filter 5[6] =      0
+[Monitor] Filter 6[6] =      0
+[Monitor] Filter 7[6] =      0
+[Monitor] Filter 8[6] =      0
+[Monitor] Filter 9[6] =      0
+[Monitor] Filter 10[6] =      0
+[Monitor] Filter 11[6] =      0
+[Monitor] Filter 12[6] =      0
+[Monitor] Filter 13[6] =      0
+[Monitor] Filter 14[6] =      0
+[Monitor] Filter 15[6] =      0
+[Monitor] Filter 0[7] =      2
+[Monitor] Filter 1[7] =      0
+[Monitor] Filter 2[7] =      0
+[Monitor] Filter 3[7] =      0
+[Monitor] Filter 4[7] =      0
+[Monitor] Filter 5[7] =      0
+[Monitor] Filter 6[7] =      0
+[Monitor] Filter 7[7] =      0
+[Monitor] Filter 8[7] =      0
+[Monitor] Filter 9[7] =      0
+[Monitor] Filter 10[7] =      0
+[Monitor] Filter 11[7] =      0
+[Monitor] Filter 12[7] =      0
+[Monitor] Filter 13[7] =      0
+[Monitor] Filter 14[7] =      0
+[Monitor] Filter 15[7] =      0
+[Monitor] Filter 0[0] =      6
+[Monitor] Filter 1[0] =      0
+[Monitor] Filter 2[0] =      0
+[Monitor] Filter 3[0] =      0
+[Monitor] Filter 4[0] =      0
+[Monitor] Filter 5[0] =      0
+[Monitor] Filter 6[0] =      0
+[Monitor] Filter 7[0] =      0
+[Monitor] Filter 8[0] =      0
+[Monitor] Filter 9[0] =      0
+[Monitor] Filter 10[0] =      0
+[Monitor] Filter 11[0] =      0
+[Monitor] Filter 12[0] =      0
+[Monitor] Filter 13[0] =      0
+[Monitor] Filter 14[0] =      0
+[Monitor] Filter 15[0] =      0
+[Monitor] Filter 0[1] =      9
+[Monitor] Filter 1[1] =      0
+[Monitor] Filter 2[1] =      0
+[Monitor] Filter 3[1] =      0
+[Monitor] Filter 4[1] =      0
+[Monitor] Filter 5[1] =      0
+[Monitor] Filter 6[1] =      0
+[Monitor] Filter 7[1] =      0
+[Monitor] Filter 8[1] =      0
+[Monitor] Filter 9[1] =      0
+[Monitor] Filter 10[1] =      0
+[Monitor] Filter 11[1] =      0
+[Monitor] Filter 12[1] =      0
+[Monitor] Filter 13[1] =      0
+[Monitor] Filter 14[1] =      0
+[Monitor] Filter 15[1] =      0
+[Monitor] Filter 0[2] =      9
+[Monitor] Filter 1[2] =      0
+[Monitor] Filter 2[2] =      0
+[Monitor] Filter 3[2] =      0
+[Monitor] Filter 4[2] =      0
+[Monitor] Filter 5[2] =      0
+[Monitor] Filter 6[2] =      0
+[Monitor] Filter 7[2] =      0
+[Monitor] Filter 8[2] =      0
+[Monitor] Filter 9[2] =      0
+[Monitor] Filter 10[2] =      0
+[Monitor] Filter 11[2] =      0
+[Monitor] Filter 12[2] =      0
+[Monitor] Filter 13[2] =      0
+[Monitor] Filter 14[2] =      0
+[Monitor] Filter 15[2] =      0
+[Monitor] Filter 0[3] =      9
+[Monitor] Filter 1[3] =      0
+[Monitor] Filter 2[3] =      0
+[Monitor] Filter 3[3] =      0
+[Monitor] Filter 4[3] =      0
+[Monitor] Filter 5[3] =      0
+[Monitor] Filter 6[3] =      0
+[Monitor] Filter 7[3] =      0
+[Monitor] Filter 8[3] =      0
+[Monitor] Filter 9[3] =      0
+[Monitor] Filter 10[3] =      0
+[Monitor] Filter 11[3] =      0
+[Monitor] Filter 12[3] =      0
+[Monitor] Filter 13[3] =      0
+[Monitor] Filter 14[3] =      0
+[Monitor] Filter 15[3] =      0
+[Monitor] Filter 0[4] =      9
+[Monitor] Filter 1[4] =      0
+[Monitor] Filter 2[4] =      0
+[Monitor] Filter 3[4] =      0
+[Monitor] Filter 4[4] =      0
+[Monitor] Filter 5[4] =      0
+[Monitor] Filter 6[4] =      0
+[Monitor] Filter 7[4] =      0
+[Monitor] Filter 8[4] =      0
+[Monitor] Filter 9[4] =      0
+[Monitor] Filter 10[4] =      0
+[Monitor] Filter 11[4] =      0
+[Monitor] Filter 12[4] =      0
+[Monitor] Filter 13[4] =      0
+[Monitor] Filter 14[4] =      0
+[Monitor] Filter 15[4] =      0
+[Monitor] Filter 0[5] =      9
+[Monitor] Filter 1[5] =      0
+[Monitor] Filter 2[5] =      0
+[Monitor] Filter 3[5] =      0
+[Monitor] Filter 4[5] =      0
+[Monitor] Filter 5[5] =      0
+[Monitor] Filter 6[5] =      0
+[Monitor] Filter 7[5] =      0
+[Monitor] Filter 8[5] =      0
+[Monitor] Filter 9[5] =      0
+[Monitor] Filter 10[5] =      0
+[Monitor] Filter 11[5] =      0
+[Monitor] Filter 12[5] =      0
+[Monitor] Filter 13[5] =      0
+[Monitor] Filter 14[5] =      0
+[Monitor] Filter 15[5] =      0
+[Monitor] Filter 0[6] =      9
+[Monitor] Filter 1[6] =      0
+[Monitor] Filter 2[6] =      0
+[Monitor] Filter 3[6] =      0
+[Monitor] Filter 4[6] =      0
+[Monitor] Filter 5[6] =      0
+[Monitor] Filter 6[6] =      0
+[Monitor] Filter 7[6] =      0
+[Monitor] Filter 8[6] =      0
+[Monitor] Filter 9[6] =      0
+[Monitor] Filter 10[6] =      0
+[Monitor] Filter 11[6] =      0
+[Monitor] Filter 12[6] =      0
+[Monitor] Filter 13[6] =      0
+[Monitor] Filter 14[6] =      0
+[Monitor] Filter 15[6] =      0
+[Monitor] Filter 0[7] =      6
+[Monitor] Filter 1[7] =      0
+[Monitor] Filter 2[7] =      0
+[Monitor] Filter 3[7] =      0
+[Monitor] Filter 4[7] =      0
+[Monitor] Filter 5[7] =      0
+[Monitor] Filter 6[7] =      0
+[Monitor] Filter 7[7] =      0
+[Monitor] Filter 8[7] =      0
+[Monitor] Filter 9[7] =      0
+[Monitor] Filter 10[7] =      0
+[Monitor] Filter 11[7] =      0
+[Monitor] Filter 12[7] =      0
+[Monitor] Filter 13[7] =      0
+[Monitor] Filter 14[7] =      0
+[Monitor] Filter 15[7] =      0
+--- Final Readout ---
+  Filter 0[0] =      6
+  Filter 0[1] =      9
+  Filter 0[2] =      9
+  Filter 0[3] =      9
+  Filter 0[4] =      9
+  Filter 0[5] =      9
+  Filter 0[6] =      9
+  Filter 0[7] =      6
 
-Loading Weights (all = 1)...
-  Done.
+>>> TEST 2: High Padding (S=2, P=7) - No Bias (Zeroing Memory)
+--- Initializing Output BRAMs to Zero ---
+[Monitor] Filter 0[0] =      0
+[Monitor] Filter 0[1] =      0
+[Monitor] Filter 0[2] =      0
+[Monitor] Filter 0[3] =      0
+[Monitor] Filter 0[4] =      0
+[Monitor] Filter 0[5] =      0
+[Monitor] Filter 0[6] =      0
+[Monitor] Filter 0[7] =      0
+[Monitor] Filter 0[8] =      0
+[Monitor] Filter 0[0] =      0
+[Monitor] Filter 1[0] =      0
+[Monitor] Filter 2[0] =      0
+[Monitor] Filter 3[0] =      0
+[Monitor] Filter 4[0] =      0
+[Monitor] Filter 5[0] =      0
+[Monitor] Filter 6[0] =      0
+[Monitor] Filter 7[0] =      0
+[Monitor] Filter 8[0] =      0
+[Monitor] Filter 9[0] =      0
+[Monitor] Filter 10[0] =      0
+[Monitor] Filter 11[0] =      0
+[Monitor] Filter 12[0] =      0
+[Monitor] Filter 13[0] =      0
+[Monitor] Filter 14[0] =      0
+[Monitor] Filter 15[0] =      0
+[Monitor] Filter 0[1] =      0
+[Monitor] Filter 1[1] =      0
+[Monitor] Filter 2[1] =      0
+[Monitor] Filter 3[1] =      0
+[Monitor] Filter 4[1] =      0
+[Monitor] Filter 5[1] =      0
+[Monitor] Filter 6[1] =      0
+[Monitor] Filter 7[1] =      0
+[Monitor] Filter 8[1] =      0
+[Monitor] Filter 9[1] =      0
+[Monitor] Filter 10[1] =      0
+[Monitor] Filter 11[1] =      0
+[Monitor] Filter 12[1] =      0
+[Monitor] Filter 13[1] =      0
+[Monitor] Filter 14[1] =      0
+[Monitor] Filter 15[1] =      0
+[Monitor] Filter 0[2] =      1
+[Monitor] Filter 1[2] =      0
+[Monitor] Filter 2[2] =      0
+[Monitor] Filter 3[2] =      0
+[Monitor] Filter 4[2] =      0
+[Monitor] Filter 5[2] =      0
+[Monitor] Filter 6[2] =      0
+[Monitor] Filter 7[2] =      0
+[Monitor] Filter 8[2] =      0
+[Monitor] Filter 9[2] =      0
+[Monitor] Filter 10[2] =      0
+[Monitor] Filter 11[2] =      0
+[Monitor] Filter 12[2] =      0
+[Monitor] Filter 13[2] =      0
+[Monitor] Filter 14[2] =      0
+[Monitor] Filter 15[2] =      0
+[Monitor] Filter 0[3] =      6
+[Monitor] Filter 1[3] =      0
+[Monitor] Filter 2[3] =      0
+[Monitor] Filter 3[3] =      0
+[Monitor] Filter 4[3] =      0
+[Monitor] Filter 5[3] =      0
+[Monitor] Filter 6[3] =      0
+[Monitor] Filter 7[3] =      0
+[Monitor] Filter 8[3] =      0
+[Monitor] Filter 9[3] =      0
+[Monitor] Filter 10[3] =      0
+[Monitor] Filter 11[3] =      0
+[Monitor] Filter 12[3] =      0
+[Monitor] Filter 13[3] =      0
+[Monitor] Filter 14[3] =      0
+[Monitor] Filter 15[3] =      0
+[Monitor] Filter 0[4] =     14
+[Monitor] Filter 1[4] =      0
+[Monitor] Filter 2[4] =      0
+[Monitor] Filter 3[4] =      0
+[Monitor] Filter 4[4] =      0
+[Monitor] Filter 5[4] =      0
+[Monitor] Filter 6[4] =      0
+[Monitor] Filter 7[4] =      0
+[Monitor] Filter 8[4] =      0
+[Monitor] Filter 9[4] =      0
+[Monitor] Filter 10[4] =      0
+[Monitor] Filter 11[4] =      0
+[Monitor] Filter 12[4] =      0
+[Monitor] Filter 13[4] =      0
+[Monitor] Filter 14[4] =      0
+[Monitor] Filter 15[4] =      0
+[Monitor] Filter 0[5] =     22
+[Monitor] Filter 1[5] =      0
+[Monitor] Filter 2[5] =      0
+[Monitor] Filter 3[5] =      0
+[Monitor] Filter 4[5] =      0
+[Monitor] Filter 5[5] =      0
+[Monitor] Filter 6[5] =      0
+[Monitor] Filter 7[5] =      0
+[Monitor] Filter 8[5] =      0
+[Monitor] Filter 9[5] =      0
+[Monitor] Filter 10[5] =      0
+[Monitor] Filter 11[5] =      0
+[Monitor] Filter 12[5] =      0
+[Monitor] Filter 13[5] =      0
+[Monitor] Filter 14[5] =      0
+[Monitor] Filter 15[5] =      0
+[Monitor] Filter 0[6] =     13
+[Monitor] Filter 1[6] =      0
+[Monitor] Filter 2[6] =      0
+[Monitor] Filter 3[6] =      0
+[Monitor] Filter 4[6] =      0
+[Monitor] Filter 5[6] =      0
+[Monitor] Filter 6[6] =      0
+[Monitor] Filter 7[6] =      0
+[Monitor] Filter 8[6] =      0
+[Monitor] Filter 9[6] =      0
+[Monitor] Filter 10[6] =      0
+[Monitor] Filter 11[6] =      0
+[Monitor] Filter 12[6] =      0
+[Monitor] Filter 13[6] =      0
+[Monitor] Filter 14[6] =      0
+[Monitor] Filter 15[6] =      0
+[Monitor] Filter 0[7] =      0
+[Monitor] Filter 1[7] =      0
+[Monitor] Filter 2[7] =      0
+[Monitor] Filter 3[7] =      0
+[Monitor] Filter 4[7] =      0
+[Monitor] Filter 5[7] =      0
+[Monitor] Filter 6[7] =      0
+[Monitor] Filter 7[7] =      0
+[Monitor] Filter 8[7] =      0
+[Monitor] Filter 9[7] =      0
+[Monitor] Filter 10[7] =      0
+[Monitor] Filter 11[7] =      0
+[Monitor] Filter 12[7] =      0
+[Monitor] Filter 13[7] =      0
+[Monitor] Filter 14[7] =      0
+[Monitor] Filter 15[7] =      0
+[Monitor] Filter 0[8] =      0
+[Monitor] Filter 1[8] =      0
+[Monitor] Filter 2[8] =      0
+[Monitor] Filter 3[8] =      0
+[Monitor] Filter 4[8] =      0
+[Monitor] Filter 5[8] =      0
+[Monitor] Filter 6[8] =      0
+[Monitor] Filter 7[8] =      0
+[Monitor] Filter 8[8] =      0
+[Monitor] Filter 9[8] =      0
+[Monitor] Filter 10[8] =      0
+[Monitor] Filter 11[8] =      0
+[Monitor] Filter 12[8] =      0
+[Monitor] Filter 13[8] =      0
+[Monitor] Filter 14[8] =      0
+[Monitor] Filter 15[8] =      0
+[Monitor] Filter 0[0] =      0
+[Monitor] Filter 1[0] =      0
+[Monitor] Filter 2[0] =      0
+[Monitor] Filter 3[0] =      0
+[Monitor] Filter 4[0] =      0
+[Monitor] Filter 5[0] =      0
+[Monitor] Filter 6[0] =      0
+[Monitor] Filter 7[0] =      0
+[Monitor] Filter 8[0] =      0
+[Monitor] Filter 9[0] =      0
+[Monitor] Filter 10[0] =      0
+[Monitor] Filter 11[0] =      0
+[Monitor] Filter 12[0] =      0
+[Monitor] Filter 13[0] =      0
+[Monitor] Filter 14[0] =      0
+[Monitor] Filter 15[0] =      0
+[Monitor] Filter 0[1] =      0
+[Monitor] Filter 1[1] =      0
+[Monitor] Filter 2[1] =      0
+[Monitor] Filter 3[1] =      0
+[Monitor] Filter 4[1] =      0
+[Monitor] Filter 5[1] =      0
+[Monitor] Filter 6[1] =      0
+[Monitor] Filter 7[1] =      0
+[Monitor] Filter 8[1] =      0
+[Monitor] Filter 9[1] =      0
+[Monitor] Filter 10[1] =      0
+[Monitor] Filter 11[1] =      0
+[Monitor] Filter 12[1] =      0
+[Monitor] Filter 13[1] =      0
+[Monitor] Filter 14[1] =      0
+[Monitor] Filter 15[1] =      0
+[Monitor] Filter 0[2] =     12
+[Monitor] Filter 1[2] =      0
+[Monitor] Filter 2[2] =      0
+[Monitor] Filter 3[2] =      0
+[Monitor] Filter 4[2] =      0
+[Monitor] Filter 5[2] =      0
+[Monitor] Filter 6[2] =      0
+[Monitor] Filter 7[2] =      0
+[Monitor] Filter 8[2] =      0
+[Monitor] Filter 9[2] =      0
+[Monitor] Filter 10[2] =      0
+[Monitor] Filter 11[2] =      0
+[Monitor] Filter 12[2] =      0
+[Monitor] Filter 13[2] =      0
+[Monitor] Filter 14[2] =      0
+[Monitor] Filter 15[2] =      0
+[Monitor] Filter 0[3] =     42
+[Monitor] Filter 1[3] =      0
+[Monitor] Filter 2[3] =      0
+[Monitor] Filter 3[3] =      0
+[Monitor] Filter 4[3] =      0
+[Monitor] Filter 5[3] =      0
+[Monitor] Filter 6[3] =      0
+[Monitor] Filter 7[3] =      0
+[Monitor] Filter 8[3] =      0
+[Monitor] Filter 9[3] =      0
+[Monitor] Filter 10[3] =      0
+[Monitor] Filter 11[3] =      0
+[Monitor] Filter 12[3] =      0
+[Monitor] Filter 13[3] =      0
+[Monitor] Filter 14[3] =      0
+[Monitor] Filter 15[3] =      0
+[Monitor] Filter 0[4] =     68
+[Monitor] Filter 1[4] =      0
+[Monitor] Filter 2[4] =      0
+[Monitor] Filter 3[4] =      0
+[Monitor] Filter 4[4] =      0
+[Monitor] Filter 5[4] =      0
+[Monitor] Filter 6[4] =      0
+[Monitor] Filter 7[4] =      0
+[Monitor] Filter 8[4] =      0
+[Monitor] Filter 9[4] =      0
+[Monitor] Filter 10[4] =      0
+[Monitor] Filter 11[4] =      0
+[Monitor] Filter 12[4] =      0
+[Monitor] Filter 13[4] =      0
+[Monitor] Filter 14[4] =      0
+[Monitor] Filter 15[4] =      0
+[Monitor] Filter 0[5] =     84
+[Monitor] Filter 1[5] =      0
+[Monitor] Filter 2[5] =      0
+[Monitor] Filter 3[5] =      0
+[Monitor] Filter 4[5] =      0
+[Monitor] Filter 5[5] =      0
+[Monitor] Filter 6[5] =      0
+[Monitor] Filter 7[5] =      0
+[Monitor] Filter 8[5] =      0
+[Monitor] Filter 9[5] =      0
+[Monitor] Filter 10[5] =      0
+[Monitor] Filter 11[5] =      0
+[Monitor] Filter 12[5] =      0
+[Monitor] Filter 13[5] =      0
+[Monitor] Filter 14[5] =      0
+[Monitor] Filter 15[5] =      0
+[Monitor] Filter 0[6] =     46
+[Monitor] Filter 1[6] =      0
+[Monitor] Filter 2[6] =      0
+[Monitor] Filter 3[6] =      0
+[Monitor] Filter 4[6] =      0
+[Monitor] Filter 5[6] =      0
+[Monitor] Filter 6[6] =      0
+[Monitor] Filter 7[6] =      0
+[Monitor] Filter 8[6] =      0
+[Monitor] Filter 9[6] =      0
+[Monitor] Filter 10[6] =      0
+[Monitor] Filter 11[6] =      0
+[Monitor] Filter 12[6] =      0
+[Monitor] Filter 13[6] =      0
+[Monitor] Filter 14[6] =      0
+[Monitor] Filter 15[6] =      0
+[Monitor] Filter 0[7] =      0
+[Monitor] Filter 1[7] =      0
+[Monitor] Filter 2[7] =      0
+[Monitor] Filter 3[7] =      0
+[Monitor] Filter 4[7] =      0
+[Monitor] Filter 5[7] =      0
+[Monitor] Filter 6[7] =      0
+[Monitor] Filter 7[7] =      0
+[Monitor] Filter 8[7] =      0
+[Monitor] Filter 9[7] =      0
+[Monitor] Filter 10[7] =      0
+[Monitor] Filter 11[7] =      0
+[Monitor] Filter 12[7] =      0
+[Monitor] Filter 13[7] =      0
+[Monitor] Filter 14[7] =      0
+[Monitor] Filter 15[7] =      0
+[Monitor] Filter 0[8] =      0
+[Monitor] Filter 1[8] =      0
+[Monitor] Filter 2[8] =      0
+[Monitor] Filter 3[8] =      0
+[Monitor] Filter 4[8] =      0
+[Monitor] Filter 5[8] =      0
+[Monitor] Filter 6[8] =      0
+[Monitor] Filter 7[8] =      0
+[Monitor] Filter 8[8] =      0
+[Monitor] Filter 9[8] =      0
+[Monitor] Filter 10[8] =      0
+[Monitor] Filter 11[8] =      0
+[Monitor] Filter 12[8] =      0
+[Monitor] Filter 13[8] =      0
+[Monitor] Filter 14[8] =      0
+[Monitor] Filter 15[8] =      0
+--- Final Readout ---
+  Filter 0[0] =      0
+  Filter 0[1] =      0
+  Filter 0[2] =     12
+  Filter 0[3] =     42
+  Filter 0[4] =     68
+  Filter 0[5] =     84
+  Filter 0[6] =     46
+  Filter 0[7] =      0
+  Filter 0[8] =      0
 
---- Starting Convolution ---
-[@395000] Write to Output BRAM: addr=0, wea=1111111111111111
-[@405000] Write to Output BRAM: addr=1, wea=1111111111111111
-[@415000] Write to Output BRAM: addr=2, wea=1111111111111111
-[@425000] Write to Output BRAM: addr=3, wea=1111111111111111
-[@435000] Write to Output BRAM: addr=4, wea=1111111111111111
-[@445000] Write to Output BRAM: addr=5, wea=1111111111111111
-[@455000] Write to Output BRAM: addr=6, wea=1111111111111111
-[@465000] Write to Output BRAM: addr=7, wea=1111111111111111
-[@475000] Write to Output BRAM: addr=8, wea=1111111111111111
-[@485000] Write to Output BRAM: addr=9, wea=1111111111111111
-[@495000] Write to Output BRAM: addr=10, wea=1111111111111111
-[@505000] Write to Output BRAM: addr=11, wea=1111111111111111
-[@515000] Write to Output BRAM: addr=12, wea=1111111111111111
-[@525000] Write to Output BRAM: addr=13, wea=1111111111111111
-[@535000] Write to Output BRAM: addr=14, wea=1111111111111111
-[@545000] Write to Output BRAM: addr=15, wea=1111111111111111
-[@555000] Write to Output BRAM: addr=16, wea=1111111111111111
-[@565000] Write to Output BRAM: addr=17, wea=1111111111111111
-[@575000] Write to Output BRAM: addr=18, wea=1111111111111111
-[@585000] Write to Output BRAM: addr=19, wea=1111111111111111
-[@595000] Write to Output BRAM: addr=20, wea=1111111111111111
-[@605000] Write to Output BRAM: addr=21, wea=1111111111111111
-[@615000] Write to Output BRAM: addr=22, wea=1111111111111111
-[@625000] Write to Output BRAM: addr=23, wea=1111111111111111
-[@635000] Write to Output BRAM: addr=24, wea=1111111111111111
-[@645000] Write to Output BRAM: addr=25, wea=1111111111111111
-[@655000] Write to Output BRAM: addr=26, wea=1111111111111111
-[@665000] Write to Output BRAM: addr=27, wea=1111111111111111
-[@675000] Write to Output BRAM: addr=28, wea=1111111111111111
-[@685000] Write to Output BRAM: addr=29, wea=1111111111111111
-[@695000] Write to Output BRAM: addr=30, wea=1111111111111111
-[@705000] Write to Output BRAM: addr=31, wea=1111111111111111
-[@715000] Write to Output BRAM: addr=32, wea=1111111111111111
-[@725000] Write to Output BRAM: addr=33, wea=1111111111111111
-[@735000] Write to Output BRAM: addr=34, wea=1111111111111111
-[@745000] Write to Output BRAM: addr=35, wea=1111111111111111
-[@755000] Write to Output BRAM: addr=36, wea=1111111111111111
-[@765000] Write to Output BRAM: addr=37, wea=1111111111111111
-[@775000] Write to Output BRAM: addr=38, wea=1111111111111111
-[@785000] Write to Output BRAM: addr=39, wea=1111111111111111
-[@795000] Write to Output BRAM: addr=40, wea=1111111111111111
-[@805000] Write to Output BRAM: addr=41, wea=1111111111111111
-[@815000] Write to Output BRAM: addr=42, wea=1111111111111111
-[@825000] Write to Output BRAM: addr=43, wea=1111111111111111
-[@835000] Write to Output BRAM: addr=44, wea=1111111111111111
-[@845000] Write to Output BRAM: addr=45, wea=1111111111111111
-[@855000] Write to Output BRAM: addr=46, wea=1111111111111111
-[@865000] Write to Output BRAM: addr=47, wea=1111111111111111
-[@875000] Write to Output BRAM: addr=48, wea=1111111111111111
-[@885000] Write to Output BRAM: addr=49, wea=1111111111111111
-[@895000] Write to Output BRAM: addr=50, wea=1111111111111111
-[@905000] Write to Output BRAM: addr=51, wea=1111111111111111
-[@915000] Write to Output BRAM: addr=52, wea=1111111111111111
-[@925000] Write to Output BRAM: addr=53, wea=1111111111111111
-[@935000] Write to Output BRAM: addr=54, wea=1111111111111111
-[@945000] Write to Output BRAM: addr=55, wea=1111111111111111
-[@955000] Write to Output BRAM: addr=56, wea=1111111111111111
-[@965000] Write to Output BRAM: addr=57, wea=1111111111111111
-[@975000] Write to Output BRAM: addr=58, wea=1111111111111111
-[@985000] Write to Output BRAM: addr=59, wea=1111111111111111
-[@995000] Write to Output BRAM: addr=60, wea=1111111111111111
-[@1005000] Write to Output BRAM: addr=61, wea=1111111111111111
-[@1015000] Write to Output BRAM: addr=62, wea=1111111111111111
-[@1025000] Write to Output BRAM: addr=63, wea=1111111111111111
-[@1035000] Write to Output BRAM: addr=64, wea=1111111111111111
-[@1045000] Write to Output BRAM: addr=65, wea=1111111111111111
-[@1055000] Write to Output BRAM: addr=66, wea=1111111111111111
-[@1065000] Write to Output BRAM: addr=67, wea=1111111111111111
-[@1075000] Write to Output BRAM: addr=68, wea=1111111111111111
-[@1085000] Write to Output BRAM: addr=69, wea=1111111111111111
-[@1095000] Write to Output BRAM: addr=70, wea=1111111111111111
-[@1105000] Write to Output BRAM: addr=71, wea=1111111111111111
-[@1115000] Write to Output BRAM: addr=72, wea=1111111111111111
-[@1125000] Write to Output BRAM: addr=73, wea=1111111111111111
-[@1135000] Write to Output BRAM: addr=74, wea=1111111111111111
-[@1145000] Write to Output BRAM: addr=75, wea=1111111111111111
-[@1155000] Write to Output BRAM: addr=76, wea=1111111111111111
-[@1165000] Write to Output BRAM: addr=77, wea=1111111111111111
-[@1175000] Write to Output BRAM: addr=78, wea=1111111111111111
-[@1185000] Write to Output BRAM: addr=79, wea=1111111111111111
-[@1195000] Write to Output BRAM: addr=80, wea=1111111111111111
-[@1205000] Write to Output BRAM: addr=81, wea=1111111111111111
-[@1215000] Write to Output BRAM: addr=82, wea=1111111111111111
-[@1225000] Write to Output BRAM: addr=83, wea=1111111111111111
-[@1235000] Write to Output BRAM: addr=84, wea=1111111111111111
-[@1245000] Write to Output BRAM: addr=85, wea=1111111111111111
-[@1255000] Write to Output BRAM: addr=86, wea=1111111111111111
-[@1265000] Write to Output BRAM: addr=87, wea=1111111111111111
-[@1275000] Write to Output BRAM: addr=88, wea=1111111111111111
-[@1285000] Write to Output BRAM: addr=89, wea=1111111111111111
-[@1295000] Write to Output BRAM: addr=90, wea=1111111111111111
-[@1305000] Write to Output BRAM: addr=91, wea=1111111111111111
-[@1315000] Write to Output BRAM: addr=92, wea=1111111111111111
-[@1325000] Write to Output BRAM: addr=93, wea=1111111111111111
-[@1335000] Write to Output BRAM: addr=94, wea=1111111111111111
-[@1345000] Write to Output BRAM: addr=95, wea=1111111111111111
-[@1355000] Write to Output BRAM: addr=96, wea=1111111111111111
-[@1365000] Write to Output BRAM: addr=97, wea=1111111111111111
-[@1375000] Write to Output BRAM: addr=98, wea=1111111111111111
-[@1385000] Write to Output BRAM: addr=99, wea=1111111111111111
-[@1395000] Write to Output BRAM: addr=100, wea=1111111111111111
-[@1405000] Write to Output BRAM: addr=101, wea=1111111111111111
-[@1415000] Write to Output BRAM: addr=102, wea=1111111111111111
-[@1425000] Write to Output BRAM: addr=103, wea=1111111111111111
-[@1435000] Write to Output BRAM: addr=104, wea=1111111111111111
-[@1445000] Write to Output BRAM: addr=105, wea=1111111111111111
-[@1455000] Write to Output BRAM: addr=106, wea=1111111111111111
-[@1465000] Write to Output BRAM: addr=107, wea=1111111111111111
-[@1475000] Write to Output BRAM: addr=108, wea=1111111111111111
-[@1485000] Write to Output BRAM: addr=109, wea=1111111111111111
-[@1495000] Write to Output BRAM: addr=110, wea=1111111111111111
-[@1505000] Write to Output BRAM: addr=111, wea=1111111111111111
-[@1515000] Write to Output BRAM: addr=112, wea=1111111111111111
-[@1525000] Write to Output BRAM: addr=113, wea=1111111111111111
-[@1535000] Write to Output BRAM: addr=114, wea=1111111111111111
-[@1545000] Write to Output BRAM: addr=115, wea=1111111111111111
-[@1555000] Write to Output BRAM: addr=116, wea=1111111111111111
-[@1565000] Write to Output BRAM: addr=117, wea=1111111111111111
-[@1575000] Write to Output BRAM: addr=118, wea=1111111111111111
-[@1585000] Write to Output BRAM: addr=119, wea=1111111111111111
-[@1595000] Write to Output BRAM: addr=120, wea=1111111111111111
-[@1605000] Write to Output BRAM: addr=121, wea=1111111111111111
-[@1615000] Write to Output BRAM: addr=122, wea=1111111111111111
-[@1625000] Write to Output BRAM: addr=123, wea=1111111111111111
-[@1635000] Write to Output BRAM: addr=124, wea=1111111111111111
-[@1645000] Write to Output BRAM: addr=125, wea=1111111111111111
-[@1655000] Write to Output BRAM: addr=126, wea=1111111111111111
-[@1665000] Write to Output BRAM: addr=127, wea=1111111111111111
-[@1675000] Write to Output BRAM: addr=128, wea=1111111111111111
-[@1685000] Write to Output BRAM: addr=129, wea=1111111111111111
-[@1695000] Write to Output BRAM: addr=130, wea=1111111111111111
-[@1705000] Write to Output BRAM: addr=131, wea=1111111111111111
-[@1715000] Write to Output BRAM: addr=132, wea=1111111111111111
-[@1725000] Write to Output BRAM: addr=133, wea=1111111111111111
-[@1735000] Write to Output BRAM: addr=134, wea=1111111111111111
-[@1745000] Write to Output BRAM: addr=135, wea=1111111111111111
-[@1755000] Write to Output BRAM: addr=136, wea=1111111111111111
-[@1765000] Write to Output BRAM: addr=137, wea=1111111111111111
-[@1775000] Write to Output BRAM: addr=138, wea=1111111111111111
-[@1785000] Write to Output BRAM: addr=139, wea=1111111111111111
-[@1795000] Write to Output BRAM: addr=140, wea=1111111111111111
-[@1805000] Write to Output BRAM: addr=141, wea=1111111111111111
-[@1815000] Write to Output BRAM: addr=142, wea=1111111111111111
-[@1825000] Write to Output BRAM: addr=143, wea=1111111111111111
-[@1835000] Write to Output BRAM: addr=144, wea=1111111111111111
-[@1845000] Write to Output BRAM: addr=145, wea=1111111111111111
-[@1855000] Write to Output BRAM: addr=146, wea=1111111111111111
-[@1865000] Write to Output BRAM: addr=147, wea=1111111111111111
-[@1875000] Write to Output BRAM: addr=148, wea=1111111111111111
-[@1885000] Write to Output BRAM: addr=149, wea=1111111111111111
-[@1895000] Write to Output BRAM: addr=150, wea=1111111111111111
-[@1905000] Write to Output BRAM: addr=151, wea=1111111111111111
-[@1915000] Write to Output BRAM: addr=152, wea=1111111111111111
-[@1925000] Write to Output BRAM: addr=153, wea=1111111111111111
-[@1935000] Write to Output BRAM: addr=154, wea=1111111111111111
-[@1945000] Write to Output BRAM: addr=155, wea=1111111111111111
-[@1955000] Write to Output BRAM: addr=156, wea=1111111111111111
-[@1965000] Write to Output BRAM: addr=157, wea=1111111111111111
-[@1975000] Write to Output BRAM: addr=158, wea=1111111111111111
-[@1985000] Write to Output BRAM: addr=159, wea=1111111111111111
-[@1995000] Write to Output BRAM: addr=160, wea=1111111111111111
-[@2005000] Write to Output BRAM: addr=161, wea=1111111111111111
-[@2015000] Write to Output BRAM: addr=162, wea=1111111111111111
-[@2025000] Write to Output BRAM: addr=163, wea=1111111111111111
-[@2035000] Write to Output BRAM: addr=164, wea=1111111111111111
-[@2045000] Write to Output BRAM: addr=165, wea=1111111111111111
-[@2055000] Write to Output BRAM: addr=166, wea=1111111111111111
-[@2065000] Write to Output BRAM: addr=167, wea=1111111111111111
-[@2075000] Write to Output BRAM: addr=168, wea=1111111111111111
-[@2085000] Write to Output BRAM: addr=169, wea=1111111111111111
-[@2095000] Write to Output BRAM: addr=170, wea=1111111111111111
-[@2105000] Write to Output BRAM: addr=171, wea=1111111111111111
-[@2115000] Write to Output BRAM: addr=172, wea=1111111111111111
-[@2125000] Write to Output BRAM: addr=173, wea=1111111111111111
-[@2135000] Write to Output BRAM: addr=174, wea=1111111111111111
-[@2145000] Write to Output BRAM: addr=175, wea=1111111111111111
-[@2155000] Write to Output BRAM: addr=176, wea=1111111111111111
-[@2165000] Write to Output BRAM: addr=177, wea=1111111111111111
-[@2175000] Write to Output BRAM: addr=178, wea=1111111111111111
-[@2185000] Write to Output BRAM: addr=179, wea=1111111111111111
-[@2195000] Write to Output BRAM: addr=180, wea=1111111111111111
-[@2205000] Write to Output BRAM: addr=181, wea=1111111111111111
-[@2215000] Write to Output BRAM: addr=182, wea=1111111111111111
-[@2225000] Write to Output BRAM: addr=183, wea=1111111111111111
-[@2235000] Write to Output BRAM: addr=184, wea=1111111111111111
-[@2245000] Write to Output BRAM: addr=185, wea=1111111111111111
-[@2255000] Write to Output BRAM: addr=186, wea=1111111111111111
-[@2265000] Write to Output BRAM: addr=187, wea=1111111111111111
-[@2275000] Write to Output BRAM: addr=188, wea=1111111111111111
-[@2285000] Write to Output BRAM: addr=189, wea=1111111111111111
-[@2295000] Write to Output BRAM: addr=190, wea=1111111111111111
-[@2305000] Write to Output BRAM: addr=191, wea=1111111111111111
-[@2315000] Write to Output BRAM: addr=192, wea=1111111111111111
-[@2325000] Write to Output BRAM: addr=193, wea=1111111111111111
-[@2335000] Write to Output BRAM: addr=194, wea=1111111111111111
-[@2345000] Write to Output BRAM: addr=195, wea=1111111111111111
-[@2355000] Write to Output BRAM: addr=196, wea=1111111111111111
-[@2365000] Write to Output BRAM: addr=197, wea=1111111111111111
-[@2375000] Write to Output BRAM: addr=198, wea=1111111111111111
-[@2385000] Write to Output BRAM: addr=199, wea=1111111111111111
-[@2395000] Write to Output BRAM: addr=200, wea=1111111111111111
-[@2405000] Write to Output BRAM: addr=201, wea=1111111111111111
-[@2415000] Write to Output BRAM: addr=202, wea=1111111111111111
-[@2425000] Write to Output BRAM: addr=203, wea=1111111111111111
-[@2435000] Write to Output BRAM: addr=204, wea=1111111111111111
-[@2445000] Write to Output BRAM: addr=205, wea=1111111111111111
-[@2455000] Write to Output BRAM: addr=206, wea=1111111111111111
-[@2465000] Write to Output BRAM: addr=207, wea=1111111111111111
-[@2475000] Write to Output BRAM: addr=208, wea=1111111111111111
-[@2485000] Write to Output BRAM: addr=209, wea=1111111111111111
-[@2495000] Write to Output BRAM: addr=210, wea=1111111111111111
-[@2505000] Write to Output BRAM: addr=211, wea=1111111111111111
-[@2515000] Write to Output BRAM: addr=212, wea=1111111111111111
-[@2525000] Write to Output BRAM: addr=213, wea=1111111111111111
-[@2535000] Write to Output BRAM: addr=214, wea=1111111111111111
-[@2545000] Write to Output BRAM: addr=215, wea=1111111111111111
-[@2555000] Write to Output BRAM: addr=216, wea=1111111111111111
-[@2565000] Write to Output BRAM: addr=217, wea=1111111111111111
-[@2575000] Write to Output BRAM: addr=218, wea=1111111111111111
-[@2585000] Write to Output BRAM: addr=219, wea=1111111111111111
-[@2595000] Write to Output BRAM: addr=220, wea=1111111111111111
-[@2605000] Write to Output BRAM: addr=221, wea=1111111111111111
-[@2615000] Write to Output BRAM: addr=222, wea=1111111111111111
-[@2625000] Write to Output BRAM: addr=223, wea=1111111111111111
-[@2635000] Write to Output BRAM: addr=224, wea=1111111111111111
-[@2645000] Write to Output BRAM: addr=225, wea=1111111111111111
-[@2655000] Write to Output BRAM: addr=226, wea=1111111111111111
-[@2665000] Write to Output BRAM: addr=227, wea=1111111111111111
-[@2675000] Write to Output BRAM: addr=228, wea=1111111111111111
-[@2685000] Write to Output BRAM: addr=229, wea=1111111111111111
-[@2695000] Write to Output BRAM: addr=230, wea=1111111111111111
-[@2705000] Write to Output BRAM: addr=231, wea=1111111111111111
-[@2715000] Write to Output BRAM: addr=232, wea=1111111111111111
-[@2725000] Write to Output BRAM: addr=233, wea=1111111111111111
-[@2735000] Write to Output BRAM: addr=234, wea=1111111111111111
-[@2745000] Write to Output BRAM: addr=235, wea=1111111111111111
-[@2755000] Write to Output BRAM: addr=236, wea=1111111111111111
-[@2765000] Write to Output BRAM: addr=237, wea=1111111111111111
-[@2775000] Write to Output BRAM: addr=238, wea=1111111111111111
-[@2785000] Write to Output BRAM: addr=239, wea=1111111111111111
-[@2795000] Write to Output BRAM: addr=240, wea=1111111111111111
-[@2805000] Write to Output BRAM: addr=241, wea=1111111111111111
-[@2815000] Write to Output BRAM: addr=242, wea=1111111111111111
-[@2825000] Write to Output BRAM: addr=243, wea=1111111111111111
-[@2835000] Write to Output BRAM: addr=244, wea=1111111111111111
-[@2845000] Write to Output BRAM: addr=245, wea=1111111111111111
-[@2855000] Write to Output BRAM: addr=246, wea=1111111111111111
-[@2865000] Write to Output BRAM: addr=247, wea=1111111111111111
-[@2875000] Write to Output BRAM: addr=248, wea=1111111111111111
-[@2885000] Write to Output BRAM: addr=249, wea=1111111111111111
-[@2895000] Write to Output BRAM: addr=250, wea=1111111111111111
-[@2905000] Write to Output BRAM: addr=251, wea=1111111111111111
-[@2915000] Write to Output BRAM: addr=252, wea=1111111111111111
-[@2925000] Write to Output BRAM: addr=253, wea=1111111111111111
-[@2935000] Write to Output BRAM: addr=254, wea=1111111111111111
-[@2945000] Write to Output BRAM: addr=255, wea=1111111111111111
-[@2955000] Write to Output BRAM: addr=256, wea=1111111111111111
-[@2965000] Write to Output BRAM: addr=257, wea=1111111111111111
-[@2975000] Write to Output BRAM: addr=258, wea=1111111111111111
-[@2985000] Write to Output BRAM: addr=259, wea=1111111111111111
-[@2995000] Write to Output BRAM: addr=260, wea=1111111111111111
-[@3005000] Write to Output BRAM: addr=261, wea=1111111111111111
-[@3015000] Write to Output BRAM: addr=262, wea=1111111111111111
-[@3025000] Write to Output BRAM: addr=263, wea=1111111111111111
-[@3035000] Write to Output BRAM: addr=264, wea=1111111111111111
-[@3045000] Write to Output BRAM: addr=265, wea=1111111111111111
-[@3055000] Write to Output BRAM: addr=266, wea=1111111111111111
-[@3065000] Write to Output BRAM: addr=267, wea=1111111111111111
-[@3075000] Write to Output BRAM: addr=268, wea=1111111111111111
-[@3085000] Write to Output BRAM: addr=269, wea=1111111111111111
-[@3095000] Write to Output BRAM: addr=270, wea=1111111111111111
-[@3105000] Write to Output BRAM: addr=271, wea=1111111111111111
-[@3115000] Write to Output BRAM: addr=272, wea=1111111111111111
-[@3125000] Write to Output BRAM: addr=273, wea=1111111111111111
-[@3135000] Write to Output BRAM: addr=274, wea=1111111111111111
-[@3145000] Write to Output BRAM: addr=275, wea=1111111111111111
-[@3155000] Write to Output BRAM: addr=276, wea=1111111111111111
-[@3165000] Write to Output BRAM: addr=277, wea=1111111111111111
-[@3175000] Write to Output BRAM: addr=278, wea=1111111111111111
-[@3185000] Write to Output BRAM: addr=279, wea=1111111111111111
-[@3195000] Write to Output BRAM: addr=280, wea=1111111111111111
-[@3205000] Write to Output BRAM: addr=281, wea=1111111111111111
-[@3215000] Write to Output BRAM: addr=282, wea=1111111111111111
-[@3225000] Write to Output BRAM: addr=283, wea=1111111111111111
-[@3235000] Write to Output BRAM: addr=284, wea=1111111111111111
-[@3245000] Write to Output BRAM: addr=285, wea=1111111111111111
-[@3255000] Write to Output BRAM: addr=286, wea=1111111111111111
-[@3265000] Write to Output BRAM: addr=287, wea=1111111111111111
-[@3275000] Write to Output BRAM: addr=288, wea=1111111111111111
-[@3285000] Write to Output BRAM: addr=289, wea=1111111111111111
-[@3295000] Write to Output BRAM: addr=290, wea=1111111111111111
-[@3305000] Write to Output BRAM: addr=291, wea=1111111111111111
-[@3315000] Write to Output BRAM: addr=292, wea=1111111111111111
-[@3325000] Write to Output BRAM: addr=293, wea=1111111111111111
-[@3335000] Write to Output BRAM: addr=294, wea=1111111111111111
-[@3345000] Write to Output BRAM: addr=295, wea=1111111111111111
-[@3355000] Write to Output BRAM: addr=296, wea=1111111111111111
-[@3365000] Write to Output BRAM: addr=297, wea=1111111111111111
-[@3375000] Write to Output BRAM: addr=298, wea=1111111111111111
-[@3385000] Write to Output BRAM: addr=299, wea=1111111111111111
-[@3395000] Write to Output BRAM: addr=300, wea=1111111111111111
-[@3405000] Write to Output BRAM: addr=301, wea=1111111111111111
-[@3415000] Write to Output BRAM: addr=302, wea=1111111111111111
-[@3425000] Write to Output BRAM: addr=303, wea=1111111111111111
-[@3435000] Write to Output BRAM: addr=304, wea=1111111111111111
-[@3445000] Write to Output BRAM: addr=305, wea=1111111111111111
-[@3455000] Write to Output BRAM: addr=306, wea=1111111111111111
-[@3465000] Write to Output BRAM: addr=307, wea=1111111111111111
-[@3475000] Write to Output BRAM: addr=308, wea=1111111111111111
-[@3485000] Write to Output BRAM: addr=309, wea=1111111111111111
-[@3495000] Write to Output BRAM: addr=310, wea=1111111111111111
-[@3505000] Write to Output BRAM: addr=311, wea=1111111111111111
-[@3515000] Write to Output BRAM: addr=312, wea=1111111111111111
-[@3525000] Write to Output BRAM: addr=313, wea=1111111111111111
-[@3535000] Write to Output BRAM: addr=314, wea=1111111111111111
-[@3545000] Write to Output BRAM: addr=315, wea=1111111111111111
-[@3555000] Write to Output BRAM: addr=316, wea=1111111111111111
-[@3565000] Write to Output BRAM: addr=317, wea=1111111111111111
-[@3575000] Write to Output BRAM: addr=318, wea=1111111111111111
-[@3585000] Write to Output BRAM: addr=319, wea=1111111111111111
-[@3595000] Write to Output BRAM: addr=320, wea=1111111111111111
-[@3605000] Write to Output BRAM: addr=321, wea=1111111111111111
-[@3615000] Write to Output BRAM: addr=322, wea=1111111111111111
-[@3625000] Write to Output BRAM: addr=323, wea=1111111111111111
-[@3635000] Write to Output BRAM: addr=324, wea=1111111111111111
-[@3645000] Write to Output BRAM: addr=325, wea=1111111111111111
-[@3655000] Write to Output BRAM: addr=326, wea=1111111111111111
-[@3665000] Write to Output BRAM: addr=327, wea=1111111111111111
-[@3675000] Write to Output BRAM: addr=328, wea=1111111111111111
-[@3685000] Write to Output BRAM: addr=329, wea=1111111111111111
-[@3695000] Write to Output BRAM: addr=330, wea=1111111111111111
-[@3705000] Write to Output BRAM: addr=331, wea=1111111111111111
-[@3715000] Write to Output BRAM: addr=332, wea=1111111111111111
-[@3725000] Write to Output BRAM: addr=333, wea=1111111111111111
-[@3735000] Write to Output BRAM: addr=334, wea=1111111111111111
-[@3745000] Write to Output BRAM: addr=335, wea=1111111111111111
-[@3755000] Write to Output BRAM: addr=336, wea=1111111111111111
-[@3765000] Write to Output BRAM: addr=337, wea=1111111111111111
-[@3775000] Write to Output BRAM: addr=338, wea=1111111111111111
-[@3785000] Write to Output BRAM: addr=339, wea=1111111111111111
-[@3795000] Write to Output BRAM: addr=340, wea=1111111111111111
-[@3805000] Write to Output BRAM: addr=341, wea=1111111111111111
-[@3815000] Write to Output BRAM: addr=342, wea=1111111111111111
-[@3825000] Write to Output BRAM: addr=343, wea=1111111111111111
-[@3835000] Write to Output BRAM: addr=344, wea=1111111111111111
-[@3845000] Write to Output BRAM: addr=345, wea=1111111111111111
-[@3855000] Write to Output BRAM: addr=346, wea=1111111111111111
-[@3865000] Write to Output BRAM: addr=347, wea=1111111111111111
-[@3875000] Write to Output BRAM: addr=348, wea=1111111111111111
-[@3885000] Write to Output BRAM: addr=349, wea=1111111111111111
-[@3895000] Write to Output BRAM: addr=350, wea=1111111111111111
-[@3905000] Write to Output BRAM: addr=351, wea=1111111111111111
-[@3915000] Write to Output BRAM: addr=352, wea=1111111111111111
-[@3925000] Write to Output BRAM: addr=353, wea=1111111111111111
-[@3935000] Write to Output BRAM: addr=354, wea=1111111111111111
-[@3945000] Write to Output BRAM: addr=355, wea=1111111111111111
-[@3955000] Write to Output BRAM: addr=356, wea=1111111111111111
-[@3965000] Write to Output BRAM: addr=357, wea=1111111111111111
-[@3975000] Write to Output BRAM: addr=358, wea=1111111111111111
-[@3985000] Write to Output BRAM: addr=359, wea=1111111111111111
-[@3995000] Write to Output BRAM: addr=360, wea=1111111111111111
-[@4005000] Write to Output BRAM: addr=361, wea=1111111111111111
-[@4015000] Write to Output BRAM: addr=362, wea=1111111111111111
-[@4025000] Write to Output BRAM: addr=363, wea=1111111111111111
-[@4035000] Write to Output BRAM: addr=364, wea=1111111111111111
-[@4045000] Write to Output BRAM: addr=365, wea=1111111111111111
-[@4055000] Write to Output BRAM: addr=366, wea=1111111111111111
-[@4065000] Write to Output BRAM: addr=367, wea=1111111111111111
-[@4075000] Write to Output BRAM: addr=368, wea=1111111111111111
-[@4085000] Write to Output BRAM: addr=369, wea=1111111111111111
-[@4095000] Write to Output BRAM: addr=370, wea=1111111111111111
-[@4105000] Write to Output BRAM: addr=371, wea=1111111111111111
-[@4115000] Write to Output BRAM: addr=372, wea=1111111111111111
-[@4125000] Write to Output BRAM: addr=373, wea=1111111111111111
-[@4135000] Write to Output BRAM: addr=374, wea=1111111111111111
-[@4145000] Write to Output BRAM: addr=375, wea=1111111111111111
-[@4155000] Write to Output BRAM: addr=376, wea=1111111111111111
-[@4165000] Write to Output BRAM: addr=377, wea=1111111111111111
-[@4175000] Write to Output BRAM: addr=378, wea=1111111111111111
-[@4185000] Write to Output BRAM: addr=379, wea=1111111111111111
-[@4195000] Write to Output BRAM: addr=380, wea=1111111111111111
-[@4205000] Write to Output BRAM: addr=381, wea=1111111111111111
-[@4215000] Write to Output BRAM: addr=382, wea=1111111111111111
-[@4225000] Write to Output BRAM: addr=383, wea=1111111111111111
-[@4235000] Write to Output BRAM: addr=384, wea=1111111111111111
-[@4245000] Write to Output BRAM: addr=385, wea=1111111111111111
-[@4255000] Write to Output BRAM: addr=386, wea=1111111111111111
-[@4265000] Write to Output BRAM: addr=387, wea=1111111111111111
-[@4275000] Write to Output BRAM: addr=388, wea=1111111111111111
-[@4285000] Write to Output BRAM: addr=389, wea=1111111111111111
-[@4295000] Write to Output BRAM: addr=390, wea=1111111111111111
-[@4305000] Write to Output BRAM: addr=391, wea=1111111111111111
-[@4315000] Write to Output BRAM: addr=392, wea=1111111111111111
-[@4325000] Write to Output BRAM: addr=393, wea=1111111111111111
-[@4335000] Write to Output BRAM: addr=394, wea=1111111111111111
-[@4345000] Write to Output BRAM: addr=395, wea=1111111111111111
-[@4355000] Write to Output BRAM: addr=396, wea=1111111111111111
-[@4365000] Write to Output BRAM: addr=397, wea=1111111111111111
-[@4375000] Write to Output BRAM: addr=398, wea=1111111111111111
-[@4385000] Write to Output BRAM: addr=399, wea=1111111111111111
-[@4395000] Write to Output BRAM: addr=400, wea=1111111111111111
-[@4405000] Write to Output BRAM: addr=401, wea=1111111111111111
-[@4415000] Write to Output BRAM: addr=402, wea=1111111111111111
-[@4425000] Write to Output BRAM: addr=403, wea=1111111111111111
-[@4435000] Write to Output BRAM: addr=404, wea=1111111111111111
-[@4445000] Write to Output BRAM: addr=405, wea=1111111111111111
-[@4455000] Write to Output BRAM: addr=406, wea=1111111111111111
-[@4465000] Write to Output BRAM: addr=407, wea=1111111111111111
-[@4475000] Write to Output BRAM: addr=408, wea=1111111111111111
-[@4485000] Write to Output BRAM: addr=409, wea=1111111111111111
-[@4495000] Write to Output BRAM: addr=410, wea=1111111111111111
-[@4505000] Write to Output BRAM: addr=411, wea=1111111111111111
-[@4515000] Write to Output BRAM: addr=412, wea=1111111111111111
-[@4525000] Write to Output BRAM: addr=413, wea=1111111111111111
-[@4535000] Write to Output BRAM: addr=414, wea=1111111111111111
-[@4545000] Write to Output BRAM: addr=415, wea=1111111111111111
-[@4555000] Write to Output BRAM: addr=416, wea=1111111111111111
-[@4565000] Write to Output BRAM: addr=417, wea=1111111111111111
-[@4575000] Write to Output BRAM: addr=418, wea=1111111111111111
-[@4585000] Write to Output BRAM: addr=419, wea=1111111111111111
-[@4595000] Write to Output BRAM: addr=420, wea=1111111111111111
-[@4605000] Write to Output BRAM: addr=421, wea=1111111111111111
-[@4615000] Write to Output BRAM: addr=422, wea=1111111111111111
-[@4625000] Write to Output BRAM: addr=423, wea=1111111111111111
-[@4635000] Write to Output BRAM: addr=424, wea=1111111111111111
-[@4645000] Write to Output BRAM: addr=425, wea=1111111111111111
-[@4655000] Write to Output BRAM: addr=426, wea=1111111111111111
-[@4665000] Write to Output BRAM: addr=427, wea=1111111111111111
-[@4675000] Write to Output BRAM: addr=428, wea=1111111111111111
-[@4685000] Write to Output BRAM: addr=429, wea=1111111111111111
-[@4695000] Write to Output BRAM: addr=430, wea=1111111111111111
-[@4705000] Write to Output BRAM: addr=431, wea=1111111111111111
-[@4715000] Write to Output BRAM: addr=432, wea=1111111111111111
-[@4725000] Write to Output BRAM: addr=433, wea=1111111111111111
-[@4735000] Write to Output BRAM: addr=434, wea=1111111111111111
-[@4745000] Write to Output BRAM: addr=435, wea=1111111111111111
-[@4755000] Write to Output BRAM: addr=436, wea=1111111111111111
-[@4765000] Write to Output BRAM: addr=437, wea=1111111111111111
-[@4775000] Write to Output BRAM: addr=438, wea=1111111111111111
-[@4785000] Write to Output BRAM: addr=439, wea=1111111111111111
-[@4795000] Write to Output BRAM: addr=440, wea=1111111111111111
-[@4805000] Write to Output BRAM: addr=441, wea=1111111111111111
-[@4815000] Write to Output BRAM: addr=442, wea=1111111111111111
-[@4825000] Write to Output BRAM: addr=443, wea=1111111111111111
-[@4835000] Write to Output BRAM: addr=444, wea=1111111111111111
-[@4845000] Write to Output BRAM: addr=445, wea=1111111111111111
-[@4855000] Write to Output BRAM: addr=446, wea=1111111111111111
-[@4865000] Write to Output BRAM: addr=447, wea=1111111111111111
-[@4875000] Write to Output BRAM: addr=448, wea=1111111111111111
-[@4885000] Write to Output BRAM: addr=449, wea=1111111111111111
-[@4895000] Write to Output BRAM: addr=450, wea=1111111111111111
-[@4905000] Write to Output BRAM: addr=451, wea=1111111111111111
-[@4915000] Write to Output BRAM: addr=452, wea=1111111111111111
-[@4925000] Write to Output BRAM: addr=453, wea=1111111111111111
-[@4935000] Write to Output BRAM: addr=454, wea=1111111111111111
-[@4945000] Write to Output BRAM: addr=455, wea=1111111111111111
-[@4955000] Write to Output BRAM: addr=456, wea=1111111111111111
-[@4965000] Write to Output BRAM: addr=457, wea=1111111111111111
-[@4975000] Write to Output BRAM: addr=458, wea=1111111111111111
-[@4985000] Write to Output BRAM: addr=459, wea=1111111111111111
-[@4995000] Write to Output BRAM: addr=460, wea=1111111111111111
-[@5005000] Write to Output BRAM: addr=461, wea=1111111111111111
-[@5015000] Write to Output BRAM: addr=462, wea=1111111111111111
-[@5025000] Write to Output BRAM: addr=463, wea=1111111111111111
-[@5035000] Write to Output BRAM: addr=464, wea=1111111111111111
-[@5045000] Write to Output BRAM: addr=465, wea=1111111111111111
-[@5055000] Write to Output BRAM: addr=466, wea=1111111111111111
-[@5065000] Write to Output BRAM: addr=467, wea=1111111111111111
-[@5075000] Write to Output BRAM: addr=468, wea=1111111111111111
-[@5085000] Write to Output BRAM: addr=469, wea=1111111111111111
-[@5095000] Write to Output BRAM: addr=470, wea=1111111111111111
-[@5105000] Write to Output BRAM: addr=471, wea=1111111111111111
-[@5115000] Write to Output BRAM: addr=472, wea=1111111111111111
-[@5125000] Write to Output BRAM: addr=473, wea=1111111111111111
-[@5135000] Write to Output BRAM: addr=474, wea=1111111111111111
-[@5145000] Write to Output BRAM: addr=475, wea=1111111111111111
-[@5155000] Write to Output BRAM: addr=476, wea=1111111111111111
-[@5165000] Write to Output BRAM: addr=477, wea=1111111111111111
-[@5175000] Write to Output BRAM: addr=478, wea=1111111111111111
-[@5185000] Write to Output BRAM: addr=479, wea=1111111111111111
-[@5195000] Write to Output BRAM: addr=480, wea=1111111111111111
-[@5205000] Write to Output BRAM: addr=481, wea=1111111111111111
-[@5215000] Write to Output BRAM: addr=482, wea=1111111111111111
-[@5225000] Write to Output BRAM: addr=483, wea=1111111111111111
-[@5235000] Write to Output BRAM: addr=484, wea=1111111111111111
-[@5245000] Write to Output BRAM: addr=485, wea=1111111111111111
-[@5255000] Write to Output BRAM: addr=486, wea=1111111111111111
-[@5265000] Write to Output BRAM: addr=487, wea=1111111111111111
-[@5275000] Write to Output BRAM: addr=488, wea=1111111111111111
-[@5285000] Write to Output BRAM: addr=489, wea=1111111111111111
-[@5295000] Write to Output BRAM: addr=490, wea=1111111111111111
-[@5305000] Write to Output BRAM: addr=491, wea=1111111111111111
-[@5315000] Write to Output BRAM: addr=492, wea=1111111111111111
-[@5325000] Write to Output BRAM: addr=493, wea=1111111111111111
-[@5335000] Write to Output BRAM: addr=494, wea=1111111111111111
-[@5345000] Write to Output BRAM: addr=495, wea=1111111111111111
-[@5355000] Write to Output BRAM: addr=496, wea=1111111111111111
-[@5365000] Write to Output BRAM: addr=497, wea=1111111111111111
-[@5375000] Write to Output BRAM: addr=498, wea=1111111111111111
-[@5385000] Write to Output BRAM: addr=499, wea=1111111111111111
-[@5395000] Write to Output BRAM: addr=500, wea=1111111111111111
-[@5405000] Write to Output BRAM: addr=501, wea=1111111111111111
-[@5415000] Write to Output BRAM: addr=502, wea=1111111111111111
-[@5425000] Write to Output BRAM: addr=503, wea=1111111111111111
-[@5435000] Write to Output BRAM: addr=504, wea=1111111111111111
-[@5445000] Write to Output BRAM: addr=505, wea=1111111111111111
-[@5455000] Write to Output BRAM: addr=506, wea=1111111111111111
-[@5465000] Write to Output BRAM: addr=507, wea=1111111111111111
-[@5475000] Write to Output BRAM: addr=508, wea=1111111111111111
-[@5485000] Write to Output BRAM: addr=509, wea=1111111111111111
-[@5495000] Write to Output BRAM: addr=510, wea=1111111111111111
-[@5505000] Write to Output BRAM: addr=511, wea=1111111111111111
-[@6605000] Write to Output BRAM: addr=0, wea=1111111111111111
-[@6775000] Write to Output BRAM: addr=1, wea=1111111111111111
-[@6945000] Write to Output BRAM: addr=2, wea=1111111111111111
-[@7115000] Write to Output BRAM: addr=3, wea=1111111111111111
-[@7285000] Write to Output BRAM: addr=4, wea=1111111111111111
-[@7455000] Write to Output BRAM: addr=5, wea=1111111111111111
-[@7625000] Write to Output BRAM: addr=6, wea=1111111111111111
-[@7795000] Write to Output BRAM: addr=7, wea=1111111111111111
-[@7965000] Write to Output BRAM: addr=8, wea=1111111111111111
-[@9135000] Write to Output BRAM: addr=0, wea=1111111111111111
-[@9305000] Write to Output BRAM: addr=1, wea=1111111111111111
-[@9475000] Write to Output BRAM: addr=2, wea=1111111111111111
-[@9645000] Write to Output BRAM: addr=3, wea=1111111111111111
-[@9815000] Write to Output BRAM: addr=4, wea=1111111111111111
-[@9985000] Write to Output BRAM: addr=5, wea=1111111111111111
-[@10155000] Write to Output BRAM: addr=6, wea=1111111111111111
-[@10325000] Write to Output BRAM: addr=7, wea=1111111111111111
-[@10495000] Write to Output BRAM: addr=8, wea=1111111111111111
---- Convolution Finished ---
+>>> TEST 3: Multi-Filter + Bias 100
+--- Initializing Output BRAMs to Zero ---
+[Monitor] Filter 0[0] =      0
+[Monitor] Filter 0[1] =      0
+[Monitor] Filter 0[2] =      0
+[Monitor] Filter 0[3] =      0
+[Monitor] Filter 0[4] =      0
+[Monitor] Filter 0[5] =      0
+[Monitor] Filter 1[0] =      0
+[Monitor] Filter 1[1] =      0
+[Monitor] Filter 1[2] =      0
+[Monitor] Filter 1[3] =      0
+[Monitor] Filter 1[4] =      0
+[Monitor] Filter 1[5] =      0
+[Monitor] Filter 2[0] =      0
+[Monitor] Filter 2[1] =      0
+[Monitor] Filter 2[2] =      0
+[Monitor] Filter 2[3] =      0
+[Monitor] Filter 2[4] =      0
+[Monitor] Filter 2[5] =      0
+[Monitor] Filter 0[0] =      3
+[Monitor] Filter 1[0] =      3
+[Monitor] Filter 2[0] =      3
+[Monitor] Filter 3[0] =      0
+[Monitor] Filter 4[0] =      0
+[Monitor] Filter 5[0] =      0
+[Monitor] Filter 6[0] =      0
+[Monitor] Filter 7[0] =      0
+[Monitor] Filter 8[0] =      0
+[Monitor] Filter 9[0] =      0
+[Monitor] Filter 10[0] =      0
+[Monitor] Filter 11[0] =      0
+[Monitor] Filter 12[0] =      0
+[Monitor] Filter 13[0] =      0
+[Monitor] Filter 14[0] =      0
+[Monitor] Filter 15[0] =      0
+[Monitor] Filter 0[1] =      3
+[Monitor] Filter 1[1] =      3
+[Monitor] Filter 2[1] =      3
+[Monitor] Filter 3[1] =      0
+[Monitor] Filter 4[1] =      0
+[Monitor] Filter 5[1] =      0
+[Monitor] Filter 6[1] =      0
+[Monitor] Filter 7[1] =      0
+[Monitor] Filter 8[1] =      0
+[Monitor] Filter 9[1] =      0
+[Monitor] Filter 10[1] =      0
+[Monitor] Filter 11[1] =      0
+[Monitor] Filter 12[1] =      0
+[Monitor] Filter 13[1] =      0
+[Monitor] Filter 14[1] =      0
+[Monitor] Filter 15[1] =      0
+[Monitor] Filter 0[2] =      3
+[Monitor] Filter 1[2] =      3
+[Monitor] Filter 2[2] =      3
+[Monitor] Filter 3[2] =      0
+[Monitor] Filter 4[2] =      0
+[Monitor] Filter 5[2] =      0
+[Monitor] Filter 6[2] =      0
+[Monitor] Filter 7[2] =      0
+[Monitor] Filter 8[2] =      0
+[Monitor] Filter 9[2] =      0
+[Monitor] Filter 10[2] =      0
+[Monitor] Filter 11[2] =      0
+[Monitor] Filter 12[2] =      0
+[Monitor] Filter 13[2] =      0
+[Monitor] Filter 14[2] =      0
+[Monitor] Filter 15[2] =      0
+[Monitor] Filter 0[3] =      3
+[Monitor] Filter 1[3] =      3
+[Monitor] Filter 2[3] =      3
+[Monitor] Filter 3[3] =      0
+[Monitor] Filter 4[3] =      0
+[Monitor] Filter 5[3] =      0
+[Monitor] Filter 6[3] =      0
+[Monitor] Filter 7[3] =      0
+[Monitor] Filter 8[3] =      0
+[Monitor] Filter 9[3] =      0
+[Monitor] Filter 10[3] =      0
+[Monitor] Filter 11[3] =      0
+[Monitor] Filter 12[3] =      0
+[Monitor] Filter 13[3] =      0
+[Monitor] Filter 14[3] =      0
+[Monitor] Filter 15[3] =      0
+[Monitor] Filter 0[4] =      3
+[Monitor] Filter 1[4] =      3
+[Monitor] Filter 2[4] =      3
+[Monitor] Filter 3[4] =      0
+[Monitor] Filter 4[4] =      0
+[Monitor] Filter 5[4] =      0
+[Monitor] Filter 6[4] =      0
+[Monitor] Filter 7[4] =      0
+[Monitor] Filter 8[4] =      0
+[Monitor] Filter 9[4] =      0
+[Monitor] Filter 10[4] =      0
+[Monitor] Filter 11[4] =      0
+[Monitor] Filter 12[4] =      0
+[Monitor] Filter 13[4] =      0
+[Monitor] Filter 14[4] =      0
+[Monitor] Filter 15[4] =      0
+[Monitor] Filter 0[5] =      3
+[Monitor] Filter 1[5] =      3
+[Monitor] Filter 2[5] =      3
+[Monitor] Filter 3[5] =      0
+[Monitor] Filter 4[5] =      0
+[Monitor] Filter 5[5] =      0
+[Monitor] Filter 6[5] =      0
+[Monitor] Filter 7[5] =      0
+[Monitor] Filter 8[5] =      0
+[Monitor] Filter 9[5] =      0
+[Monitor] Filter 10[5] =      0
+[Monitor] Filter 11[5] =      0
+[Monitor] Filter 12[5] =      0
+[Monitor] Filter 13[5] =      0
+[Monitor] Filter 14[5] =      0
+[Monitor] Filter 15[5] =      0
+[Monitor] Filter 0[0] =      9
+[Monitor] Filter 1[0] =      9
+[Monitor] Filter 2[0] =      9
+[Monitor] Filter 3[0] =      0
+[Monitor] Filter 4[0] =      0
+[Monitor] Filter 5[0] =      0
+[Monitor] Filter 6[0] =      0
+[Monitor] Filter 7[0] =      0
+[Monitor] Filter 8[0] =      0
+[Monitor] Filter 9[0] =      0
+[Monitor] Filter 10[0] =      0
+[Monitor] Filter 11[0] =      0
+[Monitor] Filter 12[0] =      0
+[Monitor] Filter 13[0] =      0
+[Monitor] Filter 14[0] =      0
+[Monitor] Filter 15[0] =      0
+[Monitor] Filter 0[1] =      9
+[Monitor] Filter 1[1] =      9
+[Monitor] Filter 2[1] =      9
+[Monitor] Filter 3[1] =      0
+[Monitor] Filter 4[1] =      0
+[Monitor] Filter 5[1] =      0
+[Monitor] Filter 6[1] =      0
+[Monitor] Filter 7[1] =      0
+[Monitor] Filter 8[1] =      0
+[Monitor] Filter 9[1] =      0
+[Monitor] Filter 10[1] =      0
+[Monitor] Filter 11[1] =      0
+[Monitor] Filter 12[1] =      0
+[Monitor] Filter 13[1] =      0
+[Monitor] Filter 14[1] =      0
+[Monitor] Filter 15[1] =      0
+[Monitor] Filter 0[2] =      9
+[Monitor] Filter 1[2] =      9
+[Monitor] Filter 2[2] =      9
+[Monitor] Filter 3[2] =      0
+[Monitor] Filter 4[2] =      0
+[Monitor] Filter 5[2] =      0
+[Monitor] Filter 6[2] =      0
+[Monitor] Filter 7[2] =      0
+[Monitor] Filter 8[2] =      0
+[Monitor] Filter 9[2] =      0
+[Monitor] Filter 10[2] =      0
+[Monitor] Filter 11[2] =      0
+[Monitor] Filter 12[2] =      0
+[Monitor] Filter 13[2] =      0
+[Monitor] Filter 14[2] =      0
+[Monitor] Filter 15[2] =      0
+[Monitor] Filter 0[3] =      9
+[Monitor] Filter 1[3] =      9
+[Monitor] Filter 2[3] =      9
+[Monitor] Filter 3[3] =      0
+[Monitor] Filter 4[3] =      0
+[Monitor] Filter 5[3] =      0
+[Monitor] Filter 6[3] =      0
+[Monitor] Filter 7[3] =      0
+[Monitor] Filter 8[3] =      0
+[Monitor] Filter 9[3] =      0
+[Monitor] Filter 10[3] =      0
+[Monitor] Filter 11[3] =      0
+[Monitor] Filter 12[3] =      0
+[Monitor] Filter 13[3] =      0
+[Monitor] Filter 14[3] =      0
+[Monitor] Filter 15[3] =      0
+[Monitor] Filter 0[4] =      9
+[Monitor] Filter 1[4] =      9
+[Monitor] Filter 2[4] =      9
+[Monitor] Filter 3[4] =      0
+[Monitor] Filter 4[4] =      0
+[Monitor] Filter 5[4] =      0
+[Monitor] Filter 6[4] =      0
+[Monitor] Filter 7[4] =      0
+[Monitor] Filter 8[4] =      0
+[Monitor] Filter 9[4] =      0
+[Monitor] Filter 10[4] =      0
+[Monitor] Filter 11[4] =      0
+[Monitor] Filter 12[4] =      0
+[Monitor] Filter 13[4] =      0
+[Monitor] Filter 14[4] =      0
+[Monitor] Filter 15[4] =      0
+[Monitor] Filter 0[5] =      9
+[Monitor] Filter 1[5] =      9
+[Monitor] Filter 2[5] =      9
+[Monitor] Filter 3[5] =      0
+[Monitor] Filter 4[5] =      0
+[Monitor] Filter 5[5] =      0
+[Monitor] Filter 6[5] =      0
+[Monitor] Filter 7[5] =      0
+[Monitor] Filter 8[5] =      0
+[Monitor] Filter 9[5] =      0
+[Monitor] Filter 10[5] =      0
+[Monitor] Filter 11[5] =      0
+[Monitor] Filter 12[5] =      0
+[Monitor] Filter 13[5] =      0
+[Monitor] Filter 14[5] =      0
+[Monitor] Filter 15[5] =      0
+--- Final Readout ---
+Filter 0:
+  Filter 0[0] =      9
+  Filter 0[1] =      9
+  Filter 0[2] =      9
+  Filter 0[3] =      9
+  Filter 0[4] =      9
+  Filter 0[5] =      9
+Filter 1:
+  Filter 1[0] =      9
+  Filter 1[1] =      9
+  Filter 1[2] =      9
+  Filter 1[3] =      9
+  Filter 1[4] =      9
+  Filter 1[5] =      9
+Filter 2:
+  Filter 2[0] =      9
+  Filter 2[1] =      9
+  Filter 2[2] =      9
+  Filter 2[3] =      9
+  Filter 2[4] =      9
+  Filter 2[5] =      9
 
-=======================================================
-                   RESULTS
-=======================================================
-
-Filter 0 outputs:
-  Filter 0[0] = 0
-  Filter 0[1] = 0
-  Filter 0[2] = 12
-  Filter 0[3] = 42
-  Filter 0[4] = 68
-  Filter 0[5] = 84
-  Filter 0[6] = 46
-  Filter 0[7] = 0
-  Filter 0[8] = 0
-
-=======================================================
-        SIDE-BY-SIDE COMPARISON
-=======================================================
-Time | Filter 0 | Filter 1
------|----------|----------
-0  |   Filter 0[0] = 0
-1  |   Filter 0[1] = 0
-2  |   Filter 0[2] = 12
-3  |   Filter 0[3] = 42
-4  |   Filter 0[4] = 68
-5  |   Filter 0[5] = 84
-6  |   Filter 0[6] = 46
-7  |   Filter 0[7] = 0
-8  |   Filter 0[8] = 0
-
-=======================================================
-Test Finished.
-=======================================================
-$finish called at time : 11225 ns : File "D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sim_1/new/onedconv_tb.v" Line 224
+--- All Tests Finished ---
+$finish called at time : 17365 ns : File "D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sim_1/new/onedconv_tb.v" Line 280

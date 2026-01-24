@@ -45,7 +45,6 @@ module onedconv_ctrl #(
     input  wire done_count_top,
     input  wire done_top,
     input  wire out_new_val_sign,
-
     // --------------------------------------------------------
     // Counter control outputs
     // --------------------------------------------------------
@@ -284,8 +283,10 @@ module onedconv_ctrl #(
     // assign filter_bram_index = filter_number_count[3:0];
     // assign filter_slot = filter_number_count >> 4;
     // assign filter_base_addr = filter_slot * (input_channels * kernel_size);
-    assign base_addr_weight = filter_number_count * kernel_size;//(input_channel_count * kernel_size);
-
+    // assign base_addr_weight = filter_number_count * kernel_size;//(input_channel_count * kernel_size);
+// Correct: Offsets by input channel
+    assign base_addr_weight = (filter_number_count * input_channels * kernel_size) + 
+                            (input_channel_count * kernel_size);
     wire [11:0] needed_amount_weight;
     assign needed_amount_weight = (filter_number + Dimension - 1) / Dimension;
     // OUTPUT ADDRESSING
@@ -319,7 +320,7 @@ module onedconv_ctrl #(
         case (state)
             S_IDLE: begin
                 if (start_whole)
-                    next_state = S_RESET_OUTPUT;
+                    next_state = S_PICK_INPUT_LAYER_INIT_SET_ADDRESS;
             end
             S_RESET_OUTPUT: begin
                 if (output_counter_done_a) next_state = S_PICK_INPUT_LAYER_INIT_SET_ADDRESS;

@@ -28,11 +28,19 @@ module onedconv #(
     input wire [Dimension-1:0] ena_inputdata_input_bram,
     input wire [Dimension-1:0] wea_inputdata_input_bram,
 
+    input wire [Dimension-1:0] ena_bias_output_bram,
+    input wire [Dimension-1:0] wea_bias_output_bram,
+
     input wire [ADDRESS_LENGTH-1:0] weight_bram_addr, // FOR EXTERNAL ADDRESSING. Used in input PROCESS
     input wire [ADDRESS_LENGTH-1:0] inputdata_bram_addr, // FOR EXTERNAL ADDRESSING. Used in input PROCESS
+    input wire [ADDRESS_LENGTH-1:0] bias_output_bram_addr,
 
     input wire [DW*Dimension-1:0] weight_input_bram,
     input wire [DW*Dimension-1:0] inputdata_input_bram,
+    input wire [DW*Dimension-1:0] bias_output_bram, //Initial datas...
+    
+    input wire input_bias, // KEEP 0 DURING PROCESS.
+
     // For outputs, reading can be done externally OR interally, whereas writing is done internally.
     // Done Signals and Output
     input wire read_mode_output_result, //Reading Externally // KEEP 0 DURING PROCESS.
@@ -247,7 +255,20 @@ module onedconv #(
     wire [ADDRESS_LENGTH-1:0] output_result_addr_chosen_b; 
     assign output_result_addr_chosen_b = read_mode_output_result ? output_result_bram_addr : output_addr_out_b;
     //                                 External    
+    wire [Dimension-1:0] wea_output_result_chosen;
+    wire [Dimension-1:0] ena_output_result_chosen;
+    
     wire [Dimension-1:0] wea_output_result; // OUTPUT CONTROL
+//    input wire [Dimension-1:0] ena_bias_output_bram,
+//    input wire [Dimension-1:0] wea_bias_output_bram,
+//    input wire [ADDRESS_LENGTH-1:0] bias_output_bram_addr,
+//    input wire [DW*Dimension-1:0] bias_output_bram
+    wire [ADDRESS_LENGTH-1:0] output_addr_out_a_chosen;
+    wire [DW*Dimension-1:0] dia_output_bram_chosen;
+    assign wea_output_result_chosen = (input_bias)? wea_bias_output_bram  : wea_output_result;
+    assign ena_output_result_chosen = (input_bias)? ena_bias_output_bram  : ena_output_result_control;
+    assign output_addr_out_a_chosen = (input_bias)? bias_output_bram_addr : output_addr_out_a;
+    assign dia_output_bram_chosen   = (input_bias)? bias_output_bram      : systolic_output_after_adder;
     genvar r;
     generate
         for (r = 0; r < Dimension; r = r + 1) begin : gen_output_result_bram
@@ -260,12 +281,12 @@ module onedconv #(
             (
                 .clka(clk),
                 .clkb(clk),
-                .ena(ena_output_result_control[r]), // Writing is done internally
+                .ena(ena_output_result_chosen[r]), // Writing is done internally
                 .enb(enb_output_result_chosen[r]), // Reading is done externally
-                .wea(wea_output_result[r]), // Writing is done internally
-                .addra(output_addr_out_a),
+                .wea(wea_output_result_chosen[r]), // Writing is done internally
+                .addra(output_addr_out_a_chosen),
                 .addrb(output_result_addr_chosen_b),
-                .dia(systolic_output_after_adder[DW*(r+1)-1:DW*r]),
+                .dia(dia_output_bram_chosen[DW*(r+1)-1:DW*r]),
                 .dob(dob_output_result_bram[DW*(r+1)-1:DW*r])
             );
         end
