@@ -62,6 +62,37 @@ module System_Level_Top
     wire [NUM_BRAMS*DW-1:0] bram_read_data_flat;
     wire [NUM_BRAMS*ADDR_WIDTH-1:0] bram_read_addr_flat;
 
+
+    // ========================================================================
+    // Auto-start edge detection logic
+    // ========================================================================
+    reg weight_write_done_prev, ifmap_write_done_prev;
+    wire weight_done_posedge = weight_write_done & ~weight_write_done_prev;
+    wire ifmap_done_posedge = ifmap_write_done & ~ifmap_write_done_prev;
+    reg ifmap_loaded, weight_loaded;
+    
+    always @(posedge aclk or negedge aresetn) begin
+        if (!aresetn) begin
+            weight_write_done_prev <= 1'b0;
+            ifmap_write_done_prev <= 1'b0;
+            ifmap_loaded <= 1'b0;
+            weight_loaded <= 1'b0;
+        end else begin
+            weight_write_done_prev <= weight_write_done;
+            ifmap_write_done_prev <= ifmap_write_done;
+            
+            if (ifmap_done_posedge)
+                ifmap_loaded <= 1'b1;
+            if (weight_done_posedge)
+                weight_loaded <= 1'b1;
+                
+            // Clear flags when batch starts
+            if (batch_state == BATCH_IDLE && batch_next_state == BATCH_RUNNING) begin
+                ifmap_loaded <= 1'b0;
+                weight_loaded <= 1'b0;
+            end
+        end
+    end
     // ========================================================================
     // MULTI-BATCH CONTROL STATE MACHINE (untuk 8 weight loads)
     // ========================================================================
