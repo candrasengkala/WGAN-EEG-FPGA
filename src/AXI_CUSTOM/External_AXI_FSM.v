@@ -32,7 +32,11 @@ module External_AXI_FSM(
 
     output reg [4:0] demux_sel,
     output reg [2:0] mux_sel,
-    output reg bram_rd_enable
+    output reg bram_rd_enable,
+    
+    // --- NEW OUTPUTS FOR BATCH DONE ---
+    output reg batch_write_done,
+    output reg batch_read_done
 );
 
     localparam [3:0]
@@ -44,7 +48,7 @@ module External_AXI_FSM(
         DUPLEX_SETUP    = 4'd5,
         DUPLEX_WAIT     = 4'd6,
         DONE            = 4'd7;
-    
+
     reg [3:0] current_state, next_state;
     reg [4:0] bram_write_index;
     reg [2:0] bram_read_index;
@@ -54,6 +58,9 @@ module External_AXI_FSM(
     reg [2:0] rd_bram_start_reg, rd_bram_end_reg;
     reg [15:0] rd_addr_start_reg, rd_addr_count_reg;
 
+    // ========================================================================
+    // Sequential Logic (Register Updates)
+    // ========================================================================
     always @(posedge aclk) begin
         if (!aresetn) begin
             current_state <= IDLE;
@@ -71,36 +78,38 @@ module External_AXI_FSM(
         else begin
             current_state <= next_state;
             
-            if (current_state == IDLE && Instruction_code == 8'h01) begin
-                wr_bram_start_reg <= wr_bram_start;
-                wr_bram_end_reg <= wr_bram_end;
-                wr_addr_start_reg <= wr_addr_start;
-                wr_addr_count_reg <= wr_addr_count;
-                bram_write_index <= wr_bram_start;
+            // Latch parameters at IDLE start
+            if (current_state == IDLE) begin
+                if (Instruction_code == 8'h01) begin // WRITE
+                    wr_bram_start_reg <= wr_bram_start;
+                    wr_bram_end_reg <= wr_bram_end;
+                    wr_addr_start_reg <= wr_addr_start;
+                    wr_addr_count_reg <= wr_addr_count;
+                    bram_write_index <= wr_bram_start;
+                end
+                else if (Instruction_code == 8'h02) begin // READ
+                    rd_bram_start_reg <= rd_bram_start;
+                    rd_bram_end_reg <= rd_bram_end;
+                    rd_addr_start_reg <= rd_addr_start;
+                    rd_addr_count_reg <= rd_addr_count;
+                    bram_read_index <= rd_bram_start;
+                end
+                else if (Instruction_code == 8'h03) begin // DUPLEX
+                    wr_bram_start_reg <= wr_bram_start;
+                    wr_bram_end_reg <= wr_bram_end;
+                    wr_addr_start_reg <= wr_addr_start;
+                    wr_addr_count_reg <= wr_addr_count;
+                    bram_write_index <= wr_bram_start;
+                    
+                    rd_bram_start_reg <= rd_bram_start;
+                    rd_bram_end_reg <= rd_bram_end;
+                    rd_addr_start_reg <= rd_addr_start;
+                    rd_addr_count_reg <= rd_addr_count;
+                    bram_read_index <= rd_bram_start;
+                end
             end
             
-            if (current_state == IDLE && Instruction_code == 8'h02) begin
-                rd_bram_start_reg <= rd_bram_start;
-                rd_bram_end_reg <= rd_bram_end;
-                rd_addr_start_reg <= rd_addr_start;
-                rd_addr_count_reg <= rd_addr_count;
-                bram_read_index <= rd_bram_start;
-            end
-            
-            if (current_state == IDLE && Instruction_code == 8'h03) begin
-                wr_bram_start_reg <= wr_bram_start;
-                wr_bram_end_reg <= wr_bram_end;
-                wr_addr_start_reg <= wr_addr_start;
-                wr_addr_count_reg <= wr_addr_count;
-                bram_write_index <= wr_bram_start;
-                
-                rd_bram_start_reg <= rd_bram_start;
-                rd_bram_end_reg <= rd_bram_end;
-                rd_addr_start_reg <= rd_addr_start;
-                rd_addr_count_reg <= rd_addr_count;
-                bram_read_index <= rd_bram_start;
-            end
-            
+            // Index Increment Logic
             if ((current_state == WRITE_WAIT || current_state == DUPLEX_WAIT) && wr_counter_done) begin
                 if (bram_write_index < wr_bram_end_reg)
                     bram_write_index <= bram_write_index + 1;
@@ -113,6 +122,9 @@ module External_AXI_FSM(
         end
     end
 
+    // ========================================================================
+    // Combinational Logic (Next State & Outputs)
+    // ========================================================================
     always @(*) begin
         next_state = current_state;
         wr_counter_enable = 1'b0;
@@ -126,18 +138,16 @@ module External_AXI_FSM(
         demux_sel = 5'b0;
         mux_sel = 3'b0;
         bram_rd_enable = 1'b0;
+        
+        // Default Outputs for Done Signals
+        batch_write_done = 1'b0;
+        batch_read_done = 1'b0;
 
         case (current_state)
             IDLE: begin
-                if (Instruction_code == 8'h01) begin
-                    next_state = WRITE_SETUP;
-                end
-                else if (Instruction_code == 8'h02) begin
-                    next_state = READ_SETUP;
-                end
-                else if (Instruction_code == 8'h03) begin
-                    next_state = DUPLEX_SETUP;
-                end
+                if (Instruction_code == 8'h01) next_state = WRITE_SETUP;
+                else if (Instruction_code == 8'h02) next_state = READ_SETUP;
+                else if (Instruction_code == 8'h03) next_state = DUPLEX_SETUP;
             end
 
             WRITE_SETUP: begin 
@@ -145,21 +155,21 @@ module External_AXI_FSM(
                 wr_start_addr = wr_addr_start_reg;
                 wr_count_limit = wr_addr_count_reg;
                 demux_sel = bram_write_index;
-                next_state = WRITE_WAIT;  
+                next_state = WRITE_WAIT;
             end
 
             WRITE_WAIT: begin
                 demux_sel = bram_write_index;
                 wr_start_addr = wr_addr_start_reg;
-                wr_count_limit = wr_addr_count_reg;  // Maintain counter limit!
+                wr_count_limit = wr_addr_count_reg;
                 
-                // Enable counter hanya jika belum done
                 if (!wr_counter_done) begin
-                    wr_counter_enable = bram_wr_enable;  // Enable when FIFO has valid data
+                    wr_counter_enable = bram_wr_enable;
                 end
                 
                 if (wr_counter_done) begin
-                    if (bram_write_index < wr_bram_end_reg) begin
+                    // FIX: Check if next index is still within range
+                    if ((bram_write_index + 1) < wr_bram_end_reg) begin
                         next_state = WRITE_SETUP;
                     end
                     else begin
@@ -179,12 +189,13 @@ module External_AXI_FSM(
             READ_WAIT: begin
                 mux_sel = bram_read_index;
                 rd_start_addr = rd_addr_start_reg;
-                rd_count_limit = rd_addr_count_reg;  // Maintain counter limit!
+                rd_count_limit = rd_addr_count_reg;
                 bram_rd_enable = 1'b1;
                 rd_counter_enable = 1'b1;
 
                 if (rd_counter_done) begin 
-                    if (bram_read_index < rd_bram_end_reg) begin
+                    // FIX: Check if next index is still within range
+                    if ((bram_read_index + 1) < rd_bram_end_reg) begin
                         next_state = READ_SETUP;
                     end
                     else begin
@@ -210,22 +221,20 @@ module External_AXI_FSM(
             DUPLEX_WAIT: begin
                 demux_sel = bram_write_index;
                 wr_start_addr = wr_addr_start_reg;
-                wr_count_limit = wr_addr_count_reg;  // Maintain counter limit!
+                wr_count_limit = wr_addr_count_reg;
                 
-                // Enable counter hanya saat handshake berhasil
-                if (bram_wr_enable) begin
-                    wr_counter_enable = 1'b1;
-                end
+                if (bram_wr_enable) wr_counter_enable = 1'b1;
                 
                 mux_sel = bram_read_index;
                 rd_start_addr = rd_addr_start_reg;
-                rd_count_limit = rd_addr_count_reg;  // Maintain counter limit!
+                rd_count_limit = rd_addr_count_reg;
                 bram_rd_enable = 1'b1;
                 rd_counter_enable = 1'b1;
-                
+
                 if (wr_counter_done && rd_counter_done) begin
-                    if (bram_write_index >= wr_bram_end_reg && 
-                        bram_read_index >= rd_bram_end_reg) begin
+                    // FIX: Check both indices
+                    if (((bram_write_index + 1) >= wr_bram_end_reg) && 
+                        ((bram_read_index + 1) >= rd_bram_end_reg)) begin
                         next_state = DONE;
                     end
                     else begin
@@ -236,11 +245,19 @@ module External_AXI_FSM(
 
             DONE: begin
                 next_state = IDLE;
+                if (Instruction_code == 8'h01) begin // WRITE ONLY
+                    batch_write_done = 1'b1;
+                end
+                else if (Instruction_code == 8'h02) begin // READ ONLY
+                    batch_read_done = 1'b1;
+                end
+                else if (Instruction_code == 8'h03) begin // DUPLEX
+                    batch_write_done = 1'b1;
+                    batch_read_done = 1'b1;
+                end
             end
             
-            default: begin
-                next_state = IDLE;
-            end
+            default: next_state = IDLE;
         endcase
     end
 
