@@ -1,0 +1,180 @@
+Time resolution is 1 ps
+
+========================================
+  1D Convolution Testbench - ADAPTED DESIGN
+========================================
+
+>>> Test 1: Basic Convolution (No Bias)
+Initializing input data: 2 channels, 7 temporal length
+Input data initialization complete
+Initializing weights: kernel_size=4, input_channels=2, filters=1
+  Systolic Architecture: 16 BRAMs
+  Multi-Channel Logic: Weights stored continuously for all channels.
+  Filter 0 -> BRAM[0], Row 0:
+    Ch0 start addr: 0
+    Ch1 start addr: 4
+Weight initialization complete
+  Total BRAM depth usage: 8 addresses
+
+=== Starting Convolution ===
+Parameters: stride=2, padding=7, kernel_size=4
+  input_channels=2, temporal_length=7, filters=1
+  Expected output_length=9
+=== Convolution Complete ===
+
+
+========================================
+OUTPUT RESULTS
+Filters: 1 | Output Length: 9
+========================================
+
+Filter 0 (BRAM[0], Row 0):
+  [0, 0, 1478, 5110, 8200, 10080, 5460, 0, 0]
+
+========================================
+
+
+>>> Test 2: Convolution with Bias = 0
+Initializing input data: 2 channels, 7 temporal length
+Input data initialization complete
+Initializing weights: kernel_size=4, input_channels=2, filters=1
+  Systolic Architecture: 16 BRAMs
+  Multi-Channel Logic: Weights stored continuously for all channels.
+  Filter 0 -> BRAM[0], Row 0:
+    Ch0 start addr: 0
+    Ch1 start addr: 4
+Weight initialization complete
+  Total BRAM depth usage: 8 addresses
+Initializing bias: filters=1, output_length=9, bias_value=0
+  Filter 0: BRAM[0], Row 0, Addresses 0-8
+Bias initialization complete
+
+=== Starting Convolution ===
+Parameters: stride=2, padding=7, kernel_size=4
+  input_channels=2, temporal_length=7, filters=1
+  Expected output_length=9
+=== Convolution Complete ===
+
+
+========================================
+OUTPUT RESULTS
+Filters: 1 | Output Length: 9
+========================================
+
+Filter 0 (BRAM[0], Row 0):
+  [0, 0, 1478, 5110, 8200, 10080, 5460, 0, 0]
+
+========================================
+
+
+>>> Test 3: Convolution with Bias = 100
+Initializing input data: 2 channels, 7 temporal length
+Input data initialization complete
+Initializing weights: kernel_size=4, input_channels=2, filters=1
+  Systolic Architecture: 16 BRAMs
+  Multi-Channel Logic: Weights stored continuously for all channels.
+  Filter 0 -> BRAM[0], Row 0:
+    Ch0 start addr: 0
+    Ch1 start addr: 4
+Weight initialization complete
+  Total BRAM depth usage: 8 addresses
+Initializing bias: filters=1, output_length=9, bias_value=100
+  Filter 0: BRAM[0], Row 0, Addresses 0-8
+Bias initialization complete
+
+=== Starting Convolution ===
+Parameters: stride=2, padding=7, kernel_size=4
+  input_channels=2, temporal_length=7, filters=1
+  Expected output_length=9
+=== Convolution Complete ===
+
+
+========================================
+OUTPUT RESULTS
+Filters: 1 | Output Length: 9
+========================================
+
+Filter 0 (BRAM[0], Row 0):
+  [100, 100, 1578, 5210, 8300, 10180, 5560, 100, 100]
+
+========================================
+
+
+>>> Test 4: Convolution with Negative Bias = -50
+Initializing input data: 2 channels, 7 temporal length
+Input data initialization complete
+Initializing weights: kernel_size=4, input_channels=2, filters=1
+  Systolic Architecture: 16 BRAMs
+  Multi-Channel Logic: Weights stored continuously for all channels.
+  Filter 0 -> BRAM[0], Row 0:
+    Ch0 start addr: 0
+    Ch1 start addr: 4
+Weight initialization complete
+  Total BRAM depth usage: 8 addresses
+Initializing bias: filters=1, output_length=9, bias_value=-50
+  Filter 0: BRAM[0], Row 0, Addresses 0-8
+Bias initialization complete
+
+=== Starting Convolution ===
+Parameters: stride=2, padding=7, kernel_size=4
+  input_channels=2, temporal_length=7, filters=1
+  Expected output_length=9
+=== Convolution Complete ===
+
+
+========================================
+OUTPUT RESULTS
+Filters: 1 | Output Length: 9
+========================================
+
+Filter 0 (BRAM[0], Row 0):
+  [-50, -50, 1428, 5060, 8150, 10030, 5410, -50, -50]
+
+========================================
+
+
+>>> Test 5: Multiple Filters with Bias = 25
+Initializing input data: 2 channels, 8 temporal length
+Input data initialization complete
+Initializing weights: kernel_size=3, input_channels=2, filters=2
+  Systolic Architecture: 16 BRAMs
+  Multi-Channel Logic: Weights stored continuously for all channels.
+  Filter 0 -> BRAM[0], Row 0:
+    Ch0 start addr: 0
+    Ch1 start addr: 3
+  Filter 1 -> BRAM[1], Row 0:
+    Ch0 start addr: 0
+    Ch1 start addr: 3
+Weight initialization complete
+  Total BRAM depth usage: 6 addresses
+Initializing bias: filters=2, output_length=6, bias_value=25
+  Filter 0: BRAM[0], Row 0, Addresses 0-5
+  Filter 1: BRAM[1], Row 0, Addresses 0-5
+Bias initialization complete
+
+=== Starting Convolution ===
+Parameters: stride=1, padding=0, kernel_size=3
+  input_channels=2, temporal_length=8, filters=2
+  Expected output_length=6
+=== Convolution Complete ===
+
+
+========================================
+OUTPUT RESULTS
+Filters: 2 | Output Length: 6
+========================================
+
+Filter 0 (BRAM[0], Row 0):
+  [5093, 5795, 6497, 7199, 7901, 8603]
+
+Filter 1 (BRAM[1], Row 0):
+  [9293, 10595, 11897, 13199, 14501, 15803]
+
+========================================
+
+
+========================================
+  All Tests Complete!
+========================================
+
+$finish called at time : 31365 ns : File "D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sim_1/new/onedconv_tb.v" Line 459
