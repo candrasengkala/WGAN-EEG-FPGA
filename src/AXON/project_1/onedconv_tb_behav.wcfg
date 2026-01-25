@@ -1,0 +1,885 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="onedconv_tb_behav.wdb" id="1">
+         <top_modules>
+            <top_module name="glbl" />
+            <top_module name="onedconv_tb" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+      <ZoomStartTime time="0.000000 us"></ZoomStartTime>
+      <ZoomEndTime time="288.000001 us"></ZoomEndTime>
+      <Cursor1Time time="0.000000 us"></Cursor1Time>
+   </zoom_setting>
+   <column_width_setting>
+      <NameColumnWidth column_width="441"></NameColumnWidth>
+      <ValueColumnWidth column_width="136"></ValueColumnWidth>
+   </column_width_setting>
+   <WVObjectSize size="215" />
+   <wvobject fp_name="/onedconv_tb/clk" type="logic">
+      <obj_property name="ElementShortName">clk</obj_property>
+      <obj_property name="ObjectShortName">clk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/rst" type="logic">
+      <obj_property name="ElementShortName">rst</obj_property>
+      <obj_property name="ObjectShortName">rst</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/start_whole" type="logic">
+      <obj_property name="ElementShortName">start_whole</obj_property>
+      <obj_property name="ObjectShortName">start_whole</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/stride" type="array">
+      <obj_property name="ElementShortName">stride[1:0]</obj_property>
+      <obj_property name="ObjectShortName">stride[1:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/padding" type="array">
+      <obj_property name="ElementShortName">padding[2:0]</obj_property>
+      <obj_property name="ObjectShortName">padding[2:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/kernel_size" type="array">
+      <obj_property name="ElementShortName">kernel_size[4:0]</obj_property>
+      <obj_property name="ObjectShortName">kernel_size[4:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/input_channels" type="array">
+      <obj_property name="ElementShortName">input_channels[9:0]</obj_property>
+      <obj_property name="ObjectShortName">input_channels[9:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/temporal_length" type="array">
+      <obj_property name="ElementShortName">temporal_length[9:0]</obj_property>
+      <obj_property name="ObjectShortName">temporal_length[9:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/filter_number" type="array">
+      <obj_property name="ElementShortName">filter_number[9:0]</obj_property>
+      <obj_property name="ObjectShortName">filter_number[9:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/input_bias" type="logic">
+      <obj_property name="ElementShortName">input_bias</obj_property>
+      <obj_property name="ObjectShortName">input_bias</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/ena_weight_input_bram" type="array">
+      <obj_property name="ElementShortName">ena_weight_input_bram[15:0]</obj_property>
+      <obj_property name="ObjectShortName">ena_weight_input_bram[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/wea_weight_input_bram" type="array">
+      <obj_property name="ElementShortName">wea_weight_input_bram[15:0]</obj_property>
+      <obj_property name="ObjectShortName">wea_weight_input_bram[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/ena_inputdata_input_bram" type="array">
+      <obj_property name="ElementShortName">ena_inputdata_input_bram[15:0]</obj_property>
+      <obj_property name="ObjectShortName">ena_inputdata_input_bram[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/wea_inputdata_input_bram" type="array">
+      <obj_property name="ElementShortName">wea_inputdata_input_bram[15:0]</obj_property>
+      <obj_property name="ObjectShortName">wea_inputdata_input_bram[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/weight_bram_addr" type="array">
+      <obj_property name="ElementShortName">weight_bram_addr[12:0]</obj_property>
+      <obj_property name="ObjectShortName">weight_bram_addr[12:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/inputdata_bram_addr" type="array">
+      <obj_property name="ElementShortName">inputdata_bram_addr[12:0]</obj_property>
+      <obj_property name="ObjectShortName">inputdata_bram_addr[12:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/weight_input_bram" type="array">
+      <obj_property name="ElementShortName">weight_input_bram[255:0]</obj_property>
+      <obj_property name="ObjectShortName">weight_input_bram[255:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/inputdata_input_bram" type="array">
+      <obj_property name="ElementShortName">inputdata_input_bram[255:0]</obj_property>
+      <obj_property name="ObjectShortName">inputdata_input_bram[255:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/read_mode_output_result" type="logic">
+      <obj_property name="ElementShortName">read_mode_output_result</obj_property>
+      <obj_property name="ObjectShortName">read_mode_output_result</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/enb_output_result" type="array">
+      <obj_property name="ElementShortName">enb_output_result[15:0]</obj_property>
+      <obj_property name="ObjectShortName">enb_output_result[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/output_result_bram_addr" type="array">
+      <obj_property name="ElementShortName">output_result_bram_addr[12:0]</obj_property>
+      <obj_property name="ObjectShortName">output_result_bram_addr[12:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/done_all" type="logic">
+      <obj_property name="ElementShortName">done_all</obj_property>
+      <obj_property name="ObjectShortName">done_all</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/output_result" type="array">
+      <obj_property name="ElementShortName">output_result[255:0]</obj_property>
+      <obj_property name="ObjectShortName">output_result[255:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/DW" type="array">
+      <obj_property name="ElementShortName">DW[31:0]</obj_property>
+      <obj_property name="ObjectShortName">DW[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/Dimension" type="array">
+      <obj_property name="ElementShortName">Dimension[31:0]</obj_property>
+      <obj_property name="ObjectShortName">Dimension[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/ADDRESS_LENGTH" type="array">
+      <obj_property name="ElementShortName">ADDRESS_LENGTH[31:0]</obj_property>
+      <obj_property name="ObjectShortName">ADDRESS_LENGTH[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/BRAM_Depth" type="array">
+      <obj_property name="ElementShortName">BRAM_Depth[31:0]</obj_property>
+      <obj_property name="ObjectShortName">BRAM_Depth[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/MUX_SEL_WIDTH" type="array">
+      <obj_property name="ElementShortName">MUX_SEL_WIDTH[31:0]</obj_property>
+      <obj_property name="ObjectShortName">MUX_SEL_WIDTH[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/CLK_PERIOD" type="array">
+      <obj_property name="ElementShortName">CLK_PERIOD[31:0]</obj_property>
+      <obj_property name="ObjectShortName">CLK_PERIOD[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/clk" type="logic">
+      <obj_property name="ElementShortName">clk</obj_property>
+      <obj_property name="ObjectShortName">clk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/input_bias" type="logic">
+      <obj_property name="ElementShortName">input_bias</obj_property>
+      <obj_property name="ObjectShortName">input_bias</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/rst" type="logic">
+      <obj_property name="ElementShortName">rst</obj_property>
+      <obj_property name="ObjectShortName">rst</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/start_whole" type="logic">
+      <obj_property name="ElementShortName">start_whole</obj_property>
+      <obj_property name="ObjectShortName">start_whole</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/done_all" type="logic">
+      <obj_property name="ElementShortName">done_all</obj_property>
+      <obj_property name="ObjectShortName">done_all</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/stride" type="array">
+      <obj_property name="ElementShortName">stride[1:0]</obj_property>
+      <obj_property name="ObjectShortName">stride[1:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/padding" type="array">
+      <obj_property name="ElementShortName">padding[2:0]</obj_property>
+      <obj_property name="ObjectShortName">padding[2:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/kernel_size" type="array">
+      <obj_property name="ElementShortName">kernel_size[4:0]</obj_property>
+      <obj_property name="ObjectShortName">kernel_size[4:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/input_channels" type="array">
+      <obj_property name="ElementShortName">input_channels[9:0]</obj_property>
+      <obj_property name="ObjectShortName">input_channels[9:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/filter_number" type="array">
+      <obj_property name="ElementShortName">filter_number[9:0]</obj_property>
+      <obj_property name="ObjectShortName">filter_number[9:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/temporal_length" type="array">
+      <obj_property name="ElementShortName">temporal_length[9:0]</obj_property>
+      <obj_property name="ObjectShortName">temporal_length[9:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/ifmap_counter_done" type="logic">
+      <obj_property name="ElementShortName">ifmap_counter_done</obj_property>
+      <obj_property name="ObjectShortName">ifmap_counter_done</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/ifmap_flag_1per16" type="logic">
+      <obj_property name="ElementShortName">ifmap_flag_1per16</obj_property>
+      <obj_property name="ObjectShortName">ifmap_flag_1per16</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/weight_counter_done" type="logic">
+      <obj_property name="ElementShortName">weight_counter_done</obj_property>
+      <obj_property name="ObjectShortName">weight_counter_done</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/weight_flag_1per16" type="logic">
+      <obj_property name="ElementShortName">weight_flag_1per16</obj_property>
+      <obj_property name="ObjectShortName">weight_flag_1per16</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/output_counter_done_a" type="logic">
+      <obj_property name="ElementShortName">output_counter_done_a</obj_property>
+      <obj_property name="ObjectShortName">output_counter_done_a</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/output_flag_1per16_a" type="logic">
+      <obj_property name="ElementShortName">output_flag_1per16_a</obj_property>
+      <obj_property name="ObjectShortName">output_flag_1per16_a</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/output_counter_done_b" type="logic">
+      <obj_property name="ElementShortName">output_counter_done_b</obj_property>
+      <obj_property name="ObjectShortName">output_counter_done_b</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/output_flag_1per16_b" type="logic">
+      <obj_property name="ElementShortName">output_flag_1per16_b</obj_property>
+      <obj_property name="ObjectShortName">output_flag_1per16_b</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/done_count_top" type="logic">
+      <obj_property name="ElementShortName">done_count_top</obj_property>
+      <obj_property name="ObjectShortName">done_count_top</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/done_top" type="logic">
+      <obj_property name="ElementShortName">done_top</obj_property>
+      <obj_property name="ObjectShortName">done_top</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/out_new_val_sign" type="logic">
+      <obj_property name="ElementShortName">out_new_val_sign</obj_property>
+      <obj_property name="ObjectShortName">out_new_val_sign</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/ifmap_counter_en" type="logic">
+      <obj_property name="ElementShortName">ifmap_counter_en</obj_property>
+      <obj_property name="ObjectShortName">ifmap_counter_en</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/ifmap_counter_rst" type="logic">
+      <obj_property name="ElementShortName">ifmap_counter_rst</obj_property>
+      <obj_property name="ObjectShortName">ifmap_counter_rst</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/en_weight_counter" type="logic">
+      <obj_property name="ElementShortName">en_weight_counter</obj_property>
+      <obj_property name="ObjectShortName">en_weight_counter</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/weight_rst_min_16" type="logic">
+      <obj_property name="ElementShortName">weight_rst_min_16</obj_property>
+      <obj_property name="ObjectShortName">weight_rst_min_16</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/weight_counter_rst" type="logic">
+      <obj_property name="ElementShortName">weight_counter_rst</obj_property>
+      <obj_property name="ObjectShortName">weight_counter_rst</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/en_output_counter_a" type="logic">
+      <obj_property name="ElementShortName">en_output_counter_a</obj_property>
+      <obj_property name="ObjectShortName">en_output_counter_a</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/output_counter_rst_a" type="logic">
+      <obj_property name="ElementShortName">output_counter_rst_a</obj_property>
+      <obj_property name="ObjectShortName">output_counter_rst_a</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/en_output_counter_b" type="logic">
+      <obj_property name="ElementShortName">en_output_counter_b</obj_property>
+      <obj_property name="ObjectShortName">en_output_counter_b</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/output_counter_rst_b" type="logic">
+      <obj_property name="ElementShortName">output_counter_rst_b</obj_property>
+      <obj_property name="ObjectShortName">output_counter_rst_b</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/ifmap_counter_start_val" type="array">
+      <obj_property name="ElementShortName">ifmap_counter_start_val[12:0]</obj_property>
+      <obj_property name="ObjectShortName">ifmap_counter_start_val[12:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/ifmap_counter_end_val" type="array">
+      <obj_property name="ElementShortName">ifmap_counter_end_val[12:0]</obj_property>
+      <obj_property name="ObjectShortName">ifmap_counter_end_val[12:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/weight_counter_start_val" type="array">
+      <obj_property name="ElementShortName">weight_counter_start_val[12:0]</obj_property>
+      <obj_property name="ObjectShortName">weight_counter_start_val[12:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/weight_counter_end_val" type="array">
+      <obj_property name="ElementShortName">weight_counter_end_val[12:0]</obj_property>
+      <obj_property name="ObjectShortName">weight_counter_end_val[12:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/output_counter_start_val_a" type="array">
+      <obj_property name="ElementShortName">output_counter_start_val_a[12:0]</obj_property>
+      <obj_property name="ObjectShortName">output_counter_start_val_a[12:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/output_counter_end_val_a" type="array">
+      <obj_property name="ElementShortName">output_counter_end_val_a[12:0]</obj_property>
+      <obj_property name="ObjectShortName">output_counter_end_val_a[12:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/output_counter_start_val_b" type="array">
+      <obj_property name="ElementShortName">output_counter_start_val_b[12:0]</obj_property>
+      <obj_property name="ObjectShortName">output_counter_start_val_b[12:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/output_counter_end_val_b" type="array">
+      <obj_property name="ElementShortName">output_counter_end_val_b[12:0]</obj_property>
+      <obj_property name="ObjectShortName">output_counter_end_val_b[12:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/enb_inputdata_input_bram" type="array">
+      <obj_property name="ElementShortName">enb_inputdata_input_bram[15:0]</obj_property>
+      <obj_property name="ObjectShortName">enb_inputdata_input_bram[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/enb_weight_input_bram" type="array">
+      <obj_property name="ElementShortName">enb_weight_input_bram[15:0]</obj_property>
+      <obj_property name="ObjectShortName">enb_weight_input_bram[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/ena_output_result_control" type="array">
+      <obj_property name="ElementShortName">ena_output_result_control[15:0]</obj_property>
+      <obj_property name="ObjectShortName">ena_output_result_control[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/wea_output_result" type="array">
+      <obj_property name="ElementShortName">wea_output_result[15:0]</obj_property>
+      <obj_property name="ObjectShortName">wea_output_result[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/enb_output_result_control" type="array">
+      <obj_property name="ElementShortName">enb_output_result_control[15:0]</obj_property>
+      <obj_property name="ObjectShortName">enb_output_result_control[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/en_shift_reg_ifmap_input_ctrl" type="array">
+      <obj_property name="ElementShortName">en_shift_reg_ifmap_input_ctrl[15:0]</obj_property>
+      <obj_property name="ObjectShortName">en_shift_reg_ifmap_input_ctrl[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/en_shift_reg_weight_input_ctrl" type="array">
+      <obj_property name="ElementShortName">en_shift_reg_weight_input_ctrl[15:0]</obj_property>
+      <obj_property name="ObjectShortName">en_shift_reg_weight_input_ctrl[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/zero_or_data" type="logic">
+      <obj_property name="ElementShortName">zero_or_data</obj_property>
+      <obj_property name="ObjectShortName">zero_or_data</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/zero_or_data_weight" type="logic">
+      <obj_property name="ElementShortName">zero_or_data_weight</obj_property>
+      <obj_property name="ObjectShortName">zero_or_data_weight</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/sel_input_data_mem" type="array">
+      <obj_property name="ElementShortName">sel_input_data_mem[3:0]</obj_property>
+      <obj_property name="ObjectShortName">sel_input_data_mem[3:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/output_bram_destination" type="logic">
+      <obj_property name="ElementShortName">output_bram_destination</obj_property>
+      <obj_property name="ObjectShortName">output_bram_destination</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/en_reg_adder" type="logic">
+      <obj_property name="ElementShortName">en_reg_adder</obj_property>
+      <obj_property name="ObjectShortName">en_reg_adder</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/output_result_reg_rst" type="logic">
+      <obj_property name="ElementShortName">output_result_reg_rst</obj_property>
+      <obj_property name="ObjectShortName">output_result_reg_rst</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/rst_top" type="logic">
+      <obj_property name="ElementShortName">rst_top</obj_property>
+      <obj_property name="ObjectShortName">rst_top</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/mode_top" type="logic">
+      <obj_property name="ElementShortName">mode_top</obj_property>
+      <obj_property name="ObjectShortName">mode_top</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/output_val_top" type="logic">
+      <obj_property name="ElementShortName">output_val_top</obj_property>
+      <obj_property name="ObjectShortName">output_val_top</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/start_top" type="logic">
+      <obj_property name="ElementShortName">start_top</obj_property>
+      <obj_property name="ObjectShortName">start_top</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/state" type="array">
+      <obj_property name="ElementShortName">state[4:0]</obj_property>
+      <obj_property name="ObjectShortName">state[4:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/next_state" type="array">
+      <obj_property name="ElementShortName">next_state[4:0]</obj_property>
+      <obj_property name="ObjectShortName">next_state[4:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/rst_inputmicrosequencer" type="logic">
+      <obj_property name="ElementShortName">rst_inputmicrosequencer</obj_property>
+      <obj_property name="ObjectShortName">rst_inputmicrosequencer</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/en_inputmicrosequencer" type="logic">
+      <obj_property name="ElementShortName">en_inputmicrosequencer</obj_property>
+      <obj_property name="ObjectShortName">en_inputmicrosequencer</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/done_inputmicrosequencer" type="logic">
+      <obj_property name="ElementShortName">done_inputmicrosequencer</obj_property>
+      <obj_property name="ObjectShortName">done_inputmicrosequencer</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/restart_inputmicrosequencer" type="logic">
+      <obj_property name="ElementShortName">restart_inputmicrosequencer</obj_property>
+      <obj_property name="ObjectShortName">restart_inputmicrosequencer</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/rst_filtermicrosequencer" type="logic">
+      <obj_property name="ElementShortName">rst_filtermicrosequencer</obj_property>
+      <obj_property name="ObjectShortName">rst_filtermicrosequencer</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/en_filtermicrosequencer" type="logic">
+      <obj_property name="ElementShortName">en_filtermicrosequencer</obj_property>
+      <obj_property name="ObjectShortName">en_filtermicrosequencer</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/done_filtermicrosequencer" type="logic">
+      <obj_property name="ElementShortName">done_filtermicrosequencer</obj_property>
+      <obj_property name="ObjectShortName">done_filtermicrosequencer</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/restart_filtermicrosequencer" type="logic">
+      <obj_property name="ElementShortName">restart_filtermicrosequencer</obj_property>
+      <obj_property name="ObjectShortName">restart_filtermicrosequencer</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/rst_outputmicrosequencer" type="logic">
+      <obj_property name="ElementShortName">rst_outputmicrosequencer</obj_property>
+      <obj_property name="ObjectShortName">rst_outputmicrosequencer</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/en_outputmicrosequencer" type="logic">
+      <obj_property name="ElementShortName">en_outputmicrosequencer</obj_property>
+      <obj_property name="ObjectShortName">en_outputmicrosequencer</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/done_outputmicrosequencer" type="logic">
+      <obj_property name="ElementShortName">done_outputmicrosequencer</obj_property>
+      <obj_property name="ObjectShortName">done_outputmicrosequencer</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/input_channel_count" type="array">
+      <obj_property name="ElementShortName">input_channel_count[9:0]</obj_property>
+      <obj_property name="ObjectShortName">input_channel_count[9:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/filter_number_count" type="array">
+      <obj_property name="ElementShortName">filter_number_count[9:0]</obj_property>
+      <obj_property name="ObjectShortName">filter_number_count[9:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/needed_amount_count" type="array">
+      <obj_property name="ElementShortName">needed_amount_count[9:0]</obj_property>
+      <obj_property name="ObjectShortName">needed_amount_count[9:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/numerator" type="array">
+      <obj_property name="ElementShortName">numerator[11:0]</obj_property>
+      <obj_property name="ObjectShortName">numerator[11:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/output_length" type="array">
+      <obj_property name="ElementShortName">output_length[11:0]</obj_property>
+      <obj_property name="ObjectShortName">output_length[11:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/needed_amount" type="array">
+      <obj_property name="ElementShortName">needed_amount[11:0]</obj_property>
+      <obj_property name="ObjectShortName">needed_amount[11:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/stride_val" type="array">
+      <obj_property name="ElementShortName">stride_val[2:0]</obj_property>
+      <obj_property name="ObjectShortName">stride_val[2:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/base_addr_ifmap" type="array">
+      <obj_property name="ElementShortName">base_addr_ifmap[12:0]</obj_property>
+      <obj_property name="ObjectShortName">base_addr_ifmap[12:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/base_addr_weight" type="array">
+      <obj_property name="ElementShortName">base_addr_weight[12:0]</obj_property>
+      <obj_property name="ObjectShortName">base_addr_weight[12:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/DW" type="array">
+      <obj_property name="ElementShortName">DW[31:0]</obj_property>
+      <obj_property name="ObjectShortName">DW[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/Dimension" type="array">
+      <obj_property name="ElementShortName">Dimension[31:0]</obj_property>
+      <obj_property name="ObjectShortName">Dimension[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/ADDRESS_LENGTH" type="array">
+      <obj_property name="ElementShortName">ADDRESS_LENGTH[31:0]</obj_property>
+      <obj_property name="ObjectShortName">ADDRESS_LENGTH[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/MUX_SEL_WIDTH" type="array">
+      <obj_property name="ElementShortName">MUX_SEL_WIDTH[31:0]</obj_property>
+      <obj_property name="ObjectShortName">MUX_SEL_WIDTH[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/S_IDLE" type="array">
+      <obj_property name="ElementShortName">S_IDLE[4:0]</obj_property>
+      <obj_property name="ObjectShortName">S_IDLE[4:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/S_PICK_INPUT_LAYER_INIT" type="array">
+      <obj_property name="ElementShortName">S_PICK_INPUT_LAYER_INIT[4:0]</obj_property>
+      <obj_property name="ObjectShortName">S_PICK_INPUT_LAYER_INIT[4:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/S_LOAD_INITIAL" type="array">
+      <obj_property name="ElementShortName">S_LOAD_INITIAL[4:0]</obj_property>
+      <obj_property name="ObjectShortName">S_LOAD_INITIAL[4:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/S_RUN" type="array">
+      <obj_property name="ElementShortName">S_RUN[4:0]</obj_property>
+      <obj_property name="ObjectShortName">S_RUN[4:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/S_RESTART_MICROSEQUENCER" type="array">
+      <obj_property name="ElementShortName">S_RESTART_MICROSEQUENCER[4:0]</obj_property>
+      <obj_property name="ObjectShortName">S_RESTART_MICROSEQUENCER[4:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/S_OUTPUT_VAL" type="array">
+      <obj_property name="ElementShortName">S_OUTPUT_VAL[4:0]</obj_property>
+      <obj_property name="ObjectShortName">S_OUTPUT_VAL[4:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/S_CHECK_COUNTER" type="array">
+      <obj_property name="ElementShortName">S_CHECK_COUNTER[4:0]</obj_property>
+      <obj_property name="ObjectShortName">S_CHECK_COUNTER[4:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/S_CHANGE_INPUT_CHANNEL" type="array">
+      <obj_property name="ElementShortName">S_CHANGE_INPUT_CHANNEL[4:0]</obj_property>
+      <obj_property name="ObjectShortName">S_CHANGE_INPUT_CHANNEL[4:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/S_CHANGE_FILTER" type="array">
+      <obj_property name="ElementShortName">S_CHANGE_FILTER[4:0]</obj_property>
+      <obj_property name="ObjectShortName">S_CHANGE_FILTER[4:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/S_DONE" type="array">
+      <obj_property name="ElementShortName">S_DONE[4:0]</obj_property>
+      <obj_property name="ObjectShortName">S_DONE[4:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/clk" type="logic">
+      <obj_property name="ElementShortName">clk</obj_property>
+      <obj_property name="ObjectShortName">clk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/rst" type="logic">
+      <obj_property name="ElementShortName">rst</obj_property>
+      <obj_property name="ObjectShortName">rst</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/start_whole" type="logic">
+      <obj_property name="ElementShortName">start_whole</obj_property>
+      <obj_property name="ObjectShortName">start_whole</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/done_all" type="logic">
+      <obj_property name="ElementShortName">done_all</obj_property>
+      <obj_property name="ObjectShortName">done_all</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/stride" type="array">
+      <obj_property name="ElementShortName">stride[1:0]</obj_property>
+      <obj_property name="ObjectShortName">stride[1:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/padding" type="array">
+      <obj_property name="ElementShortName">padding[2:0]</obj_property>
+      <obj_property name="ObjectShortName">padding[2:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/kernel_size" type="array">
+      <obj_property name="ElementShortName">kernel_size[4:0]</obj_property>
+      <obj_property name="ObjectShortName">kernel_size[4:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/input_channels" type="array">
+      <obj_property name="ElementShortName">input_channels[9:0]</obj_property>
+      <obj_property name="ObjectShortName">input_channels[9:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/filter_number" type="array">
+      <obj_property name="ElementShortName">filter_number[9:0]</obj_property>
+      <obj_property name="ObjectShortName">filter_number[9:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/temporal_length" type="array">
+      <obj_property name="ElementShortName">temporal_length[9:0]</obj_property>
+      <obj_property name="ObjectShortName">temporal_length[9:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/ifmap_counter_done" type="logic">
+      <obj_property name="ElementShortName">ifmap_counter_done</obj_property>
+      <obj_property name="ObjectShortName">ifmap_counter_done</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/ifmap_flag_1per16" type="logic">
+      <obj_property name="ElementShortName">ifmap_flag_1per16</obj_property>
+      <obj_property name="ObjectShortName">ifmap_flag_1per16</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/weight_counter_done" type="logic">
+      <obj_property name="ElementShortName">weight_counter_done</obj_property>
+      <obj_property name="ObjectShortName">weight_counter_done</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/weight_flag_1per16" type="logic">
+      <obj_property name="ElementShortName">weight_flag_1per16</obj_property>
+      <obj_property name="ObjectShortName">weight_flag_1per16</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/output_counter_done_a" type="logic">
+      <obj_property name="ElementShortName">output_counter_done_a</obj_property>
+      <obj_property name="ObjectShortName">output_counter_done_a</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/output_flag_1per16_a" type="logic">
+      <obj_property name="ElementShortName">output_flag_1per16_a</obj_property>
+      <obj_property name="ObjectShortName">output_flag_1per16_a</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/output_counter_done_b" type="logic">
+      <obj_property name="ElementShortName">output_counter_done_b</obj_property>
+      <obj_property name="ObjectShortName">output_counter_done_b</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/output_flag_1per16_b" type="logic">
+      <obj_property name="ElementShortName">output_flag_1per16_b</obj_property>
+      <obj_property name="ObjectShortName">output_flag_1per16_b</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/done_count_top" type="logic">
+      <obj_property name="ElementShortName">done_count_top</obj_property>
+      <obj_property name="ObjectShortName">done_count_top</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/done_top" type="logic">
+      <obj_property name="ElementShortName">done_top</obj_property>
+      <obj_property name="ObjectShortName">done_top</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/out_new_val_sign" type="logic">
+      <obj_property name="ElementShortName">out_new_val_sign</obj_property>
+      <obj_property name="ObjectShortName">out_new_val_sign</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/ifmap_counter_en" type="logic">
+      <obj_property name="ElementShortName">ifmap_counter_en</obj_property>
+      <obj_property name="ObjectShortName">ifmap_counter_en</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/ifmap_counter_rst" type="logic">
+      <obj_property name="ElementShortName">ifmap_counter_rst</obj_property>
+      <obj_property name="ObjectShortName">ifmap_counter_rst</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/en_weight_counter" type="logic">
+      <obj_property name="ElementShortName">en_weight_counter</obj_property>
+      <obj_property name="ObjectShortName">en_weight_counter</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/weight_rst_min_16" type="logic">
+      <obj_property name="ElementShortName">weight_rst_min_16</obj_property>
+      <obj_property name="ObjectShortName">weight_rst_min_16</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/weight_counter_rst" type="logic">
+      <obj_property name="ElementShortName">weight_counter_rst</obj_property>
+      <obj_property name="ObjectShortName">weight_counter_rst</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/en_output_counter_a" type="logic">
+      <obj_property name="ElementShortName">en_output_counter_a</obj_property>
+      <obj_property name="ObjectShortName">en_output_counter_a</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/output_counter_rst_a" type="logic">
+      <obj_property name="ElementShortName">output_counter_rst_a</obj_property>
+      <obj_property name="ObjectShortName">output_counter_rst_a</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/en_output_counter_b" type="logic">
+      <obj_property name="ElementShortName">en_output_counter_b</obj_property>
+      <obj_property name="ObjectShortName">en_output_counter_b</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/output_counter_rst_b" type="logic">
+      <obj_property name="ElementShortName">output_counter_rst_b</obj_property>
+      <obj_property name="ObjectShortName">output_counter_rst_b</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/ifmap_counter_start_val" type="array">
+      <obj_property name="ElementShortName">ifmap_counter_start_val[12:0]</obj_property>
+      <obj_property name="ObjectShortName">ifmap_counter_start_val[12:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/ifmap_counter_end_val" type="array">
+      <obj_property name="ElementShortName">ifmap_counter_end_val[12:0]</obj_property>
+      <obj_property name="ObjectShortName">ifmap_counter_end_val[12:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/weight_counter_start_val" type="array">
+      <obj_property name="ElementShortName">weight_counter_start_val[12:0]</obj_property>
+      <obj_property name="ObjectShortName">weight_counter_start_val[12:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/weight_counter_end_val" type="array">
+      <obj_property name="ElementShortName">weight_counter_end_val[12:0]</obj_property>
+      <obj_property name="ObjectShortName">weight_counter_end_val[12:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/output_counter_start_val_a" type="array">
+      <obj_property name="ElementShortName">output_counter_start_val_a[12:0]</obj_property>
+      <obj_property name="ObjectShortName">output_counter_start_val_a[12:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/output_counter_end_val_a" type="array">
+      <obj_property name="ElementShortName">output_counter_end_val_a[12:0]</obj_property>
+      <obj_property name="ObjectShortName">output_counter_end_val_a[12:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/output_counter_start_val_b" type="array">
+      <obj_property name="ElementShortName">output_counter_start_val_b[12:0]</obj_property>
+      <obj_property name="ObjectShortName">output_counter_start_val_b[12:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/output_counter_end_val_b" type="array">
+      <obj_property name="ElementShortName">output_counter_end_val_b[12:0]</obj_property>
+      <obj_property name="ObjectShortName">output_counter_end_val_b[12:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/enb_inputdata_input_bram" type="array">
+      <obj_property name="ElementShortName">enb_inputdata_input_bram[15:0]</obj_property>
+      <obj_property name="ObjectShortName">enb_inputdata_input_bram[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/enb_weight_input_bram" type="array">
+      <obj_property name="ElementShortName">enb_weight_input_bram[15:0]</obj_property>
+      <obj_property name="ObjectShortName">enb_weight_input_bram[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/ena_output_result_control" type="array">
+      <obj_property name="ElementShortName">ena_output_result_control[15:0]</obj_property>
+      <obj_property name="ObjectShortName">ena_output_result_control[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/wea_output_result" type="array">
+      <obj_property name="ElementShortName">wea_output_result[15:0]</obj_property>
+      <obj_property name="ObjectShortName">wea_output_result[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/enb_output_result_control" type="array">
+      <obj_property name="ElementShortName">enb_output_result_control[15:0]</obj_property>
+      <obj_property name="ObjectShortName">enb_output_result_control[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/en_shift_reg_ifmap_input_ctrl" type="array">
+      <obj_property name="ElementShortName">en_shift_reg_ifmap_input_ctrl[15:0]</obj_property>
+      <obj_property name="ObjectShortName">en_shift_reg_ifmap_input_ctrl[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/en_shift_reg_weight_input_ctrl" type="array">
+      <obj_property name="ElementShortName">en_shift_reg_weight_input_ctrl[15:0]</obj_property>
+      <obj_property name="ObjectShortName">en_shift_reg_weight_input_ctrl[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/zero_or_data" type="logic">
+      <obj_property name="ElementShortName">zero_or_data</obj_property>
+      <obj_property name="ObjectShortName">zero_or_data</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/zero_or_data_weight" type="logic">
+      <obj_property name="ElementShortName">zero_or_data_weight</obj_property>
+      <obj_property name="ObjectShortName">zero_or_data_weight</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/sel_input_data_mem" type="array">
+      <obj_property name="ElementShortName">sel_input_data_mem[3:0]</obj_property>
+      <obj_property name="ObjectShortName">sel_input_data_mem[3:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/output_bram_destination" type="logic">
+      <obj_property name="ElementShortName">output_bram_destination</obj_property>
+      <obj_property name="ObjectShortName">output_bram_destination</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/en_reg_adder" type="logic">
+      <obj_property name="ElementShortName">en_reg_adder</obj_property>
+      <obj_property name="ObjectShortName">en_reg_adder</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/output_result_reg_rst" type="logic">
+      <obj_property name="ElementShortName">output_result_reg_rst</obj_property>
+      <obj_property name="ObjectShortName">output_result_reg_rst</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/rst_top" type="logic">
+      <obj_property name="ElementShortName">rst_top</obj_property>
+      <obj_property name="ObjectShortName">rst_top</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/mode_top" type="logic">
+      <obj_property name="ElementShortName">mode_top</obj_property>
+      <obj_property name="ObjectShortName">mode_top</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/output_val_top" type="logic">
+      <obj_property name="ElementShortName">output_val_top</obj_property>
+      <obj_property name="ObjectShortName">output_val_top</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/start_top" type="logic">
+      <obj_property name="ElementShortName">start_top</obj_property>
+      <obj_property name="ObjectShortName">start_top</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/state" type="array">
+      <obj_property name="ElementShortName">state[4:0]</obj_property>
+      <obj_property name="ObjectShortName">state[4:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/next_state" type="array">
+      <obj_property name="ElementShortName">next_state[4:0]</obj_property>
+      <obj_property name="ObjectShortName">next_state[4:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/rst_inputmicrosequencer" type="logic">
+      <obj_property name="ElementShortName">rst_inputmicrosequencer</obj_property>
+      <obj_property name="ObjectShortName">rst_inputmicrosequencer</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/en_inputmicrosequencer" type="logic">
+      <obj_property name="ElementShortName">en_inputmicrosequencer</obj_property>
+      <obj_property name="ObjectShortName">en_inputmicrosequencer</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/done_inputmicrosequencer" type="logic">
+      <obj_property name="ElementShortName">done_inputmicrosequencer</obj_property>
+      <obj_property name="ObjectShortName">done_inputmicrosequencer</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/restart_inputmicrosequencer" type="logic">
+      <obj_property name="ElementShortName">restart_inputmicrosequencer</obj_property>
+      <obj_property name="ObjectShortName">restart_inputmicrosequencer</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/rst_filtermicrosequencer" type="logic">
+      <obj_property name="ElementShortName">rst_filtermicrosequencer</obj_property>
+      <obj_property name="ObjectShortName">rst_filtermicrosequencer</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/en_filtermicrosequencer" type="logic">
+      <obj_property name="ElementShortName">en_filtermicrosequencer</obj_property>
+      <obj_property name="ObjectShortName">en_filtermicrosequencer</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/done_filtermicrosequencer" type="logic">
+      <obj_property name="ElementShortName">done_filtermicrosequencer</obj_property>
+      <obj_property name="ObjectShortName">done_filtermicrosequencer</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/restart_filtermicrosequencer" type="logic">
+      <obj_property name="ElementShortName">restart_filtermicrosequencer</obj_property>
+      <obj_property name="ObjectShortName">restart_filtermicrosequencer</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/rst_outputmicrosequencer" type="logic">
+      <obj_property name="ElementShortName">rst_outputmicrosequencer</obj_property>
+      <obj_property name="ObjectShortName">rst_outputmicrosequencer</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/en_outputmicrosequencer" type="logic">
+      <obj_property name="ElementShortName">en_outputmicrosequencer</obj_property>
+      <obj_property name="ObjectShortName">en_outputmicrosequencer</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/done_outputmicrosequencer" type="logic">
+      <obj_property name="ElementShortName">done_outputmicrosequencer</obj_property>
+      <obj_property name="ObjectShortName">done_outputmicrosequencer</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/input_channel_count" type="array">
+      <obj_property name="ElementShortName">input_channel_count[9:0]</obj_property>
+      <obj_property name="ObjectShortName">input_channel_count[9:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/filter_number_count" type="array">
+      <obj_property name="ElementShortName">filter_number_count[9:0]</obj_property>
+      <obj_property name="ObjectShortName">filter_number_count[9:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/needed_amount_count" type="array">
+      <obj_property name="ElementShortName">needed_amount_count[9:0]</obj_property>
+      <obj_property name="ObjectShortName">needed_amount_count[9:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/numerator" type="array">
+      <obj_property name="ElementShortName">numerator[11:0]</obj_property>
+      <obj_property name="ObjectShortName">numerator[11:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/output_length" type="array">
+      <obj_property name="ElementShortName">output_length[11:0]</obj_property>
+      <obj_property name="ObjectShortName">output_length[11:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/needed_amount" type="array">
+      <obj_property name="ElementShortName">needed_amount[11:0]</obj_property>
+      <obj_property name="ObjectShortName">needed_amount[11:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/stride_val" type="array">
+      <obj_property name="ElementShortName">stride_val[2:0]</obj_property>
+      <obj_property name="ObjectShortName">stride_val[2:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/base_addr_ifmap" type="array">
+      <obj_property name="ElementShortName">base_addr_ifmap[12:0]</obj_property>
+      <obj_property name="ObjectShortName">base_addr_ifmap[12:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/base_addr_weight" type="array">
+      <obj_property name="ElementShortName">base_addr_weight[12:0]</obj_property>
+      <obj_property name="ObjectShortName">base_addr_weight[12:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/DW" type="array">
+      <obj_property name="ElementShortName">DW[31:0]</obj_property>
+      <obj_property name="ObjectShortName">DW[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/Dimension" type="array">
+      <obj_property name="ElementShortName">Dimension[31:0]</obj_property>
+      <obj_property name="ObjectShortName">Dimension[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/ADDRESS_LENGTH" type="array">
+      <obj_property name="ElementShortName">ADDRESS_LENGTH[31:0]</obj_property>
+      <obj_property name="ObjectShortName">ADDRESS_LENGTH[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/MUX_SEL_WIDTH" type="array">
+      <obj_property name="ElementShortName">MUX_SEL_WIDTH[31:0]</obj_property>
+      <obj_property name="ObjectShortName">MUX_SEL_WIDTH[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/S_IDLE" type="array">
+      <obj_property name="ElementShortName">S_IDLE[4:0]</obj_property>
+      <obj_property name="ObjectShortName">S_IDLE[4:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/S_PICK_INPUT_LAYER_INIT" type="array">
+      <obj_property name="ElementShortName">S_PICK_INPUT_LAYER_INIT[4:0]</obj_property>
+      <obj_property name="ObjectShortName">S_PICK_INPUT_LAYER_INIT[4:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/S_LOAD_INITIAL" type="array">
+      <obj_property name="ElementShortName">S_LOAD_INITIAL[4:0]</obj_property>
+      <obj_property name="ObjectShortName">S_LOAD_INITIAL[4:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/S_RUN" type="array">
+      <obj_property name="ElementShortName">S_RUN[4:0]</obj_property>
+      <obj_property name="ObjectShortName">S_RUN[4:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/S_RESTART_MICROSEQUENCER" type="array">
+      <obj_property name="ElementShortName">S_RESTART_MICROSEQUENCER[4:0]</obj_property>
+      <obj_property name="ObjectShortName">S_RESTART_MICROSEQUENCER[4:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/S_OUTPUT_VAL" type="array">
+      <obj_property name="ElementShortName">S_OUTPUT_VAL[4:0]</obj_property>
+      <obj_property name="ObjectShortName">S_OUTPUT_VAL[4:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/S_CHECK_COUNTER" type="array">
+      <obj_property name="ElementShortName">S_CHECK_COUNTER[4:0]</obj_property>
+      <obj_property name="ObjectShortName">S_CHECK_COUNTER[4:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/S_CHANGE_INPUT_CHANNEL" type="array">
+      <obj_property name="ElementShortName">S_CHANGE_INPUT_CHANNEL[4:0]</obj_property>
+      <obj_property name="ObjectShortName">S_CHANGE_INPUT_CHANNEL[4:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/S_CHANGE_FILTER" type="array">
+      <obj_property name="ElementShortName">S_CHANGE_FILTER[4:0]</obj_property>
+      <obj_property name="ObjectShortName">S_CHANGE_FILTER[4:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/S_DONE" type="array">
+      <obj_property name="ElementShortName">S_DONE[4:0]</obj_property>
+      <obj_property name="ObjectShortName">S_DONE[4:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/output_result" type="array">
+      <obj_property name="ElementShortName">output_result[255:0]</obj_property>
+      <obj_property name="ObjectShortName">output_result[255:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/input_bias" type="logic">
+      <obj_property name="ElementShortName">input_bias</obj_property>
+      <obj_property name="ObjectShortName">input_bias</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/input_bias" type="logic">
+      <obj_property name="ElementShortName">input_bias</obj_property>
+      <obj_property name="ObjectShortName">input_bias</obj_property>
+   </wvobject>
+</wave_config>

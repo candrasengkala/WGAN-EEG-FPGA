@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="top_lvl_tb_behav.wdb" id="1">
+         <top_modules>
+            <top_module name="glbl" />
+            <top_module name="top_lvl_tb" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+      <ZoomStartTime time="0.000 ns"></ZoomStartTime>
+      <ZoomEndTime time="1,107.001 ns"></ZoomEndTime>
+      <Cursor1Time time="165.000 ns"></Cursor1Time>
+   </zoom_setting>
+   <column_width_setting>
+      <NameColumnWidth column_width="258"></NameColumnWidth>
+      <ValueColumnWidth column_width="100"></ValueColumnWidth>
+   </column_width_setting>
+   <WVObjectSize size="19" />
+   <wvobject fp_name="/top_lvl_tb/clk" type="logic">
+      <obj_property name="ElementShortName">clk</obj_property>
+      <obj_property name="ObjectShortName">clk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_lvl_tb/rst" type="logic">
+      <obj_property name="ElementShortName">rst</obj_property>
+      <obj_property name="ObjectShortName">rst</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_lvl_tb/en_cntr" type="logic">
+      <obj_property name="ElementShortName">en_cntr</obj_property>
+      <obj_property name="ObjectShortName">en_cntr</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_lvl_tb/en_in" type="array">
+      <obj_property name="ElementShortName">en_in[255:0]</obj_property>
+      <obj_property name="ObjectShortName">en_in[255:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_lvl_tb/en_out" type="array">
+      <obj_property name="ElementShortName">en_out[255:0]</obj_property>
+      <obj_property name="ObjectShortName">en_out[255:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_lvl_tb/en_psum" type="array">
+      <obj_property name="ElementShortName">en_psum[255:0]</obj_property>
+      <obj_property name="ObjectShortName">en_psum[255:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_lvl_tb/ifmaps_sel" type="array">
+      <obj_property name="ElementShortName">ifmaps_sel[15:0]</obj_property>
+      <obj_property name="ObjectShortName">ifmaps_sel[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_lvl_tb/output_eject_ctrl" type="array">
+      <obj_property name="ElementShortName">output_eject_ctrl[15:0]</obj_property>
+      <obj_property name="ObjectShortName">output_eject_ctrl[15:0]</obj_property>
+      <obj_property name="Radix">BINARYRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_lvl_tb/weight_in" type="array">
+      <obj_property name="ElementShortName">weight_in[255:0]</obj_property>
+      <obj_property name="ObjectShortName">weight_in[255:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_lvl_tb/ifmap_in" type="array">
+      <obj_property name="ElementShortName">ifmap_in[255:0]</obj_property>
+      <obj_property name="ObjectShortName">ifmap_in[255:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_lvl_tb/output_out" type="array">
+      <obj_property name="ElementShortName">output_out[255:0]</obj_property>
+      <obj_property name="ObjectShortName">output_out[255:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_lvl_tb/done_count" type="logic">
+      <obj_property name="ElementShortName">done_count</obj_property>
+      <obj_property name="ObjectShortName">done_count</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_lvl_tb/r" type="array">
+      <obj_property name="ElementShortName">r[31:0]</obj_property>
+      <obj_property name="ObjectShortName">r[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_lvl_tb/c" type="array">
+      <obj_property name="ElementShortName">c[31:0]</obj_property>
+      <obj_property name="ObjectShortName">c[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_lvl_tb/A" type="array">
+      <obj_property name="ElementShortName">A[0:15][0:15][15:0]</obj_property>
+      <obj_property name="ObjectShortName">A[0:15][0:15][15:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_lvl_tb/B" type="array">
+      <obj_property name="ElementShortName">B[0:15][0:15][15:0]</obj_property>
+      <obj_property name="ObjectShortName">B[0:15][0:15][15:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_lvl_tb/i" type="array">
+      <obj_property name="ElementShortName">i[31:0]</obj_property>
+      <obj_property name="ObjectShortName">i[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_lvl_tb/DW" type="array">
+      <obj_property name="ElementShortName">DW[31:0]</obj_property>
+      <obj_property name="ObjectShortName">DW[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_lvl_tb/Dimension" type="array">
+      <obj_property name="ElementShortName">Dimension[31:0]</obj_property>
+      <obj_property name="ObjectShortName">Dimension[31:0]</obj_property>
+   </wvobject>
+</wave_config>
