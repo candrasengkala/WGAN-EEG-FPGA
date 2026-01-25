@@ -1,0 +1,1299 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="onedconv_tb_behav.wdb" id="1">
+         <top_modules>
+            <top_module name="glbl" />
+            <top_module name="onedconv_tb" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+      <ZoomStartTime time="75,474.500 ns"></ZoomStartTime>
+      <ZoomEndTime time="76,111.001 ns"></ZoomEndTime>
+      <Cursor1Time time="75,804.500 ns"></Cursor1Time>
+   </zoom_setting>
+   <column_width_setting>
+      <NameColumnWidth column_width="273"></NameColumnWidth>
+      <ValueColumnWidth column_width="315"></ValueColumnWidth>
+   </column_width_setting>
+   <WVObjectSize size="275" />
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[0].bram_output /clka" type="logic">
+      <obj_property name="ElementShortName">clka</obj_property>
+      <obj_property name="ObjectShortName">clka</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[0].bram_output /clkb" type="logic">
+      <obj_property name="ElementShortName">clkb</obj_property>
+      <obj_property name="ObjectShortName">clkb</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[0].bram_output /ena" type="logic">
+      <obj_property name="ElementShortName">ena</obj_property>
+      <obj_property name="ObjectShortName">ena</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[0].bram_output /enb" type="logic">
+      <obj_property name="ElementShortName">enb</obj_property>
+      <obj_property name="ObjectShortName">enb</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/output_counter_inst_b/en" type="logic">
+      <obj_property name="ElementShortName">en</obj_property>
+      <obj_property name="ObjectShortName">en</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/output_counter_inst_a/en" type="logic">
+      <obj_property name="ElementShortName">en</obj_property>
+      <obj_property name="ObjectShortName">en</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[0].bram_output /wea" type="logic">
+      <obj_property name="ElementShortName">wea</obj_property>
+      <obj_property name="ObjectShortName">wea</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/output_counter_inst_b/en" type="logic">
+      <obj_property name="ElementShortName">en</obj_property>
+      <obj_property name="ObjectShortName">en</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/output_microsequencer_inst/out_new_val_sign" type="logic">
+      <obj_property name="ElementShortName">out_new_val_sign</obj_property>
+      <obj_property name="ObjectShortName">out_new_val_sign</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/output_microsequencer_inst/state" type="array">
+      <obj_property name="ElementShortName">state[3:0]</obj_property>
+      <obj_property name="ObjectShortName">state[3:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/output_microsequencer_inst/next_state" type="array">
+      <obj_property name="ElementShortName">next_state[3:0]</obj_property>
+      <obj_property name="ObjectShortName">next_state[3:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/output_counter_inst_a/addr_out" type="array">
+      <obj_property name="ElementShortName">addr_out[8:0]</obj_property>
+      <obj_property name="ObjectShortName">addr_out[8:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[0].bram_output /addra" type="array">
+      <obj_property name="ElementShortName">addra[8:0]</obj_property>
+      <obj_property name="ObjectShortName">addra[8:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[0].bram_output /addrb" type="array">
+      <obj_property name="ElementShortName">addrb[8:0]</obj_property>
+      <obj_property name="ObjectShortName">addrb[8:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[0].bram_output /dia" type="array">
+      <obj_property name="ElementShortName">dia[15:0]</obj_property>
+      <obj_property name="ObjectShortName">dia[15:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/output_out" type="array">
+      <obj_property name="ElementShortName">output_out[255:0]</obj_property>
+      <obj_property name="ObjectShortName">output_out[255:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/systolic_out_adder_inst/in_a" type="array">
+      <obj_property name="ElementShortName">in_a[255:0]</obj_property>
+      <obj_property name="ObjectShortName">in_a[255:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/systolic_out_adder_inst/in_b" type="array">
+      <obj_property name="ElementShortName">in_b[255:0]</obj_property>
+      <obj_property name="ObjectShortName">in_b[255:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/systolic_out_adder_inst/out_val" type="array">
+      <obj_property name="ElementShortName">out_val[255:0]</obj_property>
+      <obj_property name="ObjectShortName">out_val[255:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/systolic_out_adder_inst/i" type="array">
+      <obj_property name="ElementShortName">i[31:0]</obj_property>
+      <obj_property name="ObjectShortName">i[31:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/systolic_out_adder_inst/hasil" type="array">
+      <obj_property name="ElementShortName">hasil[0:15][15:0]</obj_property>
+      <obj_property name="ObjectShortName">hasil[0:15][15:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_weight_bram[0].bram_filter /enb" type="logic">
+      <obj_property name="ElementShortName">enb</obj_property>
+      <obj_property name="ObjectShortName">enb</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/systolic_out_adder_inst/Dimension" type="array">
+      <obj_property name="ElementShortName">Dimension[31:0]</obj_property>
+      <obj_property name="ObjectShortName">Dimension[31:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/systolic_out_adder_inst/DW" type="array">
+      <obj_property name="ElementShortName">DW[31:0]</obj_property>
+      <obj_property name="ObjectShortName">DW[31:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/input_bias" type="logic">
+      <obj_property name="ElementShortName">input_bias</obj_property>
+      <obj_property name="ObjectShortName">input_bias</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/output_result_bram_to_adder_reg_inst/clk" type="logic">
+      <obj_property name="ElementShortName">clk</obj_property>
+      <obj_property name="ObjectShortName">clk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/output_result_bram_to_adder_reg_inst/rst" type="logic">
+      <obj_property name="ElementShortName">rst</obj_property>
+      <obj_property name="ObjectShortName">rst</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/output_result_bram_to_adder_reg_inst/en" type="logic">
+      <obj_property name="ElementShortName">en</obj_property>
+      <obj_property name="ObjectShortName">en</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/output_result_bram_to_adder_reg_inst/en" type="logic">
+      <obj_property name="ElementShortName">en</obj_property>
+      <obj_property name="ObjectShortName">en</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/output_result_bram_to_adder_reg_inst/d" type="array">
+      <obj_property name="ElementShortName">d[255:0]</obj_property>
+      <obj_property name="ObjectShortName">d[255:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/output_result_bram_to_adder_reg_inst/q" type="array">
+      <obj_property name="ElementShortName">q[255:0]</obj_property>
+      <obj_property name="ObjectShortName">q[255:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/output_result_bram_to_adder_reg_inst/WIDTH" type="array">
+      <obj_property name="ElementShortName">WIDTH[31:0]</obj_property>
+      <obj_property name="ObjectShortName">WIDTH[31:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[0].bram_output /ram" type="array">
+      <obj_property name="ElementShortName">ram[511:0][15:0]</obj_property>
+      <obj_property name="ObjectShortName">ram[511:0][15:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[0].bram_output /ram[1]" type="array">
+      <obj_property name="ElementShortName">[1][15:0]</obj_property>
+      <obj_property name="ObjectShortName">[1][15:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[0].bram_output /dob" type="array">
+      <obj_property name="ElementShortName">dob[15:0]</obj_property>
+      <obj_property name="ObjectShortName">dob[15:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[0].bram_output /i" type="array">
+      <obj_property name="ElementShortName">i[31:0]</obj_property>
+      <obj_property name="ObjectShortName">i[31:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[0].bram_output /DW" type="array">
+      <obj_property name="ElementShortName">DW[31:0]</obj_property>
+      <obj_property name="ObjectShortName">DW[31:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[0].bram_output /ADDRESS_LENGTH" type="array">
+      <obj_property name="ElementShortName">ADDRESS_LENGTH[31:0]</obj_property>
+      <obj_property name="ObjectShortName">ADDRESS_LENGTH[31:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[0].bram_output /DEPTH" type="array">
+      <obj_property name="ElementShortName">DEPTH[31:0]</obj_property>
+      <obj_property name="ObjectShortName">DEPTH[31:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[1].bram_output /clka" type="logic">
+      <obj_property name="ElementShortName">clka</obj_property>
+      <obj_property name="ObjectShortName">clka</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[1].bram_output /clkb" type="logic">
+      <obj_property name="ElementShortName">clkb</obj_property>
+      <obj_property name="ObjectShortName">clkb</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[1].bram_output /ena" type="logic">
+      <obj_property name="ElementShortName">ena</obj_property>
+      <obj_property name="ObjectShortName">ena</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[1].bram_output /enb" type="logic">
+      <obj_property name="ElementShortName">enb</obj_property>
+      <obj_property name="ObjectShortName">enb</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[1].bram_output /wea" type="logic">
+      <obj_property name="ElementShortName">wea</obj_property>
+      <obj_property name="ObjectShortName">wea</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[1].bram_output /addra" type="array">
+      <obj_property name="ElementShortName">addra[8:0]</obj_property>
+      <obj_property name="ObjectShortName">addra[8:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[1].bram_output /addrb" type="array">
+      <obj_property name="ElementShortName">addrb[8:0]</obj_property>
+      <obj_property name="ObjectShortName">addrb[8:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[1].bram_output /dia" type="array">
+      <obj_property name="ElementShortName">dia[15:0]</obj_property>
+      <obj_property name="ObjectShortName">dia[15:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/output_counter_inst_a/start_val" type="array">
+      <obj_property name="ElementShortName">start_val[8:0]</obj_property>
+      <obj_property name="ObjectShortName">start_val[8:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/output_counter_inst_a/end_val" type="array">
+      <obj_property name="ElementShortName">end_val[8:0]</obj_property>
+      <obj_property name="ObjectShortName">end_val[8:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/output_counter_inst_a/flag_1per16" type="logic">
+      <obj_property name="ElementShortName">flag_1per16</obj_property>
+      <obj_property name="ObjectShortName">flag_1per16</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/output_counter_inst_a/addr_out" type="array">
+      <obj_property name="ElementShortName">addr_out[8:0]</obj_property>
+      <obj_property name="ObjectShortName">addr_out[8:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/output_counter_inst_a/done" type="logic">
+      <obj_property name="ElementShortName">done</obj_property>
+      <obj_property name="ObjectShortName">done</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/output_counter_inst_b/en" type="logic">
+      <obj_property name="ElementShortName">en</obj_property>
+      <obj_property name="ObjectShortName">en</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/output_counter_inst_a/count" type="array">
+      <obj_property name="ElementShortName">count[8:0]</obj_property>
+      <obj_property name="ObjectShortName">count[8:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/output_counter_inst_a/reached_end" type="logic">
+      <obj_property name="ElementShortName">reached_end</obj_property>
+      <obj_property name="ObjectShortName">reached_end</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/output_counter_inst_a/ADDRESS_LENGTH" type="array">
+      <obj_property name="ElementShortName">ADDRESS_LENGTH[31:0]</obj_property>
+      <obj_property name="ObjectShortName">ADDRESS_LENGTH[31:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[1].bram_output /ram" type="array">
+      <obj_property name="ElementShortName">ram[511:0][15:0]</obj_property>
+      <obj_property name="ObjectShortName">ram[511:0][15:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[1].bram_output /dob" type="array">
+      <obj_property name="ElementShortName">dob[15:0]</obj_property>
+      <obj_property name="ObjectShortName">dob[15:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[1].bram_output /i" type="array">
+      <obj_property name="ElementShortName">i[31:0]</obj_property>
+      <obj_property name="ObjectShortName">i[31:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[1].bram_output /DW" type="array">
+      <obj_property name="ElementShortName">DW[31:0]</obj_property>
+      <obj_property name="ObjectShortName">DW[31:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[1].bram_output /ADDRESS_LENGTH" type="array">
+      <obj_property name="ElementShortName">ADDRESS_LENGTH[31:0]</obj_property>
+      <obj_property name="ObjectShortName">ADDRESS_LENGTH[31:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[1].bram_output /DEPTH" type="array">
+      <obj_property name="ElementShortName">DEPTH[31:0]</obj_property>
+      <obj_property name="ObjectShortName">DEPTH[31:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[2].bram_output /clka" type="logic">
+      <obj_property name="ElementShortName">clka</obj_property>
+      <obj_property name="ObjectShortName">clka</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[2].bram_output /clkb" type="logic">
+      <obj_property name="ElementShortName">clkb</obj_property>
+      <obj_property name="ObjectShortName">clkb</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[2].bram_output /ena" type="logic">
+      <obj_property name="ElementShortName">ena</obj_property>
+      <obj_property name="ObjectShortName">ena</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[2].bram_output /enb" type="logic">
+      <obj_property name="ElementShortName">enb</obj_property>
+      <obj_property name="ObjectShortName">enb</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[2].bram_output /wea" type="logic">
+      <obj_property name="ElementShortName">wea</obj_property>
+      <obj_property name="ObjectShortName">wea</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[2].bram_output /addra" type="array">
+      <obj_property name="ElementShortName">addra[8:0]</obj_property>
+      <obj_property name="ObjectShortName">addra[8:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[2].bram_output /addrb" type="array">
+      <obj_property name="ElementShortName">addrb[8:0]</obj_property>
+      <obj_property name="ObjectShortName">addrb[8:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[2].bram_output /dia" type="array">
+      <obj_property name="ElementShortName">dia[15:0]</obj_property>
+      <obj_property name="ObjectShortName">dia[15:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[2].bram_output /ram" type="array">
+      <obj_property name="ElementShortName">ram[511:0][15:0]</obj_property>
+      <obj_property name="ObjectShortName">ram[511:0][15:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[2].bram_output /dob" type="array">
+      <obj_property name="ElementShortName">dob[15:0]</obj_property>
+      <obj_property name="ObjectShortName">dob[15:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[2].bram_output /i" type="array">
+      <obj_property name="ElementShortName">i[31:0]</obj_property>
+      <obj_property name="ObjectShortName">i[31:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[2].bram_output /DW" type="array">
+      <obj_property name="ElementShortName">DW[31:0]</obj_property>
+      <obj_property name="ObjectShortName">DW[31:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[2].bram_output /ADDRESS_LENGTH" type="array">
+      <obj_property name="ElementShortName">ADDRESS_LENGTH[31:0]</obj_property>
+      <obj_property name="ObjectShortName">ADDRESS_LENGTH[31:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[2].bram_output /DEPTH" type="array">
+      <obj_property name="ElementShortName">DEPTH[31:0]</obj_property>
+      <obj_property name="ObjectShortName">DEPTH[31:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[3].bram_output /clka" type="logic">
+      <obj_property name="ElementShortName">clka</obj_property>
+      <obj_property name="ObjectShortName">clka</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[3].bram_output /clkb" type="logic">
+      <obj_property name="ElementShortName">clkb</obj_property>
+      <obj_property name="ObjectShortName">clkb</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[3].bram_output /ena" type="logic">
+      <obj_property name="ElementShortName">ena</obj_property>
+      <obj_property name="ObjectShortName">ena</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[3].bram_output /enb" type="logic">
+      <obj_property name="ElementShortName">enb</obj_property>
+      <obj_property name="ObjectShortName">enb</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[3].bram_output /wea" type="logic">
+      <obj_property name="ElementShortName">wea</obj_property>
+      <obj_property name="ObjectShortName">wea</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[3].bram_output /addra" type="array">
+      <obj_property name="ElementShortName">addra[8:0]</obj_property>
+      <obj_property name="ObjectShortName">addra[8:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[3].bram_output /addrb" type="array">
+      <obj_property name="ElementShortName">addrb[8:0]</obj_property>
+      <obj_property name="ObjectShortName">addrb[8:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[3].bram_output /dia" type="array">
+      <obj_property name="ElementShortName">dia[15:0]</obj_property>
+      <obj_property name="ObjectShortName">dia[15:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[3].bram_output /ram" type="array">
+      <obj_property name="ElementShortName">ram[511:0][15:0]</obj_property>
+      <obj_property name="ObjectShortName">ram[511:0][15:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[3].bram_output /dob" type="array">
+      <obj_property name="ElementShortName">dob[15:0]</obj_property>
+      <obj_property name="ObjectShortName">dob[15:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[3].bram_output /i" type="array">
+      <obj_property name="ElementShortName">i[31:0]</obj_property>
+      <obj_property name="ObjectShortName">i[31:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[3].bram_output /DW" type="array">
+      <obj_property name="ElementShortName">DW[31:0]</obj_property>
+      <obj_property name="ObjectShortName">DW[31:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[3].bram_output /ADDRESS_LENGTH" type="array">
+      <obj_property name="ElementShortName">ADDRESS_LENGTH[31:0]</obj_property>
+      <obj_property name="ObjectShortName">ADDRESS_LENGTH[31:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[3].bram_output /DEPTH" type="array">
+      <obj_property name="ElementShortName">DEPTH[31:0]</obj_property>
+      <obj_property name="ObjectShortName">DEPTH[31:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[4].bram_output /clka" type="logic">
+      <obj_property name="ElementShortName">clka</obj_property>
+      <obj_property name="ObjectShortName">clka</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[4].bram_output /clkb" type="logic">
+      <obj_property name="ElementShortName">clkb</obj_property>
+      <obj_property name="ObjectShortName">clkb</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[4].bram_output /ena" type="logic">
+      <obj_property name="ElementShortName">ena</obj_property>
+      <obj_property name="ObjectShortName">ena</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[4].bram_output /enb" type="logic">
+      <obj_property name="ElementShortName">enb</obj_property>
+      <obj_property name="ObjectShortName">enb</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[4].bram_output /wea" type="logic">
+      <obj_property name="ElementShortName">wea</obj_property>
+      <obj_property name="ObjectShortName">wea</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[4].bram_output /addra" type="array">
+      <obj_property name="ElementShortName">addra[8:0]</obj_property>
+      <obj_property name="ObjectShortName">addra[8:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[4].bram_output /addrb" type="array">
+      <obj_property name="ElementShortName">addrb[8:0]</obj_property>
+      <obj_property name="ObjectShortName">addrb[8:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[4].bram_output /dia" type="array">
+      <obj_property name="ElementShortName">dia[15:0]</obj_property>
+      <obj_property name="ObjectShortName">dia[15:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[4].bram_output /ram" type="array">
+      <obj_property name="ElementShortName">ram[511:0][15:0]</obj_property>
+      <obj_property name="ObjectShortName">ram[511:0][15:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[4].bram_output /dob" type="array">
+      <obj_property name="ElementShortName">dob[15:0]</obj_property>
+      <obj_property name="ObjectShortName">dob[15:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[4].bram_output /i" type="array">
+      <obj_property name="ElementShortName">i[31:0]</obj_property>
+      <obj_property name="ObjectShortName">i[31:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[4].bram_output /DW" type="array">
+      <obj_property name="ElementShortName">DW[31:0]</obj_property>
+      <obj_property name="ObjectShortName">DW[31:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[4].bram_output /ADDRESS_LENGTH" type="array">
+      <obj_property name="ElementShortName">ADDRESS_LENGTH[31:0]</obj_property>
+      <obj_property name="ObjectShortName">ADDRESS_LENGTH[31:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[4].bram_output /DEPTH" type="array">
+      <obj_property name="ElementShortName">DEPTH[31:0]</obj_property>
+      <obj_property name="ObjectShortName">DEPTH[31:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[5].bram_output /clka" type="logic">
+      <obj_property name="ElementShortName">clka</obj_property>
+      <obj_property name="ObjectShortName">clka</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[5].bram_output /clkb" type="logic">
+      <obj_property name="ElementShortName">clkb</obj_property>
+      <obj_property name="ObjectShortName">clkb</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[5].bram_output /ena" type="logic">
+      <obj_property name="ElementShortName">ena</obj_property>
+      <obj_property name="ObjectShortName">ena</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[5].bram_output /enb" type="logic">
+      <obj_property name="ElementShortName">enb</obj_property>
+      <obj_property name="ObjectShortName">enb</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[5].bram_output /wea" type="logic">
+      <obj_property name="ElementShortName">wea</obj_property>
+      <obj_property name="ObjectShortName">wea</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[5].bram_output /addra" type="array">
+      <obj_property name="ElementShortName">addra[8:0]</obj_property>
+      <obj_property name="ObjectShortName">addra[8:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[5].bram_output /addrb" type="array">
+      <obj_property name="ElementShortName">addrb[8:0]</obj_property>
+      <obj_property name="ObjectShortName">addrb[8:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[5].bram_output /dia" type="array">
+      <obj_property name="ElementShortName">dia[15:0]</obj_property>
+      <obj_property name="ObjectShortName">dia[15:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[5].bram_output /ram" type="array">
+      <obj_property name="ElementShortName">ram[511:0][15:0]</obj_property>
+      <obj_property name="ObjectShortName">ram[511:0][15:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[5].bram_output /dob" type="array">
+      <obj_property name="ElementShortName">dob[15:0]</obj_property>
+      <obj_property name="ObjectShortName">dob[15:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[5].bram_output /i" type="array">
+      <obj_property name="ElementShortName">i[31:0]</obj_property>
+      <obj_property name="ObjectShortName">i[31:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[5].bram_output /DW" type="array">
+      <obj_property name="ElementShortName">DW[31:0]</obj_property>
+      <obj_property name="ObjectShortName">DW[31:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[5].bram_output /ADDRESS_LENGTH" type="array">
+      <obj_property name="ElementShortName">ADDRESS_LENGTH[31:0]</obj_property>
+      <obj_property name="ObjectShortName">ADDRESS_LENGTH[31:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[5].bram_output /DEPTH" type="array">
+      <obj_property name="ElementShortName">DEPTH[31:0]</obj_property>
+      <obj_property name="ObjectShortName">DEPTH[31:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[6].bram_output /clka" type="logic">
+      <obj_property name="ElementShortName">clka</obj_property>
+      <obj_property name="ObjectShortName">clka</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[6].bram_output /clkb" type="logic">
+      <obj_property name="ElementShortName">clkb</obj_property>
+      <obj_property name="ObjectShortName">clkb</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[6].bram_output /ena" type="logic">
+      <obj_property name="ElementShortName">ena</obj_property>
+      <obj_property name="ObjectShortName">ena</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[6].bram_output /enb" type="logic">
+      <obj_property name="ElementShortName">enb</obj_property>
+      <obj_property name="ObjectShortName">enb</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[6].bram_output /wea" type="logic">
+      <obj_property name="ElementShortName">wea</obj_property>
+      <obj_property name="ObjectShortName">wea</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[6].bram_output /addra" type="array">
+      <obj_property name="ElementShortName">addra[8:0]</obj_property>
+      <obj_property name="ObjectShortName">addra[8:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[6].bram_output /addrb" type="array">
+      <obj_property name="ElementShortName">addrb[8:0]</obj_property>
+      <obj_property name="ObjectShortName">addrb[8:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[6].bram_output /dia" type="array">
+      <obj_property name="ElementShortName">dia[15:0]</obj_property>
+      <obj_property name="ObjectShortName">dia[15:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[6].bram_output /ram" type="array">
+      <obj_property name="ElementShortName">ram[511:0][15:0]</obj_property>
+      <obj_property name="ObjectShortName">ram[511:0][15:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[6].bram_output /dob" type="array">
+      <obj_property name="ElementShortName">dob[15:0]</obj_property>
+      <obj_property name="ObjectShortName">dob[15:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[6].bram_output /i" type="array">
+      <obj_property name="ElementShortName">i[31:0]</obj_property>
+      <obj_property name="ObjectShortName">i[31:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[6].bram_output /DW" type="array">
+      <obj_property name="ElementShortName">DW[31:0]</obj_property>
+      <obj_property name="ObjectShortName">DW[31:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[6].bram_output /ADDRESS_LENGTH" type="array">
+      <obj_property name="ElementShortName">ADDRESS_LENGTH[31:0]</obj_property>
+      <obj_property name="ObjectShortName">ADDRESS_LENGTH[31:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[6].bram_output /DEPTH" type="array">
+      <obj_property name="ElementShortName">DEPTH[31:0]</obj_property>
+      <obj_property name="ObjectShortName">DEPTH[31:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[7].bram_output /clka" type="logic">
+      <obj_property name="ElementShortName">clka</obj_property>
+      <obj_property name="ObjectShortName">clka</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[7].bram_output /clkb" type="logic">
+      <obj_property name="ElementShortName">clkb</obj_property>
+      <obj_property name="ObjectShortName">clkb</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[7].bram_output /ena" type="logic">
+      <obj_property name="ElementShortName">ena</obj_property>
+      <obj_property name="ObjectShortName">ena</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[7].bram_output /enb" type="logic">
+      <obj_property name="ElementShortName">enb</obj_property>
+      <obj_property name="ObjectShortName">enb</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[7].bram_output /wea" type="logic">
+      <obj_property name="ElementShortName">wea</obj_property>
+      <obj_property name="ObjectShortName">wea</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[7].bram_output /addra" type="array">
+      <obj_property name="ElementShortName">addra[8:0]</obj_property>
+      <obj_property name="ObjectShortName">addra[8:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[7].bram_output /addrb" type="array">
+      <obj_property name="ElementShortName">addrb[8:0]</obj_property>
+      <obj_property name="ObjectShortName">addrb[8:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[7].bram_output /dia" type="array">
+      <obj_property name="ElementShortName">dia[15:0]</obj_property>
+      <obj_property name="ObjectShortName">dia[15:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[7].bram_output /ram" type="array">
+      <obj_property name="ElementShortName">ram[511:0][15:0]</obj_property>
+      <obj_property name="ObjectShortName">ram[511:0][15:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[7].bram_output /dob" type="array">
+      <obj_property name="ElementShortName">dob[15:0]</obj_property>
+      <obj_property name="ObjectShortName">dob[15:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[7].bram_output /i" type="array">
+      <obj_property name="ElementShortName">i[31:0]</obj_property>
+      <obj_property name="ObjectShortName">i[31:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[7].bram_output /DW" type="array">
+      <obj_property name="ElementShortName">DW[31:0]</obj_property>
+      <obj_property name="ObjectShortName">DW[31:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[7].bram_output /ADDRESS_LENGTH" type="array">
+      <obj_property name="ElementShortName">ADDRESS_LENGTH[31:0]</obj_property>
+      <obj_property name="ObjectShortName">ADDRESS_LENGTH[31:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[7].bram_output /DEPTH" type="array">
+      <obj_property name="ElementShortName">DEPTH[31:0]</obj_property>
+      <obj_property name="ObjectShortName">DEPTH[31:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[8].bram_output /clka" type="logic">
+      <obj_property name="ElementShortName">clka</obj_property>
+      <obj_property name="ObjectShortName">clka</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[8].bram_output /clkb" type="logic">
+      <obj_property name="ElementShortName">clkb</obj_property>
+      <obj_property name="ObjectShortName">clkb</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[8].bram_output /ena" type="logic">
+      <obj_property name="ElementShortName">ena</obj_property>
+      <obj_property name="ObjectShortName">ena</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[8].bram_output /enb" type="logic">
+      <obj_property name="ElementShortName">enb</obj_property>
+      <obj_property name="ObjectShortName">enb</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[8].bram_output /wea" type="logic">
+      <obj_property name="ElementShortName">wea</obj_property>
+      <obj_property name="ObjectShortName">wea</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[8].bram_output /addra" type="array">
+      <obj_property name="ElementShortName">addra[8:0]</obj_property>
+      <obj_property name="ObjectShortName">addra[8:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[8].bram_output /addrb" type="array">
+      <obj_property name="ElementShortName">addrb[8:0]</obj_property>
+      <obj_property name="ObjectShortName">addrb[8:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[8].bram_output /dia" type="array">
+      <obj_property name="ElementShortName">dia[15:0]</obj_property>
+      <obj_property name="ObjectShortName">dia[15:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[8].bram_output /ram" type="array">
+      <obj_property name="ElementShortName">ram[511:0][15:0]</obj_property>
+      <obj_property name="ObjectShortName">ram[511:0][15:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[8].bram_output /dob" type="array">
+      <obj_property name="ElementShortName">dob[15:0]</obj_property>
+      <obj_property name="ObjectShortName">dob[15:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[8].bram_output /i" type="array">
+      <obj_property name="ElementShortName">i[31:0]</obj_property>
+      <obj_property name="ObjectShortName">i[31:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[8].bram_output /DW" type="array">
+      <obj_property name="ElementShortName">DW[31:0]</obj_property>
+      <obj_property name="ObjectShortName">DW[31:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[8].bram_output /ADDRESS_LENGTH" type="array">
+      <obj_property name="ElementShortName">ADDRESS_LENGTH[31:0]</obj_property>
+      <obj_property name="ObjectShortName">ADDRESS_LENGTH[31:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[8].bram_output /DEPTH" type="array">
+      <obj_property name="ElementShortName">DEPTH[31:0]</obj_property>
+      <obj_property name="ObjectShortName">DEPTH[31:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[9].bram_output /clka" type="logic">
+      <obj_property name="ElementShortName">clka</obj_property>
+      <obj_property name="ObjectShortName">clka</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[9].bram_output /clkb" type="logic">
+      <obj_property name="ElementShortName">clkb</obj_property>
+      <obj_property name="ObjectShortName">clkb</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[9].bram_output /ena" type="logic">
+      <obj_property name="ElementShortName">ena</obj_property>
+      <obj_property name="ObjectShortName">ena</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[9].bram_output /enb" type="logic">
+      <obj_property name="ElementShortName">enb</obj_property>
+      <obj_property name="ObjectShortName">enb</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[9].bram_output /wea" type="logic">
+      <obj_property name="ElementShortName">wea</obj_property>
+      <obj_property name="ObjectShortName">wea</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[9].bram_output /addra" type="array">
+      <obj_property name="ElementShortName">addra[8:0]</obj_property>
+      <obj_property name="ObjectShortName">addra[8:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[9].bram_output /addrb" type="array">
+      <obj_property name="ElementShortName">addrb[8:0]</obj_property>
+      <obj_property name="ObjectShortName">addrb[8:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[9].bram_output /dia" type="array">
+      <obj_property name="ElementShortName">dia[15:0]</obj_property>
+      <obj_property name="ObjectShortName">dia[15:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[9].bram_output /ram" type="array">
+      <obj_property name="ElementShortName">ram[511:0][15:0]</obj_property>
+      <obj_property name="ObjectShortName">ram[511:0][15:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[9].bram_output /dob" type="array">
+      <obj_property name="ElementShortName">dob[15:0]</obj_property>
+      <obj_property name="ObjectShortName">dob[15:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[9].bram_output /i" type="array">
+      <obj_property name="ElementShortName">i[31:0]</obj_property>
+      <obj_property name="ObjectShortName">i[31:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[9].bram_output /DW" type="array">
+      <obj_property name="ElementShortName">DW[31:0]</obj_property>
+      <obj_property name="ObjectShortName">DW[31:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[9].bram_output /ADDRESS_LENGTH" type="array">
+      <obj_property name="ElementShortName">ADDRESS_LENGTH[31:0]</obj_property>
+      <obj_property name="ObjectShortName">ADDRESS_LENGTH[31:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[9].bram_output /DEPTH" type="array">
+      <obj_property name="ElementShortName">DEPTH[31:0]</obj_property>
+      <obj_property name="ObjectShortName">DEPTH[31:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[10].bram_output /clka" type="logic">
+      <obj_property name="ElementShortName">clka</obj_property>
+      <obj_property name="ObjectShortName">clka</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[10].bram_output /clkb" type="logic">
+      <obj_property name="ElementShortName">clkb</obj_property>
+      <obj_property name="ObjectShortName">clkb</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[10].bram_output /ena" type="logic">
+      <obj_property name="ElementShortName">ena</obj_property>
+      <obj_property name="ObjectShortName">ena</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[10].bram_output /enb" type="logic">
+      <obj_property name="ElementShortName">enb</obj_property>
+      <obj_property name="ObjectShortName">enb</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[10].bram_output /wea" type="logic">
+      <obj_property name="ElementShortName">wea</obj_property>
+      <obj_property name="ObjectShortName">wea</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[10].bram_output /addra" type="array">
+      <obj_property name="ElementShortName">addra[8:0]</obj_property>
+      <obj_property name="ObjectShortName">addra[8:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[10].bram_output /addrb" type="array">
+      <obj_property name="ElementShortName">addrb[8:0]</obj_property>
+      <obj_property name="ObjectShortName">addrb[8:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[10].bram_output /dia" type="array">
+      <obj_property name="ElementShortName">dia[15:0]</obj_property>
+      <obj_property name="ObjectShortName">dia[15:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[10].bram_output /ram" type="array">
+      <obj_property name="ElementShortName">ram[511:0][15:0]</obj_property>
+      <obj_property name="ObjectShortName">ram[511:0][15:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[10].bram_output /dob" type="array">
+      <obj_property name="ElementShortName">dob[15:0]</obj_property>
+      <obj_property name="ObjectShortName">dob[15:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[10].bram_output /i" type="array">
+      <obj_property name="ElementShortName">i[31:0]</obj_property>
+      <obj_property name="ObjectShortName">i[31:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[10].bram_output /DW" type="array">
+      <obj_property name="ElementShortName">DW[31:0]</obj_property>
+      <obj_property name="ObjectShortName">DW[31:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[10].bram_output /ADDRESS_LENGTH" type="array">
+      <obj_property name="ElementShortName">ADDRESS_LENGTH[31:0]</obj_property>
+      <obj_property name="ObjectShortName">ADDRESS_LENGTH[31:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[10].bram_output /DEPTH" type="array">
+      <obj_property name="ElementShortName">DEPTH[31:0]</obj_property>
+      <obj_property name="ObjectShortName">DEPTH[31:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[11].bram_output /clka" type="logic">
+      <obj_property name="ElementShortName">clka</obj_property>
+      <obj_property name="ObjectShortName">clka</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[11].bram_output /clkb" type="logic">
+      <obj_property name="ElementShortName">clkb</obj_property>
+      <obj_property name="ObjectShortName">clkb</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[11].bram_output /ena" type="logic">
+      <obj_property name="ElementShortName">ena</obj_property>
+      <obj_property name="ObjectShortName">ena</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[11].bram_output /enb" type="logic">
+      <obj_property name="ElementShortName">enb</obj_property>
+      <obj_property name="ObjectShortName">enb</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[11].bram_output /wea" type="logic">
+      <obj_property name="ElementShortName">wea</obj_property>
+      <obj_property name="ObjectShortName">wea</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[11].bram_output /addra" type="array">
+      <obj_property name="ElementShortName">addra[8:0]</obj_property>
+      <obj_property name="ObjectShortName">addra[8:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[11].bram_output /addrb" type="array">
+      <obj_property name="ElementShortName">addrb[8:0]</obj_property>
+      <obj_property name="ObjectShortName">addrb[8:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[11].bram_output /dia" type="array">
+      <obj_property name="ElementShortName">dia[15:0]</obj_property>
+      <obj_property name="ObjectShortName">dia[15:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[11].bram_output /ram" type="array">
+      <obj_property name="ElementShortName">ram[511:0][15:0]</obj_property>
+      <obj_property name="ObjectShortName">ram[511:0][15:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[11].bram_output /dob" type="array">
+      <obj_property name="ElementShortName">dob[15:0]</obj_property>
+      <obj_property name="ObjectShortName">dob[15:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[11].bram_output /i" type="array">
+      <obj_property name="ElementShortName">i[31:0]</obj_property>
+      <obj_property name="ObjectShortName">i[31:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[11].bram_output /DW" type="array">
+      <obj_property name="ElementShortName">DW[31:0]</obj_property>
+      <obj_property name="ObjectShortName">DW[31:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[11].bram_output /ADDRESS_LENGTH" type="array">
+      <obj_property name="ElementShortName">ADDRESS_LENGTH[31:0]</obj_property>
+      <obj_property name="ObjectShortName">ADDRESS_LENGTH[31:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[11].bram_output /DEPTH" type="array">
+      <obj_property name="ElementShortName">DEPTH[31:0]</obj_property>
+      <obj_property name="ObjectShortName">DEPTH[31:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[12].bram_output /clka" type="logic">
+      <obj_property name="ElementShortName">clka</obj_property>
+      <obj_property name="ObjectShortName">clka</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[12].bram_output /clkb" type="logic">
+      <obj_property name="ElementShortName">clkb</obj_property>
+      <obj_property name="ObjectShortName">clkb</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[12].bram_output /ena" type="logic">
+      <obj_property name="ElementShortName">ena</obj_property>
+      <obj_property name="ObjectShortName">ena</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[12].bram_output /enb" type="logic">
+      <obj_property name="ElementShortName">enb</obj_property>
+      <obj_property name="ObjectShortName">enb</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[12].bram_output /wea" type="logic">
+      <obj_property name="ElementShortName">wea</obj_property>
+      <obj_property name="ObjectShortName">wea</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[12].bram_output /addra" type="array">
+      <obj_property name="ElementShortName">addra[8:0]</obj_property>
+      <obj_property name="ObjectShortName">addra[8:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[12].bram_output /addrb" type="array">
+      <obj_property name="ElementShortName">addrb[8:0]</obj_property>
+      <obj_property name="ObjectShortName">addrb[8:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[12].bram_output /dia" type="array">
+      <obj_property name="ElementShortName">dia[15:0]</obj_property>
+      <obj_property name="ObjectShortName">dia[15:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[12].bram_output /ram" type="array">
+      <obj_property name="ElementShortName">ram[511:0][15:0]</obj_property>
+      <obj_property name="ObjectShortName">ram[511:0][15:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[12].bram_output /dob" type="array">
+      <obj_property name="ElementShortName">dob[15:0]</obj_property>
+      <obj_property name="ObjectShortName">dob[15:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[12].bram_output /i" type="array">
+      <obj_property name="ElementShortName">i[31:0]</obj_property>
+      <obj_property name="ObjectShortName">i[31:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[12].bram_output /DW" type="array">
+      <obj_property name="ElementShortName">DW[31:0]</obj_property>
+      <obj_property name="ObjectShortName">DW[31:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[12].bram_output /ADDRESS_LENGTH" type="array">
+      <obj_property name="ElementShortName">ADDRESS_LENGTH[31:0]</obj_property>
+      <obj_property name="ObjectShortName">ADDRESS_LENGTH[31:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[12].bram_output /DEPTH" type="array">
+      <obj_property name="ElementShortName">DEPTH[31:0]</obj_property>
+      <obj_property name="ObjectShortName">DEPTH[31:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[13].bram_output /clka" type="logic">
+      <obj_property name="ElementShortName">clka</obj_property>
+      <obj_property name="ObjectShortName">clka</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[13].bram_output /clkb" type="logic">
+      <obj_property name="ElementShortName">clkb</obj_property>
+      <obj_property name="ObjectShortName">clkb</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[13].bram_output /ena" type="logic">
+      <obj_property name="ElementShortName">ena</obj_property>
+      <obj_property name="ObjectShortName">ena</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[13].bram_output /enb" type="logic">
+      <obj_property name="ElementShortName">enb</obj_property>
+      <obj_property name="ObjectShortName">enb</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[13].bram_output /wea" type="logic">
+      <obj_property name="ElementShortName">wea</obj_property>
+      <obj_property name="ObjectShortName">wea</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[13].bram_output /addra" type="array">
+      <obj_property name="ElementShortName">addra[8:0]</obj_property>
+      <obj_property name="ObjectShortName">addra[8:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[13].bram_output /addrb" type="array">
+      <obj_property name="ElementShortName">addrb[8:0]</obj_property>
+      <obj_property name="ObjectShortName">addrb[8:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[13].bram_output /dia" type="array">
+      <obj_property name="ElementShortName">dia[15:0]</obj_property>
+      <obj_property name="ObjectShortName">dia[15:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[13].bram_output /ram" type="array">
+      <obj_property name="ElementShortName">ram[511:0][15:0]</obj_property>
+      <obj_property name="ObjectShortName">ram[511:0][15:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[13].bram_output /dob" type="array">
+      <obj_property name="ElementShortName">dob[15:0]</obj_property>
+      <obj_property name="ObjectShortName">dob[15:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[13].bram_output /i" type="array">
+      <obj_property name="ElementShortName">i[31:0]</obj_property>
+      <obj_property name="ObjectShortName">i[31:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[13].bram_output /DW" type="array">
+      <obj_property name="ElementShortName">DW[31:0]</obj_property>
+      <obj_property name="ObjectShortName">DW[31:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[13].bram_output /ADDRESS_LENGTH" type="array">
+      <obj_property name="ElementShortName">ADDRESS_LENGTH[31:0]</obj_property>
+      <obj_property name="ObjectShortName">ADDRESS_LENGTH[31:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[13].bram_output /DEPTH" type="array">
+      <obj_property name="ElementShortName">DEPTH[31:0]</obj_property>
+      <obj_property name="ObjectShortName">DEPTH[31:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[14].bram_output /clka" type="logic">
+      <obj_property name="ElementShortName">clka</obj_property>
+      <obj_property name="ObjectShortName">clka</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[14].bram_output /clkb" type="logic">
+      <obj_property name="ElementShortName">clkb</obj_property>
+      <obj_property name="ObjectShortName">clkb</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[14].bram_output /ena" type="logic">
+      <obj_property name="ElementShortName">ena</obj_property>
+      <obj_property name="ObjectShortName">ena</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[14].bram_output /enb" type="logic">
+      <obj_property name="ElementShortName">enb</obj_property>
+      <obj_property name="ObjectShortName">enb</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[14].bram_output /wea" type="logic">
+      <obj_property name="ElementShortName">wea</obj_property>
+      <obj_property name="ObjectShortName">wea</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[14].bram_output /addra" type="array">
+      <obj_property name="ElementShortName">addra[8:0]</obj_property>
+      <obj_property name="ObjectShortName">addra[8:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[14].bram_output /addrb" type="array">
+      <obj_property name="ElementShortName">addrb[8:0]</obj_property>
+      <obj_property name="ObjectShortName">addrb[8:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[14].bram_output /dia" type="array">
+      <obj_property name="ElementShortName">dia[15:0]</obj_property>
+      <obj_property name="ObjectShortName">dia[15:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[14].bram_output /ram" type="array">
+      <obj_property name="ElementShortName">ram[511:0][15:0]</obj_property>
+      <obj_property name="ObjectShortName">ram[511:0][15:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[14].bram_output /dob" type="array">
+      <obj_property name="ElementShortName">dob[15:0]</obj_property>
+      <obj_property name="ObjectShortName">dob[15:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[14].bram_output /i" type="array">
+      <obj_property name="ElementShortName">i[31:0]</obj_property>
+      <obj_property name="ObjectShortName">i[31:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[14].bram_output /DW" type="array">
+      <obj_property name="ElementShortName">DW[31:0]</obj_property>
+      <obj_property name="ObjectShortName">DW[31:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[14].bram_output /ADDRESS_LENGTH" type="array">
+      <obj_property name="ElementShortName">ADDRESS_LENGTH[31:0]</obj_property>
+      <obj_property name="ObjectShortName">ADDRESS_LENGTH[31:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[14].bram_output /DEPTH" type="array">
+      <obj_property name="ElementShortName">DEPTH[31:0]</obj_property>
+      <obj_property name="ObjectShortName">DEPTH[31:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[15].bram_output /clka" type="logic">
+      <obj_property name="ElementShortName">clka</obj_property>
+      <obj_property name="ObjectShortName">clka</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[15].bram_output /clkb" type="logic">
+      <obj_property name="ElementShortName">clkb</obj_property>
+      <obj_property name="ObjectShortName">clkb</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[15].bram_output /ena" type="logic">
+      <obj_property name="ElementShortName">ena</obj_property>
+      <obj_property name="ObjectShortName">ena</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[15].bram_output /enb" type="logic">
+      <obj_property name="ElementShortName">enb</obj_property>
+      <obj_property name="ObjectShortName">enb</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[15].bram_output /wea" type="logic">
+      <obj_property name="ElementShortName">wea</obj_property>
+      <obj_property name="ObjectShortName">wea</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[15].bram_output /addra" type="array">
+      <obj_property name="ElementShortName">addra[8:0]</obj_property>
+      <obj_property name="ObjectShortName">addra[8:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[15].bram_output /addrb" type="array">
+      <obj_property name="ElementShortName">addrb[8:0]</obj_property>
+      <obj_property name="ObjectShortName">addrb[8:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[15].bram_output /dia" type="array">
+      <obj_property name="ElementShortName">dia[15:0]</obj_property>
+      <obj_property name="ObjectShortName">dia[15:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[15].bram_output /ram" type="array">
+      <obj_property name="ElementShortName">ram[511:0][15:0]</obj_property>
+      <obj_property name="ObjectShortName">ram[511:0][15:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[15].bram_output /dob" type="array">
+      <obj_property name="ElementShortName">dob[15:0]</obj_property>
+      <obj_property name="ObjectShortName">dob[15:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[15].bram_output /i" type="array">
+      <obj_property name="ElementShortName">i[31:0]</obj_property>
+      <obj_property name="ObjectShortName">i[31:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[15].bram_output /DW" type="array">
+      <obj_property name="ElementShortName">DW[31:0]</obj_property>
+      <obj_property name="ObjectShortName">DW[31:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[15].bram_output /ADDRESS_LENGTH" type="array">
+      <obj_property name="ElementShortName">ADDRESS_LENGTH[31:0]</obj_property>
+      <obj_property name="ObjectShortName">ADDRESS_LENGTH[31:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[15].bram_output /DEPTH" type="array">
+      <obj_property name="ElementShortName">DEPTH[31:0]</obj_property>
+      <obj_property name="ObjectShortName">DEPTH[31:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/systolic_out_adder_inst/in_a" type="array">
+      <obj_property name="ElementShortName">in_a[255:0]</obj_property>
+      <obj_property name="ObjectShortName">in_a[255:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/systolic_out_adder_inst/in_b" type="array">
+      <obj_property name="ElementShortName">in_b[255:0]</obj_property>
+      <obj_property name="ObjectShortName">in_b[255:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/systolic_out_adder_inst/out_val" type="array">
+      <obj_property name="ElementShortName">out_val[255:0]</obj_property>
+      <obj_property name="ObjectShortName">out_val[255:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/systolic_out_adder_inst/i" type="array">
+      <obj_property name="ElementShortName">i[31:0]</obj_property>
+      <obj_property name="ObjectShortName">i[31:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/systolic_out_adder_inst/hasil" type="array">
+      <obj_property name="ElementShortName">hasil[0:15][15:0]</obj_property>
+      <obj_property name="ObjectShortName">hasil[0:15][15:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/systolic_out_adder_inst/Dimension" type="array">
+      <obj_property name="ElementShortName">Dimension[31:0]</obj_property>
+      <obj_property name="ObjectShortName">Dimension[31:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/systolic_out_adder_inst/DW" type="array">
+      <obj_property name="ElementShortName">DW[31:0]</obj_property>
+      <obj_property name="ObjectShortName">DW[31:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/output_result_bram_to_adder_reg_inst/clk" type="logic">
+      <obj_property name="ElementShortName">clk</obj_property>
+      <obj_property name="ObjectShortName">clk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/output_result_bram_to_adder_reg_inst/rst" type="logic">
+      <obj_property name="ElementShortName">rst</obj_property>
+      <obj_property name="ObjectShortName">rst</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/output_result_bram_to_adder_reg_inst/en" type="logic">
+      <obj_property name="ElementShortName">en</obj_property>
+      <obj_property name="ObjectShortName">en</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/output_result_bram_to_adder_reg_inst/d" type="array">
+      <obj_property name="ElementShortName">d[255:0]</obj_property>
+      <obj_property name="ObjectShortName">d[255:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/output_result_bram_to_adder_reg_inst/q" type="array">
+      <obj_property name="ElementShortName">q[255:0]</obj_property>
+      <obj_property name="ObjectShortName">q[255:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/output_result_bram_to_adder_reg_inst/WIDTH" type="array">
+      <obj_property name="ElementShortName">WIDTH[31:0]</obj_property>
+      <obj_property name="ObjectShortName">WIDTH[31:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/output_out" type="array">
+      <obj_property name="ElementShortName">output_out[255:0]</obj_property>
+      <obj_property name="ObjectShortName">output_out[255:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/output_out" type="array">
+      <obj_property name="ElementShortName">output_out[255:0]</obj_property>
+      <obj_property name="ObjectShortName">output_out[255:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/input_bias" type="logic">
+      <obj_property name="ElementShortName">input_bias</obj_property>
+      <obj_property name="ObjectShortName">input_bias</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/input_bias" type="logic">
+      <obj_property name="ElementShortName">input_bias</obj_property>
+      <obj_property name="ObjectShortName">input_bias</obj_property>
+   </wvobject>
+</wave_config>
