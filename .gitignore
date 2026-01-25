@@ -1,3 +1,21 @@
 venv/
 !data/.gitkeep
 data/
+# Vivado Simulation Artifacts
+*.log
+*.vcd
+*.wdb
+*.jou
+*.pb
+
+# Xilinx Simulator Generated Directory (Compiled objects)
+xsim.dir/
+
+# Compiled Executables and build garbage
+*.exe
+*.rtti
+*.xdbg
+
+# Recommended: Ignore the entire simulation directory
+# (Uncomment the line below if you don't need to save simulation setups)
+# *.sim/
