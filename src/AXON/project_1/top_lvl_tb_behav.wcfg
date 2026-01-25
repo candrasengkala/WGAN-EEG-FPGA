@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="top_lvl_behav.wdb" id="1">
+         <top_modules>
+            <top_module name="glbl" />
+            <top_module name="top_lvl" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+      <ZoomStartTime time="440.835 ns"></ZoomStartTime>
+      <ZoomEndTime time="675.403 ns"></ZoomEndTime>
+      <Cursor1Time time="1,000.000 ns"></Cursor1Time>
+   </zoom_setting>
+   <column_width_setting>
+      <NameColumnWidth column_width="236"></NameColumnWidth>
+      <ValueColumnWidth column_width="172"></ValueColumnWidth>
+   </column_width_setting>
+   <WVObjectSize size="20" />
+   <wvobject fp_name="/top_lvl/clk" type="logic">
+      <obj_property name="ElementShortName">clk</obj_property>
+      <obj_property name="ObjectShortName">clk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_lvl/rst" type="logic">
+      <obj_property name="ElementShortName">rst</obj_property>
+      <obj_property name="ObjectShortName">rst</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_lvl/en_cntr" type="logic">
+      <obj_property name="ElementShortName">en_cntr</obj_property>
+      <obj_property name="ObjectShortName">en_cntr</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_lvl/en_in" type="array">
+      <obj_property name="ElementShortName">en_in[255:0]</obj_property>
+      <obj_property name="ObjectShortName">en_in[255:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_lvl/en_out" type="array">
+      <obj_property name="ElementShortName">en_out[255:0]</obj_property>
+      <obj_property name="ObjectShortName">en_out[255:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_lvl/en_psum" type="array">
+      <obj_property name="ElementShortName">en_psum[255:0]</obj_property>
+      <obj_property name="ObjectShortName">en_psum[255:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_lvl/ifmaps_sel" type="array">
+      <obj_property name="ElementShortName">ifmaps_sel[15:0]</obj_property>
+      <obj_property name="ObjectShortName">ifmaps_sel[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_lvl/output_eject_ctrl" type="array">
+      <obj_property name="ElementShortName">output_eject_ctrl[15:0]</obj_property>
+      <obj_property name="ObjectShortName">output_eject_ctrl[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_lvl/weight_in" type="array">
+      <obj_property name="ElementShortName">weight_in[255:0]</obj_property>
+      <obj_property name="ObjectShortName">weight_in[255:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_lvl/ifmap_in" type="array">
+      <obj_property name="ElementShortName">ifmap_in[255:0]</obj_property>
+      <obj_property name="ObjectShortName">ifmap_in[255:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_lvl/done_count" type="logic">
+      <obj_property name="ElementShortName">done_count</obj_property>
+      <obj_property name="ObjectShortName">done_count</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_lvl/output_out" type="array">
+      <obj_property name="ElementShortName">output_out[255:0]</obj_property>
+      <obj_property name="ObjectShortName">output_out[255:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_lvl/weight_wires" type="array">
+      <obj_property name="ElementShortName">weight_wires[0:15][0:15][15:0]</obj_property>
+      <obj_property name="ObjectShortName">weight_wires[0:15][0:15][15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_lvl/ifmap_wires" type="array">
+      <obj_property name="ElementShortName">ifmap_wires[0:15][0:15][15:0]</obj_property>
+      <obj_property name="ObjectShortName">ifmap_wires[0:15][0:15][15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_lvl/output_wires" type="array">
+      <obj_property name="ElementShortName">output_wires[0:15][0:15][15:0]</obj_property>
+      <obj_property name="ObjectShortName">output_wires[0:15][0:15][15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_lvl/en_in_wires" type="array">
+      <obj_property name="ElementShortName">en_in_wires[0:15][0:15][15:0]</obj_property>
+      <obj_property name="ObjectShortName">en_in_wires[0:15][0:15][15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_lvl/en_psum_wires" type="array">
+      <obj_property name="ElementShortName">en_psum_wires[0:15][0:15][15:0]</obj_property>
+      <obj_property name="ObjectShortName">en_psum_wires[0:15][0:15][15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_lvl/en_out_wires" type="array">
+      <obj_property name="ElementShortName">en_out_wires[0:15][0:15][15:0]</obj_property>
+      <obj_property name="ObjectShortName">en_out_wires[0:15][0:15][15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_lvl/DW" type="array">
+      <obj_property name="ElementShortName">DW[31:0]</obj_property>
+      <obj_property name="ObjectShortName">DW[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_lvl/Dimension" type="array">
+      <obj_property name="ElementShortName">Dimension[31:0]</obj_property>
+      <obj_property name="ObjectShortName">Dimension[31:0]</obj_property>
+   </wvobject>
+</wave_config>

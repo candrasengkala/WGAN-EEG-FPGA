@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="onedconv_tb_behav.wdb" id="1">
+         <top_modules>
+            <top_module name="glbl" />
+            <top_module name="onedconv_tb" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+      <ZoomStartTime time="976.000 ns"></ZoomStartTime>
+      <ZoomEndTime time="1,024.201 ns"></ZoomEndTime>
+      <Cursor1Time time="1,000.000 ns"></Cursor1Time>
+   </zoom_setting>
+   <column_width_setting>
+      <NameColumnWidth column_width="238"></NameColumnWidth>
+      <ValueColumnWidth column_width="764"></ValueColumnWidth>
+   </column_width_setting>
+   <WVObjectSize size="49" />
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/output_microsequencer_inst/clk" type="logic">
+      <obj_property name="ElementShortName">clk</obj_property>
+      <obj_property name="ObjectShortName">clk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/output_microsequencer_inst/rst" type="logic">
+      <obj_property name="ElementShortName">rst</obj_property>
+      <obj_property name="ObjectShortName">rst</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/output_microsequencer_inst/en" type="logic">
+      <obj_property name="ElementShortName">en</obj_property>
+      <obj_property name="ObjectShortName">en</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/output_microsequencer_inst/out_new_val_sign" type="logic">
+      <obj_property name="ElementShortName">out_new_val_sign</obj_property>
+      <obj_property name="ObjectShortName">out_new_val_sign</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/output_microsequencer_inst/output_counter_done_a" type="logic">
+      <obj_property name="ElementShortName">output_counter_done_a</obj_property>
+      <obj_property name="ObjectShortName">output_counter_done_a</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/output_microsequencer_inst/output_flag_1per16_a" type="logic">
+      <obj_property name="ElementShortName">output_flag_1per16_a</obj_property>
+      <obj_property name="ObjectShortName">output_flag_1per16_a</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/output_microsequencer_inst/output_counter_done_b" type="logic">
+      <obj_property name="ElementShortName">output_counter_done_b</obj_property>
+      <obj_property name="ObjectShortName">output_counter_done_b</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/output_microsequencer_inst/output_flag_1per16_b" type="logic">
+      <obj_property name="ElementShortName">output_flag_1per16_b</obj_property>
+      <obj_property name="ObjectShortName">output_flag_1per16_b</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/output_microsequencer_inst/en_output_counter_a" type="logic">
+      <obj_property name="ElementShortName">en_output_counter_a</obj_property>
+      <obj_property name="ObjectShortName">en_output_counter_a</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/output_microsequencer_inst/en_output_counter_b" type="logic">
+      <obj_property name="ElementShortName">en_output_counter_b</obj_property>
+      <obj_property name="ObjectShortName">en_output_counter_b</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/output_microsequencer_inst/ena_output_result_control" type="array">
+      <obj_property name="ElementShortName">ena_output_result_control[15:0]</obj_property>
+      <obj_property name="ObjectShortName">ena_output_result_control[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/output_microsequencer_inst/wea_output_result" type="array">
+      <obj_property name="ElementShortName">wea_output_result[15:0]</obj_property>
+      <obj_property name="ObjectShortName">wea_output_result[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/output_microsequencer_inst/enb_output_result_control" type="array">
+      <obj_property name="ElementShortName">enb_output_result_control[15:0]</obj_property>
+      <obj_property name="ObjectShortName">enb_output_result_control[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/output_microsequencer_inst/en_reg_adder" type="logic">
+      <obj_property name="ElementShortName">en_reg_adder</obj_property>
+      <obj_property name="ObjectShortName">en_reg_adder</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/output_microsequencer_inst/output_result_reg_rst" type="logic">
+      <obj_property name="ElementShortName">output_result_reg_rst</obj_property>
+      <obj_property name="ObjectShortName">output_result_reg_rst</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/output_microsequencer_inst/done" type="logic">
+      <obj_property name="ElementShortName">done</obj_property>
+      <obj_property name="ObjectShortName">done</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/output_microsequencer_inst/state" type="array">
+      <obj_property name="ElementShortName">state[3:0]</obj_property>
+      <obj_property name="ObjectShortName">state[3:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/output_microsequencer_inst/next_state" type="array">
+      <obj_property name="ElementShortName">next_state[3:0]</obj_property>
+      <obj_property name="ObjectShortName">next_state[3:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/output_microsequencer_inst/output_count" type="array">
+      <obj_property name="ElementShortName">output_count[4:0]</obj_property>
+      <obj_property name="ObjectShortName">output_count[4:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/output_microsequencer_inst/DW" type="array">
+      <obj_property name="ElementShortName">DW[31:0]</obj_property>
+      <obj_property name="ObjectShortName">DW[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/output_microsequencer_inst/Dimension" type="array">
+      <obj_property name="ElementShortName">Dimension[31:0]</obj_property>
+      <obj_property name="ObjectShortName">Dimension[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/output_microsequencer_inst/S_IDLE" type="array">
+      <obj_property name="ElementShortName">S_IDLE[3:0]</obj_property>
+      <obj_property name="ObjectShortName">S_IDLE[3:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/output_microsequencer_inst/S_WAIT_NEW_VAL" type="array">
+      <obj_property name="ElementShortName">S_WAIT_NEW_VAL[3:0]</obj_property>
+      <obj_property name="ObjectShortName">S_WAIT_NEW_VAL[3:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/output_microsequencer_inst/S_READ_PREV" type="array">
+      <obj_property name="ElementShortName">S_READ_PREV[3:0]</obj_property>
+      <obj_property name="ObjectShortName">S_READ_PREV[3:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/output_microsequencer_inst/S_LATCH_PREV" type="array">
+      <obj_property name="ElementShortName">S_LATCH_PREV[3:0]</obj_property>
+      <obj_property name="ObjectShortName">S_LATCH_PREV[3:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/output_microsequencer_inst/S_WRITE_NEW" type="array">
+      <obj_property name="ElementShortName">S_WRITE_NEW[3:0]</obj_property>
+      <obj_property name="ObjectShortName">S_WRITE_NEW[3:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/output_microsequencer_inst/S_CHECK_DONE" type="array">
+      <obj_property name="ElementShortName">S_CHECK_DONE[3:0]</obj_property>
+      <obj_property name="ObjectShortName">S_CHECK_DONE[3:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/output_microsequencer_inst/S_DONE" type="array">
+      <obj_property name="ElementShortName">S_DONE[3:0]</obj_property>
+      <obj_property name="ObjectShortName">S_DONE[3:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/systolic_out_adder_inst/in_a" type="array">
+      <obj_property name="ElementShortName">in_a[255:0]</obj_property>
+      <obj_property name="ObjectShortName">in_a[255:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/systolic_out_adder_inst/in_b" type="array">
+      <obj_property name="ElementShortName">in_b[255:0]</obj_property>
+      <obj_property name="ObjectShortName">in_b[255:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/systolic_out_adder_inst/out_val" type="array">
+      <obj_property name="ElementShortName">out_val[255:0]</obj_property>
+      <obj_property name="ObjectShortName">out_val[255:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/systolic_out_adder_inst/i" type="array">
+      <obj_property name="ElementShortName">i[31:0]</obj_property>
+      <obj_property name="ObjectShortName">i[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/systolic_out_adder_inst/hasil" type="array">
+      <obj_property name="ElementShortName">hasil[0:15][15:0]</obj_property>
+      <obj_property name="ObjectShortName">hasil[0:15][15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/systolic_out_adder_inst/Dimension" type="array">
+      <obj_property name="ElementShortName">Dimension[31:0]</obj_property>
+      <obj_property name="ObjectShortName">Dimension[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/systolic_out_adder_inst/DW" type="array">
+      <obj_property name="ElementShortName">DW[31:0]</obj_property>
+      <obj_property name="ObjectShortName">DW[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[0].bram_output /clka" type="logic">
+      <obj_property name="ElementShortName">clka</obj_property>
+      <obj_property name="ObjectShortName">clka</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[0].bram_output /clkb" type="logic">
+      <obj_property name="ElementShortName">clkb</obj_property>
+      <obj_property name="ObjectShortName">clkb</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[0].bram_output /ena" type="logic">
+      <obj_property name="ElementShortName">ena</obj_property>
+      <obj_property name="ObjectShortName">ena</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[0].bram_output /enb" type="logic">
+      <obj_property name="ElementShortName">enb</obj_property>
+      <obj_property name="ObjectShortName">enb</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[0].bram_output /wea" type="logic">
+      <obj_property name="ElementShortName">wea</obj_property>
+      <obj_property name="ObjectShortName">wea</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[0].bram_output /addra" type="array">
+      <obj_property name="ElementShortName">addra[12:0]</obj_property>
+      <obj_property name="ObjectShortName">addra[12:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[0].bram_output /addrb" type="array">
+      <obj_property name="ElementShortName">addrb[12:0]</obj_property>
+      <obj_property name="ObjectShortName">addrb[12:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[0].bram_output /dia" type="array">
+      <obj_property name="ElementShortName">dia[15:0]</obj_property>
+      <obj_property name="ObjectShortName">dia[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[0].bram_output /ram" type="array">
+      <obj_property name="ElementShortName">ram[511:0][15:0]</obj_property>
+      <obj_property name="ObjectShortName">ram[511:0][15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[0].bram_output /dob" type="array">
+      <obj_property name="ElementShortName">dob[15:0]</obj_property>
+      <obj_property name="ObjectShortName">dob[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[0].bram_output /i" type="array">
+      <obj_property name="ElementShortName">i[31:0]</obj_property>
+      <obj_property name="ObjectShortName">i[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[0].bram_output /DW" type="array">
+      <obj_property name="ElementShortName">DW[31:0]</obj_property>
+      <obj_property name="ObjectShortName">DW[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[0].bram_output /ADDRESS_LENGTH" type="array">
+      <obj_property name="ElementShortName">ADDRESS_LENGTH[31:0]</obj_property>
+      <obj_property name="ObjectShortName">ADDRESS_LENGTH[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[0].bram_output /DEPTH" type="array">
+      <obj_property name="ElementShortName">DEPTH[31:0]</obj_property>
+      <obj_property name="ObjectShortName">DEPTH[31:0]</obj_property>
+   </wvobject>
+</wave_config>

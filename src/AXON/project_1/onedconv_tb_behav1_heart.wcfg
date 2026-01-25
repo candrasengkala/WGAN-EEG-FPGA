@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="onedconv_tb_behav.wdb" id="1">
+         <top_modules>
+            <top_module name="glbl" />
+            <top_module name="onedconv_tb" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+      <ZoomStartTime time="30,299.166 ns"></ZoomStartTime>
+      <ZoomEndTime time="31,578.167 ns"></ZoomEndTime>
+      <Cursor1Time time="31,365.000 ns"></Cursor1Time>
+   </zoom_setting>
+   <column_width_setting>
+      <NameColumnWidth column_width="182"></NameColumnWidth>
+      <ValueColumnWidth column_width="400"></ValueColumnWidth>
+   </column_width_setting>
+   <WVObjectSize size="60" />
+   <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/dut/\GEN_DIAG[13].pe_d /base_design/ifmap_reg" type="array">
+      <obj_property name="ElementShortName">ifmap_reg[15:0]</obj_property>
+      <obj_property name="ObjectShortName">ifmap_reg[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/dut/\GEN_DIAG[13].pe_d /base_design/weight_reg" type="array">
+      <obj_property name="ElementShortName">weight_reg[15:0]</obj_property>
+      <obj_property name="ObjectShortName">weight_reg[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/dut/\GEN_DIAG[13].pe_d /base_design/psum_reg" type="array">
+      <obj_property name="ElementShortName">psum_reg[15:0]</obj_property>
+      <obj_property name="ObjectShortName">psum_reg[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/dut/\GEN_DIAG[13].pe_d /base_design/output_reg" type="array">
+      <obj_property name="ElementShortName">output_reg[15:0]</obj_property>
+      <obj_property name="ObjectShortName">output_reg[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/dut/\GEN_DIAG[0].pe_d /base_design/ifmap_reg" type="array">
+      <obj_property name="ElementShortName">ifmap_reg[15:0]</obj_property>
+      <obj_property name="ObjectShortName">ifmap_reg[15:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/\INPUT_SHIFT_REGS[0].ifmap_shift /shreg" type="array">
+      <obj_property name="ElementShortName">shreg[0:16][15:0]</obj_property>
+      <obj_property name="ObjectShortName">shreg[0:16][15:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/dut/\GEN_DIAG[0].pe_d /base_design/weight_reg" type="array">
+      <obj_property name="ElementShortName">weight_reg[15:0]</obj_property>
+      <obj_property name="ObjectShortName">weight_reg[15:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/\INPUT_SHIFT_REGS[0].weight_shift /shreg" type="array">
+      <obj_property name="ElementShortName">shreg[0:16][15:0]</obj_property>
+      <obj_property name="ObjectShortName">shreg[0:16][15:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/\INPUT_SHIFT_REGS[3].ifmap_shift /clk" type="logic">
+      <obj_property name="ElementShortName">clk</obj_property>
+      <obj_property name="ObjectShortName">clk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/dut/\GEN_DIAG[0].pe_d /base_design/output_reg" type="array">
+      <obj_property name="ElementShortName">output_reg[15:0]</obj_property>
+      <obj_property name="ObjectShortName">output_reg[15:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/dut/\GEN_DIAG[1].pe_d /base_design/ifmap_reg" type="array">
+      <obj_property name="ElementShortName">ifmap_reg[15:0]</obj_property>
+      <obj_property name="ObjectShortName">ifmap_reg[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/dut/\GEN_DIAG[1].pe_d /base_design/weight_reg" type="array">
+      <obj_property name="ElementShortName">weight_reg[15:0]</obj_property>
+      <obj_property name="ObjectShortName">weight_reg[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/dut/\GEN_DIAG[1].pe_d /base_design/psum_reg" type="array">
+      <obj_property name="ElementShortName">psum_reg[15:0]</obj_property>
+      <obj_property name="ObjectShortName">psum_reg[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/dut/\GEN_DIAG[1].pe_d /base_design/output_reg" type="array">
+      <obj_property name="ElementShortName">output_reg[15:0]</obj_property>
+      <obj_property name="ObjectShortName">output_reg[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/dut/\GEN_DIAG[2].pe_d /base_design/ifmap_reg" type="array">
+      <obj_property name="ElementShortName">ifmap_reg[15:0]</obj_property>
+      <obj_property name="ObjectShortName">ifmap_reg[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/dut/\GEN_DIAG[2].pe_d /base_design/weight_reg" type="array">
+      <obj_property name="ElementShortName">weight_reg[15:0]</obj_property>
+      <obj_property name="ObjectShortName">weight_reg[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/dut/\GEN_DIAG[2].pe_d /base_design/psum_reg" type="array">
+      <obj_property name="ElementShortName">psum_reg[15:0]</obj_property>
+      <obj_property name="ObjectShortName">psum_reg[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/dut/\GEN_DIAG[2].pe_d /base_design/output_reg" type="array">
+      <obj_property name="ElementShortName">output_reg[15:0]</obj_property>
+      <obj_property name="ObjectShortName">output_reg[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/dut/\GEN_DIAG[3].pe_d /base_design/ifmap_reg" type="array">
+      <obj_property name="ElementShortName">ifmap_reg[15:0]</obj_property>
+      <obj_property name="ObjectShortName">ifmap_reg[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/dut/\GEN_DIAG[3].pe_d /base_design/weight_reg" type="array">
+      <obj_property name="ElementShortName">weight_reg[15:0]</obj_property>
+      <obj_property name="ObjectShortName">weight_reg[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/dut/\GEN_DIAG[3].pe_d /base_design/psum_reg" type="array">
+      <obj_property name="ElementShortName">psum_reg[15:0]</obj_property>
+      <obj_property name="ObjectShortName">psum_reg[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/dut/\GEN_DIAG[3].pe_d /base_design/output_reg" type="array">
+      <obj_property name="ElementShortName">output_reg[15:0]</obj_property>
+      <obj_property name="ObjectShortName">output_reg[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/dut/\GEN_DIAG[4].pe_d /base_design/ifmap_reg" type="array">
+      <obj_property name="ElementShortName">ifmap_reg[15:0]</obj_property>
+      <obj_property name="ObjectShortName">ifmap_reg[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/dut/\GEN_DIAG[4].pe_d /base_design/weight_reg" type="array">
+      <obj_property name="ElementShortName">weight_reg[15:0]</obj_property>
+      <obj_property name="ObjectShortName">weight_reg[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/dut/\GEN_DIAG[4].pe_d /base_design/psum_reg" type="array">
+      <obj_property name="ElementShortName">psum_reg[15:0]</obj_property>
+      <obj_property name="ObjectShortName">psum_reg[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/dut/\GEN_DIAG[4].pe_d /base_design/output_reg" type="array">
+      <obj_property name="ElementShortName">output_reg[15:0]</obj_property>
+      <obj_property name="ObjectShortName">output_reg[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/dut/\GEN_DIAG[5].pe_d /base_design/ifmap_reg" type="array">
+      <obj_property name="ElementShortName">ifmap_reg[15:0]</obj_property>
+      <obj_property name="ObjectShortName">ifmap_reg[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/dut/\GEN_DIAG[5].pe_d /base_design/weight_reg" type="array">
+      <obj_property name="ElementShortName">weight_reg[15:0]</obj_property>
+      <obj_property name="ObjectShortName">weight_reg[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/dut/\GEN_DIAG[5].pe_d /base_design/psum_reg" type="array">
+      <obj_property name="ElementShortName">psum_reg[15:0]</obj_property>
+      <obj_property name="ObjectShortName">psum_reg[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/dut/\GEN_DIAG[5].pe_d /base_design/output_reg" type="array">
+      <obj_property name="ElementShortName">output_reg[15:0]</obj_property>
+      <obj_property name="ObjectShortName">output_reg[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/dut/\GEN_DIAG[6].pe_d /base_design/ifmap_reg" type="array">
+      <obj_property name="ElementShortName">ifmap_reg[15:0]</obj_property>
+      <obj_property name="ObjectShortName">ifmap_reg[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/dut/\GEN_DIAG[6].pe_d /base_design/weight_reg" type="array">
+      <obj_property name="ElementShortName">weight_reg[15:0]</obj_property>
+      <obj_property name="ObjectShortName">weight_reg[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/dut/\GEN_DIAG[6].pe_d /base_design/psum_reg" type="array">
+      <obj_property name="ElementShortName">psum_reg[15:0]</obj_property>
+      <obj_property name="ObjectShortName">psum_reg[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/dut/\GEN_DIAG[6].pe_d /base_design/output_reg" type="array">
+      <obj_property name="ElementShortName">output_reg[15:0]</obj_property>
+      <obj_property name="ObjectShortName">output_reg[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/\INPUT_SHIFT_REGS[0].weight_shift /shreg" type="array">
+      <obj_property name="ElementShortName">shreg[0:16][15:0]</obj_property>
+      <obj_property name="ObjectShortName">shreg[0:16][15:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/\INPUT_SHIFT_REGS[0].ifmap_shift /shreg" type="array">
+      <obj_property name="ElementShortName">shreg[0:16][15:0]</obj_property>
+      <obj_property name="ObjectShortName">shreg[0:16][15:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/\INPUT_SHIFT_REGS[1].weight_shift /shreg" type="array">
+      <obj_property name="ElementShortName">shreg[0:16][15:0]</obj_property>
+      <obj_property name="ObjectShortName">shreg[0:16][15:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/\INPUT_SHIFT_REGS[1].ifmap_shift /shreg" type="array">
+      <obj_property name="ElementShortName">shreg[0:16][15:0]</obj_property>
+      <obj_property name="ObjectShortName">shreg[0:16][15:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/\INPUT_SHIFT_REGS[2].weight_shift /shreg" type="array">
+      <obj_property name="ElementShortName">shreg[0:16][15:0]</obj_property>
+      <obj_property name="ObjectShortName">shreg[0:16][15:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/\INPUT_SHIFT_REGS[2].ifmap_shift /shreg" type="array">
+      <obj_property name="ElementShortName">shreg[0:16][15:0]</obj_property>
+      <obj_property name="ObjectShortName">shreg[0:16][15:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/\INPUT_SHIFT_REGS[3].weight_shift /shreg" type="array">
+      <obj_property name="ElementShortName">shreg[0:16][15:0]</obj_property>
+      <obj_property name="ObjectShortName">shreg[0:16][15:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/done_inputmicrosequencer" type="logic">
+      <obj_property name="ElementShortName">done_inputmicrosequencer</obj_property>
+      <obj_property name="ObjectShortName">done_inputmicrosequencer</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/done_filtermicrosequencer" type="logic">
+      <obj_property name="ElementShortName">done_filtermicrosequencer</obj_property>
+      <obj_property name="ObjectShortName">done_filtermicrosequencer</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/\INPUT_SHIFT_REGS[3].ifmap_shift /clk" type="logic">
+      <obj_property name="ElementShortName">clk</obj_property>
+      <obj_property name="ObjectShortName">clk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/\INPUT_SHIFT_REGS[3].ifmap_shift /clken" type="logic">
+      <obj_property name="ElementShortName">clken</obj_property>
+      <obj_property name="ObjectShortName">clken</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/\INPUT_SHIFT_REGS[3].ifmap_shift /rst" type="logic">
+      <obj_property name="ElementShortName">rst</obj_property>
+      <obj_property name="ObjectShortName">rst</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/\INPUT_SHIFT_REGS[3].ifmap_shift /SI" type="array">
+      <obj_property name="ElementShortName">SI[15:0]</obj_property>
+      <obj_property name="ObjectShortName">SI[15:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/\INPUT_SHIFT_REGS[3].ifmap_shift /SO" type="array">
+      <obj_property name="ElementShortName">SO[15:0]</obj_property>
+      <obj_property name="ObjectShortName">SO[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/\INPUT_SHIFT_REGS[3].ifmap_shift /shreg" type="array">
+      <obj_property name="ElementShortName">shreg[0:16][15:0]</obj_property>
+      <obj_property name="ObjectShortName">shreg[0:16][15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/\INPUT_SHIFT_REGS[3].ifmap_shift /i" type="array">
+      <obj_property name="ElementShortName">i[31:0]</obj_property>
+      <obj_property name="ObjectShortName">i[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/\INPUT_SHIFT_REGS[3].ifmap_shift /DW" type="array">
+      <obj_property name="ElementShortName">DW[31:0]</obj_property>
+      <obj_property name="ObjectShortName">DW[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/\INPUT_SHIFT_REGS[3].ifmap_shift /Depth_added" type="array">
+      <obj_property name="ElementShortName">Depth_added[31:0]</obj_property>
+      <obj_property name="ObjectShortName">Depth_added[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/dut/\GEN_LOWER_ROW[15].GEN_LOWER_COL[0].pe_h /output_reg" type="array">
+      <obj_property name="ElementShortName">output_reg[15:0]</obj_property>
+      <obj_property name="ObjectShortName">output_reg[15:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/dut/\GEN_LOWER_ROW[15].GEN_LOWER_COL[1].pe_h /output_reg" type="array">
+      <obj_property name="ElementShortName">output_reg[15:0]</obj_property>
+      <obj_property name="ObjectShortName">output_reg[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/dut/\GEN_LOWER_ROW[15].GEN_LOWER_COL[2].pe_h /output_reg" type="array">
+      <obj_property name="ElementShortName">output_reg[15:0]</obj_property>
+      <obj_property name="ObjectShortName">output_reg[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/dut/\GEN_LOWER_ROW[15].GEN_LOWER_COL[3].pe_h /output_reg" type="array">
+      <obj_property name="ElementShortName">output_reg[15:0]</obj_property>
+      <obj_property name="ObjectShortName">output_reg[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/dut/\GEN_LOWER_ROW[15].GEN_LOWER_COL[4].pe_h /output_reg" type="array">
+      <obj_property name="ElementShortName">output_reg[15:0]</obj_property>
+      <obj_property name="ObjectShortName">output_reg[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/en_in" type="array">
+      <obj_property name="ElementShortName">en_in[255:0]</obj_property>
+      <obj_property name="ObjectShortName">en_in[255:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/en_out" type="array">
+      <obj_property name="ElementShortName">en_out[255:0]</obj_property>
+      <obj_property name="ObjectShortName">en_out[255:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/en_psum" type="array">
+      <obj_property name="ElementShortName">en_psum[255:0]</obj_property>
+      <obj_property name="ObjectShortName">en_psum[255:0]</obj_property>
+   </wvobject>
+</wave_config>
