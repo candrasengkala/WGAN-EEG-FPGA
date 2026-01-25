@@ -11,9 +11,9 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="9.565000 us"></ZoomStartTime>
-      <ZoomEndTime time="11.385001 us"></ZoomEndTime>
-      <Cursor1Time time="11.905000 us"></Cursor1Time>
+      <ZoomStartTime time="73.620000 us"></ZoomStartTime>
+      <ZoomEndTime time="144.270001 us"></ZoomEndTime>
+      <Cursor1Time time="132.495000 us"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
       <NameColumnWidth column_width="358"></NameColumnWidth>
@@ -21,12 +21,12 @@
    </column_width_setting>
    <WVObjectSize size="20" />
    <wvobject fp_name="/onedconv_tb/dut/\gen_inputdata_bram[0].bram_input /ram" type="array">
-      <obj_property name="ElementShortName">ram[511:0][15:0]</obj_property>
-      <obj_property name="ObjectShortName">ram[511:0][15:0]</obj_property>
+      <obj_property name="ElementShortName">ram[511:0][19:0]</obj_property>
+      <obj_property name="ObjectShortName">ram[511:0][19:0]</obj_property>
    </wvobject>
    <wvobject fp_name="/onedconv_tb/dut/\gen_inputdata_bram[1].bram_input /ram" type="array">
-      <obj_property name="ElementShortName">ram[511:0][15:0]</obj_property>
-      <obj_property name="ObjectShortName">ram[511:0][15:0]</obj_property>
+      <obj_property name="ElementShortName">ram[511:0][19:0]</obj_property>
+      <obj_property name="ObjectShortName">ram[511:0][19:0]</obj_property>
    </wvobject>
    <wvobject fp_name="/onedconv_tb/input_bias" type="logic">
       <obj_property name="ElementShortName">input_bias</obj_property>
@@ -63,6 +63,7 @@
    <wvobject fp_name="/onedconv_tb/dut/ifmap_counter_inst/addr_out" type="array">
       <obj_property name="ElementShortName">addr_out[8:0]</obj_property>
       <obj_property name="ObjectShortName">addr_out[8:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/onedconv_tb/dut/ifmap_counter_inst/done" type="logic">
       <obj_property name="ElementShortName">done</obj_property>
@@ -71,6 +72,7 @@
    <wvobject fp_name="/onedconv_tb/dut/ifmap_counter_inst/count" type="array">
       <obj_property name="ElementShortName">count[8:0]</obj_property>
       <obj_property name="ObjectShortName">count[8:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/onedconv_tb/dut/ifmap_counter_inst/reached_end" type="logic">
       <obj_property name="ElementShortName">reached_end</obj_property>
@@ -81,16 +83,16 @@
       <obj_property name="ObjectShortName">ADDRESS_LENGTH[31:0]</obj_property>
    </wvobject>
    <wvobject fp_name="/onedconv_tb/dut/inputdata_mux_inst/data_in" type="array">
-      <obj_property name="ElementShortName">data_in[255:0]</obj_property>
-      <obj_property name="ObjectShortName">data_in[255:0]</obj_property>
+      <obj_property name="ElementShortName">data_in[319:0]</obj_property>
+      <obj_property name="ObjectShortName">data_in[319:0]</obj_property>
    </wvobject>
    <wvobject fp_name="/onedconv_tb/dut/inputdata_mux_inst/sel" type="array">
       <obj_property name="ElementShortName">sel[3:0]</obj_property>
       <obj_property name="ObjectShortName">sel[3:0]</obj_property>
    </wvobject>
    <wvobject fp_name="/onedconv_tb/dut/inputdata_mux_inst/data_out" type="array">
-      <obj_property name="ElementShortName">data_out[15:0]</obj_property>
-      <obj_property name="ObjectShortName">data_out[15:0]</obj_property>
+      <obj_property name="ElementShortName">data_out[19:0]</obj_property>
+      <obj_property name="ObjectShortName">data_out[19:0]</obj_property>
       <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/onedconv_tb/dut/\gen_inputdata_bram[1].bram_input /enb" type="logic">

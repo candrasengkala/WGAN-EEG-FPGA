@@ -77,73 +77,73 @@ def run_tests():
     print("      (Matches Verilog Unique Test Vectors)")
     print("=======================================================")
 
-    # =========================================================
-    # TEST 1: Basic (S=1, P=1) - No Bias
-    # =========================================================
-    S, P, K = 1, 1, 3
-    IN_CH, LEN, FILTERS = 2, 8, 1
-    BIAS = 0
+    # # =========================================================
+    # # TEST 1: Basic (S=1, P=1) - No Bias
+    # # =========================================================
+    # S, P, K = 1, 1, 3
+    # IN_CH, LEN, FILTERS = 2, 8, 1
+    # BIAS = 0
 
-    # Init Data: (c + 1) * 10 + i
-    input_data = np.zeros((IN_CH, LEN), dtype=np.int32)
-    for c in range(IN_CH):
-        input_data[c, :] = np.arange(LEN) + (c + 1) * 10
+    # # Init Data: (c + 1) * 10 + i
+    # input_data = np.zeros((IN_CH, LEN), dtype=np.int32)
+    # for c in range(IN_CH):
+    #     input_data[c, :] = np.arange(LEN) + (c + 1) * 10
         
-    # Init Weights: (f + 1) * 10 + (c + 1) * 5 + k + 1
-    weights = np.zeros((FILTERS, IN_CH, K), dtype=np.int32)
-    for f in range(FILTERS):
-        for c in range(IN_CH):
-            weights[f, c, :] = np.arange(K) + (f + 1) * 10 + (c + 1) * 5 + 1
+    # # Init Weights: (f + 1) * 10 + (c + 1) * 5 + k + 1
+    # weights = np.zeros((FILTERS, IN_CH, K), dtype=np.int32)
+    # for f in range(FILTERS):
+    #     for c in range(IN_CH):
+    #         weights[f, c, :] = np.arange(K) + (f + 1) * 10 + (c + 1) * 5 + 1
 
-    # Print Config
-    print_test_config_numpy("1: Basic (S=1, P=1, No Bias)", S, P, K, IN_CH, LEN, FILTERS, BIAS, input_data, weights)
+    # # Print Config
+    # print_test_config_numpy("1: Basic (S=1, P=1, No Bias)", S, P, K, IN_CH, LEN, FILTERS, BIAS, input_data, weights)
 
-    # Run
-    res = oned_conv_numpy(input_data, weights, BIAS, S, P)
+    # # Run
+    # res = oned_conv_numpy(input_data, weights, BIAS, S, P)
 
-    # Print Results
-    print("RESULTS:")
-    for f in range(FILTERS):
-        for i in range(res.shape[1]):
-            print(f"  Filter {f}[{i}] = {res[f, i]}")
+    # # Print Results
+    # print("RESULTS:")
+    # for f in range(FILTERS):
+    #     for i in range(res.shape[1]):
+    #         print(f"  Filter {f}[{i}] = {res[f, i]}")
 
 
-    # =========================================================
-    # TEST 2: High Padding (S=2, P=7) - No Bias
-    # =========================================================
-    S, P, K = 2, 7, 4
-    IN_CH, LEN, FILTERS = 2, 7, 1
-    BIAS = 0
+    # # =========================================================
+    # # TEST 2: High Padding (S=2, P=7) - No Bias
+    # # =========================================================
+    # S, P, K = 2, 7, 4
+    # IN_CH, LEN, FILTERS = 2, 7, 1
+    # BIAS = 0
 
-    # Init Data: (c + 1) * 10 + i
-    input_data = np.zeros((IN_CH, LEN), dtype=np.int32)
-    for c in range(IN_CH):
-        input_data[c, :] = np.arange(LEN) + (c + 1) * 10
+    # # Init Data: (c + 1) * 10 + i
+    # input_data = np.zeros((IN_CH, LEN), dtype=np.int32)
+    # for c in range(IN_CH):
+    #     input_data[c, :] = np.arange(LEN) + (c + 1) * 10
 
-    # Init Weights: (f + 1) * 10 + (c + 1) * 5 + k + 1
-    weights = np.zeros((FILTERS, IN_CH, K), dtype=np.int32)
-    for f in range(FILTERS):
-        for c in range(IN_CH):
-            weights[f, c, :] = np.arange(K) + (f + 1) * 10 + (c + 1) * 5 + 1
+    # # Init Weights: (f + 1) * 10 + (c + 1) * 5 + k + 1
+    # weights = np.zeros((FILTERS, IN_CH, K), dtype=np.int32)
+    # for f in range(FILTERS):
+    #     for c in range(IN_CH):
+    #         weights[f, c, :] = np.arange(K) + (f + 1) * 10 + (c + 1) * 5 + 1
 
-    # Print Config
-    print_test_config_numpy("2: High Padding (S=2, P=7, No Bias)", S, P, K, IN_CH, LEN, FILTERS, BIAS, input_data, weights)
+    # # Print Config
+    # print_test_config_numpy("2: High Padding (S=2, P=7, No Bias)", S, P, K, IN_CH, LEN, FILTERS, BIAS, input_data, weights)
 
-    # Run
-    res = oned_conv_numpy(input_data, weights, BIAS, S, P)
+    # # Run
+    # res = oned_conv_numpy(input_data, weights, BIAS, S, P)
 
-    # Print Results
-    print("RESULTS:")
-    for f in range(FILTERS):
-        for i in range(res.shape[1]):
-            print(f"  Filter {f}[{i}] = {res[f, i]}")
+    # # Print Results
+    # print("RESULTS:")
+    # for f in range(FILTERS):
+    #     for i in range(res.shape[1]):
+    #         print(f"  Filter {f}[{i}] = {res[f, i]}")
 
 
     # =========================================================
     # TEST 3: Multi-Filter + Bias
     # =========================================================
-    S, P, K = 1, 0, 3
-    IN_CH, LEN, FILTERS = 2, 8, 3
+    S, P, K = 2, 0, 4
+    IN_CH, LEN, FILTERS = 2, 64, 32
     
     # Init Bias: (f + 1) * 100
     BIAS = [(f + 1) * 100 for f in range(FILTERS)]

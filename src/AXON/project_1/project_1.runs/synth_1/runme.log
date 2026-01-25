@@ -8,12 +8,12 @@
   **** SW Build 6140274 on Thu May 22 00:12:29 MDT 2025
   **** IP Build 6138677 on Thu May 22 03:10:11 MDT 2025
   **** SharedData Build 6139179 on Tue May 20 17:58:58 MDT 2025
-  **** Start of session at: Fri Jan 23 22:38:51 2026
+  **** Start of session at: Sat Jan 24 21:08:51 2026
     ** Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
     ** Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
 
 source onedconv.tcl -notrace
-create_project: Time (s): cpu = 00:00:06 ; elapsed = 00:00:09 . Memory (MB): peak = 512.727 ; gain = 212.148
+create_project: Time (s): cpu = 00:00:06 ; elapsed = 00:00:12 . Memory (MB): peak = 511.277 ; gain = 211.781
 Command: read_checkpoint -auto_incremental -incremental D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/utils_1/imports/synth_1/top_lvl.dcp
 INFO: [Vivado 12-5825] Read reference checkpoint from D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/utils_1/imports/synth_1/top_lvl.dcp for incremental synthesis
 INFO: [Vivado 12-7989] Please ensure there are no constraint changes
@@ -26,9 +26,9 @@ INFO: [Designutils 20-5440] No compile time benefit to using incremental synthes
 INFO: [Designutils 20-4379] Flow is switching to default flow due to incremental criteria not met. If you would like to alter this behaviour and have the flow terminate instead, please set the following parameter config_implementation {autoIncr.Synth.RejectBehavior Terminate}
 INFO: [Synth 8-7079] Multithreading enabled for synth_design using a maximum of 2 processes.
 INFO: [Synth 8-7078] Launching helper process for spawning children vivado processes
-INFO: [Synth 8-7075] Helper process launched with PID 41576
+INFO: [Synth 8-7075] Helper process launched with PID 41620
 ---------------------------------------------------------------------------------
-Starting RTL Elaboration : Time (s): cpu = 00:00:08 ; elapsed = 00:00:14 . Memory (MB): peak = 1245.035 ; gain = 493.324
+Starting RTL Elaboration : Time (s): cpu = 00:00:06 ; elapsed = 00:00:13 . Memory (MB): peak = 1246.824 ; gain = 495.145
 ---------------------------------------------------------------------------------
 INFO: [Synth 8-6157] synthesizing module 'onedconv' [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/onedconv.v:2]
 INFO: [Synth 8-6157] synthesizing module 'simple_dual_two_clocks' [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/simple_dual_two_clocks.v:1]
@@ -106,78 +106,73 @@ INFO: [Synth 8-6157] synthesizing module 'onedconv_ctrl' [D:/SEMESTER1_20252026/
 INFO: [Synth 8-6157] synthesizing module 'input_microsequencer' [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/input_microsequencer.v:3]
 	Parameter DW bound to: 16 - type: integer 
 	Parameter Dimension bound to: 16 - type: integer 
-WARNING: [Synth 8-324] index -1 out of range [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/input_microsequencer.v:91]
-WARNING: [Synth 8-324] index -2 out of range [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/input_microsequencer.v:91]
-WARNING: [Synth 8-324] index -3 out of range [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/input_microsequencer.v:91]
-WARNING: [Synth 8-324] index -4 out of range [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/input_microsequencer.v:91]
-WARNING: [Synth 8-324] index -5 out of range [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/input_microsequencer.v:91]
-WARNING: [Synth 8-324] index -6 out of range [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/input_microsequencer.v:91]
-WARNING: [Synth 8-324] index -7 out of range [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/input_microsequencer.v:91]
-WARNING: [Synth 8-324] index -8 out of range [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/input_microsequencer.v:91]
-WARNING: [Synth 8-324] index -9 out of range [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/input_microsequencer.v:91]
-WARNING: [Synth 8-324] index -10 out of range [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/input_microsequencer.v:91]
-WARNING: [Synth 8-324] index -11 out of range [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/input_microsequencer.v:91]
-WARNING: [Synth 8-324] index -12 out of range [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/input_microsequencer.v:91]
-WARNING: [Synth 8-324] index -13 out of range [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/input_microsequencer.v:91]
-WARNING: [Synth 8-324] index -14 out of range [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/input_microsequencer.v:91]
-WARNING: [Synth 8-324] index -15 out of range [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/input_microsequencer.v:91]
-WARNING: [Synth 8-324] index -16 out of range [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/input_microsequencer.v:91]
-WARNING: [Synth 8-324] index -17 out of range [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/input_microsequencer.v:91]
-WARNING: [Synth 8-324] index -18 out of range [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/input_microsequencer.v:91]
-WARNING: [Synth 8-324] index -19 out of range [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/input_microsequencer.v:91]
-WARNING: [Synth 8-324] index -20 out of range [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/input_microsequencer.v:91]
-WARNING: [Synth 8-324] index -21 out of range [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/input_microsequencer.v:91]
-WARNING: [Synth 8-324] index -22 out of range [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/input_microsequencer.v:91]
-WARNING: [Synth 8-324] index -23 out of range [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/input_microsequencer.v:91]
-WARNING: [Synth 8-324] index -24 out of range [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/input_microsequencer.v:91]
-WARNING: [Synth 8-324] index -25 out of range [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/input_microsequencer.v:91]
-WARNING: [Synth 8-324] index -26 out of range [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/input_microsequencer.v:91]
-WARNING: [Synth 8-324] index -27 out of range [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/input_microsequencer.v:91]
-WARNING: [Synth 8-324] index -28 out of range [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/input_microsequencer.v:91]
-WARNING: [Synth 8-324] index -29 out of range [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/input_microsequencer.v:91]
-WARNING: [Synth 8-324] index -30 out of range [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/input_microsequencer.v:91]
-WARNING: [Synth 8-324] index -31 out of range [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/input_microsequencer.v:91]
-WARNING: [Synth 8-324] index -32 out of range [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/input_microsequencer.v:91]
-WARNING: [Synth 8-324] index -33 out of range [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/input_microsequencer.v:91]
-WARNING: [Synth 8-324] index -34 out of range [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/input_microsequencer.v:91]
-WARNING: [Synth 8-324] index -35 out of range [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/input_microsequencer.v:91]
-WARNING: [Synth 8-324] index -36 out of range [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/input_microsequencer.v:91]
-WARNING: [Synth 8-324] index -37 out of range [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/input_microsequencer.v:91]
-WARNING: [Synth 8-324] index -38 out of range [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/input_microsequencer.v:91]
-WARNING: [Synth 8-324] index -39 out of range [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/input_microsequencer.v:91]
-WARNING: [Synth 8-324] index -40 out of range [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/input_microsequencer.v:91]
-WARNING: [Synth 8-324] index -41 out of range [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/input_microsequencer.v:91]
-WARNING: [Synth 8-324] index -42 out of range [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/input_microsequencer.v:91]
-WARNING: [Synth 8-324] index -43 out of range [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/input_microsequencer.v:91]
-WARNING: [Synth 8-324] index -44 out of range [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/input_microsequencer.v:91]
-WARNING: [Synth 8-324] index -45 out of range [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/input_microsequencer.v:91]
-WARNING: [Synth 8-324] index -46 out of range [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/input_microsequencer.v:91]
-INFO: [Synth 8-155] case statement is not full and has no default [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/input_microsequencer.v:143]
+WARNING: [Synth 8-324] index -1 out of range [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/input_microsequencer.v:92]
+WARNING: [Synth 8-324] index -2 out of range [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/input_microsequencer.v:92]
+WARNING: [Synth 8-324] index -3 out of range [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/input_microsequencer.v:92]
+WARNING: [Synth 8-324] index -4 out of range [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/input_microsequencer.v:92]
+WARNING: [Synth 8-324] index -5 out of range [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/input_microsequencer.v:92]
+WARNING: [Synth 8-324] index -6 out of range [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/input_microsequencer.v:92]
+WARNING: [Synth 8-324] index -7 out of range [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/input_microsequencer.v:92]
+WARNING: [Synth 8-324] index -8 out of range [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/input_microsequencer.v:92]
+WARNING: [Synth 8-324] index -9 out of range [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/input_microsequencer.v:92]
+WARNING: [Synth 8-324] index -10 out of range [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/input_microsequencer.v:92]
+WARNING: [Synth 8-324] index -11 out of range [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/input_microsequencer.v:92]
+WARNING: [Synth 8-324] index -12 out of range [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/input_microsequencer.v:92]
+WARNING: [Synth 8-324] index -13 out of range [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/input_microsequencer.v:92]
+WARNING: [Synth 8-324] index -14 out of range [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/input_microsequencer.v:92]
+WARNING: [Synth 8-324] index -15 out of range [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/input_microsequencer.v:92]
+WARNING: [Synth 8-324] index -16 out of range [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/input_microsequencer.v:92]
+WARNING: [Synth 8-324] index -17 out of range [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/input_microsequencer.v:92]
+WARNING: [Synth 8-324] index -18 out of range [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/input_microsequencer.v:92]
+WARNING: [Synth 8-324] index -19 out of range [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/input_microsequencer.v:92]
+WARNING: [Synth 8-324] index -20 out of range [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/input_microsequencer.v:92]
+WARNING: [Synth 8-324] index -21 out of range [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/input_microsequencer.v:92]
+WARNING: [Synth 8-324] index -22 out of range [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/input_microsequencer.v:92]
+WARNING: [Synth 8-324] index -23 out of range [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/input_microsequencer.v:92]
+WARNING: [Synth 8-324] index -24 out of range [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/input_microsequencer.v:92]
+WARNING: [Synth 8-324] index -25 out of range [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/input_microsequencer.v:92]
+WARNING: [Synth 8-324] index -26 out of range [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/input_microsequencer.v:92]
+WARNING: [Synth 8-324] index -27 out of range [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/input_microsequencer.v:92]
+WARNING: [Synth 8-324] index -28 out of range [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/input_microsequencer.v:92]
+WARNING: [Synth 8-324] index -29 out of range [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/input_microsequencer.v:92]
+WARNING: [Synth 8-324] index -30 out of range [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/input_microsequencer.v:92]
+WARNING: [Synth 8-324] index -31 out of range [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/input_microsequencer.v:92]
+WARNING: [Synth 8-324] index -32 out of range [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/input_microsequencer.v:92]
+WARNING: [Synth 8-324] index -33 out of range [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/input_microsequencer.v:92]
+WARNING: [Synth 8-324] index -34 out of range [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/input_microsequencer.v:92]
+WARNING: [Synth 8-324] index -35 out of range [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/input_microsequencer.v:92]
+WARNING: [Synth 8-324] index -36 out of range [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/input_microsequencer.v:92]
+WARNING: [Synth 8-324] index -37 out of range [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/input_microsequencer.v:92]
+WARNING: [Synth 8-324] index -38 out of range [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/input_microsequencer.v:92]
+WARNING: [Synth 8-324] index -39 out of range [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/input_microsequencer.v:92]
+WARNING: [Synth 8-324] index -40 out of range [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/input_microsequencer.v:92]
+WARNING: [Synth 8-324] index -41 out of range [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/input_microsequencer.v:92]
+WARNING: [Synth 8-324] index -42 out of range [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/input_microsequencer.v:92]
+WARNING: [Synth 8-324] index -43 out of range [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/input_microsequencer.v:92]
+WARNING: [Synth 8-324] index -44 out of range [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/input_microsequencer.v:92]
+WARNING: [Synth 8-324] index -45 out of range [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/input_microsequencer.v:92]
+WARNING: [Synth 8-324] index -46 out of range [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/input_microsequencer.v:92]
+INFO: [Synth 8-155] case statement is not full and has no default [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/input_microsequencer.v:149]
 INFO: [Synth 8-6155] done synthesizing module 'input_microsequencer' (0#1) [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/input_microsequencer.v:3]
-INFO: [Synth 8-6157] synthesizing module 'filter_microsequencer' [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/filter_microsequencer.v:9]
+INFO: [Synth 8-6157] synthesizing module 'filter_microsequencer' [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/filter_microsequencer.v:8]
 	Parameter DW bound to: 16 - type: integer 
 	Parameter Dimension bound to: 16 - type: integer 
-INFO: [Synth 8-226] default block is never used [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/filter_microsequencer.v:81]
-INFO: [Synth 8-226] default block is never used [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/filter_microsequencer.v:148]
-WARNING: [Synth 8-6090] variable 'zero_or_data_weight' is written by both blocking and non-blocking assignments, entire logic could be removed [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/filter_microsequencer.v:192]
-INFO: [Synth 8-226] default block is never used [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/filter_microsequencer.v:209]
-INFO: [Synth 8-6155] done synthesizing module 'filter_microsequencer' (0#1) [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/filter_microsequencer.v:9]
-INFO: [Synth 8-6157] synthesizing module 'output_microsequencer' [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/output_microsequencer.v:9]
+WARNING: [Synth 8-6090] variable 'zero_or_data_weight' is written by both blocking and non-blocking assignments, entire logic could be removed [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/filter_microsequencer.v:186]
+INFO: [Synth 8-6155] done synthesizing module 'filter_microsequencer' (0#1) [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/filter_microsequencer.v:8]
+INFO: [Synth 8-6157] synthesizing module 'output_microsequencer' [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/output_microsequencer.v:7]
 	Parameter DW bound to: 16 - type: integer 
 	Parameter Dimension bound to: 16 - type: integer 
-INFO: [Synth 8-6155] done synthesizing module 'output_microsequencer' (0#1) [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/output_microsequencer.v:9]
-INFO: [Synth 8-155] case statement is not full and has no default [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/onedconv_ctrl.v:551]
-INFO: [Synth 8-155] case statement is not full and has no default [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/onedconv_ctrl.v:589]
+INFO: [Synth 8-6155] done synthesizing module 'output_microsequencer' (0#1) [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/output_microsequencer.v:7]
+INFO: [Synth 8-155] case statement is not full and has no default [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/onedconv_ctrl.v:552]
+INFO: [Synth 8-155] case statement is not full and has no default [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/onedconv_ctrl.v:594]
 INFO: [Synth 8-6155] done synthesizing module 'onedconv_ctrl' (0#1) [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/onedconv_ctrl.v:5]
 INFO: [Synth 8-6155] done synthesizing module 'onedconv' (0#1) [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/onedconv.v:2]
-WARNING: [Synth 8-6014] Unused sequential element shift_count_reg was removed.  [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/filter_microsequencer.v:206]
-WARNING: [Synth 8-7137] Register fill_zero_count_reg in module filter_microsequencer has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/filter_microsequencer.v:214]
-WARNING: [Synth 8-6014] Unused sequential element output_counter_done_b_pipeline_reg was removed.  [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/output_microsequencer.v:84]
-WARNING: [Synth 8-6014] Unused sequential element output_count_reg was removed.  [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/output_microsequencer.v:167]
-WARNING: [Synth 8-7137] Register ifmap_counter_end_val_reg in module onedconv_ctrl has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/onedconv_ctrl.v:541]
-WARNING: [Synth 8-7137] Register weight_counter_end_val_reg in module onedconv_ctrl has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/onedconv_ctrl.v:543]
-WARNING: [Synth 8-7137] Register output_counter_end_val_a_reg in module onedconv_ctrl has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/onedconv_ctrl.v:545]
-WARNING: [Synth 8-7137] Register output_counter_end_val_b_reg in module onedconv_ctrl has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/onedconv_ctrl.v:547]
+WARNING: [Synth 8-6014] Unused sequential element output_counter_done_b_pipeline_reg was removed.  [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/output_microsequencer.v:56]
+WARNING: [Synth 8-6014] Unused sequential element output_count_reg was removed.  [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/output_microsequencer.v:150]
+WARNING: [Synth 8-7137] Register ifmap_counter_end_val_reg in module onedconv_ctrl has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/onedconv_ctrl.v:542]
+WARNING: [Synth 8-7137] Register weight_counter_end_val_reg in module onedconv_ctrl has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/onedconv_ctrl.v:544]
+WARNING: [Synth 8-7137] Register output_counter_end_val_a_reg in module onedconv_ctrl has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/onedconv_ctrl.v:546]
+WARNING: [Synth 8-7137] Register output_counter_end_val_b_reg in module onedconv_ctrl has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sources_1/new/onedconv_ctrl.v:548]
 WARNING: [Synth 8-7129] Port output_counter_done_b in module output_microsequencer is either unconnected or has no load
 WARNING: [Synth 8-7129] Port output_flag_1per16_b in module output_microsequencer is either unconnected or has no load
 WARNING: [Synth 8-7129] Port weight_flag_1per16 in module filter_microsequencer is either unconnected or has no load
@@ -194,52 +189,48 @@ WARNING: [Synth 8-7129] Port temporal_length[0] in module input_microsequencer i
 WARNING: [Synth 8-7129] Port ifmap_flag_1per16 in module input_microsequencer is either unconnected or has no load
 WARNING: [Synth 8-7129] Port done_top in module onedconv_ctrl is either unconnected or has no load
 ---------------------------------------------------------------------------------
-Finished RTL Elaboration : Time (s): cpu = 00:00:11 ; elapsed = 00:00:20 . Memory (MB): peak = 1375.648 ; gain = 623.938
+Finished RTL Elaboration : Time (s): cpu = 00:00:07 ; elapsed = 00:00:17 . Memory (MB): peak = 1378.406 ; gain = 626.727
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Handling Custom Attributes
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Handling Custom Attributes : Time (s): cpu = 00:00:11 ; elapsed = 00:00:20 . Memory (MB): peak = 1375.648 ; gain = 623.938
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:07 ; elapsed = 00:00:17 . Memory (MB): peak = 1378.406 ; gain = 626.727
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:11 ; elapsed = 00:00:20 . Memory (MB): peak = 1375.648 ; gain = 623.938
+Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:07 ; elapsed = 00:00:17 . Memory (MB): peak = 1378.406 ; gain = 626.727
 ---------------------------------------------------------------------------------
-Netlist sorting complete. Time (s): cpu = 00:00:01 ; elapsed = 00:00:01 . Memory (MB): peak = 1375.648 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:01 ; elapsed = 00:00:01 . Memory (MB): peak = 1378.406 ; gain = 0.000
 INFO: [Project 1-570] Preparing netlist for logic optimization
 
 Processing XDC Constraints
 Initializing timing engine
-Parsing XDC File [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/constrs_1/new/timing_constraint.xdc]
-CRITICAL WARNING: [Constraints 18-602] set_output_delay: list contains '9' objects of types '(port)' other than the types '(output port,internal pin)' supported by the constraint. These objects will not be used for this constraint. Please review the object list and ensure unsupported object types are removed. [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/constrs_1/new/timing_constraint.xdc:33]
-CRITICAL WARNING: [Constraints 18-602] set_output_delay: list contains '9' objects of types '(port)' other than the types '(output port,internal pin)' supported by the constraint. These objects will not be used for this constraint. Please review the object list and ensure unsupported object types are removed. [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/constrs_1/new/timing_constraint.xdc:34]
-Finished Parsing XDC File [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/constrs_1/new/timing_constraint.xdc]
-INFO: [Project 1-236] Implementation specific constraints were found while reading constraint file [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/constrs_1/new/timing_constraint.xdc]. These constraints will be ignored for synthesis but will be used in implementation. Impacted constraints are listed in the file [.Xil/onedconv_propImpl.xdc].
-Resolution: To avoid this warning, move constraints listed in [.Xil/onedconv_propImpl.xdc] to another XDC file and exclude this new file from synthesis with the used_in_synthesis property (File Properties dialog in GUI) and re-run elaboration/synthesis.
+Parsing XDC File [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/constrs_1/new/timing.xdc]
+Finished Parsing XDC File [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/constrs_1/new/timing.xdc]
 Completed Processing XDC Constraints
 
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.031 . Memory (MB): peak = 1462.668 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.043 . Memory (MB): peak = 1457.277 ; gain = 0.000
 INFO: [Project 1-111] Unisim Transformation Summary:
 No Unisim elements were transformed.
 
-Constraint Validation Runtime : Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.270 . Memory (MB): peak = 1462.668 ; gain = 0.000
+Constraint Validation Runtime : Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.870 . Memory (MB): peak = 1457.277 ; gain = 0.000
 INFO: [Designutils 20-5440] No compile time benefit to using incremental synthesis; A full resynthesis will be run
 INFO: [Designutils 20-4379] Flow is switching to default flow due to incremental criteria not met. If you would like to alter this behaviour and have the flow terminate instead, please set the following parameter config_implementation {autoIncr.Synth.RejectBehavior Terminate}
 ---------------------------------------------------------------------------------
-Finished Constraint Validation : Time (s): cpu = 00:00:29 ; elapsed = 00:00:49 . Memory (MB): peak = 1462.668 ; gain = 710.957
+Finished Constraint Validation : Time (s): cpu = 00:00:22 ; elapsed = 00:00:48 . Memory (MB): peak = 1457.277 ; gain = 705.598
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Loading Part and Timing Information
 ---------------------------------------------------------------------------------
 Loading part: xc7z020clg400-1
 ---------------------------------------------------------------------------------
-Finished Loading Part and Timing Information : Time (s): cpu = 00:00:29 ; elapsed = 00:00:49 . Memory (MB): peak = 1462.668 ; gain = 710.957
+Finished Loading Part and Timing Information : Time (s): cpu = 00:00:22 ; elapsed = 00:00:48 . Memory (MB): peak = 1457.277 ; gain = 705.598
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Applying 'set_property' XDC Constraints
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:29 ; elapsed = 00:00:49 . Memory (MB): peak = 1462.668 ; gain = 710.957
+Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:22 ; elapsed = 00:00:48 . Memory (MB): peak = 1457.277 ; gain = 705.598
 ---------------------------------------------------------------------------------
 INFO: [Synth 8-802] inferred FSM for state register 'state_reg' in module 'matrix_mult_control'
 INFO: [Synth 8-802] inferred FSM for state register 'state_reg' in module 'input_microsequencer'
@@ -263,64 +254,68 @@ INFO: [Synth 8-3354] encoded FSM with state register 'state_reg' using encoding 
                    State |                     New Encoding |                Previous Encoding 
 ---------------------------------------------------------------------------------------------------
                     IDLE |                              000 |                             0000
-                    INIT |                              001 |                             0001
-               STREAMING |                              010 |                             0010
-               FILL_ZERO |                              011 |                             0101
-                COMPLETE |                              100 |                             0100
-                PRE_INIT |                              101 |                             0110
-    PRE_INIT_WAIT_SETTLE |                              110 |                             0111
+PRE_INIT_PADDING_ZERO_FIRST |                              001 |                             1000
+                    INIT |                              010 |                             0001
+               STREAMING |                              011 |                             0010
+               FILL_ZERO |                              100 |                             0101
+                COMPLETE |                              101 |                             0100
+                PRE_INIT |                              110 |                             0110
+    PRE_INIT_WAIT_SETTLE |                              111 |                             0111
 ---------------------------------------------------------------------------------------------------
 INFO: [Synth 8-3354] encoded FSM with state register 'state_reg' using encoding 'sequential' in module 'input_microsequencer'
 ---------------------------------------------------------------------------------------------------
                    State |                     New Encoding |                Previous Encoding 
 ---------------------------------------------------------------------------------------------------
-                  S_IDLE |                              000 |                              000
-                  S_INIT |                              001 |                              001
-         S_SHIFT_WEIGHTS |                              010 |                              010
-         S_LOAD_LAST_VAL |                              011 |                              110
-             S_FILL_ZERO |                              100 |                              111
-                  S_DONE |                              101 |                              101
+                  S_IDLE |                        000000001 |                             0000
+              S_PRE_INIT |                        000000010 |                             1000
+                  S_INIT |                        000000100 |                             0001
+         S_SHIFT_WEIGHTS |                        000001000 |                             0010
+         S_LOAD_LAST_VAL |                        000010000 |                             0110
+      S_CONSUME_LAST_VAL |                        000100000 |                             1001
+            S_ZERO_PAD_1 |                        001000000 |                             0011
+             S_FILL_ZERO |                        010000000 |                             0111
+                  S_DONE |                        100000000 |                             0101
 ---------------------------------------------------------------------------------------------------
-INFO: [Synth 8-3354] encoded FSM with state register 'state_reg' using encoding 'sequential' in module 'filter_microsequencer'
+INFO: [Synth 8-3354] encoded FSM with state register 'state_reg' using encoding 'one-hot' in module 'filter_microsequencer'
 ---------------------------------------------------------------------------------------------------
                    State |                     New Encoding |                Previous Encoding 
 ---------------------------------------------------------------------------------------------------
-                  S_IDLE |                              000 |                             0000
-          S_WAIT_NEW_VAL |                              001 |                             0001
-             S_READ_PREV |                              010 |                             0010
-            S_LATCH_PREV |                              011 |                             0011
-             S_WRITE_NEW |                              100 |                             0100
-         S_WAIT_SETTLE_2 |                              101 |                             1000
-            S_CHECK_DONE |                              110 |                             0101
-                  S_DONE |                              111 |                             0110
+                  S_IDLE |                             0000 |                             0000
+          S_WAIT_NEW_VAL |                             0001 |                             0001
+             S_READ_PREV |                             0010 |                             0010
+             S_WAIT_DATA |                             0011 |                             1001
+            S_LATCH_PREV |                             0100 |                             0011
+             S_WRITE_NEW |                             0101 |                             0100
+         S_WAIT_SETTLE_2 |                             0110 |                             1000
+            S_CHECK_DONE |                             0111 |                             0101
+                  S_DONE |                             1000 |                             0110
 ---------------------------------------------------------------------------------------------------
 INFO: [Synth 8-3354] encoded FSM with state register 'state_reg' using encoding 'sequential' in module 'output_microsequencer'
 ---------------------------------------------------------------------------------------------------
                    State |                     New Encoding |                Previous Encoding 
 ---------------------------------------------------------------------------------------------------
-                  S_IDLE |                            00000 |                            00000
-          S_RESET_OUTPUT |                            00001 |                            01010
-S_PICK_INPUT_LAYER_INIT_SET_ADDRESS |                            00010 |                            10000
- S_PICK_INPUT_LAYER_INIT |                            00011 |                            00001
-           S_WAIT_SETTLE |                            00100 |                            01011
-          S_LOAD_INITIAL |                            00101 |                            00010
-                   S_RUN |                            00110 |                            00011
-            S_OUTPUT_VAL |                            00111 |                            00101
-S_CHECK_COUNTER_INCREMENT |                            01000 |                            01100
-         S_CHECK_COUNTER |                            01001 |                            00110
-S_RESTART_MICROSEQUENCER_SET_ADDRESS |                            01010 |                            10001
-S_PRE_RESTART_MICROSEQUENCER |                            01011 |                            10010
-S_RESTART_MICROSEQUENCER |                            01100 |                            00100
-     S_RESTART_WAIT_DONE |                            01101 |                            01111
-S_CHANGE_INPUT_CHANNEL_INCREMENT |                            01110 |                            01101
-  S_CHANGE_INPUT_CHANNEL |                            01111 |                            00111
-S_CHANGE_FILTER_INCREMENT |                            10000 |                            01110
-         S_CHANGE_FILTER |                            10001 |                            01000
-                  S_DONE |                            10010 |                            01001
+                  S_IDLE |               000000000000000001 |                            00000
+S_PICK_INPUT_LAYER_INIT_SET_ADDRESS |               000000000000000010 |                            10000
+ S_PICK_INPUT_LAYER_INIT |               000000000000000100 |                            00001
+           S_WAIT_SETTLE |               000000000000001000 |                            01011
+          S_LOAD_INITIAL |               000000000000010000 |                            00010
+                   S_RUN |               000000000000100000 |                            00011
+            S_OUTPUT_VAL |               000000000001000000 |                            00101
+S_CHECK_COUNTER_INCREMENT |               000000000010000000 |                            01100
+         S_CHECK_COUNTER |               000000000100000000 |                            00110
+S_RESTART_MICROSEQUENCER_SET_ADDRESS |               000000001000000000 |                            10001
+S_PRE_RESTART_MICROSEQUENCER |               000000010000000000 |                            10010
+S_RESTART_MICROSEQUENCER |               000000100000000000 |                            00100
+     S_RESTART_WAIT_DONE |               000001000000000000 |                            01111
+S_CHANGE_INPUT_CHANNEL_INCREMENT |               000010000000000000 |                            01101
+  S_CHANGE_INPUT_CHANNEL |               000100000000000000 |                            00111
+S_CHANGE_FILTER_INCREMENT |               001000000000000000 |                            01110
+         S_CHANGE_FILTER |               010000000000000000 |                            01000
+                  S_DONE |               100000000000000000 |                            01001
 ---------------------------------------------------------------------------------------------------
-INFO: [Synth 8-3354] encoded FSM with state register 'state_reg' using encoding 'sequential' in module 'onedconv_ctrl'
+INFO: [Synth 8-3354] encoded FSM with state register 'state_reg' using encoding 'one-hot' in module 'onedconv_ctrl'
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:31 ; elapsed = 00:00:53 . Memory (MB): peak = 1462.668 ; gain = 710.957
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:24 ; elapsed = 00:00:52 . Memory (MB): peak = 1457.277 ; gain = 705.598
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start RTL Component Statistics 
@@ -353,43 +348,42 @@ Detailed RTL Component Info :
 +---RAMs : 
 	               8K Bit	(512 X 16 bit)          RAMs := 48    
 +---Muxes : 
-	   2 Input  256 Bit        Muxes := 3     
+	   2 Input  256 Bit        Muxes := 4     
 	   8 Input  256 Bit        Muxes := 2     
-	   7 Input   32 Bit        Muxes := 1     
+	   8 Input   32 Bit        Muxes := 1     
+	  18 Input   18 Bit        Muxes := 1     
+	   2 Input   18 Bit        Muxes := 3     
 	   2 Input   17 Bit        Muxes := 13    
 	   5 Input   17 Bit        Muxes := 1     
 	   2 Input   16 Bit        Muxes := 279   
 	   3 Input   16 Bit        Muxes := 1     
-	   4 Input   16 Bit        Muxes := 1     
-	   7 Input   16 Bit        Muxes := 2     
-	   6 Input   16 Bit        Muxes := 3     
+	   4 Input   16 Bit        Muxes := 2     
 	   8 Input   16 Bit        Muxes := 2     
-	  16 Input   16 Bit        Muxes := 1     
+	   9 Input   16 Bit        Muxes := 4     
 	   2 Input   12 Bit        Muxes := 1     
-	   7 Input   10 Bit        Muxes := 1     
+	   8 Input   10 Bit        Muxes := 1     
 	   5 Input   10 Bit        Muxes := 3     
-	   2 Input    9 Bit        Muxes := 18    
-	   4 Input    9 Bit        Muxes := 3     
+	   2 Input    9 Bit        Muxes := 19    
+	   9 Input    9 Bit        Muxes := 1     
+	   3 Input    9 Bit        Muxes := 1     
 	   8 Input    8 Bit        Muxes := 1     
 	   2 Input    8 Bit        Muxes := 1     
-	   2 Input    5 Bit        Muxes := 5     
+	   2 Input    5 Bit        Muxes := 2     
 	   3 Input    5 Bit        Muxes := 1     
-	   7 Input    5 Bit        Muxes := 2     
-	  19 Input    5 Bit        Muxes := 1     
-	   7 Input    3 Bit        Muxes := 1     
-	   6 Input    3 Bit        Muxes := 1     
+	   8 Input    5 Bit        Muxes := 2     
+	   9 Input    4 Bit        Muxes := 1     
+	   2 Input    4 Bit        Muxes := 1     
 	   8 Input    3 Bit        Muxes := 1     
 	   2 Input    3 Bit        Muxes := 1     
 	   2 Input    2 Bit        Muxes := 3     
-	   7 Input    2 Bit        Muxes := 1     
-	   2 Input    1 Bit        Muxes := 29    
-	   8 Input    1 Bit        Muxes := 7     
-	   3 Input    1 Bit        Muxes := 1     
-	   7 Input    1 Bit        Muxes := 16    
-	   6 Input    1 Bit        Muxes := 5     
-	  16 Input    1 Bit        Muxes := 10    
-	  19 Input    1 Bit        Muxes := 1     
-	   4 Input    1 Bit        Muxes := 3     
+	   8 Input    2 Bit        Muxes := 1     
+	   2 Input    1 Bit        Muxes := 28    
+	   8 Input    1 Bit        Muxes := 18    
+	   3 Input    1 Bit        Muxes := 2     
+	   9 Input    1 Bit        Muxes := 7     
+	   4 Input    1 Bit        Muxes := 1     
+	  15 Input    1 Bit        Muxes := 4     
+	  18 Input    1 Bit        Muxes := 1     
 	   5 Input    1 Bit        Muxes := 3     
 ---------------------------------------------------------------------------------
 Finished RTL Component Statistics 
@@ -2301,7 +2295,7 @@ WARNING: [Synth 8-7129] Port temporal_length[0] in module input_microsequencer i
 WARNING: [Synth 8-7129] Port ifmap_flag_1per16 in module input_microsequencer is either unconnected or has no load
 WARNING: [Synth 8-7129] Port done_top in module onedconv_ctrl is either unconnected or has no load
 ---------------------------------------------------------------------------------
-Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:56 ; elapsed = 00:01:41 . Memory (MB): peak = 1633.109 ; gain = 881.398
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:57 ; elapsed = 00:01:59 . Memory (MB): peak = 1645.605 ; gain = 893.926
 ---------------------------------------------------------------------------------
 WARNING: [Synth 8-3323] Resources of type DSP have been overutilized. Used = 256, Available = 220. Use report_utilization command for details.
  Sort Area is  GEN_UPPER_ROW[0].GEN_UPPER_COL[2].pe_h/psum_reg_reg_12 : 0 0 : 2064 28704 : Used 1 time 0
@@ -4724,13 +4718,13 @@ Finished ROM, RAM, DSP, Shift Register and Retiming Reporting
 Start Applying XDC Timing Constraints
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Applying XDC Timing Constraints : Time (s): cpu = 00:01:08 ; elapsed = 00:02:06 . Memory (MB): peak = 1723.254 ; gain = 971.543
+Finished Applying XDC Timing Constraints : Time (s): cpu = 00:01:20 ; elapsed = 00:02:43 . Memory (MB): peak = 1720.641 ; gain = 968.961
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Timing Optimization
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Timing Optimization : Time (s): cpu = 00:01:22 ; elapsed = 00:02:31 . Memory (MB): peak = 1926.262 ; gain = 1174.551
+Finished Timing Optimization : Time (s): cpu = 00:01:39 ; elapsed = 00:03:16 . Memory (MB): peak = 1867.270 ; gain = 1115.590
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start ROM, RAM, DSP, Shift Register and Retiming Reporting
@@ -4845,7 +4839,7 @@ INFO: [Synth 8-7052] The timing for the instance gen_output_result_bram[13].bram
 INFO: [Synth 8-7052] The timing for the instance gen_output_result_bram[14].bram_output/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
 INFO: [Synth 8-7052] The timing for the instance gen_output_result_bram[15].bram_output/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
 ---------------------------------------------------------------------------------
-Finished Technology Mapping : Time (s): cpu = 00:01:36 ; elapsed = 00:02:54 . Memory (MB): peak = 2018.527 ; gain = 1266.816
+Finished Technology Mapping : Time (s): cpu = 00:02:03 ; elapsed = 00:04:12 . Memory (MB): peak = 1986.035 ; gain = 1234.355
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start IO Insertion
@@ -4863,37 +4857,37 @@ Start Final Netlist Cleanup
 Finished Final Netlist Cleanup
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished IO Insertion : Time (s): cpu = 00:01:41 ; elapsed = 00:03:03 . Memory (MB): peak = 2046.328 ; gain = 1294.617
+Finished IO Insertion : Time (s): cpu = 00:02:07 ; elapsed = 00:04:20 . Memory (MB): peak = 2013.910 ; gain = 1262.230
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Instances
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Instances : Time (s): cpu = 00:01:41 ; elapsed = 00:03:03 . Memory (MB): peak = 2046.328 ; gain = 1294.617
+Finished Renaming Generated Instances : Time (s): cpu = 00:02:07 ; elapsed = 00:04:21 . Memory (MB): peak = 2013.910 ; gain = 1262.230
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Rebuilding User Hierarchy
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Rebuilding User Hierarchy : Time (s): cpu = 00:01:44 ; elapsed = 00:03:10 . Memory (MB): peak = 2074.676 ; gain = 1322.965
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:02:11 ; elapsed = 00:04:28 . Memory (MB): peak = 2043.438 ; gain = 1291.758
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Ports
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Ports : Time (s): cpu = 00:01:44 ; elapsed = 00:03:10 . Memory (MB): peak = 2074.676 ; gain = 1322.965
+Finished Renaming Generated Ports : Time (s): cpu = 00:02:11 ; elapsed = 00:04:28 . Memory (MB): peak = 2043.438 ; gain = 1291.758
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Handling Custom Attributes
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Handling Custom Attributes : Time (s): cpu = 00:01:45 ; elapsed = 00:03:11 . Memory (MB): peak = 2099.512 ; gain = 1347.801
+Finished Handling Custom Attributes : Time (s): cpu = 00:02:12 ; elapsed = 00:04:29 . Memory (MB): peak = 2068.293 ; gain = 1316.613
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Nets
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Nets : Time (s): cpu = 00:01:45 ; elapsed = 00:03:11 . Memory (MB): peak = 2099.512 ; gain = 1347.801
+Finished Renaming Generated Nets : Time (s): cpu = 00:02:12 ; elapsed = 00:04:29 . Memory (MB): peak = 2068.293 ; gain = 1316.613
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start ROM, RAM, DSP, Shift Register and Retiming Reporting
@@ -5151,49 +5145,33 @@ Report Cell Usage:
 |      |Cell     |Count |
 +------+---------+------+
 |1     |BUFG     |     1|
-|2     |CARRY4   |  1446|
+|2     |CARRY4   |  1442|
 |3     |DSP48E1  |   220|
-|9     |LUT1     |    13|
-|10    |LUT2     |  3684|
-|11    |LUT3     |  5207|
-|12    |LUT4     |  1656|
-|13    |LUT5     |   136|
-|14    |LUT6     |  3527|
+|9     |LUT1     |    14|
+|10    |LUT2     |  3676|
+|11    |LUT3     |  6033|
+|12    |LUT4     |  1626|
+|13    |LUT5     |   123|
+|14    |LUT6     |  3025|
 |15    |MUXF7    |    16|
 |16    |RAMB18E1 |    48|
 |17    |SRL16E   |   512|
-|18    |FDCE     |   201|
-|19    |FDPE     |    36|
-|20    |FDRE     | 10393|
+|18    |FDCE     |   214|
+|19    |FDPE     |    32|
+|20    |FDRE     | 10377|
 |21    |FDSE     |     1|
 |22    |LDC      |    24|
-|23    |IBUF     |   663|
+|23    |IBUF     |   961|
 |24    |OBUF     |   257|
 +------+---------+------+
 ---------------------------------------------------------------------------------
-Finished Writing Synthesis Report : Time (s): cpu = 00:01:45 ; elapsed = 00:03:11 . Memory (MB): peak = 2099.512 ; gain = 1347.801
+Finished Writing Synthesis Report : Time (s): cpu = 00:02:12 ; elapsed = 00:04:29 . Memory (MB): peak = 2068.293 ; gain = 1316.613
 ---------------------------------------------------------------------------------
 Synthesis finished with 0 errors, 0 critical warnings and 17 warnings.
-Synthesis Optimization Runtime : Time (s): cpu = 00:01:24 ; elapsed = 00:02:57 . Memory (MB): peak = 2099.512 ; gain = 1260.781
-Synthesis Optimization Complete : Time (s): cpu = 00:01:45 ; elapsed = 00:03:12 . Memory (MB): peak = 2099.512 ; gain = 1347.801
+Synthesis Optimization Runtime : Time (s): cpu = 00:01:57 ; elapsed = 00:04:13 . Memory (MB): peak = 2068.293 ; gain = 1237.742
+Synthesis Optimization Complete : Time (s): cpu = 00:02:12 ; elapsed = 00:04:29 . Memory (MB): peak = 2068.293 ; gain = 1316.613
 INFO: [Project 1-571] Translating synthesized netlist
-Netlist sorting complete. Time (s): cpu = 00:00:01 ; elapsed = 00:00:01 . Memory (MB): peak = 2108.680 ; gain = 0.000
-INFO: [Netlist 29-17] Analyzing 1754 Unisim elements for replacement
+Netlist sorting complete. Time (s): cpu = 00:00:01 ; elapsed = 00:00:01 . Memory (MB): peak = 2077.414 ; gain = 0.000
+INFO: [Netlist 29-17] Analyzing 1750 Unisim elements for replacement
 INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
 INFO: [Project 1-570] Preparing netlist for logic optimization
-INFO: [Opt 31-138] Pushed 1 inverter(s) to 512 load pin(s).
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.033 . Memory (MB): peak = 2114.324 ; gain = 0.000
-INFO: [Project 1-111] Unisim Transformation Summary:
-  A total of 24 instances were transformed.
-  LDC => LDCE: 24 instances
-
-Synth Design complete | Checksum: 55e1a6ae
-INFO: [Common 17-83] Releasing license: Synthesis
-133 Infos, 88 Warnings, 2 Critical Warnings and 0 Errors encountered.
-synth_design completed successfully
-synth_design: Time (s): cpu = 00:01:56 ; elapsed = 00:03:34 . Memory (MB): peak = 2114.324 ; gain = 1594.199
-INFO: [runtcl-6] Synthesis results are not added to the cache due to CRITICAL_WARNING
-Write ShapeDB Complete: Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.148 . Memory (MB): peak = 2114.324 ; gain = 0.000
-INFO: [Common 17-1381] The checkpoint 'D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.runs/synth_1/onedconv.dcp' has been generated.
-INFO: [Vivado 12-24828] Executing command : report_utilization -file onedconv_utilization_synth.rpt -pb onedconv_utilization_synth.pb
-INFO: [Common 17-206] Exiting Vivado at Fri Jan 23 22:42:43 2026...

@@ -11,73 +11,77 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="0.000 ns"></ZoomStartTime>
-      <ZoomEndTime time="80.001 ns"></ZoomEndTime>
-      <Cursor1Time time="0.000 ns"></Cursor1Time>
+      <ZoomStartTime time="49.873334 us"></ZoomStartTime>
+      <ZoomEndTime time="177.173335 us"></ZoomEndTime>
+      <Cursor1Time time="73.273334 us"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
       <NameColumnWidth column_width="262"></NameColumnWidth>
-      <ValueColumnWidth column_width="332"></ValueColumnWidth>
+      <ValueColumnWidth column_width="326"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="46" />
+   <WVObjectSize size="48" />
    <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/\INPUT_SHIFT_REGS[0].ifmap_shift /shreg" type="array">
-      <obj_property name="ElementShortName">shreg[0:16][15:0]</obj_property>
-      <obj_property name="ObjectShortName">shreg[0:16][15:0]</obj_property>
+      <obj_property name="ElementShortName">shreg[0:16][19:0]</obj_property>
+      <obj_property name="ObjectShortName">shreg[0:16][19:0]</obj_property>
       <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/\INPUT_SHIFT_REGS[1].ifmap_shift /shreg" type="array">
-      <obj_property name="ElementShortName">shreg[0:16][15:0]</obj_property>
-      <obj_property name="ObjectShortName">shreg[0:16][15:0]</obj_property>
+      <obj_property name="ElementShortName">shreg[0:16][19:0]</obj_property>
+      <obj_property name="ObjectShortName">shreg[0:16][19:0]</obj_property>
       <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/\INPUT_SHIFT_REGS[2].ifmap_shift /shreg" type="array">
-      <obj_property name="ElementShortName">shreg[0:16][15:0]</obj_property>
-      <obj_property name="ObjectShortName">shreg[0:16][15:0]</obj_property>
+      <obj_property name="ElementShortName">shreg[0:16][19:0]</obj_property>
+      <obj_property name="ObjectShortName">shreg[0:16][19:0]</obj_property>
       <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/\INPUT_SHIFT_REGS[3].ifmap_shift /shreg" type="array">
-      <obj_property name="ElementShortName">shreg[0:16][15:0]</obj_property>
-      <obj_property name="ObjectShortName">shreg[0:16][15:0]</obj_property>
+      <obj_property name="ElementShortName">shreg[0:16][19:0]</obj_property>
+      <obj_property name="ObjectShortName">shreg[0:16][19:0]</obj_property>
       <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/\INPUT_SHIFT_REGS[4].ifmap_shift /shreg" type="array">
-      <obj_property name="ElementShortName">shreg[0:16][15:0]</obj_property>
-      <obj_property name="ObjectShortName">shreg[0:16][15:0]</obj_property>
+      <obj_property name="ElementShortName">shreg[0:16][19:0]</obj_property>
+      <obj_property name="ObjectShortName">shreg[0:16][19:0]</obj_property>
       <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/\INPUT_SHIFT_REGS[5].ifmap_shift /shreg" type="array">
-      <obj_property name="ElementShortName">shreg[0:16][15:0]</obj_property>
-      <obj_property name="ObjectShortName">shreg[0:16][15:0]</obj_property>
+      <obj_property name="ElementShortName">shreg[0:16][19:0]</obj_property>
+      <obj_property name="ObjectShortName">shreg[0:16][19:0]</obj_property>
       <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/\INPUT_SHIFT_REGS[6].ifmap_shift /shreg" type="array">
-      <obj_property name="ElementShortName">shreg[0:16][15:0]</obj_property>
-      <obj_property name="ObjectShortName">shreg[0:16][15:0]</obj_property>
+      <obj_property name="ElementShortName">shreg[0:16][19:0]</obj_property>
+      <obj_property name="ObjectShortName">shreg[0:16][19:0]</obj_property>
       <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/\INPUT_SHIFT_REGS[7].ifmap_shift /shreg" type="array">
-      <obj_property name="ElementShortName">shreg[0:16][15:0]</obj_property>
-      <obj_property name="ObjectShortName">shreg[0:16][15:0]</obj_property>
+      <obj_property name="ElementShortName">shreg[0:16][19:0]</obj_property>
+      <obj_property name="ObjectShortName">shreg[0:16][19:0]</obj_property>
       <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/\INPUT_SHIFT_REGS[8].ifmap_shift /shreg" type="array">
-      <obj_property name="ElementShortName">shreg[0:16][15:0]</obj_property>
-      <obj_property name="ObjectShortName">shreg[0:16][15:0]</obj_property>
+      <obj_property name="ElementShortName">shreg[0:16][19:0]</obj_property>
+      <obj_property name="ObjectShortName">shreg[0:16][19:0]</obj_property>
       <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/\INPUT_SHIFT_REGS[9].ifmap_shift /shreg" type="array">
-      <obj_property name="ElementShortName">shreg[0:16][15:0]</obj_property>
-      <obj_property name="ObjectShortName">shreg[0:16][15:0]</obj_property>
+      <obj_property name="ElementShortName">shreg[0:16][19:0]</obj_property>
+      <obj_property name="ObjectShortName">shreg[0:16][19:0]</obj_property>
       <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/\INPUT_SHIFT_REGS[15].ifmap_shift /shreg" type="array">
-      <obj_property name="ElementShortName">shreg[0:16][15:0]</obj_property>
-      <obj_property name="ObjectShortName">shreg[0:16][15:0]</obj_property>
+      <obj_property name="ElementShortName">shreg[0:16][19:0]</obj_property>
+      <obj_property name="ObjectShortName">shreg[0:16][19:0]</obj_property>
       <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/zero_or_data" type="logic">
       <obj_property name="ElementShortName">zero_or_data</obj_property>
       <obj_property name="ObjectShortName">zero_or_data</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/input_microsequencer_inst/state" type="array">
+      <obj_property name="ElementShortName">state[3:0]</obj_property>
+      <obj_property name="ObjectShortName">state[3:0]</obj_property>
    </wvobject>
    <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/input_microsequencer_inst/en_shift_reg" type="array">
       <obj_property name="ElementShortName">en_shift_reg[15:0]</obj_property>
@@ -90,8 +94,8 @@
       <obj_property name="Radix">BINARYRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/onedconv_tb/dut/ifmap_counter_inst/count" type="array">
-      <obj_property name="ElementShortName">count[12:0]</obj_property>
-      <obj_property name="ObjectShortName">count[12:0]</obj_property>
+      <obj_property name="ElementShortName">count[8:0]</obj_property>
+      <obj_property name="ObjectShortName">count[8:0]</obj_property>
    </wvobject>
    <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/input_microsequencer_inst/one_clock" type="logic">
       <obj_property name="ElementShortName">one_clock</obj_property>
@@ -139,13 +143,17 @@
       <obj_property name="ObjectShortName">en</obj_property>
    </wvobject>
    <wvobject fp_name="/onedconv_tb/dut/inputdata_mux_inst/data_out" type="array">
-      <obj_property name="ElementShortName">data_out[15:0]</obj_property>
-      <obj_property name="ObjectShortName">data_out[15:0]</obj_property>
+      <obj_property name="ElementShortName">data_out[19:0]</obj_property>
+      <obj_property name="ObjectShortName">data_out[19:0]</obj_property>
       <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
    </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/done_all" type="logic">
+      <obj_property name="ElementShortName">done_all</obj_property>
+      <obj_property name="ObjectShortName">done_all</obj_property>
+   </wvobject>
    <wvobject fp_name="/onedconv_tb/dut/ifmap_counter_inst/addr_out" type="array">
-      <obj_property name="ElementShortName">addr_out[12:0]</obj_property>
-      <obj_property name="ObjectShortName">addr_out[12:0]</obj_property>
+      <obj_property name="ElementShortName">addr_out[8:0]</obj_property>
+      <obj_property name="ObjectShortName">addr_out[8:0]</obj_property>
       <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/state" type="array">
@@ -158,33 +166,33 @@
       <obj_property name="ObjectShortName">state[3:0]</obj_property>
    </wvobject>
    <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/\INPUT_SHIFT_REGS[10].ifmap_shift /shreg" type="array">
-      <obj_property name="ElementShortName">shreg[0:16][15:0]</obj_property>
-      <obj_property name="ObjectShortName">shreg[0:16][15:0]</obj_property>
+      <obj_property name="ElementShortName">shreg[0:16][19:0]</obj_property>
+      <obj_property name="ObjectShortName">shreg[0:16][19:0]</obj_property>
       <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/\INPUT_SHIFT_REGS[11].ifmap_shift /shreg" type="array">
-      <obj_property name="ElementShortName">shreg[0:16][15:0]</obj_property>
-      <obj_property name="ObjectShortName">shreg[0:16][15:0]</obj_property>
+      <obj_property name="ElementShortName">shreg[0:16][19:0]</obj_property>
+      <obj_property name="ObjectShortName">shreg[0:16][19:0]</obj_property>
       <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/\INPUT_SHIFT_REGS[12].ifmap_shift /shreg" type="array">
-      <obj_property name="ElementShortName">shreg[0:16][15:0]</obj_property>
-      <obj_property name="ObjectShortName">shreg[0:16][15:0]</obj_property>
+      <obj_property name="ElementShortName">shreg[0:16][19:0]</obj_property>
+      <obj_property name="ObjectShortName">shreg[0:16][19:0]</obj_property>
       <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/\INPUT_SHIFT_REGS[13].ifmap_shift /shreg" type="array">
-      <obj_property name="ElementShortName">shreg[0:16][15:0]</obj_property>
-      <obj_property name="ObjectShortName">shreg[0:16][15:0]</obj_property>
+      <obj_property name="ElementShortName">shreg[0:16][19:0]</obj_property>
+      <obj_property name="ObjectShortName">shreg[0:16][19:0]</obj_property>
       <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/\INPUT_SHIFT_REGS[14].ifmap_shift /shreg" type="array">
-      <obj_property name="ElementShortName">shreg[0:16][15:0]</obj_property>
-      <obj_property name="ObjectShortName">shreg[0:16][15:0]</obj_property>
+      <obj_property name="ElementShortName">shreg[0:16][19:0]</obj_property>
+      <obj_property name="ObjectShortName">shreg[0:16][19:0]</obj_property>
       <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/\INPUT_SHIFT_REGS[15].ifmap_shift /shreg" type="array">
-      <obj_property name="ElementShortName">shreg[0:16][15:0]</obj_property>
-      <obj_property name="ObjectShortName">shreg[0:16][15:0]</obj_property>
+      <obj_property name="ElementShortName">shreg[0:16][19:0]</obj_property>
+      <obj_property name="ObjectShortName">shreg[0:16][19:0]</obj_property>
       <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/\INPUT_SHIFT_REGS[0].weight_shift /clk" type="logic">
@@ -204,12 +212,12 @@
       <obj_property name="ObjectShortName">rst</obj_property>
    </wvobject>
    <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/\INPUT_SHIFT_REGS[0].weight_shift /SI" type="array">
-      <obj_property name="ElementShortName">SI[15:0]</obj_property>
-      <obj_property name="ObjectShortName">SI[15:0]</obj_property>
+      <obj_property name="ElementShortName">SI[19:0]</obj_property>
+      <obj_property name="ObjectShortName">SI[19:0]</obj_property>
    </wvobject>
    <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/\INPUT_SHIFT_REGS[0].weight_shift /shreg" type="array">
-      <obj_property name="ElementShortName">shreg[0:16][15:0]</obj_property>
-      <obj_property name="ObjectShortName">shreg[0:16][15:0]</obj_property>
+      <obj_property name="ElementShortName">shreg[0:16][19:0]</obj_property>
+      <obj_property name="ObjectShortName">shreg[0:16][19:0]</obj_property>
    </wvobject>
    <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/\INPUT_SHIFT_REGS[0].weight_shift /i" type="array">
       <obj_property name="ElementShortName">i[31:0]</obj_property>

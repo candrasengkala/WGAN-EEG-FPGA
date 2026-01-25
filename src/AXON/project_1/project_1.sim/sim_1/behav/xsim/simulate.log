@@ -1,825 +1,180 @@
 Time resolution is 1 ps
 
->>> TEST 1: Basic (S=1, P=1) - No Bias (Zeroing Memory)
---- Initializing Output BRAMs to Zero ---
-[Monitor] Filter 0[0] =      0
-[Monitor] Filter 0[1] =      0
-[Monitor] Filter 0[2] =      0
-[Monitor] Filter 0[3] =      0
-[Monitor] Filter 0[4] =      0
-[Monitor] Filter 0[5] =      0
-[Monitor] Filter 0[6] =      0
-[Monitor] Filter 0[7] =      0
-[Monitor] Filter 0[0] =      2
-[Monitor] Filter 1[0] =      0
-[Monitor] Filter 2[0] =      0
-[Monitor] Filter 3[0] =      0
-[Monitor] Filter 4[0] =      0
-[Monitor] Filter 5[0] =      0
-[Monitor] Filter 6[0] =      0
-[Monitor] Filter 7[0] =      0
-[Monitor] Filter 8[0] =      0
-[Monitor] Filter 9[0] =      0
-[Monitor] Filter 10[0] =      0
-[Monitor] Filter 11[0] =      0
-[Monitor] Filter 12[0] =      0
-[Monitor] Filter 13[0] =      0
-[Monitor] Filter 14[0] =      0
-[Monitor] Filter 15[0] =      0
-[Monitor] Filter 0[1] =      3
-[Monitor] Filter 1[1] =      0
-[Monitor] Filter 2[1] =      0
-[Monitor] Filter 3[1] =      0
-[Monitor] Filter 4[1] =      0
-[Monitor] Filter 5[1] =      0
-[Monitor] Filter 6[1] =      0
-[Monitor] Filter 7[1] =      0
-[Monitor] Filter 8[1] =      0
-[Monitor] Filter 9[1] =      0
-[Monitor] Filter 10[1] =      0
-[Monitor] Filter 11[1] =      0
-[Monitor] Filter 12[1] =      0
-[Monitor] Filter 13[1] =      0
-[Monitor] Filter 14[1] =      0
-[Monitor] Filter 15[1] =      0
-[Monitor] Filter 0[2] =      3
-[Monitor] Filter 1[2] =      0
-[Monitor] Filter 2[2] =      0
-[Monitor] Filter 3[2] =      0
-[Monitor] Filter 4[2] =      0
-[Monitor] Filter 5[2] =      0
-[Monitor] Filter 6[2] =      0
-[Monitor] Filter 7[2] =      0
-[Monitor] Filter 8[2] =      0
-[Monitor] Filter 9[2] =      0
-[Monitor] Filter 10[2] =      0
-[Monitor] Filter 11[2] =      0
-[Monitor] Filter 12[2] =      0
-[Monitor] Filter 13[2] =      0
-[Monitor] Filter 14[2] =      0
-[Monitor] Filter 15[2] =      0
-[Monitor] Filter 0[3] =      3
-[Monitor] Filter 1[3] =      0
-[Monitor] Filter 2[3] =      0
-[Monitor] Filter 3[3] =      0
-[Monitor] Filter 4[3] =      0
-[Monitor] Filter 5[3] =      0
-[Monitor] Filter 6[3] =      0
-[Monitor] Filter 7[3] =      0
-[Monitor] Filter 8[3] =      0
-[Monitor] Filter 9[3] =      0
-[Monitor] Filter 10[3] =      0
-[Monitor] Filter 11[3] =      0
-[Monitor] Filter 12[3] =      0
-[Monitor] Filter 13[3] =      0
-[Monitor] Filter 14[3] =      0
-[Monitor] Filter 15[3] =      0
-[Monitor] Filter 0[4] =      3
-[Monitor] Filter 1[4] =      0
-[Monitor] Filter 2[4] =      0
-[Monitor] Filter 3[4] =      0
-[Monitor] Filter 4[4] =      0
-[Monitor] Filter 5[4] =      0
-[Monitor] Filter 6[4] =      0
-[Monitor] Filter 7[4] =      0
-[Monitor] Filter 8[4] =      0
-[Monitor] Filter 9[4] =      0
-[Monitor] Filter 10[4] =      0
-[Monitor] Filter 11[4] =      0
-[Monitor] Filter 12[4] =      0
-[Monitor] Filter 13[4] =      0
-[Monitor] Filter 14[4] =      0
-[Monitor] Filter 15[4] =      0
-[Monitor] Filter 0[5] =      3
-[Monitor] Filter 1[5] =      0
-[Monitor] Filter 2[5] =      0
-[Monitor] Filter 3[5] =      0
-[Monitor] Filter 4[5] =      0
-[Monitor] Filter 5[5] =      0
-[Monitor] Filter 6[5] =      0
-[Monitor] Filter 7[5] =      0
-[Monitor] Filter 8[5] =      0
-[Monitor] Filter 9[5] =      0
-[Monitor] Filter 10[5] =      0
-[Monitor] Filter 11[5] =      0
-[Monitor] Filter 12[5] =      0
-[Monitor] Filter 13[5] =      0
-[Monitor] Filter 14[5] =      0
-[Monitor] Filter 15[5] =      0
-[Monitor] Filter 0[6] =      3
-[Monitor] Filter 1[6] =      0
-[Monitor] Filter 2[6] =      0
-[Monitor] Filter 3[6] =      0
-[Monitor] Filter 4[6] =      0
-[Monitor] Filter 5[6] =      0
-[Monitor] Filter 6[6] =      0
-[Monitor] Filter 7[6] =      0
-[Monitor] Filter 8[6] =      0
-[Monitor] Filter 9[6] =      0
-[Monitor] Filter 10[6] =      0
-[Monitor] Filter 11[6] =      0
-[Monitor] Filter 12[6] =      0
-[Monitor] Filter 13[6] =      0
-[Monitor] Filter 14[6] =      0
-[Monitor] Filter 15[6] =      0
-[Monitor] Filter 0[7] =      2
-[Monitor] Filter 1[7] =      0
-[Monitor] Filter 2[7] =      0
-[Monitor] Filter 3[7] =      0
-[Monitor] Filter 4[7] =      0
-[Monitor] Filter 5[7] =      0
-[Monitor] Filter 6[7] =      0
-[Monitor] Filter 7[7] =      0
-[Monitor] Filter 8[7] =      0
-[Monitor] Filter 9[7] =      0
-[Monitor] Filter 10[7] =      0
-[Monitor] Filter 11[7] =      0
-[Monitor] Filter 12[7] =      0
-[Monitor] Filter 13[7] =      0
-[Monitor] Filter 14[7] =      0
-[Monitor] Filter 15[7] =      0
-[Monitor] Filter 0[0] =      6
-[Monitor] Filter 1[0] =      0
-[Monitor] Filter 2[0] =      0
-[Monitor] Filter 3[0] =      0
-[Monitor] Filter 4[0] =      0
-[Monitor] Filter 5[0] =      0
-[Monitor] Filter 6[0] =      0
-[Monitor] Filter 7[0] =      0
-[Monitor] Filter 8[0] =      0
-[Monitor] Filter 9[0] =      0
-[Monitor] Filter 10[0] =      0
-[Monitor] Filter 11[0] =      0
-[Monitor] Filter 12[0] =      0
-[Monitor] Filter 13[0] =      0
-[Monitor] Filter 14[0] =      0
-[Monitor] Filter 15[0] =      0
-[Monitor] Filter 0[1] =      9
-[Monitor] Filter 1[1] =      0
-[Monitor] Filter 2[1] =      0
-[Monitor] Filter 3[1] =      0
-[Monitor] Filter 4[1] =      0
-[Monitor] Filter 5[1] =      0
-[Monitor] Filter 6[1] =      0
-[Monitor] Filter 7[1] =      0
-[Monitor] Filter 8[1] =      0
-[Monitor] Filter 9[1] =      0
-[Monitor] Filter 10[1] =      0
-[Monitor] Filter 11[1] =      0
-[Monitor] Filter 12[1] =      0
-[Monitor] Filter 13[1] =      0
-[Monitor] Filter 14[1] =      0
-[Monitor] Filter 15[1] =      0
-[Monitor] Filter 0[2] =      9
-[Monitor] Filter 1[2] =      0
-[Monitor] Filter 2[2] =      0
-[Monitor] Filter 3[2] =      0
-[Monitor] Filter 4[2] =      0
-[Monitor] Filter 5[2] =      0
-[Monitor] Filter 6[2] =      0
-[Monitor] Filter 7[2] =      0
-[Monitor] Filter 8[2] =      0
-[Monitor] Filter 9[2] =      0
-[Monitor] Filter 10[2] =      0
-[Monitor] Filter 11[2] =      0
-[Monitor] Filter 12[2] =      0
-[Monitor] Filter 13[2] =      0
-[Monitor] Filter 14[2] =      0
-[Monitor] Filter 15[2] =      0
-[Monitor] Filter 0[3] =      9
-[Monitor] Filter 1[3] =      0
-[Monitor] Filter 2[3] =      0
-[Monitor] Filter 3[3] =      0
-[Monitor] Filter 4[3] =      0
-[Monitor] Filter 5[3] =      0
-[Monitor] Filter 6[3] =      0
-[Monitor] Filter 7[3] =      0
-[Monitor] Filter 8[3] =      0
-[Monitor] Filter 9[3] =      0
-[Monitor] Filter 10[3] =      0
-[Monitor] Filter 11[3] =      0
-[Monitor] Filter 12[3] =      0
-[Monitor] Filter 13[3] =      0
-[Monitor] Filter 14[3] =      0
-[Monitor] Filter 15[3] =      0
-[Monitor] Filter 0[4] =      9
-[Monitor] Filter 1[4] =      0
-[Monitor] Filter 2[4] =      0
-[Monitor] Filter 3[4] =      0
-[Monitor] Filter 4[4] =      0
-[Monitor] Filter 5[4] =      0
-[Monitor] Filter 6[4] =      0
-[Monitor] Filter 7[4] =      0
-[Monitor] Filter 8[4] =      0
-[Monitor] Filter 9[4] =      0
-[Monitor] Filter 10[4] =      0
-[Monitor] Filter 11[4] =      0
-[Monitor] Filter 12[4] =      0
-[Monitor] Filter 13[4] =      0
-[Monitor] Filter 14[4] =      0
-[Monitor] Filter 15[4] =      0
-[Monitor] Filter 0[5] =      9
-[Monitor] Filter 1[5] =      0
-[Monitor] Filter 2[5] =      0
-[Monitor] Filter 3[5] =      0
-[Monitor] Filter 4[5] =      0
-[Monitor] Filter 5[5] =      0
-[Monitor] Filter 6[5] =      0
-[Monitor] Filter 7[5] =      0
-[Monitor] Filter 8[5] =      0
-[Monitor] Filter 9[5] =      0
-[Monitor] Filter 10[5] =      0
-[Monitor] Filter 11[5] =      0
-[Monitor] Filter 12[5] =      0
-[Monitor] Filter 13[5] =      0
-[Monitor] Filter 14[5] =      0
-[Monitor] Filter 15[5] =      0
-[Monitor] Filter 0[6] =      9
-[Monitor] Filter 1[6] =      0
-[Monitor] Filter 2[6] =      0
-[Monitor] Filter 3[6] =      0
-[Monitor] Filter 4[6] =      0
-[Monitor] Filter 5[6] =      0
-[Monitor] Filter 6[6] =      0
-[Monitor] Filter 7[6] =      0
-[Monitor] Filter 8[6] =      0
-[Monitor] Filter 9[6] =      0
-[Monitor] Filter 10[6] =      0
-[Monitor] Filter 11[6] =      0
-[Monitor] Filter 12[6] =      0
-[Monitor] Filter 13[6] =      0
-[Monitor] Filter 14[6] =      0
-[Monitor] Filter 15[6] =      0
-[Monitor] Filter 0[7] =      6
-[Monitor] Filter 1[7] =      0
-[Monitor] Filter 2[7] =      0
-[Monitor] Filter 3[7] =      0
-[Monitor] Filter 4[7] =      0
-[Monitor] Filter 5[7] =      0
-[Monitor] Filter 6[7] =      0
-[Monitor] Filter 7[7] =      0
-[Monitor] Filter 8[7] =      0
-[Monitor] Filter 9[7] =      0
-[Monitor] Filter 10[7] =      0
-[Monitor] Filter 11[7] =      0
-[Monitor] Filter 12[7] =      0
-[Monitor] Filter 13[7] =      0
-[Monitor] Filter 14[7] =      0
-[Monitor] Filter 15[7] =      0
---- Final Readout ---
-  Filter 0[0] =      6
-  Filter 0[1] =      9
-  Filter 0[2] =      9
-  Filter 0[3] =      9
-  Filter 0[4] =      9
-  Filter 0[5] =      9
-  Filter 0[6] =      9
-  Filter 0[7] =      6
+========================================
+  1D Convolution Testbench - ADAPTED DESIGN
+========================================
 
->>> TEST 2: High Padding (S=2, P=7) - No Bias (Zeroing Memory)
---- Initializing Output BRAMs to Zero ---
-[Monitor] Filter 0[0] =      0
-[Monitor] Filter 0[1] =      0
-[Monitor] Filter 0[2] =      0
-[Monitor] Filter 0[3] =      0
-[Monitor] Filter 0[4] =      0
-[Monitor] Filter 0[5] =      0
-[Monitor] Filter 0[6] =      0
-[Monitor] Filter 0[7] =      0
-[Monitor] Filter 0[8] =      0
-[Monitor] Filter 0[0] =      0
-[Monitor] Filter 1[0] =      0
-[Monitor] Filter 2[0] =      0
-[Monitor] Filter 3[0] =      0
-[Monitor] Filter 4[0] =      0
-[Monitor] Filter 5[0] =      0
-[Monitor] Filter 6[0] =      0
-[Monitor] Filter 7[0] =      0
-[Monitor] Filter 8[0] =      0
-[Monitor] Filter 9[0] =      0
-[Monitor] Filter 10[0] =      0
-[Monitor] Filter 11[0] =      0
-[Monitor] Filter 12[0] =      0
-[Monitor] Filter 13[0] =      0
-[Monitor] Filter 14[0] =      0
-[Monitor] Filter 15[0] =      0
-[Monitor] Filter 0[1] =      0
-[Monitor] Filter 1[1] =      0
-[Monitor] Filter 2[1] =      0
-[Monitor] Filter 3[1] =      0
-[Monitor] Filter 4[1] =      0
-[Monitor] Filter 5[1] =      0
-[Monitor] Filter 6[1] =      0
-[Monitor] Filter 7[1] =      0
-[Monitor] Filter 8[1] =      0
-[Monitor] Filter 9[1] =      0
-[Monitor] Filter 10[1] =      0
-[Monitor] Filter 11[1] =      0
-[Monitor] Filter 12[1] =      0
-[Monitor] Filter 13[1] =      0
-[Monitor] Filter 14[1] =      0
-[Monitor] Filter 15[1] =      0
-[Monitor] Filter 0[2] =      1
-[Monitor] Filter 1[2] =      0
-[Monitor] Filter 2[2] =      0
-[Monitor] Filter 3[2] =      0
-[Monitor] Filter 4[2] =      0
-[Monitor] Filter 5[2] =      0
-[Monitor] Filter 6[2] =      0
-[Monitor] Filter 7[2] =      0
-[Monitor] Filter 8[2] =      0
-[Monitor] Filter 9[2] =      0
-[Monitor] Filter 10[2] =      0
-[Monitor] Filter 11[2] =      0
-[Monitor] Filter 12[2] =      0
-[Monitor] Filter 13[2] =      0
-[Monitor] Filter 14[2] =      0
-[Monitor] Filter 15[2] =      0
-[Monitor] Filter 0[3] =      6
-[Monitor] Filter 1[3] =      0
-[Monitor] Filter 2[3] =      0
-[Monitor] Filter 3[3] =      0
-[Monitor] Filter 4[3] =      0
-[Monitor] Filter 5[3] =      0
-[Monitor] Filter 6[3] =      0
-[Monitor] Filter 7[3] =      0
-[Monitor] Filter 8[3] =      0
-[Monitor] Filter 9[3] =      0
-[Monitor] Filter 10[3] =      0
-[Monitor] Filter 11[3] =      0
-[Monitor] Filter 12[3] =      0
-[Monitor] Filter 13[3] =      0
-[Monitor] Filter 14[3] =      0
-[Monitor] Filter 15[3] =      0
-[Monitor] Filter 0[4] =     14
-[Monitor] Filter 1[4] =      0
-[Monitor] Filter 2[4] =      0
-[Monitor] Filter 3[4] =      0
-[Monitor] Filter 4[4] =      0
-[Monitor] Filter 5[4] =      0
-[Monitor] Filter 6[4] =      0
-[Monitor] Filter 7[4] =      0
-[Monitor] Filter 8[4] =      0
-[Monitor] Filter 9[4] =      0
-[Monitor] Filter 10[4] =      0
-[Monitor] Filter 11[4] =      0
-[Monitor] Filter 12[4] =      0
-[Monitor] Filter 13[4] =      0
-[Monitor] Filter 14[4] =      0
-[Monitor] Filter 15[4] =      0
-[Monitor] Filter 0[5] =     22
-[Monitor] Filter 1[5] =      0
-[Monitor] Filter 2[5] =      0
-[Monitor] Filter 3[5] =      0
-[Monitor] Filter 4[5] =      0
-[Monitor] Filter 5[5] =      0
-[Monitor] Filter 6[5] =      0
-[Monitor] Filter 7[5] =      0
-[Monitor] Filter 8[5] =      0
-[Monitor] Filter 9[5] =      0
-[Monitor] Filter 10[5] =      0
-[Monitor] Filter 11[5] =      0
-[Monitor] Filter 12[5] =      0
-[Monitor] Filter 13[5] =      0
-[Monitor] Filter 14[5] =      0
-[Monitor] Filter 15[5] =      0
-[Monitor] Filter 0[6] =     13
-[Monitor] Filter 1[6] =      0
-[Monitor] Filter 2[6] =      0
-[Monitor] Filter 3[6] =      0
-[Monitor] Filter 4[6] =      0
-[Monitor] Filter 5[6] =      0
-[Monitor] Filter 6[6] =      0
-[Monitor] Filter 7[6] =      0
-[Monitor] Filter 8[6] =      0
-[Monitor] Filter 9[6] =      0
-[Monitor] Filter 10[6] =      0
-[Monitor] Filter 11[6] =      0
-[Monitor] Filter 12[6] =      0
-[Monitor] Filter 13[6] =      0
-[Monitor] Filter 14[6] =      0
-[Monitor] Filter 15[6] =      0
-[Monitor] Filter 0[7] =      0
-[Monitor] Filter 1[7] =      0
-[Monitor] Filter 2[7] =      0
-[Monitor] Filter 3[7] =      0
-[Monitor] Filter 4[7] =      0
-[Monitor] Filter 5[7] =      0
-[Monitor] Filter 6[7] =      0
-[Monitor] Filter 7[7] =      0
-[Monitor] Filter 8[7] =      0
-[Monitor] Filter 9[7] =      0
-[Monitor] Filter 10[7] =      0
-[Monitor] Filter 11[7] =      0
-[Monitor] Filter 12[7] =      0
-[Monitor] Filter 13[7] =      0
-[Monitor] Filter 14[7] =      0
-[Monitor] Filter 15[7] =      0
-[Monitor] Filter 0[8] =      0
-[Monitor] Filter 1[8] =      0
-[Monitor] Filter 2[8] =      0
-[Monitor] Filter 3[8] =      0
-[Monitor] Filter 4[8] =      0
-[Monitor] Filter 5[8] =      0
-[Monitor] Filter 6[8] =      0
-[Monitor] Filter 7[8] =      0
-[Monitor] Filter 8[8] =      0
-[Monitor] Filter 9[8] =      0
-[Monitor] Filter 10[8] =      0
-[Monitor] Filter 11[8] =      0
-[Monitor] Filter 12[8] =      0
-[Monitor] Filter 13[8] =      0
-[Monitor] Filter 14[8] =      0
-[Monitor] Filter 15[8] =      0
-[Monitor] Filter 0[0] =      0
-[Monitor] Filter 1[0] =      0
-[Monitor] Filter 2[0] =      0
-[Monitor] Filter 3[0] =      0
-[Monitor] Filter 4[0] =      0
-[Monitor] Filter 5[0] =      0
-[Monitor] Filter 6[0] =      0
-[Monitor] Filter 7[0] =      0
-[Monitor] Filter 8[0] =      0
-[Monitor] Filter 9[0] =      0
-[Monitor] Filter 10[0] =      0
-[Monitor] Filter 11[0] =      0
-[Monitor] Filter 12[0] =      0
-[Monitor] Filter 13[0] =      0
-[Monitor] Filter 14[0] =      0
-[Monitor] Filter 15[0] =      0
-[Monitor] Filter 0[1] =      0
-[Monitor] Filter 1[1] =      0
-[Monitor] Filter 2[1] =      0
-[Monitor] Filter 3[1] =      0
-[Monitor] Filter 4[1] =      0
-[Monitor] Filter 5[1] =      0
-[Monitor] Filter 6[1] =      0
-[Monitor] Filter 7[1] =      0
-[Monitor] Filter 8[1] =      0
-[Monitor] Filter 9[1] =      0
-[Monitor] Filter 10[1] =      0
-[Monitor] Filter 11[1] =      0
-[Monitor] Filter 12[1] =      0
-[Monitor] Filter 13[1] =      0
-[Monitor] Filter 14[1] =      0
-[Monitor] Filter 15[1] =      0
-[Monitor] Filter 0[2] =     12
-[Monitor] Filter 1[2] =      0
-[Monitor] Filter 2[2] =      0
-[Monitor] Filter 3[2] =      0
-[Monitor] Filter 4[2] =      0
-[Monitor] Filter 5[2] =      0
-[Monitor] Filter 6[2] =      0
-[Monitor] Filter 7[2] =      0
-[Monitor] Filter 8[2] =      0
-[Monitor] Filter 9[2] =      0
-[Monitor] Filter 10[2] =      0
-[Monitor] Filter 11[2] =      0
-[Monitor] Filter 12[2] =      0
-[Monitor] Filter 13[2] =      0
-[Monitor] Filter 14[2] =      0
-[Monitor] Filter 15[2] =      0
-[Monitor] Filter 0[3] =     42
-[Monitor] Filter 1[3] =      0
-[Monitor] Filter 2[3] =      0
-[Monitor] Filter 3[3] =      0
-[Monitor] Filter 4[3] =      0
-[Monitor] Filter 5[3] =      0
-[Monitor] Filter 6[3] =      0
-[Monitor] Filter 7[3] =      0
-[Monitor] Filter 8[3] =      0
-[Monitor] Filter 9[3] =      0
-[Monitor] Filter 10[3] =      0
-[Monitor] Filter 11[3] =      0
-[Monitor] Filter 12[3] =      0
-[Monitor] Filter 13[3] =      0
-[Monitor] Filter 14[3] =      0
-[Monitor] Filter 15[3] =      0
-[Monitor] Filter 0[4] =     68
-[Monitor] Filter 1[4] =      0
-[Monitor] Filter 2[4] =      0
-[Monitor] Filter 3[4] =      0
-[Monitor] Filter 4[4] =      0
-[Monitor] Filter 5[4] =      0
-[Monitor] Filter 6[4] =      0
-[Monitor] Filter 7[4] =      0
-[Monitor] Filter 8[4] =      0
-[Monitor] Filter 9[4] =      0
-[Monitor] Filter 10[4] =      0
-[Monitor] Filter 11[4] =      0
-[Monitor] Filter 12[4] =      0
-[Monitor] Filter 13[4] =      0
-[Monitor] Filter 14[4] =      0
-[Monitor] Filter 15[4] =      0
-[Monitor] Filter 0[5] =     84
-[Monitor] Filter 1[5] =      0
-[Monitor] Filter 2[5] =      0
-[Monitor] Filter 3[5] =      0
-[Monitor] Filter 4[5] =      0
-[Monitor] Filter 5[5] =      0
-[Monitor] Filter 6[5] =      0
-[Monitor] Filter 7[5] =      0
-[Monitor] Filter 8[5] =      0
-[Monitor] Filter 9[5] =      0
-[Monitor] Filter 10[5] =      0
-[Monitor] Filter 11[5] =      0
-[Monitor] Filter 12[5] =      0
-[Monitor] Filter 13[5] =      0
-[Monitor] Filter 14[5] =      0
-[Monitor] Filter 15[5] =      0
-[Monitor] Filter 0[6] =     46
-[Monitor] Filter 1[6] =      0
-[Monitor] Filter 2[6] =      0
-[Monitor] Filter 3[6] =      0
-[Monitor] Filter 4[6] =      0
-[Monitor] Filter 5[6] =      0
-[Monitor] Filter 6[6] =      0
-[Monitor] Filter 7[6] =      0
-[Monitor] Filter 8[6] =      0
-[Monitor] Filter 9[6] =      0
-[Monitor] Filter 10[6] =      0
-[Monitor] Filter 11[6] =      0
-[Monitor] Filter 12[6] =      0
-[Monitor] Filter 13[6] =      0
-[Monitor] Filter 14[6] =      0
-[Monitor] Filter 15[6] =      0
-[Monitor] Filter 0[7] =      0
-[Monitor] Filter 1[7] =      0
-[Monitor] Filter 2[7] =      0
-[Monitor] Filter 3[7] =      0
-[Monitor] Filter 4[7] =      0
-[Monitor] Filter 5[7] =      0
-[Monitor] Filter 6[7] =      0
-[Monitor] Filter 7[7] =      0
-[Monitor] Filter 8[7] =      0
-[Monitor] Filter 9[7] =      0
-[Monitor] Filter 10[7] =      0
-[Monitor] Filter 11[7] =      0
-[Monitor] Filter 12[7] =      0
-[Monitor] Filter 13[7] =      0
-[Monitor] Filter 14[7] =      0
-[Monitor] Filter 15[7] =      0
-[Monitor] Filter 0[8] =      0
-[Monitor] Filter 1[8] =      0
-[Monitor] Filter 2[8] =      0
-[Monitor] Filter 3[8] =      0
-[Monitor] Filter 4[8] =      0
-[Monitor] Filter 5[8] =      0
-[Monitor] Filter 6[8] =      0
-[Monitor] Filter 7[8] =      0
-[Monitor] Filter 8[8] =      0
-[Monitor] Filter 9[8] =      0
-[Monitor] Filter 10[8] =      0
-[Monitor] Filter 11[8] =      0
-[Monitor] Filter 12[8] =      0
-[Monitor] Filter 13[8] =      0
-[Monitor] Filter 14[8] =      0
-[Monitor] Filter 15[8] =      0
---- Final Readout ---
-  Filter 0[0] =      0
-  Filter 0[1] =      0
-  Filter 0[2] =     12
-  Filter 0[3] =     42
-  Filter 0[4] =     68
-  Filter 0[5] =     84
-  Filter 0[6] =     46
-  Filter 0[7] =      0
-  Filter 0[8] =      0
+>>> Test 1: Basic Convolution (No Bias)
+Initializing input data: 2 channels, 7 temporal length
+Input data initialization complete
+Initializing weights: kernel_size=4, input_channels=2, filters=1
+  Systolic Architecture: 16 BRAMs
+  Multi-Channel Logic: Weights stored continuously for all channels.
+  Filter 0 -> BRAM[0], Row 0:
+    Ch0 start addr: 0
+    Ch1 start addr: 4
+Weight initialization complete
+  Total BRAM depth usage: 8 addresses
 
->>> TEST 3: Multi-Filter + Bias 100
---- Initializing Output BRAMs to Zero ---
-[Monitor] Filter 0[0] =      0
-[Monitor] Filter 0[1] =      0
-[Monitor] Filter 0[2] =      0
-[Monitor] Filter 0[3] =      0
-[Monitor] Filter 0[4] =      0
-[Monitor] Filter 0[5] =      0
-[Monitor] Filter 1[0] =      0
-[Monitor] Filter 1[1] =      0
-[Monitor] Filter 1[2] =      0
-[Monitor] Filter 1[3] =      0
-[Monitor] Filter 1[4] =      0
-[Monitor] Filter 1[5] =      0
-[Monitor] Filter 2[0] =      0
-[Monitor] Filter 2[1] =      0
-[Monitor] Filter 2[2] =      0
-[Monitor] Filter 2[3] =      0
-[Monitor] Filter 2[4] =      0
-[Monitor] Filter 2[5] =      0
-[Monitor] Filter 0[0] =      3
-[Monitor] Filter 1[0] =      3
-[Monitor] Filter 2[0] =      3
-[Monitor] Filter 3[0] =      0
-[Monitor] Filter 4[0] =      0
-[Monitor] Filter 5[0] =      0
-[Monitor] Filter 6[0] =      0
-[Monitor] Filter 7[0] =      0
-[Monitor] Filter 8[0] =      0
-[Monitor] Filter 9[0] =      0
-[Monitor] Filter 10[0] =      0
-[Monitor] Filter 11[0] =      0
-[Monitor] Filter 12[0] =      0
-[Monitor] Filter 13[0] =      0
-[Monitor] Filter 14[0] =      0
-[Monitor] Filter 15[0] =      0
-[Monitor] Filter 0[1] =      3
-[Monitor] Filter 1[1] =      3
-[Monitor] Filter 2[1] =      3
-[Monitor] Filter 3[1] =      0
-[Monitor] Filter 4[1] =      0
-[Monitor] Filter 5[1] =      0
-[Monitor] Filter 6[1] =      0
-[Monitor] Filter 7[1] =      0
-[Monitor] Filter 8[1] =      0
-[Monitor] Filter 9[1] =      0
-[Monitor] Filter 10[1] =      0
-[Monitor] Filter 11[1] =      0
-[Monitor] Filter 12[1] =      0
-[Monitor] Filter 13[1] =      0
-[Monitor] Filter 14[1] =      0
-[Monitor] Filter 15[1] =      0
-[Monitor] Filter 0[2] =      3
-[Monitor] Filter 1[2] =      3
-[Monitor] Filter 2[2] =      3
-[Monitor] Filter 3[2] =      0
-[Monitor] Filter 4[2] =      0
-[Monitor] Filter 5[2] =      0
-[Monitor] Filter 6[2] =      0
-[Monitor] Filter 7[2] =      0
-[Monitor] Filter 8[2] =      0
-[Monitor] Filter 9[2] =      0
-[Monitor] Filter 10[2] =      0
-[Monitor] Filter 11[2] =      0
-[Monitor] Filter 12[2] =      0
-[Monitor] Filter 13[2] =      0
-[Monitor] Filter 14[2] =      0
-[Monitor] Filter 15[2] =      0
-[Monitor] Filter 0[3] =      3
-[Monitor] Filter 1[3] =      3
-[Monitor] Filter 2[3] =      3
-[Monitor] Filter 3[3] =      0
-[Monitor] Filter 4[3] =      0
-[Monitor] Filter 5[3] =      0
-[Monitor] Filter 6[3] =      0
-[Monitor] Filter 7[3] =      0
-[Monitor] Filter 8[3] =      0
-[Monitor] Filter 9[3] =      0
-[Monitor] Filter 10[3] =      0
-[Monitor] Filter 11[3] =      0
-[Monitor] Filter 12[3] =      0
-[Monitor] Filter 13[3] =      0
-[Monitor] Filter 14[3] =      0
-[Monitor] Filter 15[3] =      0
-[Monitor] Filter 0[4] =      3
-[Monitor] Filter 1[4] =      3
-[Monitor] Filter 2[4] =      3
-[Monitor] Filter 3[4] =      0
-[Monitor] Filter 4[4] =      0
-[Monitor] Filter 5[4] =      0
-[Monitor] Filter 6[4] =      0
-[Monitor] Filter 7[4] =      0
-[Monitor] Filter 8[4] =      0
-[Monitor] Filter 9[4] =      0
-[Monitor] Filter 10[4] =      0
-[Monitor] Filter 11[4] =      0
-[Monitor] Filter 12[4] =      0
-[Monitor] Filter 13[4] =      0
-[Monitor] Filter 14[4] =      0
-[Monitor] Filter 15[4] =      0
-[Monitor] Filter 0[5] =      3
-[Monitor] Filter 1[5] =      3
-[Monitor] Filter 2[5] =      3
-[Monitor] Filter 3[5] =      0
-[Monitor] Filter 4[5] =      0
-[Monitor] Filter 5[5] =      0
-[Monitor] Filter 6[5] =      0
-[Monitor] Filter 7[5] =      0
-[Monitor] Filter 8[5] =      0
-[Monitor] Filter 9[5] =      0
-[Monitor] Filter 10[5] =      0
-[Monitor] Filter 11[5] =      0
-[Monitor] Filter 12[5] =      0
-[Monitor] Filter 13[5] =      0
-[Monitor] Filter 14[5] =      0
-[Monitor] Filter 15[5] =      0
-[Monitor] Filter 0[0] =      9
-[Monitor] Filter 1[0] =      9
-[Monitor] Filter 2[0] =      9
-[Monitor] Filter 3[0] =      0
-[Monitor] Filter 4[0] =      0
-[Monitor] Filter 5[0] =      0
-[Monitor] Filter 6[0] =      0
-[Monitor] Filter 7[0] =      0
-[Monitor] Filter 8[0] =      0
-[Monitor] Filter 9[0] =      0
-[Monitor] Filter 10[0] =      0
-[Monitor] Filter 11[0] =      0
-[Monitor] Filter 12[0] =      0
-[Monitor] Filter 13[0] =      0
-[Monitor] Filter 14[0] =      0
-[Monitor] Filter 15[0] =      0
-[Monitor] Filter 0[1] =      9
-[Monitor] Filter 1[1] =      9
-[Monitor] Filter 2[1] =      9
-[Monitor] Filter 3[1] =      0
-[Monitor] Filter 4[1] =      0
-[Monitor] Filter 5[1] =      0
-[Monitor] Filter 6[1] =      0
-[Monitor] Filter 7[1] =      0
-[Monitor] Filter 8[1] =      0
-[Monitor] Filter 9[1] =      0
-[Monitor] Filter 10[1] =      0
-[Monitor] Filter 11[1] =      0
-[Monitor] Filter 12[1] =      0
-[Monitor] Filter 13[1] =      0
-[Monitor] Filter 14[1] =      0
-[Monitor] Filter 15[1] =      0
-[Monitor] Filter 0[2] =      9
-[Monitor] Filter 1[2] =      9
-[Monitor] Filter 2[2] =      9
-[Monitor] Filter 3[2] =      0
-[Monitor] Filter 4[2] =      0
-[Monitor] Filter 5[2] =      0
-[Monitor] Filter 6[2] =      0
-[Monitor] Filter 7[2] =      0
-[Monitor] Filter 8[2] =      0
-[Monitor] Filter 9[2] =      0
-[Monitor] Filter 10[2] =      0
-[Monitor] Filter 11[2] =      0
-[Monitor] Filter 12[2] =      0
-[Monitor] Filter 13[2] =      0
-[Monitor] Filter 14[2] =      0
-[Monitor] Filter 15[2] =      0
-[Monitor] Filter 0[3] =      9
-[Monitor] Filter 1[3] =      9
-[Monitor] Filter 2[3] =      9
-[Monitor] Filter 3[3] =      0
-[Monitor] Filter 4[3] =      0
-[Monitor] Filter 5[3] =      0
-[Monitor] Filter 6[3] =      0
-[Monitor] Filter 7[3] =      0
-[Monitor] Filter 8[3] =      0
-[Monitor] Filter 9[3] =      0
-[Monitor] Filter 10[3] =      0
-[Monitor] Filter 11[3] =      0
-[Monitor] Filter 12[3] =      0
-[Monitor] Filter 13[3] =      0
-[Monitor] Filter 14[3] =      0
-[Monitor] Filter 15[3] =      0
-[Monitor] Filter 0[4] =      9
-[Monitor] Filter 1[4] =      9
-[Monitor] Filter 2[4] =      9
-[Monitor] Filter 3[4] =      0
-[Monitor] Filter 4[4] =      0
-[Monitor] Filter 5[4] =      0
-[Monitor] Filter 6[4] =      0
-[Monitor] Filter 7[4] =      0
-[Monitor] Filter 8[4] =      0
-[Monitor] Filter 9[4] =      0
-[Monitor] Filter 10[4] =      0
-[Monitor] Filter 11[4] =      0
-[Monitor] Filter 12[4] =      0
-[Monitor] Filter 13[4] =      0
-[Monitor] Filter 14[4] =      0
-[Monitor] Filter 15[4] =      0
-[Monitor] Filter 0[5] =      9
-[Monitor] Filter 1[5] =      9
-[Monitor] Filter 2[5] =      9
-[Monitor] Filter 3[5] =      0
-[Monitor] Filter 4[5] =      0
-[Monitor] Filter 5[5] =      0
-[Monitor] Filter 6[5] =      0
-[Monitor] Filter 7[5] =      0
-[Monitor] Filter 8[5] =      0
-[Monitor] Filter 9[5] =      0
-[Monitor] Filter 10[5] =      0
-[Monitor] Filter 11[5] =      0
-[Monitor] Filter 12[5] =      0
-[Monitor] Filter 13[5] =      0
-[Monitor] Filter 14[5] =      0
-[Monitor] Filter 15[5] =      0
---- Final Readout ---
-Filter 0:
-  Filter 0[0] =      9
-  Filter 0[1] =      9
-  Filter 0[2] =      9
-  Filter 0[3] =      9
-  Filter 0[4] =      9
-  Filter 0[5] =      9
-Filter 1:
-  Filter 1[0] =      9
-  Filter 1[1] =      9
-  Filter 1[2] =      9
-  Filter 1[3] =      9
-  Filter 1[4] =      9
-  Filter 1[5] =      9
-Filter 2:
-  Filter 2[0] =      9
-  Filter 2[1] =      9
-  Filter 2[2] =      9
-  Filter 2[3] =      9
-  Filter 2[4] =      9
-  Filter 2[5] =      9
+=== Starting Convolution ===
+Parameters: stride=2, padding=7, kernel_size=4
+  input_channels=2, temporal_length=7, filters=1
+  Expected output_length=9
+=== Convolution Complete ===
 
---- All Tests Finished ---
-$finish called at time : 17365 ns : File "D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sim_1/new/onedconv_tb.v" Line 280
+
+========================================
+OUTPUT RESULTS
+Filters: 1 | Output Length: 9
+========================================
+
+Filter 0 (BRAM[0], Row 0):
+  [0, 0, 1478, 5110, 8200, 10080, 5460, 0, 0]
+
+========================================
+
+
+>>> Test 2: Convolution with Bias = 0
+Initializing input data: 2 channels, 7 temporal length
+Input data initialization complete
+Initializing weights: kernel_size=4, input_channels=2, filters=1
+  Systolic Architecture: 16 BRAMs
+  Multi-Channel Logic: Weights stored continuously for all channels.
+  Filter 0 -> BRAM[0], Row 0:
+    Ch0 start addr: 0
+    Ch1 start addr: 4
+Weight initialization complete
+  Total BRAM depth usage: 8 addresses
+Initializing bias: filters=1, output_length=9, bias_value=0
+  Filter 0: BRAM[0], Row 0, Addresses 0-8
+Bias initialization complete
+
+=== Starting Convolution ===
+Parameters: stride=2, padding=7, kernel_size=4
+  input_channels=2, temporal_length=7, filters=1
+  Expected output_length=9
+=== Convolution Complete ===
+
+
+========================================
+OUTPUT RESULTS
+Filters: 1 | Output Length: 9
+========================================
+
+Filter 0 (BRAM[0], Row 0):
+  [0, 0, 1478, 5110, 8200, 10080, 5460, 0, 0]
+
+========================================
+
+
+>>> Test 3: Convolution with Bias = 100
+Initializing input data: 2 channels, 7 temporal length
+Input data initialization complete
+Initializing weights: kernel_size=4, input_channels=2, filters=1
+  Systolic Architecture: 16 BRAMs
+  Multi-Channel Logic: Weights stored continuously for all channels.
+  Filter 0 -> BRAM[0], Row 0:
+    Ch0 start addr: 0
+    Ch1 start addr: 4
+Weight initialization complete
+  Total BRAM depth usage: 8 addresses
+Initializing bias: filters=1, output_length=9, bias_value=100
+  Filter 0: BRAM[0], Row 0, Addresses 0-8
+Bias initialization complete
+
+=== Starting Convolution ===
+Parameters: stride=2, padding=7, kernel_size=4
+  input_channels=2, temporal_length=7, filters=1
+  Expected output_length=9
+=== Convolution Complete ===
+
+
+========================================
+OUTPUT RESULTS
+Filters: 1 | Output Length: 9
+========================================
+
+Filter 0 (BRAM[0], Row 0):
+  [100, 100, 1578, 5210, 8300, 10180, 5560, 100, 100]
+
+========================================
+
+
+>>> Test 4: Convolution with Negative Bias = -50
+Initializing input data: 2 channels, 7 temporal length
+Input data initialization complete
+Initializing weights: kernel_size=4, input_channels=2, filters=1
+  Systolic Architecture: 16 BRAMs
+  Multi-Channel Logic: Weights stored continuously for all channels.
+  Filter 0 -> BRAM[0], Row 0:
+    Ch0 start addr: 0
+    Ch1 start addr: 4
+Weight initialization complete
+  Total BRAM depth usage: 8 addresses
+Initializing bias: filters=1, output_length=9, bias_value=-50
+  Filter 0: BRAM[0], Row 0, Addresses 0-8
+Bias initialization complete
+
+=== Starting Convolution ===
+Parameters: stride=2, padding=7, kernel_size=4
+  input_channels=2, temporal_length=7, filters=1
+  Expected output_length=9
+=== Convolution Complete ===
+
+
+========================================
+OUTPUT RESULTS
+Filters: 1 | Output Length: 9
+========================================
+
+Filter 0 (BRAM[0], Row 0):
+  [-50, -50, 1428, 5060, 8150, 10030, 5410, -50, -50]
+
+========================================
+
+
+>>> Test 5: Multiple Filters with Bias = 25
+Initializing input data: 2 channels, 8 temporal length
+Input data initialization complete
+Initializing weights: kernel_size=3, input_channels=2, filters=2
+  Systolic Architecture: 16 BRAMs
+  Multi-Channel Logic: Weights stored continuously for all channels.
+  Filter 0 -> BRAM[0], Row 0:
+    Ch0 start addr: 0
+    Ch1 start addr: 3
+  Filter 1 -> BRAM[1], Row 0:
+    Ch0 start addr: 0
+    Ch1 start addr: 3
+Weight initialization complete
+  Total BRAM depth usage: 6 addresses
+Initializing bias: filters=2, output_length=6, bias_value=25
+  Filter 0: BRAM[0], Row 0, Addresses 0-5
+  Filter 1: BRAM[1], Row 0, Addresses 0-5
+Bias initialization complete
+
+=== Starting Convolution ===
+Parameters: stride=1, padding=0, kernel_size=3
+  input_channels=2, temporal_length=8, filters=2
+  Expected output_length=6
+=== Convolution Complete ===
+
+
+========================================
+OUTPUT RESULTS
+Filters: 2 | Output Length: 6
+========================================
+
+Filter 0 (BRAM[0], Row 0):
+  [5093, 5795, 6497, 7199, 7901, 8603]
+
+Filter 1 (BRAM[1], Row 0):
+  [9293, 10595, 11897, 13199, 14501, 15803]
+
+========================================
+
+
+========================================
+  All Tests Complete!
+========================================
+
+$finish called at time : 31365 ns : File "D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sim_1/new/onedconv_tb.v" Line 459

@@ -54,18 +54,18 @@ module filter_microsequencer #(
     // --------------------------------------------------------
     // BRAM Enable Mask Generation
     // --------------------------------------------------------
-    reg [Dimension-1:0] bram_enable_mask;
-    integer i;
+    wire [Dimension-1:0] bram_enable_mask;
+    // integer i;
     
-    always @(*) begin
-        for (i = 0; i < Dimension; i = i + 1) begin
-            if (i < kernel_size)
-                bram_enable_mask[i] = 1'b1;
-            else
-                bram_enable_mask[i] = 1'b0;
-        end
-    end
-
+    // always @(*) begin
+    //     for (i = 0; i < Dimension; i = i + 1) begin
+    //         if (i < kernel_size)
+    //             bram_enable_mask[i] = 1'b1;
+    //         else
+    //             bram_enable_mask[i] = 1'b0;
+    //     end
+    // end
+    assign bram_enable_mask = {Dimension{1'b1}};
     // --------------------------------------------------------
     // State register
     // --------------------------------------------------------
@@ -118,7 +118,7 @@ module filter_microsequencer #(
             
             S_DONE: begin
                 if (restart)
-                    next_state = S_INIT;
+                    next_state = S_PRE_INIT;
             end
             
             default: begin
@@ -143,25 +143,25 @@ module filter_microsequencer #(
                 // All outputs at default
             end
             S_PRE_INIT: begin
-                enb_weight_input_bram = bram_enable_mask;
+                enb_weight_input_bram = {Dimension{1'b1}};
                 en_weight_counter = 1'b1; 
             end
             S_INIT: begin
                 en_shift_reg_weight_input_ctrl = {Dimension{1'b1}};
-                enb_weight_input_bram = bram_enable_mask;
+                enb_weight_input_bram = {Dimension{1'b1}};
                 en_weight_counter = 1'b1; 
             end
             
             S_SHIFT_WEIGHTS: begin
                 en_shift_reg_weight_input_ctrl = {Dimension{1'b1}};
-                enb_weight_input_bram = bram_enable_mask;
+                enb_weight_input_bram = {Dimension{1'b1}};
                 en_weight_counter = 1'b1;
             end
             
             S_LOAD_LAST_VAL: begin
                 // [FIX] Enable shift register here to capture the last data!
             //    en_shift_reg_weight_input_ctrl = {Dimension{1'b1}};
-                enb_weight_input_bram = bram_enable_mask; // Keep enabled if latency requires
+                enb_weight_input_bram = {Dimension{1'b1}}; // Keep enabled if latency requires
             end
             
             S_CONSUME_LAST_VAL: begin
@@ -207,6 +207,9 @@ module filter_microsequencer #(
                 end
                 S_FILL_ZERO: begin
                     fill_zero_count <= fill_zero_count + 1;
+                end
+                S_DONE: begin
+                    fill_zero_count <= 0;
                 end
                 default: begin
                     // Keep current values

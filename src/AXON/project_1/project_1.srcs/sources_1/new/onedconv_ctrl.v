@@ -1,6 +1,5 @@
 // ============================================================
-// 1D Convolution Control FSM - Simplified
-// Single-run controller (once per convolution)
+// 1D Convolution Control FSM - Updated for Multi-Channel Weights
 // ============================================================
 module onedconv_ctrl #(
     parameter DW = 16,
@@ -111,7 +110,7 @@ module onedconv_ctrl #(
     output reg  start_top
 );
     // --------------------------------------------------------
-    // State encoding - SIMPLIFIED (10 states instead of 15)
+    // State encoding
     // --------------------------------------------------------
     localparam S_IDLE                     = 5'd0;
     localparam S_PICK_INPUT_LAYER_INIT    = 5'd1;
@@ -119,9 +118,9 @@ module onedconv_ctrl #(
     localparam S_RUN                      = 5'd3;
     localparam S_RESTART_MICROSEQUENCER   = 5'd4;
     localparam S_OUTPUT_VAL               = 5'd5;
-    localparam S_CHECK_COUNTER            = 5'd6; //
-    localparam S_CHANGE_INPUT_CHANNEL     = 5'd7; //
-    localparam S_CHANGE_FILTER            = 5'd8; //
+    localparam S_CHECK_COUNTER            = 5'd6; 
+    localparam S_CHANGE_INPUT_CHANNEL     = 5'd7; 
+    localparam S_CHANGE_FILTER            = 5'd8; 
     localparam S_DONE                     = 5'd9;
     localparam S_RESET_OUTPUT             = 5'd10;
     localparam S_WAIT_SETTLE              = 5'd11;
@@ -259,8 +258,6 @@ module onedconv_ctrl #(
     // Helper wires for addressing
     // --------------------------------------------------------
     // INPUT ADDRESSING
-    // Channel 0-15  → BRAM 0-15, address 0 to temporal_length-1
-    // Channel 16-31 → BRAM 0-15, address temporal_length to 2*temporal_length-1
     wire [3:0] input_bram_index;
     wire [9:0] input_slot;
     wire [ADDRESS_LENGTH-1:0] base_addr_ifmap;
@@ -270,37 +267,30 @@ module onedconv_ctrl #(
     assign base_addr_ifmap = input_slot * temporal_length;
 
     // WEIGHT ADDRESSING
-    // BRAM[f % 16] stores filter f
-    // Filter 0-15   → BRAM 0-15, address 0
-    // Filter 16-31  → BRAM 0-15, address (input_channels * kernel_size)
-    // Within each filter: weights for all input channels stored sequentially
     wire [3:0] filter_bram_index;
     wire [9:0] filter_slot;
     wire [ADDRESS_LENGTH-1:0] filter_base_addr;
     wire [ADDRESS_LENGTH-1:0] base_addr_weight;
-    //EACH CONVOLUTION PROCESS IS 16 IFMAPS by 16 FILTERS.
-    //FILTERS ARE ADDRESSED DIFFERENTLY THAN IFMAPS AND OUTPUTS. 
-    // assign filter_bram_index = filter_number_count[3:0];
-    // assign filter_slot = filter_number_count >> 4;
-    // assign filter_base_addr = filter_slot * (input_channels * kernel_size);
-    // assign base_addr_weight = filter_number_count * kernel_size;//(input_channel_count * kernel_size);
-// Correct: Offsets by input channel
+
+    // [FIX] CORRECTED ADDRESSING: 
+    // Jumps to the correct weight block for EACH input channel.
+    // Address = (Batch_Offset) + (Channel_Offset)
     assign base_addr_weight = (filter_number_count * input_channels * kernel_size) + 
-                            (input_channel_count * kernel_size);
+                              (input_channel_count * kernel_size);
+    //TBA
+    // assign base_addr_weight = 
+    //                             (input_channel_count * kernel_size);
+    
     wire [11:0] needed_amount_weight;
     assign needed_amount_weight = (filter_number + Dimension - 1) / Dimension;
+    
     // OUTPUT ADDRESSING
-    // Similar to input and weight: 16 BRAMs, stacked storage
-    // Filter 0-15   → BRAM 0-15, address 0
-    // Filter 16-31  → BRAM 0-15, address output_length
     wire [3:0] output_bram_index;
     wire [9:0] output_slot;
     wire [ADDRESS_LENGTH-1:0] base_addr_output;
     
-    // assign output_bram_index = filter_number_count[3:0];
-    // assign output_slot = filter_number_count >> 4;
-    assign base_addr_output = filter_number_count*output_length;
-
+    assign base_addr_output = filter_number_count * output_length; 
+    
     // --------------------------------------------------------
     // State register
     // --------------------------------------------------------
@@ -488,9 +478,13 @@ module onedconv_ctrl #(
                 mode_top = 1'b1;
             end
             S_PRE_RESTART_MICROSEQUENCER: begin
+                // [FIX] UNCOMMENTED: Reset output counters to allow next batch (Time 16+)
+                output_counter_rst_a = 1'b0;
+                output_counter_rst_b = 1'b0;
+                
                 ifmap_counter_rst = 1'b0;
-                rst_outputmicrosequencer = 1'b0;  // Reset output microsequencer
-                weight_counter_rst = 1'b0;  // Reset weight counter for next iteration
+                rst_outputmicrosequencer = 1'b0;
+                weight_counter_rst = 1'b0; 
             end
             S_RESTART_MICROSEQUENCER: begin
                 restart_inputmicrosequencer = 1'b1;
@@ -551,7 +545,7 @@ module onedconv_ctrl #(
         else begin
             case (state) 
                 S_PICK_INPUT_LAYER_INIT_SET_ADDRESS: begin
-                                    // Select input BRAM based on channel
+                                                    // Select input BRAM based on channel
                 sel_input_data_mem = input_bram_index;
                 // Set address ranges
                 ifmap_counter_start_val = base_addr_ifmap[ADDRESS_LENGTH-1:0];
@@ -571,8 +565,14 @@ module onedconv_ctrl #(
                     output_counter_end_val_a = {ADDRESS_LENGTH{1'b1}};
                 end
                 S_RESTART_MICROSEQUENCER_SET_ADDRESS: begin
-                    ifmap_counter_start_val = base_addr_ifmap[ADDRESS_LENGTH-1:0] + stride_val*(needed_amount_count*Dimension - 1);
+                    ifmap_counter_start_val = base_addr_ifmap[ADDRESS_LENGTH-1:0] + stride_val*(needed_amount_count*Dimension);
                     ifmap_counter_end_val = (base_addr_ifmap + temporal_length - 1);
+                    
+                    // [FIX] UNCOMMENTED: Point to next output batch (Index 16+)
+                    output_counter_start_val_a = base_addr_output[ADDRESS_LENGTH-1:0] + (needed_amount_count * Dimension);
+                    output_counter_end_val_a   = (base_addr_output + output_length - 1);
+                    output_counter_start_val_b = output_counter_start_val_a; 
+                    output_counter_end_val_b   = output_counter_end_val_a;
                 end
             endcase
         end
