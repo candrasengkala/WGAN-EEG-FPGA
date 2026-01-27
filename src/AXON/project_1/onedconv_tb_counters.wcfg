@@ -11,9 +11,9 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="2,437.025000 us"></ZoomStartTime>
-      <ZoomEndTime time="2,487.638336 us"></ZoomEndTime>
-      <Cursor1Time time="2,459.285000 us"></Cursor1Time>
+      <ZoomStartTime time="4,204,929.000 ns"></ZoomStartTime>
+      <ZoomEndTime time="4,204,936.201 ns"></ZoomEndTime>
+      <Cursor1Time time="4,204,935.000 ns"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
       <NameColumnWidth column_width="260"></NameColumnWidth>
@@ -35,10 +35,12 @@
    <wvobject fp_name="/onedconv_tb/dut/ifmap_counter_inst/start_val" type="array">
       <obj_property name="ElementShortName">start_val[9:0]</obj_property>
       <obj_property name="ObjectShortName">start_val[9:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/onedconv_tb/dut/ifmap_counter_inst/end_val" type="array">
       <obj_property name="ElementShortName">end_val[9:0]</obj_property>
       <obj_property name="ObjectShortName">end_val[9:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/onedconv_tb/dut/ifmap_counter_inst/flag_1per16" type="logic">
       <obj_property name="ElementShortName">flag_1per16</obj_property>
@@ -47,6 +49,7 @@
    <wvobject fp_name="/onedconv_tb/dut/ifmap_counter_inst/addr_out" type="array">
       <obj_property name="ElementShortName">addr_out[9:0]</obj_property>
       <obj_property name="ObjectShortName">addr_out[9:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/onedconv_tb/dut/ifmap_counter_inst/done" type="logic">
       <obj_property name="ElementShortName">done</obj_property>
@@ -55,6 +58,7 @@
    <wvobject fp_name="/onedconv_tb/dut/ifmap_counter_inst/count" type="array">
       <obj_property name="ElementShortName">count[9:0]</obj_property>
       <obj_property name="ObjectShortName">count[9:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/onedconv_tb/dut/ifmap_counter_inst/reached_end" type="logic">
       <obj_property name="ElementShortName">reached_end</obj_property>
@@ -63,6 +67,7 @@
    <wvobject fp_name="/onedconv_tb/dut/ifmap_counter_inst/ADDRESS_LENGTH" type="array">
       <obj_property name="ElementShortName">ADDRESS_LENGTH[31:0]</obj_property>
       <obj_property name="ObjectShortName">ADDRESS_LENGTH[31:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/onedconv_tb/dut/output_counter_inst_a/clk" type="logic">
       <obj_property name="ElementShortName">clk</obj_property>
@@ -79,10 +84,12 @@
    <wvobject fp_name="/onedconv_tb/dut/output_counter_inst_a/start_val" type="array">
       <obj_property name="ElementShortName">start_val[9:0]</obj_property>
       <obj_property name="ObjectShortName">start_val[9:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/onedconv_tb/dut/output_counter_inst_a/end_val" type="array">
       <obj_property name="ElementShortName">end_val[9:0]</obj_property>
       <obj_property name="ObjectShortName">end_val[9:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/onedconv_tb/dut/output_counter_inst_a/flag_1per16" type="logic">
       <obj_property name="ElementShortName">flag_1per16</obj_property>
@@ -91,6 +98,7 @@
    <wvobject fp_name="/onedconv_tb/dut/output_counter_inst_a/addr_out" type="array">
       <obj_property name="ElementShortName">addr_out[9:0]</obj_property>
       <obj_property name="ObjectShortName">addr_out[9:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/onedconv_tb/dut/output_counter_inst_a/done" type="logic">
       <obj_property name="ElementShortName">done</obj_property>
@@ -99,6 +107,7 @@
    <wvobject fp_name="/onedconv_tb/dut/output_counter_inst_a/count" type="array">
       <obj_property name="ElementShortName">count[9:0]</obj_property>
       <obj_property name="ObjectShortName">count[9:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/onedconv_tb/dut/output_counter_inst_a/reached_end" type="logic">
       <obj_property name="ElementShortName">reached_end</obj_property>
@@ -107,6 +116,7 @@
    <wvobject fp_name="/onedconv_tb/dut/output_counter_inst_a/ADDRESS_LENGTH" type="array">
       <obj_property name="ElementShortName">ADDRESS_LENGTH[31:0]</obj_property>
       <obj_property name="ObjectShortName">ADDRESS_LENGTH[31:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/onedconv_tb/dut/output_counter_inst_a/clk" type="logic">
       <obj_property name="ElementShortName">clk</obj_property>
@@ -123,10 +133,12 @@
    <wvobject fp_name="/onedconv_tb/dut/output_counter_inst_a/start_val" type="array">
       <obj_property name="ElementShortName">start_val[9:0]</obj_property>
       <obj_property name="ObjectShortName">start_val[9:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/onedconv_tb/dut/output_counter_inst_a/end_val" type="array">
       <obj_property name="ElementShortName">end_val[9:0]</obj_property>
       <obj_property name="ObjectShortName">end_val[9:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/onedconv_tb/dut/output_counter_inst_a/flag_1per16" type="logic">
       <obj_property name="ElementShortName">flag_1per16</obj_property>
@@ -135,6 +147,7 @@
    <wvobject fp_name="/onedconv_tb/dut/output_counter_inst_a/addr_out" type="array">
       <obj_property name="ElementShortName">addr_out[9:0]</obj_property>
       <obj_property name="ObjectShortName">addr_out[9:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/onedconv_tb/dut/output_counter_inst_a/done" type="logic">
       <obj_property name="ElementShortName">done</obj_property>
@@ -143,6 +156,7 @@
    <wvobject fp_name="/onedconv_tb/dut/output_counter_inst_a/count" type="array">
       <obj_property name="ElementShortName">count[9:0]</obj_property>
       <obj_property name="ObjectShortName">count[9:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/onedconv_tb/dut/output_counter_inst_a/reached_end" type="logic">
       <obj_property name="ElementShortName">reached_end</obj_property>
@@ -151,6 +165,7 @@
    <wvobject fp_name="/onedconv_tb/dut/output_counter_inst_a/ADDRESS_LENGTH" type="array">
       <obj_property name="ElementShortName">ADDRESS_LENGTH[31:0]</obj_property>
       <obj_property name="ObjectShortName">ADDRESS_LENGTH[31:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/onedconv_tb/dut/output_counter_inst_b/clk" type="logic">
       <obj_property name="ElementShortName">clk</obj_property>
@@ -167,10 +182,12 @@
    <wvobject fp_name="/onedconv_tb/dut/output_counter_inst_b/start_val" type="array">
       <obj_property name="ElementShortName">start_val[9:0]</obj_property>
       <obj_property name="ObjectShortName">start_val[9:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/onedconv_tb/dut/output_counter_inst_b/end_val" type="array">
       <obj_property name="ElementShortName">end_val[9:0]</obj_property>
       <obj_property name="ObjectShortName">end_val[9:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/onedconv_tb/dut/output_counter_inst_b/flag_1per16" type="logic">
       <obj_property name="ElementShortName">flag_1per16</obj_property>
@@ -179,6 +196,7 @@
    <wvobject fp_name="/onedconv_tb/dut/output_counter_inst_b/addr_out" type="array">
       <obj_property name="ElementShortName">addr_out[9:0]</obj_property>
       <obj_property name="ObjectShortName">addr_out[9:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/onedconv_tb/dut/output_counter_inst_b/done" type="logic">
       <obj_property name="ElementShortName">done</obj_property>
@@ -187,6 +205,7 @@
    <wvobject fp_name="/onedconv_tb/dut/output_counter_inst_b/count" type="array">
       <obj_property name="ElementShortName">count[9:0]</obj_property>
       <obj_property name="ObjectShortName">count[9:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/onedconv_tb/dut/output_counter_inst_b/reached_end" type="logic">
       <obj_property name="ElementShortName">reached_end</obj_property>
@@ -195,6 +214,7 @@
    <wvobject fp_name="/onedconv_tb/dut/output_counter_inst_b/ADDRESS_LENGTH" type="array">
       <obj_property name="ElementShortName">ADDRESS_LENGTH[31:0]</obj_property>
       <obj_property name="ObjectShortName">ADDRESS_LENGTH[31:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/onedconv_tb/dut/ifmap_counter_inst/clk" type="logic">
       <obj_property name="ElementShortName">clk</obj_property>
@@ -211,10 +231,12 @@
    <wvobject fp_name="/onedconv_tb/dut/ifmap_counter_inst/start_val" type="array">
       <obj_property name="ElementShortName">start_val[9:0]</obj_property>
       <obj_property name="ObjectShortName">start_val[9:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/onedconv_tb/dut/ifmap_counter_inst/end_val" type="array">
       <obj_property name="ElementShortName">end_val[9:0]</obj_property>
       <obj_property name="ObjectShortName">end_val[9:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/onedconv_tb/dut/ifmap_counter_inst/flag_1per16" type="logic">
       <obj_property name="ElementShortName">flag_1per16</obj_property>
@@ -223,6 +245,7 @@
    <wvobject fp_name="/onedconv_tb/dut/ifmap_counter_inst/addr_out" type="array">
       <obj_property name="ElementShortName">addr_out[9:0]</obj_property>
       <obj_property name="ObjectShortName">addr_out[9:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/onedconv_tb/dut/ifmap_counter_inst/done" type="logic">
       <obj_property name="ElementShortName">done</obj_property>
@@ -231,6 +254,7 @@
    <wvobject fp_name="/onedconv_tb/dut/ifmap_counter_inst/count" type="array">
       <obj_property name="ElementShortName">count[9:0]</obj_property>
       <obj_property name="ObjectShortName">count[9:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/onedconv_tb/dut/ifmap_counter_inst/reached_end" type="logic">
       <obj_property name="ElementShortName">reached_end</obj_property>
@@ -239,6 +263,7 @@
    <wvobject fp_name="/onedconv_tb/dut/ifmap_counter_inst/ADDRESS_LENGTH" type="array">
       <obj_property name="ElementShortName">ADDRESS_LENGTH[31:0]</obj_property>
       <obj_property name="ObjectShortName">ADDRESS_LENGTH[31:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/onedconv_tb/dut/weight_counter_inst/clk" type="logic">
       <obj_property name="ElementShortName">clk</obj_property>
@@ -259,10 +284,12 @@
    <wvobject fp_name="/onedconv_tb/dut/weight_counter_inst/start_val" type="array">
       <obj_property name="ElementShortName">start_val[9:0]</obj_property>
       <obj_property name="ObjectShortName">start_val[9:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/onedconv_tb/dut/weight_counter_inst/end_val" type="array">
       <obj_property name="ElementShortName">end_val[9:0]</obj_property>
       <obj_property name="ObjectShortName">end_val[9:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/onedconv_tb/dut/weight_counter_inst/flag_1per16" type="logic">
       <obj_property name="ElementShortName">flag_1per16</obj_property>
@@ -271,6 +298,7 @@
    <wvobject fp_name="/onedconv_tb/dut/weight_counter_inst/addr_out" type="array">
       <obj_property name="ElementShortName">addr_out[9:0]</obj_property>
       <obj_property name="ObjectShortName">addr_out[9:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/onedconv_tb/dut/weight_counter_inst/done" type="logic">
       <obj_property name="ElementShortName">done</obj_property>
@@ -279,6 +307,7 @@
    <wvobject fp_name="/onedconv_tb/dut/weight_counter_inst/count" type="array">
       <obj_property name="ElementShortName">count[9:0]</obj_property>
       <obj_property name="ObjectShortName">count[9:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/onedconv_tb/dut/weight_counter_inst/reached_end" type="logic">
       <obj_property name="ElementShortName">reached_end</obj_property>
@@ -287,5 +316,6 @@
    <wvobject fp_name="/onedconv_tb/dut/weight_counter_inst/ADDRESS_LENGTH" type="array">
       <obj_property name="ElementShortName">ADDRESS_LENGTH[31:0]</obj_property>
       <obj_property name="ObjectShortName">ADDRESS_LENGTH[31:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
    </wvobject>
 </wave_config>

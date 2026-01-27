@@ -2,3 +2,6 @@ Running: xsim.dir/onedconv_tb_behav/xsimk.exe -simmode gui -wdb onedconv_tb_beha
 Design successfully loaded
 Design Loading Memory Usage: 11180 KB (Peak: 11180 KB)
 Design Loading CPU Usage: 0 ms
+Simulation completed
+Simulation Memory Usage: 23660 KB (Peak: 23660 KB)
+Simulation CPU Usage: 82656 ms

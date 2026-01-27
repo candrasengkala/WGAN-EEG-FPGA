@@ -11,9 +11,9 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="4,202.535000 us"></ZoomStartTime>
-      <ZoomEndTime time="4,207.155001 us"></ZoomEndTime>
-      <Cursor1Time time="4,204.935000 us"></Cursor1Time>
+      <ZoomStartTime time="4,199,605.833 ns"></ZoomStartTime>
+      <ZoomEndTime time="4,206,000.834 ns"></ZoomEndTime>
+      <Cursor1Time time="4,204,935.000 ns"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
       <NameColumnWidth column_width="273"></NameColumnWidth>
@@ -52,6 +52,7 @@
    <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[2].bram_output /dia" type="array">
       <obj_property name="ElementShortName">dia[15:0]</obj_property>
       <obj_property name="ObjectShortName">dia[15:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/onedconv_tb/dut/\gen_output_result_bram[2].bram_output /ram" type="array">
       <obj_property name="ElementShortName">ram[1023:0][15:0]</obj_property>

@@ -619,3 +619,4 @@ DEBUG: First 5 filter outputs at Time 0:
 ========================================
 
 $finish called at time : 4204935 ns : File "D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sim_1/new/onedconv_tb.v" Line 958
+INFO: xsimkernel Simulation Memory Usage: 23660 KB (Peak: 23660 KB), Simulation CPU Usage: 82656 ms
