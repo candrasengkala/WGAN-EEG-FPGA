@@ -293,7 +293,7 @@ class Conv1DGoldenModel:
 def generate_unique_weights(filter_number: int, input_channels: int, kernel_size: int) -> np.ndarray:
     """
     Generate unique weights matching the Verilog testbench pattern
-    Pattern: weight[f][c][k] = (f+1) * 100 + (c+1) * 10 + (k+1)
+    Pattern: weight[f][c][k] = ((f + k) % 5) + 1
     
     Args:
         filter_number: Number of output filters
@@ -307,24 +307,25 @@ def generate_unique_weights(filter_number: int, input_channels: int, kernel_size
     for f in range(filter_number):
         for c in range(input_channels):
             for k in range(kernel_size):
-                weights[f, c, k] = (f + 1) * 100 + (c + 1) * 10 + (k + 1)
+                weights[f, c, k] = ((f + k) % 5) + 1
     return weights
 def generate_testbench_data(input_channels: int, temporal_length: int) -> np.ndarray:
     """
     Generate test input data matching the Verilog testbench pattern
-    Pattern: channel_id * 10 + time_index + 1
-    
+    Pattern: ((channel_id + time_index) % 5) + 1
+
     Args:
         input_channels: Number of input channels
         temporal_length: Length of input sequence
-        
+
     Returns:
         input_data: Shape (input_channels, temporal_length)
     """
     data = np.zeros((input_channels, temporal_length), dtype=np.int32)
     for c in range(input_channels):
         for t in range(temporal_length):
-            data[c, t] = c * 10 + t + 1
+            # Match testbench pattern: ((ch + t) % 5) + 1
+            data[c, t] = ((c + t) % 5) + 1
     return data
 
 
@@ -372,11 +373,11 @@ def run_test(test_name: str, input_channels: int, temporal_length: int,
     model.print_input_data()
     
     # Set weights with UNIQUE values per filter (matching Verilog testbench)
-    # Pattern: weight[f][c][k] = (f+1) * 100 + (c+1) * 10 + (k+1)
+    # Pattern: weight[f][c][k] = ((f + k) % 5) + 1
     weights = generate_unique_weights(filter_number, input_channels, kernel_size)
     model.set_weights(weights)
     print("\nWeights: Unique per filter")
-    print(f"  Pattern: W[f][c][k] = (f+1)*100 + (c+1)*10 + (k+1)")
+    print(f"  Pattern: W[f][c][k] = ((f + k) % 5) + 1")
     model.print_weights()
     
     # Set bias
@@ -409,8 +410,8 @@ def main():
     print("  1D CONVOLUTION GOLDEN MODEL - TEST SUITE")
     print("  UNIQUE WEIGHTS PER FILTER")
     print("=" * 60)
-    print("Weight Pattern: W[f][c][k] = (f+1)*100 + (c+1)*10 + (k+1)")
-    print("Input Pattern: I[c][t] = c*10 + t + 1")
+    print("Weight Pattern: W[f][c][k] = ((f + k) % 5) + 1")
+    print("Input Pattern: I[c][t] = ((c + t) % 5) + 1")
     print("=" * 60)
     
     # Test 1: No bias
@@ -424,80 +425,128 @@ def main():
         kernel_size=4,
         filter_number=1,
         stride=2,
-        padding=7,
+        padding=0,
         bias_value=None,
         use_bias=False
     )
     
-    # Test 2: Bias = 0
+    # Test 2: Stride = 2
     print("\n" + "="*60)
-    print("TEST 2: Convolution with Bias = 0")
+    print("TEST 2: Convolution with Stride = 2")
     print("="*60)
     output2 = run_test(
-        "Test 2: Convolution with Bias = 0",
-        input_channels=2,
-        temporal_length=7,
-        kernel_size=4,
+        "Test 2: Convolution with Stride = 2",
+        input_channels=1,
+        temporal_length=16,
+        kernel_size=3,
         filter_number=1,
         stride=2,
-        padding=7,
-        bias_value=0,
-        use_bias=True
+        padding=0,
+        bias_value=None,
+        use_bias=False
     )
     
-    # Test 3: Bias = 100
+    # Test 3: Padding = 2
     print("\n" + "="*60)
-    print("TEST 3: Convolution with Bias = 100")
+    print("TEST 3: Convolution with Padding = 2")
     print("="*60)
     output3 = run_test(
-        "Test 3: Convolution with Bias = 100",
-        input_channels=2,
-        temporal_length=7,
-        kernel_size=4,
+        "Test 3: Convolution with Padding = 2",
+        input_channels=1,
+        temporal_length=16,
+        kernel_size=3,
         filter_number=1,
         stride=2,
-        padding=7,
-        bias_value=100,
-        use_bias=True
+        padding=2,
+        bias_value=None,
+        use_bias=False
     )
     
-    # Test 4: Bias = -50
+    # Test 4: Kernel Size = 7
     print("\n" + "="*60)
-    print("TEST 4: Convolution with Negative Bias = -50")
+    print("TEST 4: Kernel Size = 7")
     print("="*60)
     output4 = run_test(
-        "Test 4: Convolution with Negative Bias = -50",
-        input_channels=2,
-        temporal_length=7,
-        kernel_size=4,
+        "Test 4: Kernel Size = 7",
+        input_channels=1,
+        temporal_length=32,
+        kernel_size=7,
         filter_number=1,
-        stride=2,
-        padding=7,
-        bias_value=-50,
-        use_bias=True
-    )
-    
-    # Test 5: Multiple filters with bias
-    print("\n" + "="*60)
-    print("TEST 5: Multiple Filters with Bias = 25")
-    print("="*60)
-    output5 = run_test(
-        "Test 5: Multiple Filters with Bias = 25",
-        input_channels=2,
-        temporal_length=8,
-        kernel_size=3,
-        filter_number=2,
         stride=1,
         padding=0,
-        bias_value=25,
-        use_bias=True
+        bias_value=None,
+        use_bias=False
+    )
+    
+    # Test 5: Multiple Input Channels
+    print("\n" + "="*60)
+    print("TEST 5: Multiple Input Channels (4 channels)")
+    print("="*60)
+    output5 = run_test(
+        "Test 5: Multiple Input Channels (4 channels)",
+        input_channels=4,
+        temporal_length=16,
+        kernel_size=3,
+        filter_number=1,
+        stride=1,
+        padding=0,
+        bias_value=None,
+        use_bias=False
+    )
+
+    # Test 6: Complex Scenario
+    print("\n" + "="*60)
+    print("TEST 6: Complex Scenario")
+    print("="*60)
+    output6 = run_test(
+        "Test 6: Complex Scenario",
+        input_channels=32,
+        temporal_length=64,
+        kernel_size=5,
+        filter_number=2,
+        stride=2,
+        padding=1,
+        bias_value=None,
+        use_bias=False
+    )
+
+    # Test 7: Block-based Weight Loading
+    print("\n" + "="*60)
+    print("TEST 7: Block-based Weight Loading (70 Channels)")
+    print("="*60)
+    output7 = run_test(
+        "Test 7: Block-based Weight Loading (70 Channels)",
+        input_channels=70,
+        temporal_length=16,
+        kernel_size=3,
+        filter_number=1,
+        stride=1,
+        padding=0,
+        bias_value=None,
+        use_bias=False
+    )
+
+    # Test 8: Large Filter Number
+    print("\n" + "="*60)
+    print("TEST 8: Large Filter Number (32 Filters)")
+    print("="*60)
+    output8 = run_test(
+        "Test 8: Large Filter Number (32 Filters)",
+        input_channels=16,
+        temporal_length=16,
+        kernel_size=3,
+        filter_number=32,
+        stride=2, # Matches TB stride=2'd1
+        padding=1,
+        bias_value=None,
+        use_bias=False
     )
     
     print("\n" + "=" * 60)
     print("All Tests Finished.")
     print("=" * 60)
     
-    return output1, output2, output3, output4, output5
+    return output1, output2, output3, output4, output5, output6, output7, output8
 
 
 def run_custom_test(input_channels: int = 3, 

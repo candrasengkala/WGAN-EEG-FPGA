@@ -11,253 +11,374 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="20.706666 us"></ZoomStartTime>
-      <ZoomEndTime time="33.496667 us"></ZoomEndTime>
-      <Cursor1Time time="31.365000 us"></Cursor1Time>
+      <ZoomStartTime time="4,204,514.506 ns"></ZoomStartTime>
+      <ZoomEndTime time="4,204,962.007 ns"></ZoomEndTime>
+      <Cursor1Time time="4,204,935.000 ns"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
-      <NameColumnWidth column_width="262"></NameColumnWidth>
-      <ValueColumnWidth column_width="320"></ValueColumnWidth>
+      <NameColumnWidth column_width="217"></NameColumnWidth>
+      <ValueColumnWidth column_width="749"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="53" />
-   <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/\INPUT_SHIFT_REGS[0].ifmap_shift /shreg" type="array">
-      <obj_property name="ElementShortName">shreg[0:16][15:0]</obj_property>
-      <obj_property name="ObjectShortName">shreg[0:16][15:0]</obj_property>
+   <WVObjectSize size="83" />
+   <wvobject fp_name="/onedconv_tb/dut/\gen_inputdata_bram[0].bram_input /clka" type="logic">
+      <obj_property name="ElementShortName">clka</obj_property>
+      <obj_property name="ObjectShortName">clka</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_inputdata_bram[0].bram_input /clkb" type="logic">
+      <obj_property name="ElementShortName">clkb</obj_property>
+      <obj_property name="ObjectShortName">clkb</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_inputdata_bram[0].bram_input /ena" type="logic">
+      <obj_property name="ElementShortName">ena</obj_property>
+      <obj_property name="ObjectShortName">ena</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_inputdata_bram[0].bram_input /enb" type="logic">
+      <obj_property name="ElementShortName">enb</obj_property>
+      <obj_property name="ObjectShortName">enb</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_inputdata_bram[0].bram_input /wea" type="logic">
+      <obj_property name="ElementShortName">wea</obj_property>
+      <obj_property name="ObjectShortName">wea</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_inputdata_bram[0].bram_input /addra" type="array">
+      <obj_property name="ElementShortName">addra[9:0]</obj_property>
+      <obj_property name="ObjectShortName">addra[9:0]</obj_property>
       <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_inputdata_bram[0].bram_input /addrb" type="array">
+      <obj_property name="ElementShortName">addrb[9:0]</obj_property>
+      <obj_property name="ObjectShortName">addrb[9:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_inputdata_bram[0].bram_input /dia" type="array">
+      <obj_property name="ElementShortName">dia[15:0]</obj_property>
+      <obj_property name="ObjectShortName">dia[15:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_inputdata_bram[0].bram_input /ram" type="array">
+      <obj_property name="ElementShortName">ram[1023:0][15:0]</obj_property>
+      <obj_property name="ObjectShortName">ram[1023:0][15:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_inputdata_bram[0].bram_input /dob" type="array">
+      <obj_property name="ElementShortName">dob[15:0]</obj_property>
+      <obj_property name="ObjectShortName">dob[15:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/inputdata_mux_inst/data_in" type="array">
+      <obj_property name="ElementShortName">data_in[255:0]</obj_property>
+      <obj_property name="ObjectShortName">data_in[255:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/inputdata_mux_inst/sel" type="array">
+      <obj_property name="ElementShortName">sel[3:0]</obj_property>
+      <obj_property name="ObjectShortName">sel[3:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/inputdata_mux_inst/data_out" type="array">
+      <obj_property name="ElementShortName">data_out[15:0]</obj_property>
+      <obj_property name="ObjectShortName">data_out[15:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/inputdata_mux_inst/i" type="array">
+      <obj_property name="ElementShortName">i[31:0]</obj_property>
+      <obj_property name="ObjectShortName">i[31:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/inputdata_mux_inst/DW" type="array">
+      <obj_property name="ElementShortName">DW[31:0]</obj_property>
+      <obj_property name="ObjectShortName">DW[31:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/inputdata_mux_inst/Inputs" type="array">
+      <obj_property name="ElementShortName">Inputs[31:0]</obj_property>
+      <obj_property name="ObjectShortName">Inputs[31:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/inputdata_mux_inst/Sel_Width" type="array">
+      <obj_property name="ElementShortName">Sel_Width[31:0]</obj_property>
+      <obj_property name="ObjectShortName">Sel_Width[31:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/en_shift_reg_ifmap" type="array">
+      <obj_property name="ElementShortName">en_shift_reg_ifmap[15:0]</obj_property>
+      <obj_property name="ObjectShortName">en_shift_reg_ifmap[15:0]</obj_property>
+      <obj_property name="Radix">BINARYRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/en_shift_reg_weight" type="array">
+      <obj_property name="ElementShortName">en_shift_reg_weight[15:0]</obj_property>
+      <obj_property name="ObjectShortName">en_shift_reg_weight[15:0]</obj_property>
+      <obj_property name="Radix">BINARYRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/\INPUT_SHIFT_REGS[2].ifmap_shift /rst" type="logic">
+      <obj_property name="ElementShortName">rst</obj_property>
+      <obj_property name="ObjectShortName">rst</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/\INPUT_SHIFT_REGS[2].ifmap_shift /SI" type="array">
+      <obj_property name="ElementShortName">SI[15:0]</obj_property>
+      <obj_property name="ObjectShortName">SI[15:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/\INPUT_SHIFT_REGS[2].ifmap_shift /SO" type="array">
+      <obj_property name="ElementShortName">SO[15:0]</obj_property>
+      <obj_property name="ObjectShortName">SO[15:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/\INPUT_SHIFT_REGS[1].ifmap_shift /clk" type="logic">
+      <obj_property name="ElementShortName">clk</obj_property>
+      <obj_property name="ObjectShortName">clk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/\INPUT_SHIFT_REGS[1].ifmap_shift /clken" type="logic">
+      <obj_property name="ElementShortName">clken</obj_property>
+      <obj_property name="ObjectShortName">clken</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/\INPUT_SHIFT_REGS[1].ifmap_shift /rst" type="logic">
+      <obj_property name="ElementShortName">rst</obj_property>
+      <obj_property name="ObjectShortName">rst</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/\INPUT_SHIFT_REGS[1].ifmap_shift /SI" type="array">
+      <obj_property name="ElementShortName">SI[15:0]</obj_property>
+      <obj_property name="ObjectShortName">SI[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/\INPUT_SHIFT_REGS[1].ifmap_shift /SO" type="array">
+      <obj_property name="ElementShortName">SO[15:0]</obj_property>
+      <obj_property name="ObjectShortName">SO[15:0]</obj_property>
    </wvobject>
    <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/\INPUT_SHIFT_REGS[1].ifmap_shift /shreg" type="array">
       <obj_property name="ElementShortName">shreg[0:16][15:0]</obj_property>
       <obj_property name="ObjectShortName">shreg[0:16][15:0]</obj_property>
-      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/\INPUT_SHIFT_REGS[1].ifmap_shift /i" type="array">
+      <obj_property name="ElementShortName">i[31:0]</obj_property>
+      <obj_property name="ObjectShortName">i[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/\INPUT_SHIFT_REGS[1].ifmap_shift /DW" type="array">
+      <obj_property name="ElementShortName">DW[31:0]</obj_property>
+      <obj_property name="ObjectShortName">DW[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/\INPUT_SHIFT_REGS[1].ifmap_shift /Depth_added" type="array">
+      <obj_property name="ElementShortName">Depth_added[31:0]</obj_property>
+      <obj_property name="ObjectShortName">Depth_added[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/\INPUT_SHIFT_REGS[0].weight_shift /SI" type="array">
+      <obj_property name="ElementShortName">SI[15:0]</obj_property>
+      <obj_property name="ObjectShortName">SI[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/\INPUT_SHIFT_REGS[0].weight_shift /clken" type="logic">
+      <obj_property name="ElementShortName">clken</obj_property>
+      <obj_property name="ObjectShortName">clken</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/\INPUT_SHIFT_REGS[0].weight_shift /rst" type="logic">
+      <obj_property name="ElementShortName">rst</obj_property>
+      <obj_property name="ObjectShortName">rst</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/\INPUT_SHIFT_REGS[0].weight_shift /shreg" type="array">
+      <obj_property name="ElementShortName">shreg[0:16][15:0]</obj_property>
+      <obj_property name="ObjectShortName">shreg[0:16][15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/\INPUT_SHIFT_REGS[1].weight_shift /SI" type="array">
+      <obj_property name="ElementShortName">SI[15:0]</obj_property>
+      <obj_property name="ObjectShortName">SI[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/\INPUT_SHIFT_REGS[1].weight_shift /clken" type="logic">
+      <obj_property name="ElementShortName">clken</obj_property>
+      <obj_property name="ObjectShortName">clken</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/\INPUT_SHIFT_REGS[1].weight_shift /rst" type="logic">
+      <obj_property name="ElementShortName">rst</obj_property>
+      <obj_property name="ObjectShortName">rst</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/\INPUT_SHIFT_REGS[1].weight_shift /shreg" type="array">
+      <obj_property name="ElementShortName">shreg[0:16][15:0]</obj_property>
+      <obj_property name="ObjectShortName">shreg[0:16][15:0]</obj_property>
    </wvobject>
    <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/\INPUT_SHIFT_REGS[2].ifmap_shift /shreg" type="array">
       <obj_property name="ElementShortName">shreg[0:16][15:0]</obj_property>
       <obj_property name="ObjectShortName">shreg[0:16][15:0]</obj_property>
       <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
    </wvobject>
-   <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/\INPUT_SHIFT_REGS[3].ifmap_shift /shreg" type="array">
+   <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/\INPUT_SHIFT_REGS[3].weight_shift /clk" type="logic">
+      <obj_property name="ElementShortName">clk</obj_property>
+      <obj_property name="ObjectShortName">clk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/\INPUT_SHIFT_REGS[3].weight_shift /clken" type="logic">
+      <obj_property name="ElementShortName">clken</obj_property>
+      <obj_property name="ObjectShortName">clken</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/\INPUT_SHIFT_REGS[3].weight_shift /rst" type="logic">
+      <obj_property name="ElementShortName">rst</obj_property>
+      <obj_property name="ObjectShortName">rst</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/\INPUT_SHIFT_REGS[3].weight_shift /SI" type="array">
+      <obj_property name="ElementShortName">SI[15:0]</obj_property>
+      <obj_property name="ObjectShortName">SI[15:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/\INPUT_SHIFT_REGS[3].weight_shift /SO" type="array">
+      <obj_property name="ElementShortName">SO[15:0]</obj_property>
+      <obj_property name="ObjectShortName">SO[15:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/\INPUT_SHIFT_REGS[3].weight_shift /shreg" type="array">
       <obj_property name="ElementShortName">shreg[0:16][15:0]</obj_property>
       <obj_property name="ObjectShortName">shreg[0:16][15:0]</obj_property>
       <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_weight_bram[0].bram_filter /clka" type="logic">
+      <obj_property name="ElementShortName">clka</obj_property>
+      <obj_property name="ObjectShortName">clka</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_weight_bram[0].bram_filter /clkb" type="logic">
+      <obj_property name="ElementShortName">clkb</obj_property>
+      <obj_property name="ObjectShortName">clkb</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_weight_bram[0].bram_filter /ena" type="logic">
+      <obj_property name="ElementShortName">ena</obj_property>
+      <obj_property name="ObjectShortName">ena</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_weight_bram[0].bram_filter /enb" type="logic">
+      <obj_property name="ElementShortName">enb</obj_property>
+      <obj_property name="ObjectShortName">enb</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_weight_bram[0].bram_filter /wea" type="logic">
+      <obj_property name="ElementShortName">wea</obj_property>
+      <obj_property name="ObjectShortName">wea</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_weight_bram[0].bram_filter /addra" type="array">
+      <obj_property name="ElementShortName">addra[9:0]</obj_property>
+      <obj_property name="ObjectShortName">addra[9:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_weight_bram[0].bram_filter /addrb" type="array">
+      <obj_property name="ElementShortName">addrb[9:0]</obj_property>
+      <obj_property name="ObjectShortName">addrb[9:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_weight_bram[0].bram_filter /dia" type="array">
+      <obj_property name="ElementShortName">dia[15:0]</obj_property>
+      <obj_property name="ObjectShortName">dia[15:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_weight_bram[0].bram_filter /ram" type="array">
+      <obj_property name="ElementShortName">ram[1023:0][15:0]</obj_property>
+      <obj_property name="ObjectShortName">ram[1023:0][15:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_weight_bram[0].bram_filter /dob" type="array">
+      <obj_property name="ElementShortName">dob[15:0]</obj_property>
+      <obj_property name="ObjectShortName">dob[15:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_weight_bram[0].bram_filter /i" type="array">
+      <obj_property name="ElementShortName">i[31:0]</obj_property>
+      <obj_property name="ObjectShortName">i[31:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_weight_bram[0].bram_filter /DW" type="array">
+      <obj_property name="ElementShortName">DW[31:0]</obj_property>
+      <obj_property name="ObjectShortName">DW[31:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_weight_bram[0].bram_filter /ADDRESS_LENGTH" type="array">
+      <obj_property name="ElementShortName">ADDRESS_LENGTH[31:0]</obj_property>
+      <obj_property name="ObjectShortName">ADDRESS_LENGTH[31:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/\gen_weight_bram[0].bram_filter /DEPTH" type="array">
+      <obj_property name="ElementShortName">DEPTH[31:0]</obj_property>
+      <obj_property name="ObjectShortName">DEPTH[31:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/\INPUT_SHIFT_REGS[0].ifmap_shift /shreg" type="array">
+      <obj_property name="ElementShortName">shreg[0:16][15:0]</obj_property>
+      <obj_property name="ObjectShortName">shreg[0:16][15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/\INPUT_SHIFT_REGS[1].ifmap_shift /shreg" type="array">
+      <obj_property name="ElementShortName">shreg[0:16][15:0]</obj_property>
+      <obj_property name="ObjectShortName">shreg[0:16][15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/\INPUT_SHIFT_REGS[2].ifmap_shift /shreg" type="array">
+      <obj_property name="ElementShortName">shreg[0:16][15:0]</obj_property>
+      <obj_property name="ObjectShortName">shreg[0:16][15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/\INPUT_SHIFT_REGS[3].ifmap_shift /shreg" type="array">
+      <obj_property name="ElementShortName">shreg[0:16][15:0]</obj_property>
+      <obj_property name="ObjectShortName">shreg[0:16][15:0]</obj_property>
    </wvobject>
    <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/\INPUT_SHIFT_REGS[4].ifmap_shift /shreg" type="array">
       <obj_property name="ElementShortName">shreg[0:16][15:0]</obj_property>
       <obj_property name="ObjectShortName">shreg[0:16][15:0]</obj_property>
-      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/\INPUT_SHIFT_REGS[5].ifmap_shift /shreg" type="array">
       <obj_property name="ElementShortName">shreg[0:16][15:0]</obj_property>
       <obj_property name="ObjectShortName">shreg[0:16][15:0]</obj_property>
-      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/\INPUT_SHIFT_REGS[6].ifmap_shift /shreg" type="array">
       <obj_property name="ElementShortName">shreg[0:16][15:0]</obj_property>
       <obj_property name="ObjectShortName">shreg[0:16][15:0]</obj_property>
-      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/\INPUT_SHIFT_REGS[7].ifmap_shift /shreg" type="array">
       <obj_property name="ElementShortName">shreg[0:16][15:0]</obj_property>
       <obj_property name="ObjectShortName">shreg[0:16][15:0]</obj_property>
-      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/\INPUT_SHIFT_REGS[8].ifmap_shift /shreg" type="array">
       <obj_property name="ElementShortName">shreg[0:16][15:0]</obj_property>
       <obj_property name="ObjectShortName">shreg[0:16][15:0]</obj_property>
-      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/\INPUT_SHIFT_REGS[9].ifmap_shift /shreg" type="array">
       <obj_property name="ElementShortName">shreg[0:16][15:0]</obj_property>
       <obj_property name="ObjectShortName">shreg[0:16][15:0]</obj_property>
-      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
-   </wvobject>
-   <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/\INPUT_SHIFT_REGS[15].ifmap_shift /shreg" type="array">
-      <obj_property name="ElementShortName">shreg[0:16][15:0]</obj_property>
-      <obj_property name="ObjectShortName">shreg[0:16][15:0]</obj_property>
-      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
-   </wvobject>
-   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/zero_or_data" type="logic">
-      <obj_property name="ElementShortName">zero_or_data</obj_property>
-      <obj_property name="ObjectShortName">zero_or_data</obj_property>
-   </wvobject>
-   <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/\INPUT_SHIFT_REGS[0].weight_shift /shreg" type="array">
-      <obj_property name="ElementShortName">shreg[0:16][15:0]</obj_property>
-      <obj_property name="ObjectShortName">shreg[0:16][15:0]</obj_property>
-      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
-      <obj_property name="CustomSignalColor">#FF00FF</obj_property>
-      <obj_property name="UseCustomSignalColor">true</obj_property>
-   </wvobject>
-   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/input_microsequencer_inst/stride_val" type="array">
-      <obj_property name="ElementShortName">stride_val[2:0]</obj_property>
-      <obj_property name="ObjectShortName">stride_val[2:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/onedconv_tb/dut/weight_counter_inst/count" type="array">
-      <obj_property name="ElementShortName">count[12:0]</obj_property>
-      <obj_property name="ObjectShortName">count[12:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/onedconv_tb/dut/inputdata_mux_inst/data_out" type="array">
-      <obj_property name="ElementShortName">data_out[15:0]</obj_property>
-      <obj_property name="ObjectShortName">data_out[15:0]</obj_property>
-      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
-   </wvobject>
-   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/state" type="array">
-      <obj_property name="ElementShortName">state[4:0]</obj_property>
-      <obj_property name="ObjectShortName">state[4:0]</obj_property>
-      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
-   </wvobject>
-   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/input_microsequencer_inst/state" type="array">
-      <obj_property name="ElementShortName">state[3:0]</obj_property>
-      <obj_property name="ObjectShortName">state[3:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/input_microsequencer_inst/en_shift_reg" type="array">
-      <obj_property name="ElementShortName">en_shift_reg[15:0]</obj_property>
-      <obj_property name="ObjectShortName">en_shift_reg[15:0]</obj_property>
-      <obj_property name="Radix">BINARYRADIX</obj_property>
-   </wvobject>
-   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/input_microsequencer_inst/en_shift_reg_ifmap_input_shadow" type="array">
-      <obj_property name="ElementShortName">en_shift_reg_ifmap_input_shadow[31:0]</obj_property>
-      <obj_property name="ObjectShortName">en_shift_reg_ifmap_input_shadow[31:0]</obj_property>
-      <obj_property name="Radix">BINARYRADIX</obj_property>
-   </wvobject>
-   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/input_microsequencer_inst/done" type="logic">
-      <obj_property name="ElementShortName">done</obj_property>
-      <obj_property name="ObjectShortName">done</obj_property>
-   </wvobject>
-   <wvobject fp_name="/onedconv_tb/dut/ifmap_counter_inst/count" type="array">
-      <obj_property name="ElementShortName">count[12:0]</obj_property>
-      <obj_property name="ObjectShortName">count[12:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/input_microsequencer_inst/one_clock" type="logic">
-      <obj_property name="ElementShortName">one_clock</obj_property>
-      <obj_property name="ObjectShortName">one_clock</obj_property>
-   </wvobject>
-   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/input_microsequencer_inst/done" type="logic">
-      <obj_property name="ElementShortName">done</obj_property>
-      <obj_property name="ObjectShortName">done</obj_property>
-   </wvobject>
-   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/input_microsequencer_inst/padding_head_count" type="array">
-      <obj_property name="ElementShortName">padding_head_count[4:0]</obj_property>
-      <obj_property name="ObjectShortName">padding_head_count[4:0]</obj_property>
-      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
-   </wvobject>
-   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/input_microsequencer_inst/padding_tail_count" type="array">
-      <obj_property name="ElementShortName">padding_tail_count[4:0]</obj_property>
-      <obj_property name="ObjectShortName">padding_tail_count[4:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/input_microsequencer_inst/stride_count" type="array">
-      <obj_property name="ElementShortName">stride_count[1:0]</obj_property>
-      <obj_property name="ObjectShortName">stride_count[1:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/input_microsequencer_inst/N_in_count" type="array">
-      <obj_property name="ElementShortName">N_in_count[9:0]</obj_property>
-      <obj_property name="ObjectShortName">N_in_count[9:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/input_microsequencer_inst/state" type="array">
-      <obj_property name="ElementShortName">state[3:0]</obj_property>
-      <obj_property name="ObjectShortName">state[3:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/clk" type="logic">
-      <obj_property name="ElementShortName">clk</obj_property>
-      <obj_property name="ObjectShortName">clk</obj_property>
-   </wvobject>
-   <wvobject fp_name="/onedconv_tb/dut/ifmap_counter_inst/rst" type="logic">
-      <obj_property name="ElementShortName">rst</obj_property>
-      <obj_property name="ObjectShortName">rst</obj_property>
-   </wvobject>
-   <wvobject fp_name="/onedconv_tb/dut/ifmap_counter_inst/en" type="logic">
-      <obj_property name="ElementShortName">en</obj_property>
-      <obj_property name="ObjectShortName">en</obj_property>
-   </wvobject>
-   <wvobject fp_name="/onedconv_tb/dut/inputdata_mux_inst/data_out" type="array">
-      <obj_property name="ElementShortName">data_out[15:0]</obj_property>
-      <obj_property name="ObjectShortName">data_out[15:0]</obj_property>
-      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
-   </wvobject>
-   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/done_all" type="logic">
-      <obj_property name="ElementShortName">done_all</obj_property>
-      <obj_property name="ObjectShortName">done_all</obj_property>
-   </wvobject>
-   <wvobject fp_name="/onedconv_tb/dut/ifmap_counter_inst/addr_out" type="array">
-      <obj_property name="ElementShortName">addr_out[12:0]</obj_property>
-      <obj_property name="ObjectShortName">addr_out[12:0]</obj_property>
-      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
-   </wvobject>
-   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/state" type="array">
-      <obj_property name="ElementShortName">state[4:0]</obj_property>
-      <obj_property name="ObjectShortName">state[4:0]</obj_property>
-      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
-   </wvobject>
-   <wvobject fp_name="/onedconv_tb/dut/onedconv_ctrl_inst/input_microsequencer_inst/state" type="array">
-      <obj_property name="ElementShortName">state[3:0]</obj_property>
-      <obj_property name="ObjectShortName">state[3:0]</obj_property>
    </wvobject>
    <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/\INPUT_SHIFT_REGS[10].ifmap_shift /shreg" type="array">
       <obj_property name="ElementShortName">shreg[0:16][15:0]</obj_property>
       <obj_property name="ObjectShortName">shreg[0:16][15:0]</obj_property>
-      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/\INPUT_SHIFT_REGS[11].ifmap_shift /shreg" type="array">
       <obj_property name="ElementShortName">shreg[0:16][15:0]</obj_property>
       <obj_property name="ObjectShortName">shreg[0:16][15:0]</obj_property>
-      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/\INPUT_SHIFT_REGS[12].ifmap_shift /shreg" type="array">
       <obj_property name="ElementShortName">shreg[0:16][15:0]</obj_property>
       <obj_property name="ObjectShortName">shreg[0:16][15:0]</obj_property>
-      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/\INPUT_SHIFT_REGS[13].ifmap_shift /shreg" type="array">
       <obj_property name="ElementShortName">shreg[0:16][15:0]</obj_property>
       <obj_property name="ObjectShortName">shreg[0:16][15:0]</obj_property>
-      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/\INPUT_SHIFT_REGS[14].ifmap_shift /shreg" type="array">
       <obj_property name="ElementShortName">shreg[0:16][15:0]</obj_property>
       <obj_property name="ObjectShortName">shreg[0:16][15:0]</obj_property>
-      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/\INPUT_SHIFT_REGS[15].ifmap_shift /shreg" type="array">
       <obj_property name="ElementShortName">shreg[0:16][15:0]</obj_property>
       <obj_property name="ObjectShortName">shreg[0:16][15:0]</obj_property>
-      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
    </wvobject>
-   <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/\INPUT_SHIFT_REGS[0].weight_shift /clk" type="logic">
-      <obj_property name="ElementShortName">clk</obj_property>
-      <obj_property name="ObjectShortName">clk</obj_property>
+   <wvobject fp_name="/onedconv_tb/dut/inputdata_mux_inst/data_in" type="array">
+      <obj_property name="ElementShortName">data_in[255:0]</obj_property>
+      <obj_property name="ObjectShortName">data_in[255:0]</obj_property>
    </wvobject>
-   <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/\INPUT_SHIFT_REGS[0].weight_shift /clken" type="logic">
-      <obj_property name="ElementShortName">clken</obj_property>
-      <obj_property name="ObjectShortName">clken</obj_property>
+   <wvobject fp_name="/onedconv_tb/dut/inputdata_mux_inst/sel" type="array">
+      <obj_property name="ElementShortName">sel[3:0]</obj_property>
+      <obj_property name="ObjectShortName">sel[3:0]</obj_property>
    </wvobject>
-   <wvobject fp_name="/onedconv_tb/dut/ifmap_counter_inst/en" type="logic">
-      <obj_property name="ElementShortName">en</obj_property>
-      <obj_property name="ObjectShortName">en</obj_property>
+   <wvobject fp_name="/onedconv_tb/dut/inputdata_mux_inst/data_out" type="array">
+      <obj_property name="ElementShortName">data_out[15:0]</obj_property>
+      <obj_property name="ObjectShortName">data_out[15:0]</obj_property>
    </wvobject>
-   <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/\INPUT_SHIFT_REGS[0].weight_shift /rst" type="logic">
-      <obj_property name="ElementShortName">rst</obj_property>
-      <obj_property name="ObjectShortName">rst</obj_property>
-   </wvobject>
-   <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/\INPUT_SHIFT_REGS[0].weight_shift /SI" type="array">
-      <obj_property name="ElementShortName">SI[15:0]</obj_property>
-      <obj_property name="ObjectShortName">SI[15:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/\INPUT_SHIFT_REGS[0].weight_shift /shreg" type="array">
-      <obj_property name="ElementShortName">shreg[0:16][15:0]</obj_property>
-      <obj_property name="ObjectShortName">shreg[0:16][15:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/\INPUT_SHIFT_REGS[0].weight_shift /i" type="array">
+   <wvobject fp_name="/onedconv_tb/dut/inputdata_mux_inst/i" type="array">
       <obj_property name="ElementShortName">i[31:0]</obj_property>
       <obj_property name="ObjectShortName">i[31:0]</obj_property>
    </wvobject>
-   <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/\INPUT_SHIFT_REGS[0].weight_shift /DW" type="array">
+   <wvobject fp_name="/onedconv_tb/dut/inputdata_mux_inst/DW" type="array">
       <obj_property name="ElementShortName">DW[31:0]</obj_property>
       <obj_property name="ObjectShortName">DW[31:0]</obj_property>
    </wvobject>
-   <wvobject fp_name="/onedconv_tb/dut/top_lvl_io_control_inst/top_lvl_with_mem_inst/\INPUT_SHIFT_REGS[0].weight_shift /Depth_added" type="array">
-      <obj_property name="ElementShortName">Depth_added[31:0]</obj_property>
-      <obj_property name="ObjectShortName">Depth_added[31:0]</obj_property>
+   <wvobject fp_name="/onedconv_tb/dut/inputdata_mux_inst/Inputs" type="array">
+      <obj_property name="ElementShortName">Inputs[31:0]</obj_property>
+      <obj_property name="ObjectShortName">Inputs[31:0]</obj_property>
    </wvobject>
-   <wvobject fp_name="/onedconv_tb/dut/\gen_inputdata_bram[0].bram_input /enb" type="logic">
-      <obj_property name="ElementShortName">enb</obj_property>
-      <obj_property name="ObjectShortName">enb</obj_property>
+   <wvobject fp_name="/onedconv_tb/dut/inputdata_mux_inst/Sel_Width" type="array">
+      <obj_property name="ElementShortName">Sel_Width[31:0]</obj_property>
+      <obj_property name="ObjectShortName">Sel_Width[31:0]</obj_property>
    </wvobject>
 </wave_config>

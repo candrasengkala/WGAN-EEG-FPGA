@@ -5,13 +5,14 @@ Running: C:/Xilinx/2025.1/Vivado/bin/unwrapped/win64.o/xelab.exe --incr --debug 
 Using 2 slave threads.
 Starting static elaboration
 Pass Through NonSizing Optimizer
+WARNING: [VRFC 10-2861] module 'onedconv' does not have a parameter named MAX_COUNT [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sim_1/new/onedconv_tb.v:74]
 Completed static elaboration
 Starting simulation data flow analysis
 Completed simulation data flow analysis
 Time Resolution for simulation is 1ps
-Compiling module xil_defaultlib.counter_axon_addr_inputdata
-Compiling module xil_defaultlib.counter_axon_addr_weight
-Compiling module xil_defaultlib.simple_dual_two_clocks
+Compiling module xil_defaultlib.counter_axon_addr_inputdata(ADDR...
+Compiling module xil_defaultlib.counter_axon_addr_weight(ADDRESS...
+Compiling module xil_defaultlib.simple_dual_two_clocks(ADDRESS_L...
 Compiling module xil_defaultlib.mux_between_channels(Inputs=16,S...
 Compiling module xil_defaultlib.reg_en_rst(WIDTH=256)
 Compiling module xil_defaultlib.dmux_out
@@ -29,8 +30,8 @@ Compiling module xil_defaultlib.top_lvl_io_control
 Compiling module xil_defaultlib.input_microsequencer
 Compiling module xil_defaultlib.filter_microsequencer
 Compiling module xil_defaultlib.output_microsequencer
-Compiling module xil_defaultlib.onedconv_ctrl(ADDRESS_LENGTH=13)
-Compiling module xil_defaultlib.onedconv(ADDRESS_LENGTH=13)
+Compiling module xil_defaultlib.onedconv_ctrl
+Compiling module xil_defaultlib.onedconv(BRAM_Depth=1024)
 Compiling module xil_defaultlib.onedconv_tb
 Compiling module xil_defaultlib.glbl
 Built simulation snapshot onedconv_tb_behav
