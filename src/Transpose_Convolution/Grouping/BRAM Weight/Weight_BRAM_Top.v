@@ -47,8 +47,8 @@ module Weight_BRAM_Top_Modified #(
     wire [NUM_BRAMS-1:0] w_re_muxed;
     wire [NUM_BRAMS*ADDR_WIDTH-1:0] w_addr_rd_muxed_flat;
     
-    // SHIFT REGISTER OUTPUT (internal wire - dari shift register module)
-    wire signed [NUM_BRAMS*DW-1:0] shift_reg_out_flat;
+    // // SHIFT REGISTER OUTPUT (internal wire - dari shift register module)
+    // wire signed [NUM_BRAMS*DW-1:0] shift_reg_out_flat;
     
     // MODE REGISTER & SIGNAL
     reg mode_transconv_reg;
@@ -108,6 +108,5 @@ module Weight_BRAM_Top_Modified #(
     // ========================================================================
     // Conv mode: shift_reg_out → PE (BRAM → shift register → PE)
     // Transconv mode: BRAM → PE (direct)
-    assign weight_out_flat = (mode_transconv == 1'b0) ? shift_reg_out_flat : bram_out_flat;
-
+    assign weight_out_flat = bram_out_flat;
 endmodule
