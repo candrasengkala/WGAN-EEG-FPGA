@@ -1,0 +1,75 @@
+/******************************************************************************
+ * Module: omap_buffer
+ * 
+ * Description:
+ *   Buffer for output map (omap) from MM2IM mapper.
+ *   Stores 16 entries of 14-bit mapping data and outputs selected entry
+ *   based on done counter, split into BRAM selector and address.
+ * 
+ * Features:
+ *   - Stores 16 × 14-bit omap entries
+ *   - Indexed access by done counter (0..16)
+ *   - Splits output into BRAM selector (4-bit) and address (10-bit)
+ *   - Combinational output (no delay)
+ * 
+ * Parameters:
+ *   NUM_PE - Number of PE columns (default: 16)
+ * 
+ * Author: Dharma Anargya Jowandy
+ * Date: January 2026
+ ******************************************************************************/
+
+module omap_buffer #(
+    parameter NUM_PE = 16  // Number of PE columns
+)(
+    input  wire                        clk,
+    input  wire                        rst_n,
+
+    // Snapshot from MM2IM (FLATTENED: 16 × 14 bit)
+    input  wire [NUM_PE*14-1:0]        omap_in_flat,  // 16*14 = 224 bit
+    input  wire                        load,          // Load snapshot (1x per tile)
+
+    // Selector from Transpose FSM
+    input  wire [4:0]                  done,          // 0..16
+
+    // Output to Write-back (SPLIT)
+    output reg  [3:0]                  bram_sel,      // BRAM index
+    output reg  [9:0]                  bram_addr      // Address in BRAM
+);
+
+    // -------------------------------------------------
+    // Internal storage
+    // -------------------------------------------------
+    reg [13:0] omap_reg [0:NUM_PE-1];
+    reg [3:0]  pe_sel;
+
+    integer i;
+
+    // -------------------------------------------------
+    // Load snapshot (flattened → internal array)
+    // -------------------------------------------------
+    always @(posedge clk or negedge rst_n) begin
+        if (!rst_n) begin
+            for (i = 0; i < NUM_PE; i = i + 1)
+                omap_reg[i] <= 14'h3FFF;   // Invalid marker
+        end else if (load) begin
+            for (i = 0; i < NUM_PE; i = i + 1)
+                omap_reg[i] <= omap_in_flat[i*14 +: 14];
+        end
+    end
+
+    // -------------------------------------------------
+    // Select & SPLIT output based on done counter
+    // -------------------------------------------------
+    always @(*) begin
+        if (done >= 5'd1 && done <= 5'd16) begin
+            pe_sel    = done[3:0] - 4'd1;
+            bram_sel  = omap_reg[pe_sel][13:10];
+            bram_addr = omap_reg[pe_sel][9:0];
+        end else begin
+            bram_sel  = 4'd0;
+            bram_addr = 10'd0;
+        end
+    end
+
+endmodule

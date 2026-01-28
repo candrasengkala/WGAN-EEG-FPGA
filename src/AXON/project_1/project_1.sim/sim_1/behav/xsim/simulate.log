@@ -1,180 +1,622 @@
 Time resolution is 1 ps
 
+
 ========================================
-  1D Convolution Testbench - ADAPTED DESIGN
+  1D Convolution Testbench
 ========================================
 
->>> Test 1: Basic Convolution (No Bias)
-Initializing input data: 2 channels, 7 temporal length
+>>> Test 1: Basic Convolution
+Initializing input data: 1 channels, 16 temporal length
+  Ch 0 -> BRAM 0, slot 0, addr 0-15, pattern: t=0:1, t=1:2, t=2:3
 Input data initialization complete
-Initializing weights: kernel_size=4, input_channels=2, filters=1
-  Systolic Architecture: 16 BRAMs
-  Multi-Channel Logic: Weights stored continuously for all channels.
-  Filter 0 -> BRAM[0], Row 0:
-    Ch0 start addr: 0
-    Ch1 start addr: 4
-Weight initialization complete
-  Total BRAM depth usage: 8 addresses
+Clearing weight BRAMs...
+Weight BRAM clear complete
+Initializing weights: kernel_size=3, filters=1, input_channels=1
+Weight initialization complete: loaded 1 channels for 1 filters
+Initializing bias (clearing output BRAM)...
+Bias initialization complete (wrote 64 zeros)
 
 === Starting Convolution ===
-Parameters: stride=2, padding=7, kernel_size=4
-  input_channels=2, temporal_length=7, filters=1
-  Expected output_length=9
+Parameters:
+  stride_input=0 (actual_stride=1), padding=0, kernel_size=3
+  input_channels=1, temporal_length=16, filters=1
+[TB] Weight Request detected at time              1655000
+[TB] Weight loading complete, asserting ack at time              1705000
 === Convolution Complete ===
 
 
 ========================================
-OUTPUT RESULTS
-Filters: 1 | Output Length: 9
+  OUTPUT RESULTS (Signed Decimal)
+========================================
+Reading 14 output values for 1 filter(s)...
+
+Time | Filter  0 |
+-----|-----------|
+   0 |        14 |
+   1 |        20 |
+   2 |        26 |
+   3 |        17 |
+   4 |        13 |
+   5 |        14 |
+   6 |        20 |
+   7 |        26 |
+   8 |        17 |
+   9 |        13 |
+  10 |        14 |
+  11 |        20 |
+  12 |        26 |
+  13 |        17 |
 ========================================
 
-Filter 0 (BRAM[0], Row 0):
-  [0, 0, 1478, 5110, 8200, 10080, 5460, 0, 0]
-
-========================================
 
 
->>> Test 2: Convolution with Bias = 0
-Initializing input data: 2 channels, 7 temporal length
+>>> Test 2: Convolution with Stride=2
+Initializing input data: 1 channels, 16 temporal length
+  Ch 0 -> BRAM 0, slot 0, addr 0-15, pattern: t=0:1, t=1:2, t=2:3
 Input data initialization complete
-Initializing weights: kernel_size=4, input_channels=2, filters=1
-  Systolic Architecture: 16 BRAMs
-  Multi-Channel Logic: Weights stored continuously for all channels.
-  Filter 0 -> BRAM[0], Row 0:
-    Ch0 start addr: 0
-    Ch1 start addr: 4
-Weight initialization complete
-  Total BRAM depth usage: 8 addresses
-Initializing bias: filters=1, output_length=9, bias_value=0
-  Filter 0: BRAM[0], Row 0, Addresses 0-8
-Bias initialization complete
+Clearing weight BRAMs...
+Weight BRAM clear complete
+Initializing weights: kernel_size=4, filters=1, input_channels=1
+Weight initialization complete: loaded 1 channels for 1 filters
+Initializing bias (clearing output BRAM)...
+Bias initialization complete (wrote 64 zeros)
 
 === Starting Convolution ===
-Parameters: stride=2, padding=7, kernel_size=4
-  input_channels=2, temporal_length=7, filters=1
-  Expected output_length=9
+Parameters:
+  stride_input=2 (actual_stride=2), padding=0, kernel_size=4
+  input_channels=1, temporal_length=16, filters=1
+[TB] Weight Request detected at time              7375000
+[TB] Weight loading complete, asserting ack at time              7425000
 === Convolution Complete ===
 
 
 ========================================
-OUTPUT RESULTS
-Filters: 1 | Output Length: 9
+  OUTPUT RESULTS (Signed Decimal)
+========================================
+Reading 7 output values for 1 filter(s)...
+
+Time | Filter  0 |
+-----|-----------|
+   0 |        30 |
+   1 |        30 |
+   2 |        25 |
+   3 |        40 |
+   4 |        25 |
+   5 |        30 |
+   6 |        30 |
 ========================================
 
-Filter 0 (BRAM[0], Row 0):
-  [0, 0, 1478, 5110, 8200, 10080, 5460, 0, 0]
-
-========================================
 
 
->>> Test 3: Convolution with Bias = 100
-Initializing input data: 2 channels, 7 temporal length
+>>> Test 3: Convolution with Padding=2
+Initializing input data: 1 channels, 16 temporal length
+  Ch 0 -> BRAM 0, slot 0, addr 0-15, pattern: t=0:1, t=1:2, t=2:3
 Input data initialization complete
-Initializing weights: kernel_size=4, input_channels=2, filters=1
-  Systolic Architecture: 16 BRAMs
-  Multi-Channel Logic: Weights stored continuously for all channels.
-  Filter 0 -> BRAM[0], Row 0:
-    Ch0 start addr: 0
-    Ch1 start addr: 4
-Weight initialization complete
-  Total BRAM depth usage: 8 addresses
-Initializing bias: filters=1, output_length=9, bias_value=100
-  Filter 0: BRAM[0], Row 0, Addresses 0-8
-Bias initialization complete
+Clearing weight BRAMs...
+Weight BRAM clear complete
+Initializing weights: kernel_size=3, filters=1, input_channels=1
+Weight initialization complete: loaded 1 channels for 1 filters
+Initializing bias (clearing output BRAM)...
+Bias initialization complete (wrote 64 zeros)
 
 === Starting Convolution ===
-Parameters: stride=2, padding=7, kernel_size=4
-  input_channels=2, temporal_length=7, filters=1
-  Expected output_length=9
+Parameters:
+  stride_input=0 (actual_stride=1), padding=2, kernel_size=3
+  input_channels=1, temporal_length=16, filters=1
+[TB] Weight Request detected at time             11715000
+[TB] Weight loading complete, asserting ack at time             11765000
 === Convolution Complete ===
 
 
 ========================================
-OUTPUT RESULTS
-Filters: 1 | Output Length: 9
+  OUTPUT RESULTS (Signed Decimal)
+========================================
+Reading 18 output values for 1 filter(s)...
+
+Time | Filter  0 |
+-----|-----------|
+   0 |         3 |
+   1 |         8 |
+   2 |        14 |
+   3 |        20 |
+   4 |        26 |
+   5 |        17 |
+   6 |        13 |
+   7 |        14 |
+   8 |        20 |
+   9 |        26 |
+  10 |        17 |
+  11 |        13 |
+  12 |        14 |
+  13 |        20 |
+  14 |        26 |
+  15 |        17 |
+  16 |        20 |
+  17 |        26 |
 ========================================
 
-Filter 0 (BRAM[0], Row 0):
-  [100, 100, 1578, 5210, 8300, 10180, 5560, 100, 100]
-
-========================================
 
 
->>> Test 4: Convolution with Negative Bias = -50
-Initializing input data: 2 channels, 7 temporal length
+>>> Test 4: Kernel Size = 7
+Initializing input data: 1 channels, 32 temporal length
+  Ch 0 -> BRAM 0, slot 0, addr 0-31, pattern: t=0:1, t=1:2, t=2:3
 Input data initialization complete
-Initializing weights: kernel_size=4, input_channels=2, filters=1
-  Systolic Architecture: 16 BRAMs
-  Multi-Channel Logic: Weights stored continuously for all channels.
-  Filter 0 -> BRAM[0], Row 0:
-    Ch0 start addr: 0
-    Ch1 start addr: 4
-Weight initialization complete
-  Total BRAM depth usage: 8 addresses
-Initializing bias: filters=1, output_length=9, bias_value=-50
-  Filter 0: BRAM[0], Row 0, Addresses 0-8
-Bias initialization complete
+Clearing weight BRAMs...
+Weight BRAM clear complete
+Initializing weights: kernel_size=7, filters=1, input_channels=1
+Weight initialization complete: loaded 1 channels for 1 filters
+Initializing bias (clearing output BRAM)...
+Bias initialization complete (wrote 64 zeros)
 
 === Starting Convolution ===
-Parameters: stride=2, padding=7, kernel_size=4
-  input_channels=2, temporal_length=7, filters=1
-  Expected output_length=9
+Parameters:
+  stride_input=0 (actual_stride=1), padding=0, kernel_size=7
+  input_channels=1, temporal_length=32, filters=1
+[TB] Weight Request detected at time             19775000
+[TB] Weight loading complete, asserting ack at time             19825000
 === Convolution Complete ===
 
 
 ========================================
-OUTPUT RESULTS
-Filters: 1 | Output Length: 9
+  OUTPUT RESULTS (Signed Decimal)
+========================================
+Reading 26 output values for 1 filter(s)...
+
+Time | Filter  0 |
+-----|-----------|
+   0 |        60 |
+   1 |        53 |
+   2 |        51 |
+   3 |        54 |
+   4 |        52 |
+   5 |        60 |
+   6 |        53 |
+   7 |        51 |
+   8 |        54 |
+   9 |        52 |
+  10 |        60 |
+  11 |        53 |
+  12 |        51 |
+  13 |        54 |
+  14 |        52 |
+  15 |        60 |
+  16 |        53 |
+  17 |        51 |
+  18 |        54 |
+  19 |        52 |
+  20 |        60 |
+  21 |        53 |
+  22 |        51 |
+  23 |        54 |
+  24 |        52 |
+  25 |        60 |
 ========================================
 
-Filter 0 (BRAM[0], Row 0):
-  [-50, -50, 1428, 5060, 8150, 10030, 5410, -50, -50]
-
-========================================
 
 
->>> Test 5: Multiple Filters with Bias = 25
-Initializing input data: 2 channels, 8 temporal length
+>>> Test 5: Multiple Input Channels (4 channels)
+Initializing input data: 4 channels, 16 temporal length
+  Ch 0 -> BRAM 0, slot 0, addr 0-15, pattern: t=0:1, t=1:2, t=2:3
+  Ch 1 -> BRAM 1, slot 0, addr 0-15, pattern: t=0:2, t=1:3, t=2:4
+  Ch 2 -> BRAM 2, slot 0, addr 0-15, pattern: t=0:3, t=1:4, t=2:5
+  Ch 3 -> BRAM 3, slot 0, addr 0-15, pattern: t=0:4, t=1:5, t=2:1
 Input data initialization complete
-Initializing weights: kernel_size=3, input_channels=2, filters=2
-  Systolic Architecture: 16 BRAMs
-  Multi-Channel Logic: Weights stored continuously for all channels.
-  Filter 0 -> BRAM[0], Row 0:
-    Ch0 start addr: 0
-    Ch1 start addr: 3
-  Filter 1 -> BRAM[1], Row 0:
-    Ch0 start addr: 0
-    Ch1 start addr: 3
-Weight initialization complete
-  Total BRAM depth usage: 6 addresses
-Initializing bias: filters=2, output_length=6, bias_value=25
-  Filter 0: BRAM[0], Row 0, Addresses 0-5
-  Filter 1: BRAM[1], Row 0, Addresses 0-5
-Bias initialization complete
+Clearing weight BRAMs...
+Weight BRAM clear complete
+Initializing weights: kernel_size=3, filters=1, input_channels=4
+Weight initialization complete: loaded 4 channels for 1 filters
+Initializing bias (clearing output BRAM)...
+Bias initialization complete (wrote 64 zeros)
 
 === Starting Convolution ===
-Parameters: stride=1, padding=0, kernel_size=3
-  input_channels=2, temporal_length=8, filters=2
-  Expected output_length=6
+Parameters:
+  stride_input=0 (actual_stride=1), padding=0, kernel_size=3
+  input_channels=4, temporal_length=16, filters=1
+[TB] Weight Request detected at time             30785000
+[TB] Weight loading complete, asserting ack at time             30835000
 === Convolution Complete ===
 
 
 ========================================
-OUTPUT RESULTS
-Filters: 2 | Output Length: 6
+  OUTPUT RESULTS (Signed Decimal)
+========================================
+Reading 14 output values for 1 filter(s)...
+
+Time | Filter  0 |
+-----|-----------|
+   0 |        77 |
+   1 |        76 |
+   2 |        70 |
+   3 |        64 |
+   4 |        73 |
+   5 |        77 |
+   6 |        76 |
+   7 |        70 |
+   8 |        64 |
+   9 |        73 |
+  10 |        77 |
+  11 |        76 |
+  12 |        70 |
+  13 |        64 |
 ========================================
 
-Filter 0 (BRAM[0], Row 0):
-  [5093, 5795, 6497, 7199, 7901, 8603]
 
-Filter 1 (BRAM[1], Row 0):
-  [9293, 10595, 11897, 13199, 14501, 15803]
+
+>>> Test 6: Complex Scenario (64 channels, 64 filters)
+    Expect 4 Weight Requests for 64 filters in batches of 16
+Initializing input data: 64 channels, 64 temporal length
+  Ch 0 -> BRAM 0, slot 0, addr 0-63, pattern: t=0:1, t=1:2, t=2:3
+  Ch 1 -> BRAM 1, slot 0, addr 0-63, pattern: t=0:2, t=1:3, t=2:4
+  Ch 2 -> BRAM 2, slot 0, addr 0-63, pattern: t=0:3, t=1:4, t=2:5
+  Ch 3 -> BRAM 3, slot 0, addr 0-63, pattern: t=0:4, t=1:5, t=2:1
+Input data initialization complete
+Initializing bias (clearing output BRAM)...
+Bias initialization complete (wrote 64 zeros)
+
+=== Starting Convolution ===
+Parameters:
+  stride_input=2 (actual_stride=2), padding=1, kernel_size=16
+  input_channels=64, temporal_length=64, filters=64
+[TB] Weight Request detected at time            168355000
+[TB] Loading Dynamic Weights for Request #0
+[TB]   -> Filter Batch 0 (Filters 0-15)
+[TB]   -> Channel Block 0 (Channels 0-63)
+[TB]     DEBUG: Filter 0, Ch 0, k=0: addr=0, value=1 (to BRAM 0)
+[TB]     DEBUG: Filter 0, Ch 0, k=1: addr=1, value=2 (to BRAM 0)
+[TB]     DEBUG: Filter 0, Ch 0, k=2: addr=2, value=3 (to BRAM 0)
+[TB]     DEBUG: Filter 0, Ch 1, k=0: addr=16, value=1 (to BRAM 0)
+[TB]     DEBUG: Filter 0, Ch 1, k=1: addr=17, value=2 (to BRAM 0)
+[TB]     DEBUG: Filter 0, Ch 1, k=2: addr=18, value=3 (to BRAM 0)
+[TB]   Loaded Filter 0 -> BRAM 0, weight pattern: k=0:1, k=1:2, k=2:3, k=3:4, k=4:5
+[TB]   Loaded Filter 1 -> BRAM 1, weight pattern: k=0:2, k=1:3, k=2:4, k=3:5, k=4:1
+[TB]   Loaded Filter 2 -> BRAM 2, weight pattern: k=0:3, k=1:4, k=2:5, k=3:1, k=4:2
+[TB]   Loaded Filter 3 -> BRAM 3, weight pattern: k=0:4, k=1:5, k=2:1, k=3:2, k=4:3
+[TB]   Loaded Filter 4 -> BRAM 4, weight pattern: k=0:5, k=1:1, k=2:2, k=3:3, k=4:4
+[TB]   Loaded Filter 5 -> BRAM 5, weight pattern: k=0:1, k=1:2, k=2:3, k=3:4, k=4:5
+[TB]   Loaded Filter 6 -> BRAM 6, weight pattern: k=0:2, k=1:3, k=2:4, k=3:5, k=4:1
+[TB]   Loaded Filter 7 -> BRAM 7, weight pattern: k=0:3, k=1:4, k=2:5, k=3:1, k=4:2
+[TB]   Loaded Filter 8 -> BRAM 8, weight pattern: k=0:4, k=1:5, k=2:1, k=3:2, k=4:3
+[TB]   Loaded Filter 9 -> BRAM 9, weight pattern: k=0:5, k=1:1, k=2:2, k=3:3, k=4:4
+[TB]   Loaded Filter 10 -> BRAM 10, weight pattern: k=0:1, k=1:2, k=2:3, k=3:4, k=4:5
+[TB]   Loaded Filter 11 -> BRAM 11, weight pattern: k=0:2, k=1:3, k=2:4, k=3:5, k=4:1
+[TB]   Loaded Filter 12 -> BRAM 12, weight pattern: k=0:3, k=1:4, k=2:5, k=3:1, k=4:2
+[TB]   Loaded Filter 13 -> BRAM 13, weight pattern: k=0:4, k=1:5, k=2:1, k=3:2, k=4:3
+[TB]   Loaded Filter 14 -> BRAM 14, weight pattern: k=0:5, k=1:1, k=2:2, k=3:3, k=4:4
+[TB]   Loaded Filter 15 -> BRAM 15, weight pattern: k=0:1, k=1:2, k=2:3, k=3:4, k=4:5
+[TB] Dynamic Weight Load Complete
+[TB] Weight loading complete, asserting ack at time            659925000
+[TB] Weight Request detected at time           1072765000
+[TB] Loading Dynamic Weights for Request #1
+[TB]   -> Filter Batch 1 (Filters 16-31)
+[TB]   -> Channel Block 0 (Channels 0-63)
+[TB]     DEBUG: Filter 16, Ch 0, k=0: addr=0, value=2 (to BRAM 0)
+[TB]     DEBUG: Filter 16, Ch 0, k=1: addr=1, value=3 (to BRAM 0)
+[TB]     DEBUG: Filter 16, Ch 0, k=2: addr=2, value=4 (to BRAM 0)
+[TB]     DEBUG: Filter 16, Ch 1, k=0: addr=16, value=2 (to BRAM 0)
+[TB]     DEBUG: Filter 16, Ch 1, k=1: addr=17, value=3 (to BRAM 0)
+[TB]     DEBUG: Filter 16, Ch 1, k=2: addr=18, value=4 (to BRAM 0)
+[TB]   Loaded Filter 16 -> BRAM 0, weight pattern: k=0:2, k=1:3, k=2:4, k=3:5, k=4:1
+[TB]   Loaded Filter 17 -> BRAM 1, weight pattern: k=0:3, k=1:4, k=2:5, k=3:1, k=4:2
+[TB]   Loaded Filter 18 -> BRAM 2, weight pattern: k=0:4, k=1:5, k=2:1, k=3:2, k=4:3
+[TB]   Loaded Filter 19 -> BRAM 3, weight pattern: k=0:5, k=1:1, k=2:2, k=3:3, k=4:4
+[TB]   Loaded Filter 20 -> BRAM 4, weight pattern: k=0:1, k=1:2, k=2:3, k=3:4, k=4:5
+[TB]   Loaded Filter 21 -> BRAM 5, weight pattern: k=0:2, k=1:3, k=2:4, k=3:5, k=4:1
+[TB]   Loaded Filter 22 -> BRAM 6, weight pattern: k=0:3, k=1:4, k=2:5, k=3:1, k=4:2
+[TB]   Loaded Filter 23 -> BRAM 7, weight pattern: k=0:4, k=1:5, k=2:1, k=3:2, k=4:3
+[TB]   Loaded Filter 24 -> BRAM 8, weight pattern: k=0:5, k=1:1, k=2:2, k=3:3, k=4:4
+[TB]   Loaded Filter 25 -> BRAM 9, weight pattern: k=0:1, k=1:2, k=2:3, k=3:4, k=4:5
+[TB]   Loaded Filter 26 -> BRAM 10, weight pattern: k=0:2, k=1:3, k=2:4, k=3:5, k=4:1
+[TB]   Loaded Filter 27 -> BRAM 11, weight pattern: k=0:3, k=1:4, k=2:5, k=3:1, k=4:2
+[TB]   Loaded Filter 28 -> BRAM 12, weight pattern: k=0:4, k=1:5, k=2:1, k=3:2, k=4:3
+[TB]   Loaded Filter 29 -> BRAM 13, weight pattern: k=0:5, k=1:1, k=2:2, k=3:3, k=4:4
+[TB]   Loaded Filter 30 -> BRAM 14, weight pattern: k=0:1, k=1:2, k=2:3, k=3:4, k=4:5
+[TB]   Loaded Filter 31 -> BRAM 15, weight pattern: k=0:2, k=1:3, k=2:4, k=3:5, k=4:1
+[TB] Dynamic Weight Load Complete
+[TB] Weight loading complete, asserting ack at time           1564335000
+[TB] Weight Request detected at time           1977175000
+[TB] Loading Dynamic Weights for Request #2
+[TB]   -> Filter Batch 2 (Filters 32-47)
+[TB]   -> Channel Block 0 (Channels 0-63)
+[TB]     DEBUG: Filter 32, Ch 0, k=0: addr=0, value=3 (to BRAM 0)
+[TB]     DEBUG: Filter 32, Ch 0, k=1: addr=1, value=4 (to BRAM 0)
+[TB]     DEBUG: Filter 32, Ch 0, k=2: addr=2, value=5 (to BRAM 0)
+[TB]     DEBUG: Filter 32, Ch 1, k=0: addr=16, value=3 (to BRAM 0)
+[TB]     DEBUG: Filter 32, Ch 1, k=1: addr=17, value=4 (to BRAM 0)
+[TB]     DEBUG: Filter 32, Ch 1, k=2: addr=18, value=5 (to BRAM 0)
+[TB]   Loaded Filter 32 -> BRAM 0, weight pattern: k=0:3, k=1:4, k=2:5, k=3:1, k=4:2
+[TB]   Loaded Filter 33 -> BRAM 1, weight pattern: k=0:4, k=1:5, k=2:1, k=3:2, k=4:3
+[TB]   Loaded Filter 34 -> BRAM 2, weight pattern: k=0:5, k=1:1, k=2:2, k=3:3, k=4:4
+[TB]   Loaded Filter 35 -> BRAM 3, weight pattern: k=0:1, k=1:2, k=2:3, k=3:4, k=4:5
+[TB]   Loaded Filter 36 -> BRAM 4, weight pattern: k=0:2, k=1:3, k=2:4, k=3:5, k=4:1
+[TB]   Loaded Filter 37 -> BRAM 5, weight pattern: k=0:3, k=1:4, k=2:5, k=3:1, k=4:2
+[TB]   Loaded Filter 38 -> BRAM 6, weight pattern: k=0:4, k=1:5, k=2:1, k=3:2, k=4:3
+[TB]   Loaded Filter 39 -> BRAM 7, weight pattern: k=0:5, k=1:1, k=2:2, k=3:3, k=4:4
+[TB]   Loaded Filter 40 -> BRAM 8, weight pattern: k=0:1, k=1:2, k=2:3, k=3:4, k=4:5
+[TB]   Loaded Filter 41 -> BRAM 9, weight pattern: k=0:2, k=1:3, k=2:4, k=3:5, k=4:1
+[TB]   Loaded Filter 42 -> BRAM 10, weight pattern: k=0:3, k=1:4, k=2:5, k=3:1, k=4:2
+[TB]   Loaded Filter 43 -> BRAM 11, weight pattern: k=0:4, k=1:5, k=2:1, k=3:2, k=4:3
+[TB]   Loaded Filter 44 -> BRAM 12, weight pattern: k=0:5, k=1:1, k=2:2, k=3:3, k=4:4
+[TB]   Loaded Filter 45 -> BRAM 13, weight pattern: k=0:1, k=1:2, k=2:3, k=3:4, k=4:5
+[TB]   Loaded Filter 46 -> BRAM 14, weight pattern: k=0:2, k=1:3, k=2:4, k=3:5, k=4:1
+[TB]   Loaded Filter 47 -> BRAM 15, weight pattern: k=0:3, k=1:4, k=2:5, k=3:1, k=4:2
+[TB] Dynamic Weight Load Complete
+[TB] Weight loading complete, asserting ack at time           2468745000
+[TB] Weight Request detected at time           2881585000
+[TB] Loading Dynamic Weights for Request #3
+[TB]   -> Filter Batch 3 (Filters 48-63)
+[TB]   -> Channel Block 0 (Channels 0-63)
+[TB]     DEBUG: Filter 48, Ch 0, k=0: addr=0, value=4 (to BRAM 0)
+[TB]     DEBUG: Filter 48, Ch 0, k=1: addr=1, value=5 (to BRAM 0)
+[TB]     DEBUG: Filter 48, Ch 0, k=2: addr=2, value=1 (to BRAM 0)
+[TB]     DEBUG: Filter 48, Ch 1, k=0: addr=16, value=4 (to BRAM 0)
+[TB]     DEBUG: Filter 48, Ch 1, k=1: addr=17, value=5 (to BRAM 0)
+[TB]     DEBUG: Filter 48, Ch 1, k=2: addr=18, value=1 (to BRAM 0)
+[TB]   Loaded Filter 48 -> BRAM 0, weight pattern: k=0:4, k=1:5, k=2:1, k=3:2, k=4:3
+[TB]   Loaded Filter 49 -> BRAM 1, weight pattern: k=0:5, k=1:1, k=2:2, k=3:3, k=4:4
+[TB]   Loaded Filter 50 -> BRAM 2, weight pattern: k=0:1, k=1:2, k=2:3, k=3:4, k=4:5
+[TB]   Loaded Filter 51 -> BRAM 3, weight pattern: k=0:2, k=1:3, k=2:4, k=3:5, k=4:1
+[TB]   Loaded Filter 52 -> BRAM 4, weight pattern: k=0:3, k=1:4, k=2:5, k=3:1, k=4:2
+[TB]   Loaded Filter 53 -> BRAM 5, weight pattern: k=0:4, k=1:5, k=2:1, k=3:2, k=4:3
+[TB]   Loaded Filter 54 -> BRAM 6, weight pattern: k=0:5, k=1:1, k=2:2, k=3:3, k=4:4
+[TB]   Loaded Filter 55 -> BRAM 7, weight pattern: k=0:1, k=1:2, k=2:3, k=3:4, k=4:5
+[TB]   Loaded Filter 56 -> BRAM 8, weight pattern: k=0:2, k=1:3, k=2:4, k=3:5, k=4:1
+[TB]   Loaded Filter 57 -> BRAM 9, weight pattern: k=0:3, k=1:4, k=2:5, k=3:1, k=4:2
+[TB]   Loaded Filter 58 -> BRAM 10, weight pattern: k=0:4, k=1:5, k=2:1, k=3:2, k=4:3
+[TB]   Loaded Filter 59 -> BRAM 11, weight pattern: k=0:5, k=1:1, k=2:2, k=3:3, k=4:4
+[TB]   Loaded Filter 60 -> BRAM 12, weight pattern: k=0:1, k=1:2, k=2:3, k=3:4, k=4:5
+[TB]   Loaded Filter 61 -> BRAM 13, weight pattern: k=0:2, k=1:3, k=2:4, k=3:5, k=4:1
+[TB]   Loaded Filter 62 -> BRAM 14, weight pattern: k=0:3, k=1:4, k=2:5, k=3:1, k=4:2
+[TB]   Loaded Filter 63 -> BRAM 15, weight pattern: k=0:4, k=1:5, k=2:1, k=3:2, k=4:3
+[TB] Dynamic Weight Load Complete
+[TB] Weight loading complete, asserting ack at time           3373155000
+=== Convolution Complete ===
+
 
 ========================================
+  TEST 6 GOLDEN MODEL COMPARISON
+========================================
+
+Time 0 Comparison (Verilog vs Golden):
+Filter | Verilog | Golden | Difference | Status
+-------|---------|--------|------------|-------
+   0   |   8273  |  8655  |     -382     | MISMATCH
+   1   |   8067  |  8655  |     -588     | MISMATCH
+   2   |   7846  |  8640  |     -794     | MISMATCH
+   3   |   7685  |  8610  |     -925     | MISMATCH
+   4   |   8464  |  8640  |     -176     | MISMATCH
+   5   |   8273  |  8655  |     -382     | MISMATCH
+   6   |   8067  |  8655  |     -588     | MISMATCH
+   7   |   7846  |  8640  |     -794     | MISMATCH
+   8   |   7685  |  8610  |     -925     | MISMATCH
+   9   |   8464  |  8640  |     -176     | MISMATCH
+  10   |   8273  |  8655  |     -382     | MISMATCH
+  11   |   8067  |  8655  |     -588     | MISMATCH
+  12   |   7846  |  8640  |     -794     | MISMATCH
+  13   |   7685  |  8610  |     -925     | MISMATCH
+  14   |   8464  |  8640  |     -176     | MISMATCH
+  15   |   8273  |  8655  |     -382     | MISMATCH
+
+
+FAIL: 16 mismatches found at Time 0
+========================================
+
+
+========================================
+  OUTPUT RESULTS (Signed Decimal)
+========================================
+Reading 26 output values for 64 filter(s)...
+
+Time | Filter  0 | Filter  1 | Filter  2 | Filter  3 | Filter  4 | Filter  5 | Filter  6 | Filter  7 | Filter  8 | Filter  9 | Filter 10 | Filter 11 | Filter 12 | Filter 13 | Filter 14 | Filter 15 |
+-----|-----------|-----------|-----------|-----------|-----------|-----------|-----------|-----------|-----------|-----------|-----------|-----------|-----------|-----------|-----------|-----------|
+   0 |      8273 |      8067 |      7846 |      7685 |      8464 |      8273 |      8067 |      7846 |      7685 |      8464 |      8273 |      8067 |      7846 |      7685 |      8464 |      8273 |
+   1 |      8640 |      8655 |      8655 |      8640 |      8610 |      8640 |      8655 |      8655 |      8640 |      8610 |      8640 |      8655 |      8655 |      8640 |      8610 |      8640 |
+   2 |      8640 |      8610 |      8640 |      8655 |      8655 |      8640 |      8610 |      8640 |      8655 |      8655 |      8640 |      8610 |      8640 |      8655 |      8655 |      8640 |
+   3 |      8655 |      8655 |      8640 |      8610 |      8640 |      8655 |      8655 |      8640 |      8610 |      8640 |      8655 |      8655 |      8640 |      8610 |      8640 |      8655 |
+   4 |      8610 |      8640 |      8655 |      8655 |      8640 |      8610 |      8640 |      8655 |      8655 |      8640 |      8610 |      8640 |      8655 |      8655 |      8640 |      8610 |
+   5 |      8655 |      8640 |      8610 |      8640 |      8655 |      8655 |      8640 |      8610 |      8640 |      8655 |      8655 |      8640 |      8610 |      8640 |      8655 |      8655 |
+   6 |      8640 |      8655 |      8655 |      8640 |      8610 |      8640 |      8655 |      8655 |      8640 |      8610 |      8640 |      8655 |      8655 |      8640 |      8610 |      8640 |
+   7 |      8640 |      8610 |      8640 |      8655 |      8655 |      8640 |      8610 |      8640 |      8655 |      8655 |      8640 |      8610 |      8640 |      8655 |      8655 |      8640 |
+   8 |      8655 |      8655 |      8640 |      8610 |      8640 |      8655 |      8655 |      8640 |      8610 |      8640 |      8655 |      8655 |      8640 |      8610 |      8640 |      8655 |
+   9 |      8610 |      8640 |      8655 |      8655 |      8640 |      8610 |      8640 |      8655 |      8655 |      8640 |      8610 |      8640 |      8655 |      8655 |      8640 |      8610 |
+  10 |      8655 |      8640 |      8610 |      8640 |      8655 |      8655 |      8640 |      8610 |      8640 |      8655 |      8655 |      8640 |      8610 |      8640 |      8655 |      8655 |
+  11 |      8640 |      8655 |      8655 |      8640 |      8610 |      8640 |      8655 |      8655 |      8640 |      8610 |      8640 |      8655 |      8655 |      8640 |      8610 |      8640 |
+  12 |      8640 |      8610 |      8640 |      8655 |      8655 |      8640 |      8610 |      8640 |      8655 |      8655 |      8640 |      8610 |      8640 |      8655 |      8655 |      8640 |
+  13 |      8655 |      8655 |      8640 |      8610 |      8640 |      8655 |      8655 |      8640 |      8610 |      8640 |      8655 |      8655 |      8640 |      8610 |      8640 |      8655 |
+  14 |      8610 |      8640 |      8655 |      8655 |      8640 |      8610 |      8640 |      8655 |      8655 |      8640 |      8610 |      8640 |      8655 |      8655 |      8640 |      8610 |
+  15 |      8655 |      8640 |      8610 |      8640 |      8655 |      8655 |      8640 |      8610 |      8640 |      8655 |      8655 |      8640 |      8610 |      8640 |      8655 |      8655 |
+  16 |      8640 |      8655 |      8655 |      8640 |      8610 |      8640 |      8655 |      8655 |      8640 |      8610 |      8640 |      8655 |      8655 |      8640 |      8610 |      8640 |
+  17 |      8640 |      8610 |      8640 |      8655 |      8655 |      8640 |      8610 |      8640 |      8655 |      8655 |      8640 |      8610 |      8640 |      8655 |      8655 |      8640 |
+  18 |      8655 |      8655 |      8640 |      8610 |      8640 |      8655 |      8655 |      8640 |      8610 |      8640 |      8655 |      8655 |      8640 |      8610 |      8640 |      8655 |
+  19 |      8610 |      8640 |      8655 |      8655 |      8640 |      8610 |      8640 |      8655 |      8655 |      8640 |      8610 |      8640 |      8655 |      8655 |      8640 |      8610 |
+  20 |      8655 |      8640 |      8610 |      8640 |      8655 |      8655 |      8640 |      8610 |      8640 |      8655 |      8655 |      8640 |      8610 |      8640 |      8655 |      8655 |
+  21 |      8640 |      8655 |      8655 |      8640 |      8610 |      8640 |      8655 |      8655 |      8640 |      8610 |      8640 |      8655 |      8655 |      8640 |      8610 |      8640 |
+  22 |      8640 |      8610 |      8640 |      8655 |      8655 |      8640 |      8610 |      8640 |      8655 |      8655 |      8640 |      8610 |      8640 |      8655 |      8655 |      8640 |
+  23 |      8655 |      8655 |      8640 |      8610 |      8640 |      8655 |      8655 |      8640 |      8610 |      8640 |      8655 |      8655 |      8640 |      8610 |      8640 |      8655 |
+  24 |      8610 |      8640 |      8655 |      8655 |      8640 |      8610 |      8640 |      8655 |      8655 |      8640 |      8610 |      8640 |      8655 |      8655 |      8640 |      8610 |
+  25 |      8655 |      8640 |      8610 |      8640 |      8655 |      8655 |      8640 |      8610 |      8640 |      8655 |      8655 |      8640 |      8610 |      8640 |      8655 |      8655 |
+========================================
+
+DEBUG: First 5 filter outputs at Time 0:
+  Filter 0: 8273 (0x2051)
+  Filter 1: 8067 (0x1f83)
+  Filter 2: 7846 (0x1ea6)
+  Filter 3: 7685 (0x1e05)
+  Filter 4: 8464 (0x2110)
+
+
+
+>>> Test 7: Block-based Weight Loading (70 Channels)
+    Expect 2 Weight Requests (Batch 0 for Ch 0-63, Batch 1 for Ch 64-69)
+Initializing input data: 70 channels, 16 temporal length
+  Ch 0 -> BRAM 0, slot 0, addr 0-15, pattern: t=0:1, t=1:2, t=2:3
+  Ch 1 -> BRAM 1, slot 0, addr 0-15, pattern: t=0:2, t=1:3, t=2:4
+  Ch 2 -> BRAM 2, slot 0, addr 0-15, pattern: t=0:3, t=1:4, t=2:5
+  Ch 3 -> BRAM 3, slot 0, addr 0-15, pattern: t=0:4, t=1:5, t=2:1
+Input data initialization complete
+Initializing bias (clearing output BRAM)...
+Bias initialization complete (wrote 64 zeros)
+
+=== Starting Convolution ===
+Parameters:
+  stride_input=0 (actual_stride=1), padding=0, kernel_size=3
+  input_channels=70, temporal_length=16, filters=1
+[TB] Weight Request detected at time           3822715000
+[TB] Loading Dynamic Weights for Request #0
+[TB]   -> Filter Batch 0 (Filters 0-0)
+[TB]   -> Channel Block 0 (Channels 0-63)
+[TB]     DEBUG: Filter 0, Ch 0, k=0: addr=0, value=1 (to BRAM 0)
+[TB]     DEBUG: Filter 0, Ch 0, k=1: addr=1, value=2 (to BRAM 0)
+[TB]     DEBUG: Filter 0, Ch 0, k=2: addr=2, value=3 (to BRAM 0)
+[TB]     DEBUG: Filter 0, Ch 1, k=0: addr=3, value=1 (to BRAM 0)
+[TB]     DEBUG: Filter 0, Ch 1, k=1: addr=4, value=2 (to BRAM 0)
+[TB]     DEBUG: Filter 0, Ch 1, k=2: addr=5, value=3 (to BRAM 0)
+[TB]   Loaded Filter 0 -> BRAM 0, weight pattern: k=0:1, k=1:2, k=2:3, k=3:4, k=4:5
+[TB] Dynamic Weight Load Complete
+[TB] Weight loading complete, asserting ack at time           3828525000
+[TB] Weight Request detected at time           4036545000
+[TB] Loading Dynamic Weights for Request #1
+[TB]   -> Filter Batch 0 (Filters 0-0)
+[TB]   -> Channel Block 1 (Channels 64-127)
+[TB]     DEBUG: Filter 0, Ch 64, k=0: addr=0, value=1 (to BRAM 0)
+[TB]     DEBUG: Filter 0, Ch 64, k=1: addr=1, value=2 (to BRAM 0)
+[TB]     DEBUG: Filter 0, Ch 64, k=2: addr=2, value=3 (to BRAM 0)
+[TB]     DEBUG: Filter 0, Ch 65, k=0: addr=3, value=1 (to BRAM 0)
+[TB]     DEBUG: Filter 0, Ch 65, k=1: addr=4, value=2 (to BRAM 0)
+[TB]     DEBUG: Filter 0, Ch 65, k=2: addr=5, value=3 (to BRAM 0)
+[TB]   Loaded Filter 0 -> BRAM 0, weight pattern: k=0:1, k=1:2, k=2:3, k=3:4, k=4:5
+[TB] Dynamic Weight Load Complete
+[TB] Weight loading complete, asserting ack at time           4037135000
+=== Convolution Complete ===
+
+
+========================================
+  OUTPUT RESULTS (Signed Decimal)
+========================================
+Reading 14 output values for 1 filter(s)...
+
+Time | Filter  0 |
+-----|-----------|
+   0 |      1260 |
+   1 |      1260 |
+   2 |      1260 |
+   3 |      1260 |
+   4 |      1260 |
+   5 |      1260 |
+   6 |      1260 |
+   7 |      1260 |
+   8 |      1260 |
+   9 |      1260 |
+  10 |      1260 |
+  11 |      1260 |
+  12 |      1260 |
+  13 |      1260 |
+========================================
+
+
+
+>>> Test 8: Large Filter Number (32 Filters)
+    Expect 2 Weight Requests (Batch 0 for Filters 0-15, Batch 1 for Filters 16-31)
+Initializing input data: 16 channels, 16 temporal length
+  Ch 0 -> BRAM 0, slot 0, addr 0-15, pattern: t=0:1, t=1:2, t=2:3
+  Ch 1 -> BRAM 1, slot 0, addr 0-15, pattern: t=0:2, t=1:3, t=2:4
+  Ch 2 -> BRAM 2, slot 0, addr 0-15, pattern: t=0:3, t=1:4, t=2:5
+  Ch 3 -> BRAM 3, slot 0, addr 0-15, pattern: t=0:4, t=1:5, t=2:1
+Input data initialization complete
+Initializing bias (clearing output BRAM)...
+Bias initialization complete (wrote 64 zeros)
+
+=== Starting Convolution ===
+Parameters:
+  stride_input=2 (actual_stride=2), padding=1, kernel_size=4
+  input_channels=16, temporal_length=16, filters=32
+[TB] Weight Request detected at time           4065955000
+[TB] Loading Dynamic Weights for Request #0
+[TB]   -> Filter Batch 0 (Filters 0-15)
+[TB]   -> Channel Block 0 (Channels 0-63)
+[TB]     DEBUG: Filter 0, Ch 0, k=0: addr=0, value=1 (to BRAM 0)
+[TB]     DEBUG: Filter 0, Ch 0, k=1: addr=1, value=2 (to BRAM 0)
+[TB]     DEBUG: Filter 0, Ch 0, k=2: addr=2, value=3 (to BRAM 0)
+[TB]     DEBUG: Filter 0, Ch 1, k=0: addr=4, value=1 (to BRAM 0)
+[TB]     DEBUG: Filter 0, Ch 1, k=1: addr=5, value=2 (to BRAM 0)
+[TB]     DEBUG: Filter 0, Ch 1, k=2: addr=6, value=3 (to BRAM 0)
+[TB]   Loaded Filter 0 -> BRAM 0, weight pattern: k=0:1, k=1:2, k=2:3, k=3:4, k=4:5
+[TB]   Loaded Filter 1 -> BRAM 1, weight pattern: k=0:2, k=1:3, k=2:4, k=3:5, k=4:1
+[TB]   Loaded Filter 2 -> BRAM 2, weight pattern: k=0:3, k=1:4, k=2:5, k=3:1, k=4:2
+[TB]   Loaded Filter 3 -> BRAM 3, weight pattern: k=0:4, k=1:5, k=2:1, k=3:2, k=4:3
+[TB]   Loaded Filter 4 -> BRAM 4, weight pattern: k=0:5, k=1:1, k=2:2, k=3:3, k=4:4
+[TB]   Loaded Filter 5 -> BRAM 5, weight pattern: k=0:1, k=1:2, k=2:3, k=3:4, k=4:5
+[TB]   Loaded Filter 6 -> BRAM 6, weight pattern: k=0:2, k=1:3, k=2:4, k=3:5, k=4:1
+[TB]   Loaded Filter 7 -> BRAM 7, weight pattern: k=0:3, k=1:4, k=2:5, k=3:1, k=4:2
+[TB]   Loaded Filter 8 -> BRAM 8, weight pattern: k=0:4, k=1:5, k=2:1, k=3:2, k=4:3
+[TB]   Loaded Filter 9 -> BRAM 9, weight pattern: k=0:5, k=1:1, k=2:2, k=3:3, k=4:4
+[TB]   Loaded Filter 10 -> BRAM 10, weight pattern: k=0:1, k=1:2, k=2:3, k=3:4, k=4:5
+[TB]   Loaded Filter 11 -> BRAM 11, weight pattern: k=0:2, k=1:3, k=2:4, k=3:5, k=4:1
+[TB]   Loaded Filter 12 -> BRAM 12, weight pattern: k=0:3, k=1:4, k=2:5, k=3:1, k=4:2
+[TB]   Loaded Filter 13 -> BRAM 13, weight pattern: k=0:4, k=1:5, k=2:1, k=3:2, k=4:3
+[TB]   Loaded Filter 14 -> BRAM 14, weight pattern: k=0:5, k=1:1, k=2:2, k=3:3, k=4:4
+[TB]   Loaded Filter 15 -> BRAM 15, weight pattern: k=0:1, k=1:2, k=2:3, k=3:4, k=4:5
+[TB] Dynamic Weight Load Complete
+[TB] Weight loading complete, asserting ack at time           4096725000
+[TB] Weight Request detected at time           4134685000
+[TB] Loading Dynamic Weights for Request #1
+[TB]   -> Filter Batch 1 (Filters 16-31)
+[TB]   -> Channel Block 0 (Channels 0-63)
+[TB]     DEBUG: Filter 16, Ch 0, k=0: addr=0, value=2 (to BRAM 0)
+[TB]     DEBUG: Filter 16, Ch 0, k=1: addr=1, value=3 (to BRAM 0)
+[TB]     DEBUG: Filter 16, Ch 0, k=2: addr=2, value=4 (to BRAM 0)
+[TB]     DEBUG: Filter 16, Ch 1, k=0: addr=4, value=2 (to BRAM 0)
+[TB]     DEBUG: Filter 16, Ch 1, k=1: addr=5, value=3 (to BRAM 0)
+[TB]     DEBUG: Filter 16, Ch 1, k=2: addr=6, value=4 (to BRAM 0)
+[TB]   Loaded Filter 16 -> BRAM 0, weight pattern: k=0:2, k=1:3, k=2:4, k=3:5, k=4:1
+[TB]   Loaded Filter 17 -> BRAM 1, weight pattern: k=0:3, k=1:4, k=2:5, k=3:1, k=4:2
+[TB]   Loaded Filter 18 -> BRAM 2, weight pattern: k=0:4, k=1:5, k=2:1, k=3:2, k=4:3
+[TB]   Loaded Filter 19 -> BRAM 3, weight pattern: k=0:5, k=1:1, k=2:2, k=3:3, k=4:4
+[TB]   Loaded Filter 20 -> BRAM 4, weight pattern: k=0:1, k=1:2, k=2:3, k=3:4, k=4:5
+[TB]   Loaded Filter 21 -> BRAM 5, weight pattern: k=0:2, k=1:3, k=2:4, k=3:5, k=4:1
+[TB]   Loaded Filter 22 -> BRAM 6, weight pattern: k=0:3, k=1:4, k=2:5, k=3:1, k=4:2
+[TB]   Loaded Filter 23 -> BRAM 7, weight pattern: k=0:4, k=1:5, k=2:1, k=3:2, k=4:3
+[TB]   Loaded Filter 24 -> BRAM 8, weight pattern: k=0:5, k=1:1, k=2:2, k=3:3, k=4:4
+[TB]   Loaded Filter 25 -> BRAM 9, weight pattern: k=0:1, k=1:2, k=2:3, k=3:4, k=4:5
+[TB]   Loaded Filter 26 -> BRAM 10, weight pattern: k=0:2, k=1:3, k=2:4, k=3:5, k=4:1
+[TB]   Loaded Filter 27 -> BRAM 11, weight pattern: k=0:3, k=1:4, k=2:5, k=3:1, k=4:2
+[TB]   Loaded Filter 28 -> BRAM 12, weight pattern: k=0:4, k=1:5, k=2:1, k=3:2, k=4:3
+[TB]   Loaded Filter 29 -> BRAM 13, weight pattern: k=0:5, k=1:1, k=2:2, k=3:3, k=4:4
+[TB]   Loaded Filter 30 -> BRAM 14, weight pattern: k=0:1, k=1:2, k=2:3, k=3:4, k=4:5
+[TB]   Loaded Filter 31 -> BRAM 15, weight pattern: k=0:2, k=1:3, k=2:4, k=3:5, k=4:1
+[TB] Dynamic Weight Load Complete
+[TB] Weight loading complete, asserting ack at time           4165455000
+=== Convolution Complete ===
+
+
+========================================
+  OUTPUT RESULTS (Signed Decimal)
+========================================
+Reading 8 output values for 32 filter(s)...
+
+Time | Filter  0 | Filter  1 | Filter  2 | Filter  3 | Filter  4 | Filter  5 | Filter  6 | Filter  7 | Filter  8 | Filter  9 | Filter 10 | Filter 11 | Filter 12 | Filter 13 | Filter 14 | Filter 15 |
+-----|-----------|-----------|-----------|-----------|-----------|-----------|-----------|-----------|-----------|-----------|-----------|-----------|-----------|-----------|-----------|-----------|
+   0 |       425 |       566 |       467 |       373 |       284 |       425 |       566 |       467 |       373 |       284 |       425 |       566 |       467 |       373 |       284 |       425 |
+   1 |       490 |       684 |       628 |       577 |       531 |       490 |       684 |       628 |       577 |       531 |       490 |       684 |       628 |       577 |       531 |       490 |
+   2 |       475 |       667 |       624 |       586 |       528 |       475 |       667 |       624 |       586 |       528 |       475 |       667 |       624 |       586 |       528 |       475 |
+   3 |       480 |       670 |       615 |       565 |       520 |       480 |       670 |       615 |       565 |       520 |       480 |       670 |       615 |       565 |       520 |       480 |
+   4 |       480 |       673 |       636 |       579 |       527 |       480 |       673 |       636 |       579 |       527 |       480 |       673 |       636 |       579 |       527 |       480 |
+   5 |       475 |       666 |       617 |       573 |       534 |       475 |       666 |       617 |       573 |       534 |       475 |       666 |       617 |       573 |       534 |       475 |
+   6 |       490 |       684 |       628 |       577 |       531 |       490 |       684 |       628 |       577 |       531 |       490 |       684 |       628 |       577 |       531 |       490 |
+   7 |       287 |       432 |       577 |       492 |       387 |       287 |       432 |       577 |       492 |       387 |       287 |       432 |       577 |       492 |       387 |       287 |
+========================================
+
+DEBUG: First 5 filter outputs at Time 0:
+  Filter 0: 425 (0x1a9)
+  Filter 1: 566 (0x236)
+  Filter 2: 467 (0x1d3)
+  Filter 3: 373 (0x175)
+  Filter 4: 284 (0x11c)
+
 
 
 ========================================
   All Tests Complete!
 ========================================
 
-$finish called at time : 31365 ns : File "D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sim_1/new/onedconv_tb.v" Line 459
+$finish called at time : 4204935 ns : File "D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sim_1/new/onedconv_tb.v" Line 958
+INFO: xsimkernel Simulation Memory Usage: 23660 KB (Peak: 23660 KB), Simulation CPU Usage: 82656 ms

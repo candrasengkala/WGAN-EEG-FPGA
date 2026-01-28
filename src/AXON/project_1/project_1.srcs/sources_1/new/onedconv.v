@@ -2,7 +2,7 @@
 module onedconv #(
     parameter DW = 16,
     parameter Dimension = 16,
-    parameter ADDRESS_LENGTH = 9,
+    parameter ADDRESS_LENGTH = 10,
     parameter BRAM_Depth = 512,
     //parameter MAX_COUNT = 512,
     parameter MUX_SEL_WIDTH = 4 // 16 BRAM PADA INPUT//
@@ -12,6 +12,10 @@ module onedconv #(
     input wire rst, 
 
     input wire start_whole,    // INPUT CONTROL
+    // Handshake for weight loading
+    output wire weight_req_top,
+    input wire weight_ack_top,
+
     //1D Convolution Parameters for central control unit.
     input wire [1:0] stride, // 0, 1, 2, 3 of stride. INPUT CONTROL
     input wire [2:0] padding,  // LIMITED TO 15. UNSIGNED. INPUT CONTROL
@@ -48,6 +52,7 @@ module onedconv #(
     input wire [ADDRESS_LENGTH-1:0] output_result_bram_addr, // FOR EXTERNAL ADDRESSING. Used in output PROCESS
 
     output wire done_all,
+    output wire done_filter,
     output wire signed [DW*Dimension-1:0] output_result    
 );
     // ...........................................
@@ -403,6 +408,9 @@ module onedconv #(
         // ----------------------------------------------------
         .start_whole(start_whole),
         .done_all(done_all),
+        .done_filter(done_filter),
+        .weight_req_top(weight_req_top),
+        .weight_ack_top(weight_ack_top),
 
         // ----------------------------------------------------
         // Convolution parameters
