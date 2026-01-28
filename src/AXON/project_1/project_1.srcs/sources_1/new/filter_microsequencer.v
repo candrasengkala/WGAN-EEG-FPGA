@@ -102,7 +102,12 @@ module filter_microsequencer #(
                 next_state = S_CONSUME_LAST_VAL;
             end
             S_CONSUME_LAST_VAL: begin
-                next_state = S_ZERO_PAD_1;
+                // Skip zero padding when kernel_size equals Dimension
+                // because the shift register is already fully loaded
+                if (kernel_size >= Dimension)
+                    next_state = S_FILL_ZERO;
+                else
+                    next_state = S_ZERO_PAD_1;
             end
             
             S_ZERO_PAD_1: begin

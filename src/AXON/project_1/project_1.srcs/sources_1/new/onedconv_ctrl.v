@@ -523,19 +523,15 @@ module onedconv_ctrl #(
                 S_RESTART_MICROSEQUENCER_SET_ADDRESS: begin
                     // Calculate input address accounting for padding:
                     // input_pos = (output_pos * stride) - padding, clamped to [0, temporal_length-1]
-                    ifmap_counter_start_val = base_addr_ifmap[ADDRESS_LENGTH-1:0]; //+ stride_val*(needed_amount_count*Dimension);
+                    temp_ifmap_start = $signed((kernel_size)*needed_amount_count*stride - padding);
+                    if (temp_ifmap_start < $signed(0))
+                        ifmap_counter_start_val = base_addr_ifmap;
+                    else if (temp_ifmap_start >= $signed({1'b0, temporal_length}))
+                        ifmap_counter_start_val = base_addr_ifmap + temporal_length;
+                    else
+                        ifmap_counter_start_val = base_addr_ifmap + temp_ifmap_start[ADDRESS_LENGTH-1:0];
+
                     ifmap_counter_end_val = (base_addr_ifmap + temporal_length - 1);
-
-                    // temp_ifmap_start = $signed(stride_val * (needed_amount_count * Dimension)) - $signed({3'b0, padding});
-
-                    // if (temp_ifmap_start < $signed(0))
-                    //     ifmap_counter_start_val = base_addr_ifmap;
-                    // else if (temp_ifmap_start >= $signed({1'b0, temporal_length}))
-                    //     ifmap_counter_start_val = base_addr_ifmap + temporal_length - 1;
-                    // else
-                    //     ifmap_counter_start_val = base_addr_ifmap + temp_ifmap_start[ADDRESS_LENGTH-1:0];
-
-                    // ifmap_counter_end_val = (base_addr_ifmap + temporal_length - 1);
 
                     output_counter_start_val_a = base_addr_output[ADDRESS_LENGTH-1:0] + (needed_amount_count * Dimension);
                     output_counter_end_val_a   = (base_addr_output + output_length - 1);

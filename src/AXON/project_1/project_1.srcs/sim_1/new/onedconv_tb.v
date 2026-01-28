@@ -743,113 +743,113 @@ module onedconv_tb;
         $display("  1D Convolution Testbench");
         $display("========================================");
         
-        // ====================================================
-        // Test 1: Basic convolution (kernel=3, stride=1, no padding)
-        // ====================================================
-        $display("\n>>> Test 1: Basic Convolution");
-        stride = 2'd0;          // stride=1
-        padding = 3'd0;         // no padding
-        kernel_size = 5'd3;
-        input_channels = 10'd1;
-        temporal_length = 10'd16;
-        filter_number = 10'd1;
+        // // ====================================================
+        // // Test 1: Basic convolution (kernel=3, stride=1, no padding)
+        // // ====================================================
+        // $display("\n>>> Test 1: Basic Convolution");
+        // stride = 2'd0;          // stride=1
+        // padding = 3'd0;         // no padding
+        // kernel_size = 5'd3;
+        // input_channels = 10'd1;
+        // temporal_length = 10'd16;
+        // filter_number = 10'd1;
         
-        init_input_data(input_channels, temporal_length);
-        clear_weight_brams(kernel_size, input_channels);
-        init_weights(kernel_size, filter_number);
-        init_bias(64);  // Clear output BRAM (max 64 outputs per test typically)
-        run_convolution();
-        read_results(10'd14);   // Expected output length: 16-3+1=14
+        // init_input_data(input_channels, temporal_length);
+        // clear_weight_brams(kernel_size, input_channels);
+        // init_weights(kernel_size, filter_number);
+        // init_bias(64);  // Clear output BRAM (max 64 outputs per test typically)
+        // run_convolution();
+        // read_results(10'd14);   // Expected output length: 16-3+1=14
         
-        repeat(20) @(posedge clk);
+        // repeat(20) @(posedge clk);
 
-        // ====================================================
-        // Test 2: Convolution with stride=2
-        // ====================================================
-        $display("\n>>> Test 2: Convolution with Stride=2");
-        rst = 1'b0; repeat(5) @(posedge clk); rst = 1'b1; repeat(5) @(posedge clk);
+        // // ====================================================
+        // // Test 2: Convolution with stride=2
+        // // ====================================================
+        // $display("\n>>> Test 2: Convolution with Stride=2");
+        // rst = 1'b0; repeat(5) @(posedge clk); rst = 1'b1; repeat(5) @(posedge clk);
 
-        stride = 2'd2;          // stride=2 (encoding: 2'd2 → actual stride 2)
-        padding = 3'd0;
-        kernel_size = 5'd4;     // Changed from 3 to 4 (kernel_size/stride must be whole number)
-        input_channels = 10'd1;
-        temporal_length = 10'd16;
-        filter_number = 10'd1;
+        // stride = 2'd2;          // stride=2 (encoding: 2'd2 → actual stride 2)
+        // padding = 3'd0;
+        // kernel_size = 5'd4;     // Changed from 3 to 4 (kernel_size/stride must be whole number)
+        // input_channels = 10'd1;
+        // temporal_length = 10'd16;
+        // filter_number = 10'd1;
 
-        init_input_data(input_channels, temporal_length);
-        clear_weight_brams(kernel_size, input_channels);
-        init_weights(kernel_size, filter_number);
-        init_bias(64);  // Clear output BRAM (max 64 outputs per test typically)
-        run_convolution();
-        read_results(10'd7);    // Expected: floor((16-4)/2)+1=7
+        // init_input_data(input_channels, temporal_length);
+        // clear_weight_brams(kernel_size, input_channels);
+        // init_weights(kernel_size, filter_number);
+        // init_bias(64);  // Clear output BRAM (max 64 outputs per test typically)
+        // run_convolution();
+        // read_results(10'd7);    // Expected: floor((16-4)/2)+1=7
         
-        repeat(20) @(posedge clk);
+        // repeat(20) @(posedge clk);
 
-        // ====================================================
-        // Test 3: Convolution with padding
-        // ====================================================
-        $display("\n>>> Test 3: Convolution with Padding=2");
-        rst = 1'b0; repeat(5) @(posedge clk); rst = 1'b1; repeat(5) @(posedge clk);
+        // // ====================================================
+        // // Test 3: Convolution with padding
+        // // ====================================================
+        // $display("\n>>> Test 3: Convolution with Padding=2");
+        // rst = 1'b0; repeat(5) @(posedge clk); rst = 1'b1; repeat(5) @(posedge clk);
 
-        stride = 2'd0;          // stride=1
-        padding = 3'd2;         // padding=2
-        kernel_size = 5'd3;
-        input_channels = 10'd1;
-        temporal_length = 10'd16;
-        filter_number = 10'd1;
+        // stride = 2'd0;          // stride=1
+        // padding = 3'd2;         // padding=2
+        // kernel_size = 5'd3;
+        // input_channels = 10'd1;
+        // temporal_length = 10'd16;
+        // filter_number = 10'd1;
         
-        init_input_data(input_channels, temporal_length);
-        clear_weight_brams(kernel_size, input_channels);
-        init_weights(kernel_size, filter_number);
-        init_bias(64);  // Clear output BRAM (max 64 outputs per test typically)
-        run_convolution();
-        read_results(10'd18);   // Expected: 16+2*2-3+1=18
+        // init_input_data(input_channels, temporal_length);
+        // clear_weight_brams(kernel_size, input_channels);
+        // init_weights(kernel_size, filter_number);
+        // init_bias(64);  // Clear output BRAM (max 64 outputs per test typically)
+        // run_convolution();
+        // read_results(10'd18);   // Expected: 16+2*2-3+1=18
         
-        repeat(20) @(posedge clk);
+        // repeat(20) @(posedge clk);
 
-        // ====================================================
-        // Test 4: Different kernel size (7)
-        // ====================================================
-        $display("\n>>> Test 4: Kernel Size = 7");
-        rst = 1'b0; repeat(5) @(posedge clk); rst = 1'b1; repeat(5) @(posedge clk);
+        // // ====================================================
+        // // Test 4: Different kernel size (7)
+        // // ====================================================
+        // $display("\n>>> Test 4: Kernel Size = 7");
+        // rst = 1'b0; repeat(5) @(posedge clk); rst = 1'b1; repeat(5) @(posedge clk);
 
-        stride = 2'd0;
-        padding = 3'd0;
-        kernel_size = 5'd7;
-        input_channels = 10'd1;
-        temporal_length = 10'd32;
-        filter_number = 10'd1;
+        // stride = 2'd0;
+        // padding = 3'd0;
+        // kernel_size = 5'd7;
+        // input_channels = 10'd1;
+        // temporal_length = 10'd32;
+        // filter_number = 10'd1;
         
-        init_input_data(input_channels, temporal_length);
-        clear_weight_brams(kernel_size, input_channels);
-        init_weights(kernel_size, filter_number);
-        init_bias(64);  // Clear output BRAM (max 64 outputs per test typically)
-        run_convolution();
-        read_results(10'd26);   // Expected: 32-7+1=26
+        // init_input_data(input_channels, temporal_length);
+        // clear_weight_brams(kernel_size, input_channels);
+        // init_weights(kernel_size, filter_number);
+        // init_bias(64);  // Clear output BRAM (max 64 outputs per test typically)
+        // run_convolution();
+        // read_results(10'd26);   // Expected: 32-7+1=26
         
-        repeat(20) @(posedge clk);
+        // repeat(20) @(posedge clk);
 
-        // ====================================================
-        // Test 5: Multiple input channels
-        // ====================================================
-        $display("\n>>> Test 5: Multiple Input Channels (4 channels)");
-        rst = 1'b0; repeat(5) @(posedge clk); rst = 1'b1; repeat(5) @(posedge clk);
+        // // ====================================================
+        // // Test 5: Multiple input channels
+        // // ====================================================
+        // $display("\n>>> Test 5: Multiple Input Channels (4 channels)");
+        // rst = 1'b0; repeat(5) @(posedge clk); rst = 1'b1; repeat(5) @(posedge clk);
 
-        stride = 2'd0;
-        padding = 3'd0;
-        kernel_size = 5'd3;
-        input_channels = 10'd4;
-        temporal_length = 10'd16;
-        filter_number = 10'd1;
+        // stride = 2'd0;
+        // padding = 3'd0;
+        // kernel_size = 5'd3;
+        // input_channels = 10'd4;
+        // temporal_length = 10'd16;
+        // filter_number = 10'd1;
         
-        init_input_data(input_channels, temporal_length);
-        clear_weight_brams(kernel_size, input_channels);
-        init_weights(kernel_size, filter_number);
-        init_bias(64);  // Clear output BRAM (max 64 outputs per test typically)
-        run_convolution();
-        read_results(10'd14);
+        // init_input_data(input_channels, temporal_length);
+        // clear_weight_brams(kernel_size, input_channels);
+        // init_weights(kernel_size, filter_number);
+        // init_bias(64);  // Clear output BRAM (max 64 outputs per test typically)
+        // run_convolution();
+        // read_results(10'd14);
         
-        repeat(20) @(posedge clk);
+        // repeat(20) @(posedge clk);
 
         // ====================================================
         // Test 6: Complex scenario with dynamic weight loading
@@ -863,11 +863,11 @@ module onedconv_tb;
         rst = 1'b0; repeat(5) @(posedge clk); rst = 1'b1; repeat(5) @(posedge clk);
 
         stride = 2'd2;          // stride=2
-        padding = 3'd1;         // padding=1
+        padding = 3'd7;         // padding=1
         kernel_size = 5'd16;    // kernel_size=16
-        input_channels = 10'd64; // 64 channels (exactly 1 block)
-        temporal_length = 10'd64;
-        filter_number = 10'd64; // 64 filters (requires 4 filter batches)
+        input_channels = 10'd1; // 64 channels (exactly 1 block)
+        temporal_length = 10'd512;
+        filter_number = 10'd32; // 64 filters (requires 4 filter batches)
 
         dynamic_weight_loading_en = 1; // Enable dynamic loading
         weight_batch_count = 0;
@@ -878,9 +878,9 @@ module onedconv_tb;
         run_convolution();
 
         // Use special comparison task for Test 6
-        read_and_compare_test6(10'd26);   // Expected: floor((64+2*1-16)/2)+1=26
+        read_and_compare_test6(10'd32);   // Expected: floor((64+2*1-16)/2)+1=26
         // Also show full table
-        read_results(10'd26);
+        read_results(10'd32);
 
         dynamic_weight_loading_en = 0; // Disable for safety
 

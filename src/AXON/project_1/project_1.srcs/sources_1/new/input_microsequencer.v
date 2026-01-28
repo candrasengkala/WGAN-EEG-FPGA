@@ -264,10 +264,9 @@ module input_microsequencer #(
                 end
                 PRE_INIT: begin //Counters assumed to be ready. Here, it is loading initial value. 
                     enb_inputdata_input_bram <= {Dimension{1'b1}};
-                    counter_bram_en <= 1'b1;
                 end
                 PRE_INIT_WAIT_SETTLE: begin
-                    // counter_bram_en <= 1'b1;
+                    counter_bram_en <= 1'b1;
                 end
             endcase
         end
