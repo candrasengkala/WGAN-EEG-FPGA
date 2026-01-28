@@ -73,7 +73,15 @@ module Conv_Transconv_System_Top_Level #(
     output wire           m1_axis_tlast,
 
     // ========================================================================
-    // AXI Stream 2 - Output Stream (to PS via DMA S2MM)
+    // AXI Stream 2 - Bias Loading (from PS via DMA MM2S) - WRITE ONLY
+    // ========================================================================
+    input  wire [DW-1:0]  s2_axis_tdata,
+    input  wire           s2_axis_tvalid,
+    output wire           s2_axis_tready,
+    input  wire           s2_axis_tlast,
+
+    // ========================================================================
+    // AXI Stream 3 - Output Stream (to PS via DMA S2MM)
     // ========================================================================
     output wire [DW-1:0]  m_output_axis_tdata,
     output wire           m_output_axis_tvalid,
@@ -146,6 +154,14 @@ module Conv_Transconv_System_Top_Level #(
     wire [NUM_BRAMS-1:0]         ifmap_wr_en;
     wire [8*DW-1:0]              ifmap_rd_data_flat_unused;
     wire [I_ADDR_W-1:0]          ifmap_rd_addr_unused;
+
+    // Bias BRAM Write Interface (from AXI wrapper)
+    wire [NUM_BRAMS*DW-1:0]      bias_wr_data_flat;
+    wire [O_ADDR_W-1:0]          bias_wr_addr;
+    wire [NUM_BRAMS-1:0]         bias_wr_en;
+    wire                         bias_write_done;
+    wire [2:0]                   bias_parser_state;
+    wire                         bias_error_invalid_magic;
 
     // ========================================================================
     // INTERNAL WIRES - TRANSCONV Control Signals
@@ -259,15 +275,36 @@ module Conv_Transconv_System_Top_Level #(
     wire [3:0]                      mux_ifmap_sel;
 
     // ========================================================================
-    // INTERNAL WIRES - Output Manager
+    // INTERNAL WIRES - Output Manager (Testing V3 Style)
     // ========================================================================
     wire                            out_mgr_ext_read_mode;
     wire [NUM_BRAMS*O_ADDR_W-1:0]   out_mgr_ext_read_addr_flat;
     wire [NUM_BRAMS*DW-1:0]         ext_read_data_flat;
     wire [NUM_BRAMS*O_ADDR_W-1:0]   bram_read_addr_flat;
 
+    // Output Manager header injection wires
+    wire [15:0] header_word_0;
+    wire [15:0] header_word_1;
+    wire [15:0] header_word_2;
+    wire [15:0] header_word_3;
+    wire [15:0] header_word_4;
+    wire [15:0] header_word_5;
+    wire        send_header;
+
+    // Output Manager read control signals
+    wire        out_mgr_trigger_read;
+    wire [2:0]  out_mgr_rd_bram_start;
+    wire [2:0]  out_mgr_rd_bram_end;
+    wire [15:0] out_mgr_rd_addr_count;
+    wire        out_mgr_notification_mode;
+    wire        out_mgr_transmission_active;
+
+    // TRANSCONV additional signals
+    wire [4:0]  transconv_done_select;
+    wire        transconv_batch_complete;
+
     // ========================================================================
-    // INSTANTIATION 1: AXI WEIGHT WRAPPER
+    // INSTANTIATION 1: AXI WEIGHT WRAPPER (Testing V3 Style)
     // ========================================================================
     axis_control_wrapper #(
         .BRAM_DEPTH(W_DEPTH),
@@ -284,11 +321,26 @@ module Conv_Transconv_System_Top_Level #(
         .s_axis_tready(s0_axis_tready),
         .s_axis_tlast(s0_axis_tlast),
 
-        // AXI Stream Master (to PS) - unused
+        // AXI Stream Master (to PS)
         .m_axis_tdata(m0_axis_tdata),
         .m_axis_tvalid(m0_axis_tvalid),
         .m_axis_tready(m0_axis_tready),
         .m_axis_tlast(m0_axis_tlast),
+
+        // Output Manager Header Interface
+        .header_word_0(header_word_0),
+        .header_word_1(header_word_1),
+        .header_word_2(header_word_2),
+        .header_word_3(header_word_3),
+        .header_word_4(header_word_4),
+        .header_word_5(header_word_5),
+        .send_header(send_header),
+
+        // Read Control (from Output Manager)
+        .out_mgr_rd_bram_start(out_mgr_rd_bram_start),
+        .out_mgr_rd_bram_end(out_mgr_rd_bram_end),
+        .out_mgr_rd_addr_count(out_mgr_rd_addr_count),
+        .notification_mode(out_mgr_notification_mode),
 
         // Status
         .write_done(weight_write_done),
@@ -302,13 +354,13 @@ module Conv_Transconv_System_Top_Level #(
         .bram_wr_addr(weight_wr_addr),
         .bram_wr_en(weight_wr_en),
 
-        // BRAM Read Interface (unused)
+        // BRAM Read Interface (unused in this design)
         .bram_rd_data_flat(weight_rd_data_flat_unused),
         .bram_rd_addr(weight_rd_addr_unused)
     );
 
     // ========================================================================
-    // INSTANTIATION 2: AXI IFMAP WRAPPER
+    // INSTANTIATION 2: AXI IFMAP WRAPPER (Testing V3 Style)
     // ========================================================================
     axis_control_wrapper #(
         .BRAM_DEPTH(I_DEPTH),
@@ -325,11 +377,26 @@ module Conv_Transconv_System_Top_Level #(
         .s_axis_tready(s1_axis_tready),
         .s_axis_tlast(s1_axis_tlast),
 
-        // AXI Stream Master (to PS) - unused
+        // AXI Stream Master (to PS)
         .m_axis_tdata(m1_axis_tdata),
         .m_axis_tvalid(m1_axis_tvalid),
         .m_axis_tready(m1_axis_tready),
         .m_axis_tlast(m1_axis_tlast),
+
+        // Output Manager Header Interface
+        .header_word_0(header_word_0),
+        .header_word_1(header_word_1),
+        .header_word_2(header_word_2),
+        .header_word_3(header_word_3),
+        .header_word_4(header_word_4),
+        .header_word_5(header_word_5),
+        .send_header(send_header),
+
+        // Read Control (from Output Manager)
+        .out_mgr_rd_bram_start(out_mgr_rd_bram_start),
+        .out_mgr_rd_bram_end(out_mgr_rd_bram_end),
+        .out_mgr_rd_addr_count(out_mgr_rd_addr_count),
+        .notification_mode(out_mgr_notification_mode),
 
         // Status
         .write_done(ifmap_write_done),
@@ -343,13 +410,69 @@ module Conv_Transconv_System_Top_Level #(
         .bram_wr_addr(ifmap_wr_addr),
         .bram_wr_en(ifmap_wr_en),
 
-        // BRAM Read Interface (unused)
+        // BRAM Read Interface (unused in this design)
         .bram_rd_data_flat(ifmap_rd_data_flat_unused),
         .bram_rd_addr(ifmap_rd_addr_unused)
     );
 
     // ========================================================================
-    // INSTANTIATION 3A: TRANSPOSE CONTROL TOP (TRANSCONV MODE)
+    // INSTANTIATION 2B: AXI BIAS WRAPPER (WRITE ONLY - Read Disabled)
+    // ========================================================================
+    axis_control_wrapper #(
+        .BRAM_DEPTH(O_DEPTH),
+        .DATA_WIDTH(DW),
+        .BRAM_COUNT(NUM_BRAMS),
+        .ADDR_WIDTH(O_ADDR_W)
+    ) bias_wrapper (
+        .aclk(aclk),
+        .aresetn(aresetn),
+
+        // AXI Stream Slave (from PS)
+        .s_axis_tdata(s2_axis_tdata),
+        .s_axis_tvalid(s2_axis_tvalid),
+        .s_axis_tready(s2_axis_tready),
+        .s_axis_tlast(s2_axis_tlast),
+
+        // AXI Stream Master - DISABLED (tied off)
+        .m_axis_tdata(),           // Unconnected
+        .m_axis_tvalid(),          // Unconnected
+        .m_axis_tready(1'b1),      // Always ready (no read-back)
+        .m_axis_tlast(),           // Unconnected
+
+        // Output Manager Header Interface - DISABLED (tied to zero)
+        .header_word_0(16'd0),
+        .header_word_1(16'd0),
+        .header_word_2(16'd0),
+        .header_word_3(16'd0),
+        .header_word_4(16'd0),
+        .header_word_5(16'd0),
+        .send_header(1'b0),        // Never send header
+
+        // Read Control - DISABLED (tied to zero)
+        .out_mgr_rd_bram_start(3'd0),
+        .out_mgr_rd_bram_end(3'd0),
+        .out_mgr_rd_addr_count(16'd0),
+        .notification_mode(1'b0),
+
+        // Status
+        .write_done(bias_write_done),
+        .read_done(),              // Unconnected (read disabled)
+        .mm2s_data_count(),        // Unconnected
+        .parser_state(bias_parser_state),
+        .error_invalid_magic(bias_error_invalid_magic),
+
+        // BRAM Write Interface
+        .bram_wr_data_flat(bias_wr_data_flat),
+        .bram_wr_addr(bias_wr_addr),
+        .bram_wr_en(bias_wr_en),
+
+        // BRAM Read Interface - DISABLED (tied off)
+        .bram_rd_data_flat({8*DW{1'b0}}),  // Tie to zero
+        .bram_rd_addr()                     // Unconnected
+    );
+
+    // ========================================================================
+    // INSTANTIATION 3A: TRANSPOSE CONTROL TOP (TRANSCONV MODE) - Updated V3
     // ========================================================================
     Transpose_Control_Top #(
         .DW(DW),
@@ -375,6 +498,7 @@ module Conv_Transconv_System_Top_Level #(
         .all_batches_done(all_batches_done),
         .clear_output_bram(transconv_clear_output_bram),
         .auto_active(auto_start_active),
+        .batch_complete_signal(transconv_batch_complete),  // NEW: For Output Manager
 
         // Weight BRAM control
         .w_re(transconv_w_re),
@@ -396,7 +520,8 @@ module Conv_Transconv_System_Top_Level #(
         // Mapping configuration
         .cmap_snapshot(transconv_cmap_snapshot),
         .omap_snapshot(transconv_omap_snapshot),
-        .mapper_done_pulse()
+        .mapper_done_pulse(),
+        .selector_mux_transpose(transconv_done_select)  // NEW: For Datapath done_select
     );
 
     // ========================================================================
@@ -684,12 +809,12 @@ module Conv_Transconv_System_Top_Level #(
         .conv_output_reg_rst(conv_output_reg_rst),
         .conv_output_bram_dest(conv_output_bram_dest),
 
-        // Bias control
-        .input_bias(input_bias),
-        .bias_ena(bias_ena),
-        .bias_wea(bias_wea),
-        .bias_addr(bias_addr),
-        .bias_data(bias_data),
+        // Bias control - Mux between external interface and AXI wrapper
+        .input_bias(input_bias | (|bias_wr_en)),  // Active if external OR wrapper writing
+        .bias_ena(input_bias ? bias_ena : bias_wr_en),
+        .bias_wea(input_bias ? bias_wea : bias_wr_en),
+        .bias_addr(input_bias ? bias_addr : bias_wr_addr),
+        .bias_data(input_bias ? bias_data : bias_wr_data_flat),
 
         // TRANSCONV Control Inputs
         .transconv_en_weight_load(transconv_en_weight_load),
@@ -698,7 +823,7 @@ module Conv_Transconv_System_Top_Level #(
         .transconv_clear_psum(transconv_clear_psum | {NUM_BRAMS{transconv_clear_output_bram}}),
         .transconv_en_output(transconv_en_output),
         .transconv_ifmap_sel_ctrl(transconv_ifmap_sel_ctrl),
-        .transconv_done_select(5'd0),
+        .transconv_done_select(transconv_done_select),  // FIXED: Connected to Transpose_Control_Top
 
         // Mapping configuration (TRANSCONV)
         .cmap(transconv_cmap_snapshot),
@@ -718,37 +843,53 @@ module Conv_Transconv_System_Top_Level #(
     assign output_result = ext_read_data_flat;
 
     // ========================================================================
-    // INSTANTIATION 5: OUTPUT STREAM MANAGER
+    // INSTANTIATION 5: OUTPUT MANAGER (Testing V3 Style - Output_Manager_Simple)
     // ========================================================================
-    output_stream_manager #(
-        .DW(DW),
-        .NUM_BRAMS(NUM_BRAMS),
-        .ADDR_WIDTH(O_ADDR_W),
-        .OUTPUT_DEPTH(O_DEPTH)
+    Output_Manager_Simple #(
+        .DW(DW)
     ) output_mgr (
         .clk(aclk),
         .rst_n(aresetn),
 
-        // Triggers from control
-        .batch_complete(1'b0),
-        .completed_batch_id(current_batch_id),
-        .all_batches_complete(conv_mode ? all_batches_done : done_all),
+        // Status Inputs
+        .batch_complete(conv_mode ? transconv_batch_complete : done_filter),
+        .current_batch_id(current_batch_id),
+        .all_batches_done(conv_mode ? all_batches_done : done_all),
+        .completed_layer_id(current_layer_id),
 
-        // Output BRAM read interface
-        .ext_read_mode(out_mgr_ext_read_mode),
-        .ext_read_addr_flat(out_mgr_ext_read_addr_flat),
-        .bram_read_data_flat(ext_read_data_flat),
+        // Header Data Outputs (connected to wrappers)
+        .header_word_0(header_word_0),
+        .header_word_1(header_word_1),
+        .header_word_2(header_word_2),
+        .header_word_3(header_word_3),
+        .header_word_4(header_word_4),
+        .header_word_5(header_word_5),
 
-        // AXI Stream Master (to PS)
-        .m_axis_tdata(m_output_axis_tdata),
-        .m_axis_tvalid(m_output_axis_tvalid),
-        .m_axis_tready(m_output_axis_tready),
-        .m_axis_tlast(m_output_axis_tlast),
+        // Control Outputs
+        .send_header(send_header),
+        .trigger_read(out_mgr_trigger_read),
+        .rd_bram_start(out_mgr_rd_bram_start),
+        .rd_bram_end(out_mgr_rd_bram_end),
+        .rd_addr_count(out_mgr_rd_addr_count),
+        .notification_mode(out_mgr_notification_mode),
 
-        // Status
-        .state_debug(),
-        .transmission_active()
+        // Handshake
+        .read_done(weight_read_done),
+        .transmission_active(out_mgr_transmission_active)
     );
+
+    // FIX: ext_read_mode dikontrol oleh transmission_active
+    assign out_mgr_ext_read_mode = out_mgr_transmission_active;
+
+    // ========================================================================
+    // OUTPUT STREAM ROUTING (Testing V3 Style)
+    // ========================================================================
+    // In Testing V3 architecture, output data is sent through m0_axis (weight wrapper)
+    // and m1_axis (ifmap wrapper). The separate m_output_axis is deprecated.
+    // Route m_output_axis to m0_axis for backward compatibility.
+    assign m_output_axis_tdata  = m0_axis_tdata;
+    assign m_output_axis_tvalid = m0_axis_tvalid;
+    assign m_output_axis_tlast  = m0_axis_tlast;
 
     // ========================================================================
     // 1DCONV INTERNAL COUNTERS FOR DATAPATH FEEDBACK

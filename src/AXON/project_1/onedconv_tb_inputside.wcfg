@@ -11,13 +11,13 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="4,200,430.833 ns"></ZoomStartTime>
-      <ZoomEndTime time="4,201,150.834 ns"></ZoomEndTime>
-      <Cursor1Time time="4,204,935.000 ns"></Cursor1Time>
+      <ZoomStartTime time="43,096.500 ns"></ZoomStartTime>
+      <ZoomEndTime time="43,662.501 ns"></ZoomEndTime>
+      <Cursor1Time time="43,313.000 ns"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
-      <NameColumnWidth column_width="176"></NameColumnWidth>
-      <ValueColumnWidth column_width="526"></ValueColumnWidth>
+      <NameColumnWidth column_width="139"></NameColumnWidth>
+      <ValueColumnWidth column_width="590"></ValueColumnWidth>
    </column_width_setting>
    <WVObjectSize size="83" />
    <wvobject fp_name="/onedconv_tb/dut/\gen_inputdata_bram[0].bram_input /clka" type="logic">
@@ -73,7 +73,7 @@
    <wvobject fp_name="/onedconv_tb/dut/inputdata_mux_inst/sel" type="array">
       <obj_property name="ElementShortName">sel[3:0]</obj_property>
       <obj_property name="ObjectShortName">sel[3:0]</obj_property>
-      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/onedconv_tb/dut/inputdata_mux_inst/data_out" type="array">
       <obj_property name="ElementShortName">data_out[15:0]</obj_property>
