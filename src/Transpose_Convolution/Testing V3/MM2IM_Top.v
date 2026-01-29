@@ -1,23 +1,36 @@
 /******************************************************************************
- * Module: MM2IM_Top
- * 
- * Description:
- *   Top-level wrapper for MM2IM (Memory Mapped to Image Mapping) subsystem.
- *   Integrates mapper, cmap buffer, and omap buffer.
- *   Precomputes and outputs full snapshots for accumulation unit.
- * 
- * Features:
- *   - MM2IM mapper for computing channel and output maps
- *   - CMap and OMap buffers (internal, for legacy compatibility)
- *   - Full snapshot outputs for direct accumulation unit connection
- *   - One-time computation per tile
- * 
- * Parameters:
- *   NUM_PE - Number of PE columns (default: 16)
- * 
- * Author: Dharma Anargya Jowandy
- * Date: January 2026
+ * Module      : MM2IM_Top
+ * Author      : Dharma Anargya Jowandy
+ * Date        : January 2026
+ *
+ * Description :
+ * Top-level wrapper for the MM2IM (Memory-Mapped-to-Image Mapping) subsystem.
+ * This module integrates the MM2IM mapper with internal CMap and OMap buffers
+ * and provides full snapshot outputs for direct connection to the
+ * accumulation unit.
+ *
+ * Key Features :
+ * - MM2IM Mapper Integration
+ *   Computes channel maps (cmap) and output maps (omap) for transposed
+ *   convolution based on layer configuration and tile position.
+ *
+ * - Snapshot-Based Operation
+ *   Precomputes and captures complete cmap and omap snapshots once per tile,
+ *   enabling deterministic downstream accumulation.
+ *
+ * - Internal Compatibility Buffers
+ *   Includes CMap and OMap buffer instances for legacy compatibility and
+ *   internal sequencing, without exposing buffered outputs at the top level.
+ *
+ * - Low-Control Overhead
+ *   Performs a single mapping operation per tile, minimizing redundant
+ *   computation and control complexity.
+ *
+ * Parameters :
+ * - NUM_PE : Number of processing element columns (default: 16)
+ *
  ******************************************************************************/
+
 
 
 module MM2IM_Top #(

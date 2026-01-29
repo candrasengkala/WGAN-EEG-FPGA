@@ -72,7 +72,15 @@ module Super_TOP_Level #(
     // ========================================================================
     input  wire                              ext_read_mode,
     input  wire [NUM_BRAMS*O_ADDR_W-1:0]     ext_read_addr_flat,
-    output wire signed [NUM_BRAMS*DW-1:0]    ext_read_data_flat
+    output wire signed [NUM_BRAMS*DW-1:0]    ext_read_data_flat,
+    
+    // ========================================================================
+    // 6. BIAS WRITE INTERFACE (External Bias Pre-loading)
+    // ========================================================================
+    input  wire                              ext_write_mode,
+    input  wire [NUM_BRAMS-1:0]              ext_write_en,
+    input  wire [NUM_BRAMS*O_ADDR_W-1:0]     ext_write_addr_flat,
+    input  wire [NUM_BRAMS*DW-1:0]           ext_write_data_flat
 );
 
     // ========================================================================
@@ -191,6 +199,11 @@ module Super_TOP_Level #(
         .ext_read_mode(ext_read_mode), 
         .ext_read_addr_flat(ext_read_addr_flat),
         .bram_read_data_flat(ext_read_data_flat),
+        // External Write Interface (Bias Pre-loading)
+        .ext_write_mode(ext_write_mode),
+        .ext_write_en(ext_write_en),
+        .ext_write_addr_flat(ext_write_addr_flat),
+        .ext_write_data_flat(ext_write_data_flat),
         // Read Address Monitoring (Optional/Unused in port list)
         .bram_read_addr_flat() 
     );

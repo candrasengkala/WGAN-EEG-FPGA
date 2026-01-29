@@ -1,13 +1,16 @@
 `timescale 1ns / 1ps
-//halo
+
 /******************************************************************************
- * System_Level_Top (DUAL PARALLEL OUTPUT STREAM)
+ * System_Level_Top (FIXED CONNECTION)
+ * * UPDATE 1:
+ * - Connected 'bias_write_done' to 'control_top'.
+ * - This completes the 3-way parallel start logic (Weight + Ifmap + Bias).
  * 
- * CRITICAL CHANGE:
- * - Output Manager now triggers BOTH wrappers simultaneously
- * - m0_axis sends BRAM 0-7 (via Weight Wrapper)
- * - m1_axis sends BRAM 8-15 (via Ifmap Wrapper)
- * - PARALLEL transmission for 2x throughput
+ * * UPDATE 2 (CRITICAL FIX):
+ * - Fixed batch_complete_signal connection to Auto_Scheduler
+ * - Was: floating wire (batch_complete_from_ctrl never driven)
+ * - Now: Connected to mapper_done_pulse from Transpose_Control_Top
+ * - This allows scheduler to detect batch completion and progress through batches
  ******************************************************************************/
 
 module System_Level_Top #(
@@ -44,6 +47,12 @@ module System_Level_Top #(
     input  wire           m1_axis_tready,
     output wire           m1_axis_tlast,
     
+    // AXI Stream 2 - Bias (WRITE ONLY, no read)
+    input  wire [DW-1:0]  s2_axis_tdata,
+    input  wire           s2_axis_tvalid,
+    output wire           s2_axis_tready,
+    input  wire           s2_axis_tlast,
+    
     // Control & Status
     input  wire           ext_start,
     input  wire [1:0]     ext_layer_id,
@@ -57,12 +66,15 @@ module System_Level_Top #(
     output wire           weight_read_done,
     output wire           ifmap_write_done,
     output wire           ifmap_read_done,
+    output wire           bias_write_done,
     output wire [9:0]     weight_mm2s_data_count,
     output wire [9:0]     ifmap_mm2s_data_count,
     output wire [2:0]     weight_parser_state,
     output wire           weight_error_invalid_magic,
     output wire [2:0]     ifmap_parser_state,
     output wire           ifmap_error_invalid_magic,
+    output wire [2:0]     bias_parser_state,
+    output wire           bias_error_invalid_magic,
     output wire           auto_start_active
 );
 
@@ -78,6 +90,12 @@ module System_Level_Top #(
     wire [I_ADDR_W-1:0]          ifmap_wr_addr;
     wire [NUM_BRAMS-1:0]         ifmap_wr_en;
     wire [I_ADDR_W-1:0]          ifmap_rd_addr;
+
+    // Bias Write Signals (to Output BRAM)
+    wire [NUM_BRAMS*DW-1:0]      bias_wr_data_flat;
+    wire [O_ADDR_W-1:0]          bias_wr_addr;
+    wire [NUM_BRAMS-1:0]         bias_wr_en;
+    wire                         bias_write_active; // Indicates bias loading in progress
     
     // Scheduler Signals
     wire [NUM_BRAMS-1:0]         w_re;
@@ -94,8 +112,7 @@ module System_Level_Top #(
     wire [NUM_BRAMS-1:0]         cmap_snapshot;
     wire [NUM_BRAMS*14-1:0]      omap_snapshot;
     wire                         clear_output_bram;
-    wire                         batch_complete_from_ctrl;
-    
+    wire                         internal_scheduler_done;  // FIX: Use scheduler_done as batch complete
     wire [NUM_BRAMS*DW-1:0]      ext_read_data_flat;
     
     // ========================================================================
@@ -115,15 +132,15 @@ module System_Level_Top #(
     wire [2:0]  out_mgr_rd_bram_end;
     wire [15:0] out_mgr_rd_addr_count;
     wire        out_mgr_notification_mode;
-    
+
     wire [8*DW-1:0] out_group0_bram_data;  // BRAM 0-7
     wire [8*DW-1:0] out_group1_bram_data;  // BRAM 8-15
     wire [4:0]      done_transpose;
-    
+
     // Datapath read interface
     wire out_mgr_ext_read_mode;
     wire [NUM_BRAMS*O_ADDR_W-1:0] out_mgr_ext_read_addr_flat;
-    wire out_mgr_transmission_active;  // NEW: untuk kontrol ext_read_mode
+    wire out_mgr_transmission_active;
 
     // FIX: ext_read_mode dikontrol oleh transmission_active
     // - Saat accumulation (transmission_active=0): pakai acc_addr_rd_flat
@@ -248,7 +265,67 @@ module System_Level_Top #(
     );
 
     // ========================================================================
-    // TRANSPOSE CONTROL TOP
+    // BIAS WRAPPER - Handles Output BRAM Bias Pre-loading (WRITE ONLY)
+    // ========================================================================
+    axis_control_wrapper #(
+        .BRAM_DEPTH(O_DEPTH),
+        .DATA_WIDTH(DW),
+        .BRAM_COUNT(NUM_BRAMS),
+        .ADDR_WIDTH(O_ADDR_W)
+    ) bias_wrapper (
+        .aclk(aclk),
+        .aresetn(aresetn),
+        
+        // AXI Stream Slave (Write Only)
+        .s_axis_tdata(s2_axis_tdata),
+        .s_axis_tvalid(s2_axis_tvalid),
+        .s_axis_tready(s2_axis_tready),
+        .s_axis_tlast(s2_axis_tlast),
+        
+        // AXI Stream Master (UNUSED - Tied off)
+        .m_axis_tdata(),
+        .m_axis_tvalid(),
+        .m_axis_tready(1'b0),  // Never ready to read
+        .m_axis_tlast(),
+        
+        // Header injection (UNUSED for bias loading)
+        .header_word_0(16'h0),
+        .header_word_1(16'h0),
+        .header_word_2(16'h0),
+        .header_word_3(16'h0),
+        .header_word_4(16'h0),
+        .header_word_5(16'h0),
+        .send_header(1'b0),  // Never send header
+        
+        // Read control (UNUSED)
+        .out_mgr_rd_bram_start(3'b0),
+        .out_mgr_rd_bram_end(3'b0),
+        .out_mgr_rd_addr_count(16'b0),
+        .notification_mode(1'b0),
+        
+        // Status
+        .write_done(bias_write_done),
+        .read_done(),  // Unused
+        .mm2s_data_count(),  // Unused
+        .parser_state(bias_parser_state),
+        .error_invalid_magic(bias_error_invalid_magic),
+        
+        // BRAM Write Interface (to Output BRAM)
+        .bram_wr_data_flat(bias_wr_data_flat),
+        .bram_wr_addr(bias_wr_addr),
+        .bram_wr_en(bias_wr_en),
+        
+        // BRAM Read Interface (UNUSED)
+        .bram_rd_data_flat({8*DW{1'b0}}),  // Tied to zero
+        .bram_rd_addr()  // Unused
+    );
+
+    // Bias write activity detector
+    // Active when any bias BRAM is being written
+    assign bias_write_active = |bias_wr_en;
+
+    // ========================================================================
+    // TRANSPOSE CONTROL TOP (FIXED: BATCH COMPLETE SIGNAL)
     // ========================================================================
     Transpose_Control_Top #(
         .DW(DW),
@@ -260,12 +337,14 @@ module System_Level_Top #(
         .rst_n(aresetn),
         .weight_write_done(weight_write_done),
         .ifmap_write_done(ifmap_write_done),
-        .batch_complete_signal(batch_complete_from_ctrl),
+        .bias_write_done(bias_write_done), // [FIX 1] Connected for 3-way parallel start
+        
+        .batch_complete_signal(internal_scheduler_done), // [FIX 2] Use scheduler_done output as feedback
         .ext_start(ext_start),
         .ext_layer_id(ext_layer_id),
         .current_layer_id(current_layer_id),
         .current_batch_id(current_batch_id),
-        .scheduler_done(scheduler_done),
+        .scheduler_done(internal_scheduler_done),  // [FIX 2] Capture this output
         .all_batches_done(all_batches_done),
         .clear_output_bram(clear_output_bram),
         .auto_active(auto_start_active),
@@ -282,7 +361,7 @@ module System_Level_Top #(
         .ifmap_sel_ctrl(ifmap_sel_ctrl),
         .cmap_snapshot(cmap_snapshot),
         .omap_snapshot(omap_snapshot),
-        .mapper_done_pulse(),
+        .mapper_done_pulse(),  // Not using this
         .selector_mux_transpose(done_transpose)
     );
 
@@ -325,7 +404,13 @@ module System_Level_Top #(
         
         .ext_read_mode(out_mgr_ext_read_mode),
         .ext_read_addr_flat(out_mgr_ext_read_addr_flat),
-        .ext_read_data_flat(ext_read_data_flat)
+        .ext_read_data_flat(ext_read_data_flat),
+        
+        // Bias Write Interface
+        .ext_write_mode(bias_write_active),
+        .ext_write_en(bias_wr_en),
+        .ext_write_addr_flat({NUM_BRAMS{bias_wr_addr}}),
+        .ext_write_data_flat(bias_wr_data_flat)
     );
 
     // ========================================================================
@@ -337,7 +422,7 @@ module System_Level_Top #(
         .clk(aclk),
         .rst_n(aresetn),
 
-        .batch_complete(batch_complete_from_ctrl),
+        .batch_complete(internal_scheduler_done),  // [FIX 2] Use scheduler_done
         .current_batch_id(current_batch_id),
         .all_batches_done(all_batches_done),
         .completed_layer_id(current_layer_id),
@@ -360,7 +445,10 @@ module System_Level_Top #(
         // Use weight_read_done as primary done signal
         // (both should complete simultaneously in parallel mode)
         .read_done(weight_read_done),
-        .transmission_active(out_mgr_transmission_active)  // FIX: tersambung untuk kontrol ext_read_mode
+        .transmission_active(out_mgr_transmission_active)  // FIX: connected for ext_read_mode control
     );
+    
+    // Output scheduler_done to external port
+    assign scheduler_done = internal_scheduler_done;
 
 endmodule

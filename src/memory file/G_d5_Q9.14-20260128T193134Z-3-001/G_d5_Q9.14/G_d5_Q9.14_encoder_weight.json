@@ -1,0 +1,38 @@
+{
+  "e1.conv.weight": {
+    "offset": 0,
+    "shape": [
+      512
+    ],
+    "dtype": "Q9.14",
+    "frac_bits": 14,
+    "int_bits": 10
+  },
+  "e2.conv.weight": {
+    "offset": 512,
+    "shape": [
+      32768
+    ],
+    "dtype": "Q9.14",
+    "frac_bits": 14,
+    "int_bits": 10
+  },
+  "e3.conv.weight": {
+    "offset": 33280,
+    "shape": [
+      131072
+    ],
+    "dtype": "Q9.14",
+    "frac_bits": 14,
+    "int_bits": 10
+  },
+  "e4.conv.weight": {
+    "offset": 164352,
+    "shape": [
+      524288
+    ],
+    "dtype": "Q9.14",
+    "frac_bits": 14,
+    "int_bits": 10
+  }
+}

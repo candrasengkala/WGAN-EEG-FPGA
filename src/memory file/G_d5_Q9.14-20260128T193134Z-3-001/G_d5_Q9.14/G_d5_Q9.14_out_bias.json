@@ -1,0 +1,11 @@
+{
+  "out.bias": {
+    "offset": 0,
+    "shape": [
+      512
+    ],
+    "dtype": "Q9.14",
+    "frac_bits": 14,
+    "int_bits": 10
+  }
+}

@@ -46,25 +46,25 @@ module BRAM_Read_Modify_Top #(
     // ======================================================
     // EXTERNAL READ CONTROL
     // ======================================================
-    input  wire                              ext_read_mode,       
+    input  wire                                   ext_read_mode,       
     input  wire        [NUM_BRAMS*ADDR_WIDTH-1:0] ext_read_addr_flat,
-    input  wire        [NUM_BRAMS-1:0]       ext_read_en, // ENABLE SIGNAL DARI LUAR
+    input  wire        [NUM_BRAMS-1:0]            ext_read_en, // ENABLE SIGNAL DARI LUAR
     
     // ======================================================
     // OUTPUT (READ PORT DATA)
     // ======================================================
-    output wire signed [NUM_BRAMS*DW-1:0]    bram_read_data_flat,  
+    output wire signed [NUM_BRAMS*DW-1:0]         bram_read_data_flat  
     output wire        [NUM_BRAMS*ADDR_WIDTH-1:0] bram_read_addr_flat
 );
 
     // ======================================================
     // 1. SOURCE 0 SIGNALS: ACCUMULATION UNIT
     // ======================================================
-    wire [NUM_BRAMS*ADDR_WIDTH-1:0] acc_addr_rd_flat;
-    wire signed [NUM_BRAMS*DW-1:0]  bram_dout_flat; 
-    wire        [NUM_BRAMS-1:0]     acc_we_flat;    
+    wire        [NUM_BRAMS*ADDR_WIDTH-1:0] acc_addr_rd_flat;
+    wire signed [NUM_BRAMS*DW-1:0]         bram_dout_flat; 
+    wire        [NUM_BRAMS-1:0]            acc_we_flat;    
     wire        [NUM_BRAMS*ADDR_WIDTH-1:0] acc_addr_wr_flat;
-    wire signed [NUM_BRAMS*DW-1:0]  acc_din_flat;
+    wire signed [NUM_BRAMS*DW-1:0]         acc_din_flat;
     
     // Internal Read Enable untuk Accumulation (Default: Always ON saat aktif)
     // Note: Accumulation Unit saat ini belum output RE, jadi kita set 1.

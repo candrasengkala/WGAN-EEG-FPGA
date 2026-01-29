@@ -78,8 +78,10 @@ module External_AXI_FSM(
         else begin
             current_state <= next_state;
             
-            // Latch parameters at IDLE start
-            if (current_state == IDLE) begin
+            // *** CRITICAL FIX: Latch parameters CONTINUOUSLY while in IDLE ***
+            // This ensures parameters are updated even if Instruction_code changes
+            // AFTER FSM enters IDLE state (e.g. from send_header override)
+            if (current_state == IDLE || next_state == IDLE) begin
                 if (Instruction_code == 8'h01) begin // WRITE
                     wr_bram_start_reg <= wr_bram_start;
                     wr_bram_end_reg <= wr_bram_end;
