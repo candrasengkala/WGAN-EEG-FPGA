@@ -15,12 +15,16 @@
  *   512 entries and 16-bit data width.
  *
  * - Read / Write Arbitration
- *   • Write port exclusively driven by the accumulation unit
+ *   • Write port MUXed between accumulation unit and external (bias loading)
  *   • Read port multiplexed between accumulation access and external access
  *
  * - External Read Mode
  *   Supports external BRAM readout (e.g., via AXI Stream or testbench)
  *   for result extraction without interfering with accumulation writes.
+ *
+ * - External Write Mode (NEW)
+ *   Supports bias pre-loading from AXI wrapper before computation starts.
+ *   Eliminates need for separate bias adder in accumulation path.
  *
  * Parameters :
  * - DW         : Data width in bits (default: 16)
@@ -57,6 +61,14 @@ module BRAM_Read_Modify_Top #(
     input  wire        [NUM_BRAMS*ADDR_WIDTH-1:0] ext_read_addr_flat, // External read addresses
     
     // ======================================================
+    // EXTERNAL WRITE CONTROL (for Bias Pre-loading from wrapper)
+    // ======================================================
+    input  wire                              ext_write_mode,      // 1 = external write (bias load), 0 = accumulation write
+    input  wire        [NUM_BRAMS-1:0]       ext_write_en,        // External write enable (per BRAM)
+    input  wire        [NUM_BRAMS*ADDR_WIDTH-1:0] ext_write_addr_flat, // External write addresses
+    input  wire        [NUM_BRAMS*DW-1:0]    ext_write_data_flat, // External write data (bias values)
+    
+    // ======================================================
     // OUTPUT for AXI Stream (READ PORT)
     // ======================================================
     output wire signed [NUM_BRAMS*DW-1:0]    bram_read_data_flat,  // Read data (flattened)
@@ -69,9 +81,9 @@ module BRAM_Read_Modify_Top #(
     wire [NUM_BRAMS*ADDR_WIDTH-1:0] acc_addr_rd_flat;   // Read address from Accumulation Unit
     wire signed [NUM_BRAMS*DW-1:0]  bram_dout_flat;     // Data from BRAM
 
-    wire        [NUM_BRAMS-1:0]     bram_we;
-    wire        [NUM_BRAMS*ADDR_WIDTH-1:0] bram_addr_wr_flat;
-    wire signed [NUM_BRAMS*DW-1:0]  bram_din_flat;
+    wire        [NUM_BRAMS-1:0]     acc_bram_we;
+    wire        [NUM_BRAMS*ADDR_WIDTH-1:0] acc_bram_addr_wr_flat;
+    wire signed [NUM_BRAMS*DW-1:0]  acc_bram_din_flat;
 
     // ======================================================
     // MUX for READ ADDRESS
@@ -79,6 +91,18 @@ module BRAM_Read_Modify_Top #(
     wire [NUM_BRAMS*ADDR_WIDTH-1:0] bram_addr_rd_muxed;
     
     assign bram_addr_rd_muxed = ext_read_mode ? ext_read_addr_flat : acc_addr_rd_flat;
+    
+    // ======================================================
+    // MUX for WRITE PORT (2-to-1)
+    // Select between Accumulation Unit or External Bias Loading
+    // ======================================================
+    wire        [NUM_BRAMS-1:0]           bram_we_muxed;
+    wire        [NUM_BRAMS*ADDR_WIDTH-1:0] bram_addr_wr_muxed;
+    wire signed [NUM_BRAMS*DW-1:0]        bram_din_muxed;
+    
+    assign bram_we_muxed      = ext_write_mode ? ext_write_en        : acc_bram_we;
+    assign bram_addr_wr_muxed = ext_write_mode ? ext_write_addr_flat : acc_bram_addr_wr_flat;
+    assign bram_din_muxed     = ext_write_mode ? ext_write_data_flat : acc_bram_din_flat;
     
     // ======================================================
     // Expose read address currently in use
@@ -106,9 +130,9 @@ module BRAM_Read_Modify_Top #(
         .omap_flat         (omap_flat),
         .bram_addr_rd_flat (acc_addr_rd_flat),  // Output from Accumulation
         .bram_dout_flat    (bram_dout_flat),    // Input to Accumulation
-        .bram_we           (bram_we),
-        .bram_addr_wr_flat (bram_addr_wr_flat),
-        .bram_din_flat     (bram_din_flat)
+        .bram_we           (acc_bram_we),
+        .bram_addr_wr_flat (acc_bram_addr_wr_flat),
+        .bram_din_flat     (acc_bram_din_flat)
     );
 
     // ======================================================
@@ -123,12 +147,12 @@ module BRAM_Read_Modify_Top #(
                 .DATA_WIDTH (DW),   // Data width (16-bit fixed-point)
                 .ADDR_WIDTH (ADDR_WIDTH)     // Address width (2^9 = 512)
             ) bram_i (
-                // WRITE PORT (controlled by Accumulation Unit)
+                // WRITE PORT (MUXed: Accumulation Unit OR External Bias Loading)
                 .clka  (clk),
                 .ena   (1'b1),
-                .wea   (bram_we[i]),
-                .addra (bram_addr_wr_flat[i*ADDR_WIDTH +: ADDR_WIDTH]),
-                .dia   (bram_din_flat[i*DW +: DW]),
+                .wea   (bram_we_muxed[i]),
+                .addra (bram_addr_wr_muxed[i*ADDR_WIDTH +: ADDR_WIDTH]),
+                .dia   (bram_din_muxed[i*DW +: DW]),
 
                 // READ PORT (MUXed: Accumulation Unit OR External)
                 .clkb  (clk),

@@ -2,7 +2,7 @@
 
 /******************************************************************************
  * Module      : Scheduler_FSM
- * Author      : Dharma Anargya Jowandy
+ * Author      : Dharma Anargya Jowandy (Fixed Version 2)
  * Date        : January 2026
  *
  * Description :
@@ -12,20 +12,20 @@
  *
  * Key Feature :
  * - Layer-Aware Pass Decoding
- *   Interprets the pass counter based on active layer configuration:
- *   • Layer 0 : 32 rows per tile (5-bit row index)
- *   • Layer 1+ : 64 rows per tile (6-bit row index)
+ * Interprets the pass counter based on active layer configuration:
+ * • Layer 0 : 32 rows per tile (5-bit row index)
+ * • Layer 1 : 64 rows per tile (6-bit row index)
+ * • Layer 2/3 : 128 rows per tile (7-bit row index)
  *
  * Functionality :
  * - Generates start pulses for Mapper, Weight, Ifmap, and Transpose modules
  * - Computes address ranges for memory accesses per pass
- * - Manages state progression: Data Load → Compute → Transpose
+ * - Manages state progression: Data Load -> Compute -> Transpose
  *
  * Parameters :
  * - ADDR_WIDTH : Address bus width (default: 10)
  *
  ******************************************************************************/
-
 
 module Scheduler_FSM #(
     parameter ADDR_WIDTH = 10 
@@ -83,7 +83,7 @@ module Scheduler_FSM #(
         
     reg [2:0] state, next_state;
     reg [1:0] bram_wait_cnt;
-    reg [7:0] pass_counter;
+    reg [7:0] pass_counter; // 8-bit counter (0..255)
 
     // ========================================================================
     // Layer Configuration Logic
@@ -103,11 +103,11 @@ module Scheduler_FSM #(
             end
             2'd2: begin
                 max_passes_per_batch = 10'd127;
-                rows_per_batch       = 7'd127;
+                rows_per_batch       = 7'd127;  // 128 rows
             end
             2'd3: begin
                 max_passes_per_batch = 10'd255;
-                rows_per_batch       = 7'd127;
+                rows_per_batch       = 7'd127;  // 128 rows
             end
             default: begin
                 max_passes_per_batch = 10'd127;
@@ -119,22 +119,35 @@ module Scheduler_FSM #(
     // ========================================================================
     // Pass Counter Decoding (Layer-Aware)
     // ========================================================================
-    // Decodes the linear 'pass_counter' into 'tile' and 'row' coordinates.
-    // The bit-split depends on the row density of the current layer.
     
     reg [1:0] tile_in_batch;
-    reg [5:0] row_in_tile;
+    reg [6:0] row_in_tile;  // 7 bits [6:0]
     
     always @(*) begin
-        if (current_layer_id == 2'd0) begin
-            // Layer 0: 32 rows/tile (5-bit row)
-            tile_in_batch = pass_counter[6:5];      // Tile = Bits [6:5]
-            row_in_tile   = {1'b0, pass_counter[4:0]}; // Row  = Bits [4:0]
-        end else begin
-            // Layer 1+: 64 rows/tile (6-bit row)
-            tile_in_batch = pass_counter[7:6];      // Tile = Bits [7:6]
-            row_in_tile   = pass_counter[5:0];      // Row  = Bits [5:0]
-        end
+        // Default initialization
+        tile_in_batch = 2'd0;
+        row_in_tile = 7'd0;
+
+        case (current_layer_id)
+            2'd0: begin
+                // Layer 0: 32 rows (Row bits [4:0])
+                tile_in_batch = pass_counter[6:5];
+                row_in_tile   = {2'd0, pass_counter[4:0]};
+            end
+            2'd1: begin
+                // Layer 1: 64 rows (Row bits [5:0])
+                tile_in_batch = pass_counter[7:6];
+                row_in_tile   = {1'd0, pass_counter[5:0]};
+            end
+            default: begin
+                // Layer 2 & 3: 128 rows (Row bits [6:0])
+                // PERBAIKAN DI SINI:
+                // pass_counter cuma [7:0]. Jadi bit tertinggi adalah [7].
+                // Bit [6:0] untuk row. Bit [7] untuk tile.
+                tile_in_batch = {1'b0, pass_counter[7]}; 
+                row_in_tile   = pass_counter[6:0]; 
+            end
+        endcase
     end
     
     wire [5:0] absolute_tile_id = {current_batch_id, tile_in_batch};
@@ -155,7 +168,7 @@ module Scheduler_FSM #(
             if (batch_complete)
                 batch_complete <= 1'b0;
 
-            // BRAM Wait Timer (Wait for data to settle)
+            // BRAM Wait Timer
             if (state == WAIT_BRAM) begin
                 if (bram_wait_cnt < 2'd2)
                     bram_wait_cnt <= bram_wait_cnt + 1'b1;
@@ -208,19 +221,26 @@ module Scheduler_FSM #(
     // Output Generation Logic
     // ========================================================================
     
-    // Predictive Decoding for Next Pass (to prepare addresses)
+    // Predictive Decoding for Next Pass
     reg [1:0] current_pass_tile;
-    reg [5:0] current_pass_row;
+    reg [6:0] current_pass_row;
     
     always @(*) begin
         if (state == WAIT_TRANS && done_transpose == 5'd16 && pass_counter < max_passes_per_batch) begin
             // Decode NEXT pass
             if (current_layer_id == 2'd0) begin
-                current_pass_tile = (pass_counter + 8'd1) >> 5;          // Div 32
-                current_pass_row  = {1'b0, (pass_counter + 8'd1) & 8'h1F}; // Mod 32
+                // Layer 0 (32 rows)
+                current_pass_tile = (pass_counter + 8'd1) >> 5;          
+                current_pass_row  = {2'd0, (pass_counter + 8'd1) & 8'h1F}; 
+            end else if (current_layer_id == 2'd1) begin
+                // Layer 1 (64 rows)
+                current_pass_tile = (pass_counter + 8'd1) >> 6;          
+                current_pass_row  = {1'd0, (pass_counter + 8'd1) & 8'h3F}; 
             end else begin
-                current_pass_tile = (pass_counter + 8'd1) >> 6;          // Div 64
-                current_pass_row  = (pass_counter + 8'd1) & 8'h3F;         // Mod 64
+                // Layer 2 & 3 (128 rows)
+                // Div 128 (shift 7). Karena pass_counter 8 bit, shift 7 nyisa 1 bit.
+                current_pass_tile = (pass_counter + 8'd1) >> 7;          
+                current_pass_row  = (pass_counter + 8'd1) & 8'h7F;       
             end
         end else begin
             // Decode CURRENT pass
@@ -249,7 +269,7 @@ module Scheduler_FSM #(
             
             case (next_state)
                 START_ALL: begin
-                    row_id       <= {3'd0, current_pass_row};
+                    row_id       <= {2'd0, current_pass_row}; 
                     tile_id      <= current_absolute_tile_calc;
                     layer_id     <= current_layer_id;
                     ifmap_sel_in <= current_pass_row[3:0];
@@ -258,7 +278,6 @@ module Scheduler_FSM #(
                     // IFMAP Address Decoding
                     // --------------------------------------------------------
                     if (current_layer_id == 2'd0) begin
-                        // Layer 0: 32 rows, 2 ranges
                         if (current_pass_row[4] == 1'b0) begin
                             if_addr_start <= 10'd0;   if_addr_end <= 10'd255;
                         end else begin
@@ -266,7 +285,6 @@ module Scheduler_FSM #(
                         end
                     end 
                     else if (current_layer_id == 2'd1) begin
-                        // Layer 1: 64 rows, 4 ranges
                         case (current_pass_row[5:4])
                             2'b00: begin if_addr_start <= 10'd0;   if_addr_end <= 10'd255;  end
                             2'b01: begin if_addr_start <= 10'd256; if_addr_end <= 10'd511;  end
@@ -275,7 +293,6 @@ module Scheduler_FSM #(
                         endcase
                     end 
                     else if (current_layer_id == 2'd2) begin
-                        // Layer 2: 8 ranges
                         case (current_pass_row[6:4])
                             3'b000: begin if_addr_start <= 10'd0;   if_addr_end <= 10'd127;  end
                             3'b001: begin if_addr_start <= 10'd128; if_addr_end <= 10'd255;  end
@@ -288,8 +305,7 @@ module Scheduler_FSM #(
                         endcase
                     end 
                     else if (current_layer_id == 2'd3) begin
-                        // Layer 3: 16 ranges
-                        case (current_pass_row[7:4])
+                        case (current_pass_row[6:3])
                             4'h0: begin if_addr_start <= 10'd0;   if_addr_end <= 10'd15;   end
                             4'h1: begin if_addr_start <= 10'd16;  if_addr_end <= 10'd31;   end
                             4'h2: begin if_addr_start <= 10'd32;  if_addr_end <= 10'd47;   end

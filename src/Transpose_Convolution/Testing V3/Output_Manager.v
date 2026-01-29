@@ -157,11 +157,6 @@ module Output_Manager_Simple #(
                 delay_counter <= 4'd0; // Reset otherwise
             end
             
-            // Debugging display (optional)
-            if (state != next_state) begin
-                 $display("[%0t] [OUT_MGR] FSM: %0d -> %0d (pending_notif=%b, pending_full=%b)", 
-                          $time, state, next_state, pending_notification, pending_full_data);
-            end
         end
     end
     
@@ -248,8 +243,6 @@ module Output_Manager_Simple #(
                     send_header <= 1'b1; // Trigger Top Module
                     trigger_read <= 1'b0;
                     
-                    $display("[%0t] [OUT_MGR] >>> Sending NOTIFICATION: Batch %0d <<<", 
-                             $time, latched_batch_id);
                 end
                 
                 WAIT_NOTIF_DONE: begin
@@ -277,16 +270,11 @@ module Output_Manager_Simple #(
                     send_header <= 1'b1; // Trigger Top Module
                     trigger_read <= 1'b1; // Override FSM to READ mode
                     
-                    $display("[%0t] [OUT_MGR] >>> Sending FULL DATA: Layer %0d <<<", 
-                             $time, latched_layer_id);
                 end
                 
                 WAIT_DATA_DONE: begin
                     transmission_active <= 1'b1;
                     notification_mode <= 1'b0;
-                    if (read_done) begin
-                        $display("[%0t] [OUT_MGR] >>> FULL DATA complete <<<", $time);
-                    end
                 end
             endcase
         end

@@ -1,31 +1,13 @@
 `timescale 1ns / 1ps
 
 /******************************************************************************
- * Module      : Transpose_Control_Top
+ * Module      : Transpose_Control_Top (FIXED VERSION)
  * Author      : Dharma Anargya Jowandy
  * Date        : January 2026
  *
- * Description :
- * Top-level control module for the Transpose Matrix Engine.
- * Integrates the Auto-Scheduler, main Scheduler FSM, and sub-controllers
- * (weight/ifmap address generators, MM2IM mapper, and Transpose FSM) to
- * manage the complete computation flow from BRAM data loading to systolic
- * array execution.
- *
- * Functionality :
- * - Coordinates weight and input feature map (Ifmap) loading
- * - Manages automatic batch sequencing via the Auto-Scheduler
- * - Controls transpose execution and address mapping logic
- * - Generates batch completion signal for synchronization with Output Manager
- *
- * Parameters :
- * - DW         : Data width (default: 16)
- * - NUM_BRAMS  : Number of BRAM banks (default: 16)
- * - NUM_PE     : Number of processing elements (default: 16)
- * - ADDR_WIDTH : Address bus width (default: 10)
- *
+ * UPDATE      : Added 'bias_write_done' connection to Auto_Scheduler.
+ * This enables the 3-way parallel start logic.
  ******************************************************************************/
-
 
 module Transpose_Control_Top #(
     parameter DW         = 16,
@@ -40,6 +22,7 @@ module Transpose_Control_Top #(
     // Automation Inputs (From AXI Wrappers)
     input  wire                   weight_write_done,
     input  wire                   ifmap_write_done,
+    input  wire                   bias_write_done,  // [NEW] Added input from Top Level
     
     // Global Control Inputs
     input  wire                   ext_start,
@@ -86,15 +69,16 @@ module Transpose_Control_Top #(
     
     wire [1:0]  auto_layer_id;
     wire [2:0]  auto_batch_id;
-
+    
     wire        start_Mapper;
     wire        start_weight;
     wire        start_ifmap;
     wire        start_transpose;
-
+    
     wire [ADDR_WIDTH-1:0] if_addr_start;
     wire [ADDR_WIDTH-1:0] if_addr_end;
     wire [3:0]            ifmap_sel_in;
+    
     wire [ADDR_WIDTH-1:0] addr_start;
     wire [ADDR_WIDTH-1:0] addr_end;
     
@@ -119,16 +103,20 @@ module Transpose_Control_Top #(
     assign selector_mux_transpose = done_transpose;
 
     // ========================================================================
-    // 1. Module Instantiation: Auto Scheduler
+    // 1. Module Instantiation: Auto Scheduler (UPDATED)
     // ========================================================================
     Auto_Scheduler u_auto_sched (
         .clk                   (clk),
         .rst_n                 (rst_n),
         .weight_write_done     (weight_write_done),
         .ifmap_write_done      (ifmap_write_done),
+        .bias_write_done       (bias_write_done),    // [FIX] Connected Here!
+        
         .ext_scheduler_start   (ext_start),
         .external_layer_id     (ext_layer_id),
+        
         .batch_complete_signal (internal_batch_complete),
+        
         .final_start_signal    (final_start_signal),
         .current_batch_id      (auto_batch_id),
         .current_layer_id      (auto_layer_id),

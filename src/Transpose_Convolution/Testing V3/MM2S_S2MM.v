@@ -1,63 +1,64 @@
 `timescale 1ns / 1ps
-// MM2S and S2MM FIFO Module
-// Modular AXI Stream FIFO for data buffering
+// MM2S and S2MM FIFO Module - FIXED VERSION
+// Modular AXI Stream FIFO for data buffering with parameterized width
 
 module MM2S_S2MM #(
     parameter FIFO_DEPTH = 512,
-    parameter DATA_WIDTH = 16
+    parameter DATA_WIDTH = 20  
 )
 (
-    input wire         aclk,
-    input wire         aresetn,
+    input wire                    aclk,
+    input wire                    aresetn,
         
-        // *** MM2S - Slave AXI Stream Input ***
-        output wire        s_axis_tready,
-        input wire [15:0]  s_axis_tdata,
-        input wire         s_axis_tvalid,
-        input wire         s_axis_tlast,
-        
-        // *** MM2S - Master Output to Processing ***
-        input wire         mm2s_tready,
-        output wire [15:0] mm2s_tdata,
-        output wire        mm2s_tvalid,
-        output wire        mm2s_tlast,
-        output wire [9:0]  mm2s_data_count,
-        
-        // *** S2MM - Slave Input from Processing ***
-        output wire        s2mm_tready,
-        input wire [15:0]  s2mm_tdata,
-        input wire         s2mm_tvalid,
-        input wire         s2mm_tlast,
-        
-        // *** S2MM - Master AXI Stream Output ***
-        input wire         m_axis_tready,
-        output wire [15:0] m_axis_tdata,
-        output wire        m_axis_tvalid,
-        output wire        m_axis_tlast
-    );
+    // *** MM2S - Slave AXI Stream Input ***
+    output wire                   s_axis_tready,
+    input wire [DATA_WIDTH-1:0]   s_axis_tdata,   
+    input wire                    s_axis_tvalid,
+    input wire                    s_axis_tlast,
+    
+    // *** MM2S - Master Output to Processing ***
+    input wire                    mm2s_tready,
+    output wire [DATA_WIDTH-1:0]  mm2s_tdata,     
+    output wire                   mm2s_tvalid,
+    output wire                   mm2s_tlast,
+    output wire [9:0]             mm2s_data_count,
+    
+    // *** S2MM - Slave Input from Processing ***
+    output wire                   s2mm_tready,
+    input wire [DATA_WIDTH-1:0]   s2mm_tdata,     
+    input wire                    s2mm_tvalid,
+    input wire                    s2mm_tlast,
+    
+    // *** S2MM - Master AXI Stream Output ***
+    input wire                    m_axis_tready,
+    output wire [DATA_WIDTH-1:0]  m_axis_tdata,   
+    output wire                   m_axis_tvalid,
+    output wire                   m_axis_tlast
+);
+
+    // ✅ Calculate TKEEP width based on DATA_WIDTH
+    localparam TKEEP_WIDTH = (DATA_WIDTH + 7) / 8;  // Ceiling division
 
     // *** MM2S FIFO ************************************************************
-    // xpm_fifo_axis: AXI Stream FIFO
-    // Xilinx Parameterized Macro, version 2018.3
     xpm_fifo_axis
     #(
-        .CDC_SYNC_STAGES(2),                 // DECIMAL
-        .CLOCKING_MODE("common_clock"),      // String
-        .ECC_MODE("no_ecc"),                 // String
-        .FIFO_DEPTH(512),                    // DECIMAL, depth 512 words
-        .FIFO_MEMORY_TYPE("auto"),           // String
-        .PACKET_FIFO("false"),               // String
-        .PROG_EMPTY_THRESH(10),              // DECIMAL
-        .PROG_FULL_THRESH(10),               // DECIMAL
-        .RD_DATA_COUNT_WIDTH(1),             // DECIMAL
-        .RELATED_CLOCKS(0),                  // DECIMAL
-        .SIM_ASSERT_CHK(0),                  // DECIMAL
-        .TDATA_WIDTH(16),                    // DECIMAL, data width 16-bit
-        .TDEST_WIDTH(1),                     // DECIMAL
-        .TID_WIDTH(1),                       // DECIMAL
-        .TUSER_WIDTH(1),                     // DECIMAL
-        .USE_ADV_FEATURES("0004"),           // String, write data count
-        .WR_DATA_COUNT_WIDTH(10)             // DECIMAL, log2(512)+1=10
+        .CDC_SYNC_STAGES(2),                 
+        .CLOCKING_MODE("common_clock"),      
+        .ECC_MODE("no_ecc"),                 
+        .FIFO_DEPTH(FIFO_DEPTH),            
+        .FIFO_MEMORY_TYPE("auto"),           
+        .PACKET_FIFO("false"),               
+        .PROG_EMPTY_THRESH(10),              
+        .PROG_FULL_THRESH(10),               
+        .RD_DATA_COUNT_WIDTH(1),             
+        .RELATED_CLOCKS(0),                  
+        .SIM_ASSERT_CHK(0),                  
+        .TDATA_WIDTH(DATA_WIDTH),            
+        .TDEST_WIDTH(1),                     
+        .TID_WIDTH(1),                       
+        .TUSER_WIDTH(1),                     
+        .USE_ADV_FEATURES("0004"),           
+        .WR_DATA_COUNT_WIDTH(10)             
     )
     xpm_fifo_axis_mm2s
     (
@@ -81,9 +82,9 @@ module MM2S_S2MM #(
         .s_axis_tvalid(s_axis_tvalid),
         .s_axis_tdest(1'b0), 
         .s_axis_tid(1'b0), 
-        .s_axis_tkeep(2'b11), 
+        .s_axis_tkeep({TKEEP_WIDTH{1'b1}}),  
         .s_axis_tlast(s_axis_tlast),
-        .s_axis_tstrb(2'b11), 
+        .s_axis_tstrb({TKEEP_WIDTH{1'b1}}),  
         .s_axis_tuser(1'b0), 
         
         // Master port - Output to processing
@@ -101,27 +102,25 @@ module MM2S_S2MM #(
     );
     
     // *** S2MM FIFO ************************************************************
-    // xpm_fifo_axis: AXI Stream FIFO
-    // Xilinx Parameterized Macro, version 2018.3
     xpm_fifo_axis
     #(
-        .CDC_SYNC_STAGES(2),                 // DECIMAL
-        .CLOCKING_MODE("common_clock"),      // String
-        .ECC_MODE("no_ecc"),                 // String
-        .FIFO_DEPTH(512),                    // DECIMAL, depth 512 words
-        .FIFO_MEMORY_TYPE("auto"),           // String
-        .PACKET_FIFO("false"),               // String
-        .PROG_EMPTY_THRESH(10),              // DECIMAL
-        .PROG_FULL_THRESH(10),               // DECIMAL
-        .RD_DATA_COUNT_WIDTH(1),             // DECIMAL
-        .RELATED_CLOCKS(0),                  // DECIMAL
-        .SIM_ASSERT_CHK(0),                  // DECIMAL
-        .TDATA_WIDTH(16),                    // DECIMAL, data width 16-bit
-        .TDEST_WIDTH(1),                     // DECIMAL
-        .TID_WIDTH(1),                       // DECIMAL
-        .TUSER_WIDTH(1),                     // DECIMAL
-        .USE_ADV_FEATURES("0000"),           // String, no advanced features
-        .WR_DATA_COUNT_WIDTH(1)              // DECIMAL
+        .CDC_SYNC_STAGES(2),                 
+        .CLOCKING_MODE("common_clock"),      
+        .ECC_MODE("no_ecc"),                 
+        .FIFO_DEPTH(FIFO_DEPTH),             
+        .FIFO_MEMORY_TYPE("auto"),           
+        .PACKET_FIFO("false"),               
+        .PROG_EMPTY_THRESH(10),              
+        .PROG_FULL_THRESH(10),               
+        .RD_DATA_COUNT_WIDTH(1),             
+        .RELATED_CLOCKS(0),                  
+        .SIM_ASSERT_CHK(0),                  
+        .TDATA_WIDTH(DATA_WIDTH),            
+        .TDEST_WIDTH(1),                     
+        .TID_WIDTH(1),                       
+        .TUSER_WIDTH(1),                     
+        .USE_ADV_FEATURES("0000"),           
+        .WR_DATA_COUNT_WIDTH(1)              
     )
     xpm_fifo_axis_s2mm
     (
@@ -145,9 +144,9 @@ module MM2S_S2MM #(
         .s_axis_tvalid(s2mm_tvalid),
         .s_axis_tdest(1'b0), 
         .s_axis_tid(1'b0), 
-        .s_axis_tkeep(2'b11), 
+        .s_axis_tkeep({TKEEP_WIDTH{1'b1}}),  
         .s_axis_tlast(s2mm_tlast),
-        .s_axis_tstrb(2'b11), 
+        .s_axis_tstrb({TKEEP_WIDTH{1'b1}}),  
         .s_axis_tuser(1'b0), 
         
         // Master port - Output to DMA
