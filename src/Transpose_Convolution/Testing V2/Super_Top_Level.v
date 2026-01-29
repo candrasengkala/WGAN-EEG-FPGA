@@ -18,7 +18,7 @@
 module Super_TOP_Level #(
     parameter DW         = 16,
     parameter NUM_BRAMS  = 16,  // Dimension
-    parameter W_ADDR_W   = 11,  // Weight BRAM Address Width
+    parameter W_ADDR_W   = 10,  // Weight BRAM Address Width
     parameter I_ADDR_W   = 10,  // Ifmap BRAM Address Width
     parameter O_ADDR_W   = 9    // Output/Accumulation BRAM Address Width
 )(

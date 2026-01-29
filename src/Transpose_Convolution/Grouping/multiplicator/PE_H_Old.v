@@ -18,7 +18,7 @@
  * Parameters:
  *   DW - Data width (default: 20 for Q9.10)
  * 
- * Author: Rizmi Ahmad Raihan (Modified for Q9.10)
+ * Author: Dharma Anargya Jowandy (Modified for Q9.10)
  * Date: January 13, 2026
  ******************************************************************************/
 

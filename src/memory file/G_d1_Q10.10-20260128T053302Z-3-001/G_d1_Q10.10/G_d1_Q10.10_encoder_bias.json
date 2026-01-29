@@ -1,0 +1,38 @@
+{
+  "e1.conv.bias": {
+    "offset": 0,
+    "shape": [
+      8192
+    ],
+    "dtype": "Q10.10",
+    "frac_bits": 10,
+    "int_bits": 10
+  },
+  "e2.conv.bias": {
+    "offset": 8192,
+    "shape": [
+      8192
+    ],
+    "dtype": "Q10.10",
+    "frac_bits": 10,
+    "int_bits": 10
+  },
+  "e3.conv.bias": {
+    "offset": 16384,
+    "shape": [
+      8192
+    ],
+    "dtype": "Q10.10",
+    "frac_bits": 10,
+    "int_bits": 10
+  },
+  "e4.conv.bias": {
+    "offset": 24576,
+    "shape": [
+      8192
+    ],
+    "dtype": "Q10.10",
+    "frac_bits": 10,
+    "int_bits": 10
+  }
+}

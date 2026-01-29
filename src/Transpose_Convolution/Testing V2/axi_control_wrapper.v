@@ -4,9 +4,15 @@
 
 /**
  * AXI Stream Custom Top with Header Parser
- * * MODIFIED VERSION:
- * - Added Auto-Clear logic for Instruction Register to prevent FSM re-triggering
- * (Fixes the "BRAM 0 Enable Glitch" at the end of transaction)
+ * 
+ * Adds packet-based control protocol:
+ *   - First 6 words = header (control parameters)
+ *   - Remaining words = data payload
+ * 
+ * Usage from PS:
+ *   1. Send packet header (6 words)
+ *   2. Send data payload (N words)
+ *   3. Assert TLAST on last word
  */
 
 module axis_control_wrapper #(
@@ -57,8 +63,28 @@ module axis_control_wrapper #(
     // BRAM Read Interface - FLATTENED (from 8 BRAM)
     // ========================================================================
     input  wire [8*DATA_WIDTH-1:0]          bram_rd_data_flat,
-    output wire [ADDR_WIDTH-1:0]            bram_rd_addr
+    output wire [ADDR_WIDTH-1:0]            bram_rd_addr,
+    
+    // ========================================================================
+    // NEW: Header injection for READ packets (from Output Manager)
+    // ========================================================================
+    input wire [15:0] header_word_0,
+    input wire [15:0] header_word_1,
+    input wire [15:0] header_word_2,
+    input wire [15:0] header_word_3,
+    input wire [15:0] header_word_4,
+    input wire [15:0] header_word_5,
+    input wire        send_header,
+    input wire        notification_only, // NEW
+
+    // ========================================================================
+    // NEW: Read control from Output Manager (for auto-read mode)
+    // ========================================================================
+    input wire [2:0]  out_mgr_rd_bram_start,
+    input wire [2:0]  out_mgr_rd_bram_end,
+    input wire [15:0] out_mgr_rd_addr_count
 );
+
     // ========================================================================
     // Internal Signals
     // ========================================================================
@@ -77,13 +103,13 @@ module axis_control_wrapper #(
     reg [15:0] wr_addr_start_reg, wr_addr_count_reg;
     reg [2:0]  rd_bram_start_reg, rd_bram_end_reg;
     reg [15:0] rd_addr_start_reg, rd_addr_count_reg;
-
+    
     // Parser to axis_custom_top connection
     wire [DATA_WIDTH-1:0] parser_tdata;
     wire parser_tvalid;
     wire parser_tready;
     wire parser_tlast;
-
+    
     // ========================================================================
     // Header Parser
     // ========================================================================
@@ -117,15 +143,17 @@ module axis_control_wrapper #(
         .error_invalid_magic(error_invalid_magic),
         .parser_state_debug(parser_state)
     );
-
-    // For read parameters, use same fields (or extend parser if needed)
-    assign rd_bram_start = wr_bram_start[2:0]; // Lower 3 bits
-    assign rd_bram_end = wr_bram_end[2:0];
+    
+    // For read parameters:
+    // - When send_header is active (auto-read from Output Manager), use Output Manager values
+    // - Otherwise, use parsed header values
+    assign rd_bram_start = send_header ? out_mgr_rd_bram_start : wr_bram_start[2:0];
+    assign rd_bram_end   = send_header ? out_mgr_rd_bram_end   : wr_bram_end[2:0];
     assign rd_addr_start = wr_addr_start;
-    assign rd_addr_count = wr_addr_count;
-
+    assign rd_addr_count = send_header ? out_mgr_rd_addr_count : wr_addr_count;
+    
     // ========================================================================
-    // Latch Control Parameters (WITH AUTO-CLEAR FIX)
+    // Latch Control Parameters
     // ========================================================================
     always @(posedge aclk) begin
         if (!aresetn) begin
@@ -138,26 +166,17 @@ module axis_control_wrapper #(
             rd_bram_end_reg <= 3'b0;
             rd_addr_start_reg <= 16'b0;
             rd_addr_count_reg <= 16'b0;
-        end else begin
-            // *** CRITICAL FIX: Auto-Clear Instruction ***
-            // Segera reset instruksi ke 0 saat done signal aktif.
-            // Ini mencegah FSM di module sebelah restart otomatis ke state WRITE/READ
-            // yang menyebabkan BRAM 0 terpilih kembali.
-            if (write_done || read_done) begin
-                instruction_code_reg <= 8'b0;
-            end
-            // Latch only when header is valid AND operation is not finishing same cycle
-            else if (header_valid) begin
-                instruction_code_reg <= instruction_code;
-                wr_bram_start_reg <= wr_bram_start;
-                wr_bram_end_reg <= wr_bram_end;
-                wr_addr_start_reg <= wr_addr_start;
-                wr_addr_count_reg <= wr_addr_count;
-                rd_bram_start_reg <= rd_bram_start;
-                rd_bram_end_reg <= rd_bram_end;
-                rd_addr_start_reg <= rd_addr_start;
-                rd_addr_count_reg <= rd_addr_count;
-            end
+        end else if (header_valid) begin
+            // Latch when header complete
+            instruction_code_reg <= instruction_code;
+            wr_bram_start_reg <= wr_bram_start;
+            wr_bram_end_reg <= wr_bram_end;
+            wr_addr_start_reg <= wr_addr_start;
+            wr_addr_count_reg <= wr_addr_count;
+            rd_bram_start_reg <= rd_bram_start;
+            rd_bram_end_reg <= rd_bram_end;
+            rd_addr_start_reg <= rd_addr_start;
+            rd_addr_count_reg <= rd_addr_count;
         end
     end
     
@@ -184,16 +203,28 @@ module axis_control_wrapper #(
         .m_axis_tready(m_axis_tready),
         .m_axis_tlast(m_axis_tlast),
         
-        // Control (from latched registers)
+        // Control (from latched registers, with Output Manager override)
         .Instruction_code(instruction_code_reg),
         .wr_bram_start(wr_bram_start_reg),
         .wr_bram_end(wr_bram_end_reg),
         .wr_addr_start(wr_addr_start_reg),
         .wr_addr_count(wr_addr_count_reg),
-        .rd_bram_start(rd_bram_start_reg),
-        .rd_bram_end(rd_bram_end_reg),
+        // CRITICAL FIX: When send_header is active, pass Output Manager values
+        // DIRECTLY (combinational) so axis_custom_top latches correct values immediately
+        .rd_bram_start(send_header ? out_mgr_rd_bram_start : rd_bram_start_reg),
+        .rd_bram_end(send_header ? out_mgr_rd_bram_end : rd_bram_end_reg),
         .rd_addr_start(rd_addr_start_reg),
-        .rd_addr_count(rd_addr_count_reg),
+        .rd_addr_count(send_header ? out_mgr_rd_addr_count : rd_addr_count_reg),
+        
+        // NEW: Header injection
+        .header_word_0(header_word_0),
+        .header_word_1(header_word_1),
+        .header_word_2(header_word_2),
+        .header_word_3(header_word_3),
+        .header_word_4(header_word_4),
+        .header_word_5(header_word_5),
+        .send_header(send_header),
+        .notification_only(notification_only),
         
         .write_done(write_done),
         .read_done(read_done),

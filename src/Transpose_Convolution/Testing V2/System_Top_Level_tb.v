@@ -1,32 +1,50 @@
 `timescale 1ns / 1ps
 
 /******************************************************************************
- * System_Level_Top Testbench - REFACTORED VERSION
+ * System_Level_Top Testbench - UPDATED untuk Header Injection
  * 
- * Test Flow:
- *   1. Load ifmap (once, all 16 BRAMs)
- *   2. Load weight batch 0 (tiles 0-3)
- *      → Auto-start batch 0 processing
- *      → Wait for batch_complete notification
- *   3. Load weight batch 1 (tiles 4-7)
- *      → Auto-start batch 1 processing
- *      → Wait for batch_complete notification
- *   4. Load weight batch 2 (tiles 8-11)
- *      → Auto-start batch 2 processing
- *      → Wait for batch_complete notification
- *   5. Verify output stream packets
+ * PERUBAHAN:
+ * - Monitoring untuk 6-word header (bukan 4-word)
+ * - Deteksi magic 0xC0DE (notification) dan 0xDA7A (full data)
+ * - Decode header untuk batch_id, tile_start/end, data_count
+ * - **NEW**: Notification is now a 6-word HEADER-ONLY packet.
+ * 
+ * EXPECTED OUTPUT:
+ * ================
+ * 
+ * Setiap batch complete akan kirim NOTIFICATION:
+ *   [Header 6 words] = 6 words total. TLAST on 6th word.
+ *   
+ *   Header format:
+ *   [0] = 0xC0DE       (magic)
+ *   [1] = 0x0001       (type: notification)
+ *   [2] = batch_id     (0-7)
+ *   [3] = 0x0000       (reserved)
+ *   [4] = 0x0000       (reserved)
+ *   [5] = 0            (data count)
+ * 
+ * Setelah semua batch (layer complete) akan kirim FULL DATA:
+ *   [Header 6 words] + [All BRAM 8192 words] = 8198 words total
+ *   
+ *   Header format:
+ *   [0] = 0xDA7A       (magic)
+ *   [1] = 0x0002       (type: full data)
+ *   [2] = layer_id     (0-3)
+ *   [3] = 0x0000       (reserved)
+ *   [4] = 0x0000       (reserved)
+ *   [5] = 4096         (data count per group)
  ******************************************************************************/
 
 module System_Level_Top_tb();
     localparam T = 10;
     
     // ========================================================================
-    // Testbench Signals
+    // Signals
     // ========================================================================
     reg             aclk;
     reg             aresetn;
-    
-    // AXI Stream 0 - Weight
+
+    // AXI Stream 0 - Weight (TX) & Notification/Data (RX)
     reg  [15:0]     s0_axis_tdata;
     reg             s0_axis_tvalid;
     wire            s0_axis_tready;
@@ -35,8 +53,8 @@ module System_Level_Top_tb();
     wire            m0_axis_tvalid;
     reg             m0_axis_tready;
     wire            m0_axis_tlast;
-    
-    // AXI Stream 1 - Ifmap
+
+    // AXI Stream 1 - Ifmap (TX) & Data (RX)
     reg  [15:0]     s1_axis_tdata;
     reg             s1_axis_tvalid;
     wire            s1_axis_tready;
@@ -46,50 +64,24 @@ module System_Level_Top_tb();
     reg             m1_axis_tready;
     wire            m1_axis_tlast;
 
-    // NEW: AXI Stream Output (from FPGA to PS)
-    wire [15:0]     m_output_axis_tdata;
-    wire            m_output_axis_tvalid;
-    reg             m_output_axis_tready;
-    wire            m_output_axis_tlast;
-
     // Status
     wire       weight_write_done;
-    wire       weight_read_done;
     wire       ifmap_write_done;
-    wire       ifmap_read_done;
-    wire [9:0] weight_mm2s_data_count;
-    wire [9:0] ifmap_mm2s_data_count;
     
-    reg        ext_start;     
-    wire       scheduler_done;
-    wire [1:0] current_layer_id;
-    wire [2:0] current_batch_id;
-    wire       all_batches_done;
-    
-    wire [2:0] weight_parser_state;
-    wire       weight_error_invalid_magic;
-    wire [2:0] ifmap_parser_state;
-    wire       ifmap_error_invalid_magic;
-    
-    wire auto_start_active;
-
-    // ========================================================================
-    // DUT Instantiation
-    // ========================================================================
+    // DUT
     System_Level_Top #(
         .DW(16), 
         .NUM_BRAMS(16),
-        .W_ADDR_W(11),
+        .W_ADDR_W(10),
         .I_ADDR_W(10),
         .O_ADDR_W(9),
-        .W_DEPTH(2048),
+        .W_DEPTH(1024),
         .I_DEPTH(1024),
         .O_DEPTH(512),
         .Dimension(16)
     ) dut (
         .aclk(aclk),
         .aresetn(aresetn),
-
         // Weight AXI
         .s0_axis_tdata(s0_axis_tdata),
         .s0_axis_tvalid(s0_axis_tvalid),
@@ -99,7 +91,6 @@ module System_Level_Top_tb();
         .m0_axis_tvalid(m0_axis_tvalid),
         .m0_axis_tready(m0_axis_tready),
         .m0_axis_tlast(m0_axis_tlast),
-
         // Ifmap AXI
         .s1_axis_tdata(s1_axis_tdata),
         .s1_axis_tvalid(s1_axis_tvalid),
@@ -109,186 +100,156 @@ module System_Level_Top_tb();
         .m1_axis_tvalid(m1_axis_tvalid),
         .m1_axis_tready(m1_axis_tready),
         .m1_axis_tlast(m1_axis_tlast),
-
-        // NEW: Output AXI Stream
-        .m_output_axis_tdata(m_output_axis_tdata),
-        .m_output_axis_tvalid(m_output_axis_tvalid),
-        .m_output_axis_tready(m_output_axis_tready),
-        .m_output_axis_tlast(m_output_axis_tlast),
-
-        // Control & Status
-        .ext_start(ext_start),
+        // Control
+        .ext_start(1'b0),
         .ext_layer_id(2'd0),
-        .scheduler_done(scheduler_done),
-        .current_layer_id(current_layer_id),
-        .current_batch_id(current_batch_id),
-        .all_batches_done(all_batches_done),
-
         // Status
         .weight_write_done(weight_write_done),
-        .weight_read_done(weight_read_done),
         .ifmap_write_done(ifmap_write_done),
-        .ifmap_read_done(ifmap_read_done),
-        .weight_mm2s_data_count(weight_mm2s_data_count),
-        .ifmap_mm2s_data_count(ifmap_mm2s_data_count),
-
-        .weight_parser_state(weight_parser_state),
-        .weight_error_invalid_magic(weight_error_invalid_magic),
-        .ifmap_parser_state(ifmap_parser_state),
-        .ifmap_error_invalid_magic(ifmap_error_invalid_magic),
-        
-        .auto_start_active(auto_start_active)
+        .scheduler_done(),
+        .current_layer_id(),
+        .current_batch_id(),
+        .all_batches_done(),
+        .weight_read_done(),
+        .ifmap_read_done(),
+        .weight_mm2s_data_count(),
+        .ifmap_mm2s_data_count(),
+        .weight_parser_state(),
+        .weight_error_invalid_magic(),
+        .ifmap_parser_state(),
+        .ifmap_error_invalid_magic(),
+        .auto_start_active()
     );
 
     // ========================================================================
-    // Output Stream Receiver (Simulate PS DMA)
+    // DEBUG READ MONITORING - UPDATED untuk header 6 words
     // ========================================================================
-    reg [15:0] output_packet [0:8191];  // Storage for output data
-    integer output_word_cnt;
-    reg [15:0] output_header [0:3];     // Header storage
-    integer output_header_cnt;
+    
+    // 1. MONITOR GROUP 0 (Notification dengan Header + Data)
+    integer rx0_count;
+    reg [15:0] notif_header [0:5];  // 6 words header
+    reg notif_detected;
+    reg in_data_phase;
     
     always @(posedge aclk) begin
         if (!aresetn) begin
-            output_word_cnt <= 0;
-            output_header_cnt <= 0;
-        end else begin
-            if (m_output_axis_tvalid && m_output_axis_tready) begin
-                // Store header first (assume first 4 words)
-                if (output_header_cnt < 4) begin
-                    output_header[output_header_cnt] <= m_output_axis_tdata;
-                    output_header_cnt <= output_header_cnt + 1;
+            rx0_count <= 0;
+            notif_detected <= 0;
+            in_data_phase <= 0;
+        end else if (m0_axis_tvalid && m0_axis_tready) begin
+            
+            // State machine is based on in_data_phase
+            if (!in_data_phase) begin 
+                // ---- HEADER RECEPTION PHASE ----
+                if (rx0_count < 6) begin
+                    notif_header[rx0_count] <= m0_axis_tdata;
+                    $display("[%0t] [RX M0] HEADER[%0d] = 0x%04h", $time, rx0_count, m0_axis_tdata);
+                end
+
+                if (m0_axis_tlast) begin
+                    // ---- HEADER-ONLY PACKET DETECTED ----
+                    $display("[%0t] [RX M0] TLAST! Header-Only Packet. Total words: %0d", $time, rx0_count + 1);
                     
-                    // Decode header after 4th word
-                    if (output_header_cnt == 3) begin
-                        if (output_header[0] == 16'hC0DE) begin
-                            $display("[%0t] [OUTPUT RX] NOTIFICATION Received:", $time);
-                            $display("              Magic: 0x%04h", output_header[0]);
-                            $display("              Batch ID: %0d", output_header[1]);
-                            $display("              Tile Start: %0d", output_header[2]);
-                            $display("              Tile End: %0d", output_header[3]);
-                        end else if (output_header[0] == 16'hDA7A) begin
-                            $display("[%0t] [OUTPUT RX] FULL DATA Header Received:", $time);
-                            $display("              Magic: 0x%04h", output_header[0]);
-                            $display("              Num BRAMs: %0d", output_header[1]);
-                            $display("              Words per BRAM: %0d", output_header[2]);
-                            $display("              Total Words: %0d", output_header[3]);
-                        end
+                    // Decode header 
+                    if (notif_header[0] == 16'hC0DE) begin
+                         $display("[%0t] >>> NOTIFICATION RECEIVED <<<", $time);
+                         $display("  Magic: 0x%04h", notif_header[0]);
+                         $display("  Type:  0x%04h", notif_header[1]);
+                         $display("  Batch: %0d", notif_header[2][2:0]);
+                         $display("  Count: %0d words", notif_header[5]);
+                         notif_detected <= 1;
+                    end
+                    // Reset for next packet
+                    rx0_count <= 0;
+                } else if (rx0_count == 5) begin // 5 means 6th word just arrived
+                    // ---- END OF HEADER, DATA EXPECTED ----
+                    in_data_phase <= 1;
+                    rx0_count <= rx0_count + 1;
+                    $display("[%0t] [RX M0] === DATA PHASE STARTED ===", $time);
+                    
+                    // Decode header for data packet
+                    if (notif_header[0] == 16'hDA7A) begin 
+                        $display("[%0t] >>> FULL DATA STREAM INCOMING <<<", $time);
+                        $display("  Magic: 0x%04h", notif_header[0]);
+                        $display("  Type:  0x%04h", notif_header[1]);
+                        $display("  Layer: %0d", notif_header[2][1:0]);
+                        $display("  Count: %0d words", notif_header[5]);
                     end
                 end else begin
-                    // Store payload
-                    output_packet[output_word_cnt] <= m_output_axis_tdata;
-                    output_word_cnt <= output_word_cnt + 1;
+                    rx0_count <= rx0_count + 1;
+                end
+            } else begin
+                // ---- DATA RECEPTION PHASE ----
+                if ((rx0_count - 6) < 10) begin // Print first 10 data words
+                    $display("[%0t] [RX M0] DATA[%0d] = 0x%04h", $time, rx0_count - 6, m0_axis_tdata);
                 end
                 
-                // Reset on TLAST
-                if (m_output_axis_tlast) begin
-                    if (output_header[0] == 16'hDA7A) begin
-                        $display("[%0t] [OUTPUT RX] Full output data received (%0d words)", 
-                                 $time, output_word_cnt);
-                    end
-                    output_header_cnt <= 0;
-                    output_word_cnt <= 0;
+                rx0_count <= rx0_count + 1;
+
+                if (m0_axis_tlast) begin
+                    $display("[%0t] [RX M0] TLAST! Total words: %0d", $time, rx0_count);
+                    // Reset for next packet
+                    rx0_count <= 0;
+                    in_data_phase <= 0;
                 end
             end
+
+        end else begin
+            // De-assert single-cycle signals
+            notif_detected <= 0;
+        end
+    end
+
+    // 2. MONITOR GROUP 1 (Data BRAM 8-15)
+    integer rx1_count;
+    always @(posedge aclk) begin
+        if (!aresetn) begin
+            rx1_count <= 0;
+        end else if (m1_axis_tvalid && m1_axis_tready) begin
+            $display("[%0t] [RX M1] Valid Data: 0x%04h | Count: %d | TLAST: %b", 
+                     $time, m1_axis_tdata, rx1_count, m1_axis_tlast);
+            
+            rx1_count <= rx1_count + 1;
+            if (m1_axis_tlast) rx1_count <= 0;
         end
     end
 
     // ========================================================================
-    // Debug Monitors
-    // ========================================================================
-    wire [2:0] dbg_sched_state = dut.control_top.u_scheduler.state;
-    wire dbg_start_weight = dut.control_top.start_weight;
-    wire dbg_start_ifmap = dut.control_top.start_ifmap;
-    wire dbg_start_mapper = dut.control_top.start_Mapper;
-    wire dbg_start_trans = dut.control_top.start_transpose;
-    wire dbg_done_weight = dut.control_top.done_weight;
-    wire dbg_done_ifmap = dut.control_top.if_done;
-    wire dbg_done_mapper = dut.control_top.done_mapper;
-    wire [8:0] dbg_row_id = dut.control_top.row_id;
-    wire [5:0] dbg_tile_id = dut.control_top.tile_id;
-    wire [2:0] dbg_batch_id = current_batch_id;
-    wire dbg_batch_complete = dut.control_top.batch_complete_signal;
-
-    // Batch state monitoring (if batch FSM is implemented)
-    // wire [2:0] dbg_batch_state = dut.batch_state;
-    // wire [2:0] dbg_batch_counter = dut.batch_counter;
-
-    always @(dbg_sched_state) begin
-        case (dbg_sched_state)
-            3'd0: $display("[%0t] [SCHEDULER] State -> IDLE", $time);
-            3'd1: $display("[%0t] [SCHEDULER] State -> START_ALL (Batch %0d)", $time, dbg_batch_id);
-            3'd2: $display("[%0t] [SCHEDULER] State -> WAIT_BRAM", $time);
-            3'd3: $display("[%0t] [SCHEDULER] State -> START_TRANS", $time);
-            3'd4: $display("[%0t] [SCHEDULER] State -> WAIT_TRANS", $time);
-            3'd5: $display("[%0t] [SCHEDULER] State -> DONE_STATE (Batch %0d Complete)", $time, dbg_batch_id);
-        endcase
-    end
-
-    always @(posedge dbg_batch_complete) begin
-        $display("[%0t] >>> BATCH %0d COMPLETE (Tiles %0d-%0d) <<<", 
-                 $time, dbg_batch_id, dbg_batch_id*4, dbg_batch_id*4+3);
-    end
-
-    always @(posedge auto_start_active) 
-        $display("[%0t] [SYSTEM] AUTO-START TRIGGERED for Batch %0d", $time, dbg_batch_id);
-
-    // ========================================================================
-    // Clock
+    // Tasks
     // ========================================================================
     always begin aclk = 0; #(T/2); aclk = 1; #(T/2); end
 
-    // ========================================================================
-    // AXI Stream Send Tasks
-    // ========================================================================
     task send_one_word_weight;
-        input [15:0] data; 
-        input is_last;
+        input [15:0] data; input is_last;
         begin
-            s0_axis_tdata = data; 
-            s0_axis_tvalid = 1; 
-            s0_axis_tlast = is_last;
-            @(posedge aclk); 
-            while (!s0_axis_tready) @(posedge aclk);
-            #1; 
-            s0_axis_tvalid = 0; 
-            s0_axis_tlast = 0;
+            s0_axis_tdata = data; s0_axis_tvalid = 1; s0_axis_tlast = is_last;
+            @(posedge aclk); while (!s0_axis_tready) @(posedge aclk);
+            #1; s0_axis_tvalid = 0; s0_axis_tlast = 0;
         end
     endtask
 
     task send_one_word_ifmap;
-        input [15:0] data; 
-        input is_last;
+        input [15:0] data; input is_last;
         begin
-            s1_axis_tdata = data; 
-            s1_axis_tvalid = 1; 
-            s1_axis_tlast = is_last;
-            @(posedge aclk); 
-            while (!s1_axis_tready) @(posedge aclk);
-            #1; 
-            s1_axis_tvalid = 0; 
-            s1_axis_tlast = 0;
+            s1_axis_tdata = data; s1_axis_tvalid = 1; s1_axis_tlast = is_last;
+            @(posedge aclk); while (!s1_axis_tready) @(posedge aclk);
+            #1; s1_axis_tvalid = 0; s1_axis_tlast = 0;
         end
     endtask
 
     task send_packet_weight;
-        input [4:0] bram_start; 
-        input [4:0] bram_end; 
-        input [15:0] num_words; 
-        input [15:0] data_pattern;
+        input [4:0] bram_start; input [4:0] bram_end; 
+        input [15:0] num_words; input [15:0] data_pattern;
         begin
-            $display("\n[%0t] [WEIGHT] Loading Batch via AXI (BRAMs %0d-%0d, %0d words each)...", 
-                     $time, bram_start, bram_end, num_words);
-            
-            // Header
-            send_one_word_weight(16'hC0DE, 0);          // Magic
-            send_one_word_weight(16'h0001, 0);          // WRITE instruction
+            $display("\n[%0t] [WEIGHT] Sending Header...", $time);
+            send_one_word_weight(16'hC0DE, 0);
+            send_one_word_weight(16'h0001, 0);
             send_one_word_weight({11'h0, bram_start}, 0);
             send_one_word_weight({11'h0, bram_end}, 0);
-            send_one_word_weight(16'd0, 0);             // Addr Start = 0
-            send_one_word_weight(num_words, 0);         // Addr Count
+            send_one_word_weight(16'd0, 0);
+            send_one_word_weight(num_words, 0);
             
-            // Payload: Pattern = BRAM_ID
+            $display("[%0t] [WEIGHT] Sending Payload (Parallel Write)...", $time);
             fork 
                 begin : weight_payload
                     integer i, j;
@@ -299,23 +260,17 @@ module System_Level_Top_tb();
                     end
                 end
             join
-            
-            wait(weight_write_done); 
+            wait(weight_write_done);
             @(posedge aclk);
             $display("[%0t] [WEIGHT] Load COMPLETE.", $time);
         end
     endtask
 
     task send_packet_ifmap;
-        input [4:0] bram_start; 
-        input [4:0] bram_end; 
-        input [15:0] num_words; 
-        input [15:0] data_pattern;
+        input [4:0] bram_start; input [4:0] bram_end; 
+        input [15:0] num_words; input [15:0] data_pattern;
         begin
-            $display("\n[%0t] [IFMAP] Loading via AXI (BRAMs %0d-%0d, %0d words each)...", 
-                     $time, bram_start, bram_end, num_words);
-            
-            // Header
+            $display("\n[%0t] [IFMAP] Sending Header...", $time);
             send_one_word_ifmap(16'hC0DE, 0);
             send_one_word_ifmap(16'h0001, 0);
             send_one_word_ifmap({11'h0, bram_start}, 0);
@@ -323,7 +278,7 @@ module System_Level_Top_tb();
             send_one_word_ifmap(16'd0, 0);
             send_one_word_ifmap(num_words, 0);
             
-            // Payload
+            $display("[%0t] [IFMAP] Sending Payload (Parallel Write)...", $time);
             fork 
                 begin : ifmap_payload
                     integer i, j;
@@ -334,88 +289,110 @@ module System_Level_Top_tb();
                     end
                 end
             join
-            
-            wait(ifmap_write_done); 
+            wait(ifmap_write_done);
             @(posedge aclk);
             $display("[%0t] [IFMAP] Load COMPLETE.", $time);
         end
     endtask
 
+    task wait_for_notification;
+        input [2:0] expected_batch;
+        begin
+            $display("[%0t] Waiting for Batch %0d notification...", $time, expected_batch);
+            @(posedge notif_detected);
+            $display("[%0t] >>> NOTIFICATION RECEIVED for Batch %0d <<<", $time, expected_batch);
+        end
+    endtask
+
     // ========================================================================
-    // Main Test Sequence - MULTI-BATCH (3 batches = 12 tiles)
+    // Main Sequence
     // ========================================================================
     initial begin
-        // Initialize
         aresetn = 0;
-        s0_axis_tdata = 0; s0_axis_tvalid = 0; s0_axis_tlast = 0; m0_axis_tready = 1;
-        s1_axis_tdata = 0; s1_axis_tvalid = 0; s1_axis_tlast = 0; m1_axis_tready = 1;
-        m_output_axis_tready = 1;  // Always ready to receive output
-        ext_start = 0; 
+        s0_axis_tdata = 0; s0_axis_tvalid = 0; s0_axis_tlast = 0; 
+        m0_axis_tready = 1; // ALWAYS READY TO READ
+        s1_axis_tdata = 0; s1_axis_tvalid = 0; s1_axis_tlast = 0; 
+        m1_axis_tready = 1; // ALWAYS READY TO READ
         
-        #(T*10); 
-        aresetn = 1;
+        #(T*10); aresetn = 1;
         $display("\n[%0t] ============ RESET RELEASED ============\n", $time);
         #(T*20);
 
-        // ====================================================================
-        // STEP 1: Load IFMAP (ONCE - all 16 BRAMs, 512 words each)
-        // ====================================================================
-        $display("\n[%0t] ===== STEP 1: Loading IFMAP (ONE-TIME) =====", $time);
-        send_packet_ifmap(5'd0, 5'd15, 16'd1024, 16'h1000);
-        
+        // STEP 1: IFMAP
+        $display("\n[%0t] ===== STEP 1: Loading IFMAP =====", $time);
+        send_packet_ifmap(5'd0, 5'd15, 16'd1024, 16'h0000);
         #(T*100);
 
-        // ====================================================================
-        // STEP 2: Load WEIGHT BATCH 0 (Tiles 0-3)
-        // ====================================================================
-        $display("\n[%0t] ===== STEP 2: Loading WEIGHT BATCH 0 (Tiles 0-3) =====", $time);
-        send_packet_weight(5'd0, 5'd15, 16'd2048, 16'h0000);
-        
-        $display("[%0t] Waiting for Batch 0 processing...", $time);
-        wait(dbg_batch_complete && dbg_batch_id == 0);
-        #(T*100);
-        
-        // ====================================================================
-        // STEP 3: Load WEIGHT BATCH 1 (Tiles 4-7)
-        // ====================================================================
-        $display("\n[%0t] ===== STEP 3: Loading WEIGHT BATCH 1 (Tiles 4-7) =====", $time);
-        send_packet_weight(5'd0, 5'd15, 16'd2048, 16'h0100);
-        
-        $display("[%0t] Waiting for Batch 1 processing...", $time);
-        wait(dbg_batch_complete && dbg_batch_id == 1);
-        #(T*100);
-        
-        // ====================================================================
-        // STEP 4: Load WEIGHT BATCH 2 (Tiles 8-11)
-        // ====================================================================
-        $display("\n[%0t] ===== STEP 4: Loading WEIGHT BATCH 2 (Tiles 8-11) =====", $time);
-        send_packet_weight(5'd0, 5'd15, 16'd2048, 16'h0200);
-        
-        $display("[%0t] Waiting for Batch 2 processing...", $time);
-        wait(dbg_batch_complete && dbg_batch_id == 2);
+        // STEP 2: BATCH 0
+        $display("\n[%0t] ===== STEP 2: Loading WEIGHT BATCH 0 =====", $time);
+        send_packet_weight(5'd0, 5'd15, 16'd1024, 16'h0000);
+        wait_for_notification(3'd0);
         #(T*100);
 
-        // ====================================================================
+        // STEP 3: BATCH 1
+        $display("\n[%0t] ===== STEP 3: Loading WEIGHT BATCH 1 =====", $time);
+        send_packet_weight(5'd0, 5'd15, 16'd1024, 16'h0000);
+        wait_for_notification(3'd1);
+        #(T*100);
+
+        // STEP 4: BATCH 2
+        $display("\n[%0t] ===== STEP 4: Loading WEIGHT BATCH 2 =====", $time);
+        send_packet_weight(5'd0, 5'd15, 16'd1024, 16'h0000);
+        wait_for_notification(3'd2);
+        #(T*100);
+        
+        // STEP 5: BATCH 3
+        $display("\n[%0t] ===== STEP 5: Loading WEIGHT BATCH 3 =====", $time);
+        send_packet_weight(5'd0, 5'd15, 16'd1024, 16'h0000);
+        wait_for_notification(3'd3);
+        #(T*100);
+        
+        // STEP 6: BATCH 4
+        $display("\n[%0t] ===== STEP 6: Loading WEIGHT BATCH 4 =====", $time);
+        send_packet_weight(5'd0, 5'd15, 16'd1024, 16'h0000);
+        wait_for_notification(3'd4);
+        #(T*100);
+        
+        // STEP 7: BATCH 5
+        $display("\n[%0t] ===== STEP 7: Loading WEIGHT BATCH 5 =====", $time);
+        send_packet_weight(5'd0, 5'd15, 16'd1024, 16'h0000);
+        wait_for_notification(3'd5);
+        #(T*100);
+        
+        // STEP 8: BATCH 6
+        $display("\n[%0t] ===== STEP 8: Loading WEIGHT BATCH 6 =====", $time);
+        send_packet_weight(5'd0, 5'd15, 16'd1024, 16'h0000);
+        wait_for_notification(3'd6);
+        #(T*100);
+        
+        // STEP 9: BATCH 7 (LAST)
+        $display("\n[%0t] ===== STEP 9: Loading WEIGHT BATCH 7 (LAST) =====", $time);
+        send_packet_weight(5'd0, 5'd15, 16'd1024, 16'h0000);
+        wait_for_notification(3'd7);
+        #(T*100);
+
         // VERIFICATION
-        // ====================================================================
-        $display("\n[%0t] ===== ALL 3 BATCHES (12 TILES) COMPLETED =====", $time);
-        $display("[%0t] Processed Tiles: 0-11", $time);
-        $display("[%0t] Waiting for final output stream transmission...", $time);
+        $display("\n[%0t] ===== ALL 8 BATCHES PROCESSED =====", $time);
+        $display("  Expected: 8 notifications received (Batch 0-7)");
+        $display("  Each notification: Header(6) words, NO DATA");
+        $display("\n  Waiting for FULL DATA transmission...");
+        $display("  Expected: Header(6) + All BRAM(4096) = 4102 words via m0_axis");
         
-        #(T*10000);  // Wait for output transmission
-
-        $display("\n[%0t] ===== TEST COMPLETE =====", $time);
+        // Tunggu data output keluar di M0/M1
+        #(T*50000);
+        
+        $display("\n[%0t] ========== TEST COMPLETE ==========", $time);
         $finish;
     end
 
-    // Timeout watchdog
+    // Watchdog
     initial begin
-        #(T*50000000);  // 500ms timeout
-        $display("\n[%0t] !!! TIMEOUT - TEST FAILED !!!", $time);
+        #(T*50000000);
+        $display("\n[%0t] !!! TIMEOUT !!!", $time);
         $finish;
     end
 
-    // ------------------------------------------------------------------------
+        // ------------------------------------------------------------------------
     // 1. WEIGHT WRITE PROBES
     // ------------------------------------------------------------------------
     wire [10:0] probe_wr_weight_addr = dut.datapath.w_addr_wr_flat[10:0]; // Alamat tulis (Shared)
@@ -497,4 +474,6 @@ module System_Level_Top_tb();
     wire probe_wr_ifmap_en_14 = dut.datapath.if_we[14];
     wire probe_wr_ifmap_en_15 = dut.datapath.if_we[15];
 
+
+    
 endmodule
