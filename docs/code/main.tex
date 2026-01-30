@@ -1,0 +1,87 @@
+\documentclass[conference]{IEEEtran}
+
+% =========================
+% Packages
+% =========================
+\usepackage{amsmath, amssymb}
+\usepackage{graphicx}
+\usepackage{cite}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{url}
+\usepackage{float}
+
+% For fixed-point / hardware notation
+\usepackage{siunitx}
+
+% =========================
+% Title & Author
+% =========================
+\title{A Systolic Array Architecture for GAN-Based EEG Artifact Removal}
+
+\author{
+\begin{minipage}[t]{0.32\textwidth}
+\centering
+\textbf{Dharma Anargya Jowandy}\\
+Electrical Engineering\\
+\textit{School of Electrical Engineering and Informatics, Bandung Institute of Technology}\\
+Bandung, Indonesia\\
+13223075@std.stei.itb.ac.id
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.32\textwidth}
+\centering
+\textbf{Rizmi Ahmad Raihan}\\
+Electrical Engineering\\
+\textit{School of Electrical Engineering and Informatics, Bandung Institute of Technology}\\
+Bandung, Indonesia\\
+13223051@std.stei.itb.ac.id
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.32\textwidth}
+\centering
+\textbf{Aryo Wisanggeni}\\
+Informatics Engineering\\
+\textit{School of Electrical Engineering and Informatics, Bandung Institute of Technology}\\
+Bandung, Indonesia\\
+13523100@std.stei.itb.ac.id
+\end{minipage}
+}
+
+
+\begin{document}
+\maketitle
+
+% =========================
+% Abstract
+% =========================
+\begin{abstract}
+This paper presents a hardware-oriented design of a Generative Adversarial Network (GAN) inference pipeline optimized for integrated circuit (IC) implementation. The proposed system focuses on fixed-point quantization, batch normalization fusion, and DDR-based weight loading to reduce memory bandwidth and computational cost while preserving output fidelity.
+\end{abstract}
+
+\begin{IEEEkeywords}
+GAN inference, fixed-point arithmetic, IC design, hardware acceleration, DDR memory
+\end{IEEEkeywords}
+
+% =========================
+% Sections
+% =========================
+\section{Introduction}
+\input{sections/introduction}
+
+\section{Design Principles and Model Decisions}
+\input{sections/methodology}
+
+\section{Model Design Principles}
+\input{sections/model_design_principles}
+
+\section{Software Implementation Detail}
+\input{sections/software_implementation_detail}
+
+% =========================
+% Bibliography
+% =========================
+\bibliographystyle{IEEEtran}
+\bibliography{refs}
+
+\end{document}
