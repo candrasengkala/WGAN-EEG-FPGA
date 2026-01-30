@@ -1,0 +1,38 @@
+\subsection{GAN Overview}
+% GAN in general
+Denoising EEG can be formulated as a conditional signal-to-signal reconstruction problem, in which a model learns to map a noisy EEG input to a clean EEG output. 
+While this task can be addressed using conventional regression-based models trained with pointwise loss functions (e.g., L1 or L2 loss), such approaches tend to produce over-smoothed reconstructions that fail to preserve high-frequency temporal structures that are critical for EEG analysis. \\
+
+Generative Adversarial Networks (GANs) provide a suitable framework for this task by modeling the conditional distribution of clean EEG signals given noisy observations. 
+In a GAN-based denoising setup, a generator is trained to reconstruct clean EEG signals from noisy inputs, while a discriminator learns to distinguish between generated synthetic signals and ground-truth clean EEG. 
+The adversarial objective encourages the generator to produce outputs that not only minimize reconstruction error, but also to consider the realism of the generated signals. 
+This property is particularly important for EEG denoising, as the notion of a single “correct” clean signal is inherently ambiguous. Multiple plausible clean EEG realizations may exist for a given noisy input. \\
+
+To capture the temporal patterns in EEG signals effectively, convolutional neural networks (CNNs) were used rather than fully connected layers. EEG signals exhibit strong local temporal correlations, and convolutions naturally exploit this locality by learning filters that detect meaningful patterns across short temporal windows. 
+CNNs also reduce the number of parameters compared to fully connected layers, improving training stability and reducing the risk of overfitting, which is especially important when working with limited EEG datasets. 
+Furthermore, convolutional architectures are well-suited to hierarchical feature extraction, allowing the model to capture both fine-grained and longer-range temporal dependencies essential for accurate denoising. 
+The reduced parameter count also makes CNNs more suitable for deployment on hardware with limited memory for real-time EEG denoising.
+
+Furthermore, GANs offer practical advantages in terms of computational efficiency. Once trained, the generator produces denoised EEG signals in a single forward pass, making GAN-based models suitable for real-time or near–real-time applications. 
+These characteristics make GANs a suitable choice for wearable EEG motion artifact removal.
+
+
+\subsection{Generator and Critic Structure}
+% Generator and critic structure used, with each diagram
+% BatchNorm will be present in both, but will be mentioned is not actually done in hardware because fusion optimization
+
+\subsection{Data-Driven Model}
+% Already will be mentioned in intorduction, but will expand a little
+% Explains that the model built can be used for variations of EEG artifacts
+
+\subsection{Normalization Strategy}
+% BN over GN motivation
+% Design level table
+
+\subsection{BatchNorm fusion}
+% Mathematical derivation and just explain why
+
+\subsection{Fixed-Point Representation}
+% Fixed-point format (Qm.n, even if tentative)
+% Inference uses fixed-point exclusively
+% Software model mirrors hardware arithmetic
