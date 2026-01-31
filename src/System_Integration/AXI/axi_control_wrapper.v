@@ -168,7 +168,7 @@ module axis_control_wrapper #(
     
     assign rd_bram_start = send_header ? out_mgr_rd_bram_start : wr_bram_start[2:0];
     assign rd_bram_end   = send_header ? out_mgr_rd_bram_end   : wr_bram_end[2:0];
-    assign rd_addr_start = wr_addr_start; // Address start is shared/inherited
+    assign rd_addr_start = send_header ? 16'd0 : wr_addr_start; // FIX: Use 0 for auto-read // Address start is shared/inherited
     assign rd_addr_count = send_header ? out_mgr_rd_addr_count : wr_addr_count;
     
     // ========================================================================
