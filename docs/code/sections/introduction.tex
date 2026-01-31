@@ -1,0 +1,17 @@
+Electroencephalography (EEG) is a widely used method to record an electrogram of the spontaneous electrical activity of the brain. 
+It has been employed extensively across a broad range of applications, from medical diagnostics and brain-computer interfaces (BCIs) to sleep analysis \cite{}.
+A critical challenge in deploying EEG systems is the extraction of clean neural signals, which requires filtering out various noise sources and artifacts that can obscure pure brain activity \cite{}.
+
+Traditionally, data denoising relies on expert analysis, where professionals manually inspect the signal to identify and remove noise. 
+However, this approach is labor-intensive and inherently subjective; the results often vary significantly depending on the individual performing the task.
+In recent years, numerous machine learning models have emerged to automate this process \cite{}, yet they face several challenges.
+First, most existing datasets provide raw signals paired with manually cleaned versions, which, as noted, lack a deterministic "ground truth" necessary for robust model training.
+Second, EEG artifacts exhibit diverse characteristics \cite{}, making it difficult to develop a generalized denoiser using standard machine learning approaches.
+Finally, state-of-the-art models are often computationally intensive \cite{}, rendering them unsuitable for real-time applications on resource-constrained devices.
+
+To address these challenges, we propose a specialized systolic array architecture implemented in hardware, designed to deliver high-performance, real-time denoising.
+Our approach utilizes a data-driven model capable of generalizing across a wide array of artifacts, provided that representative data is available for training.
+Furthermore, we adopt the methodology introduced by EEGdenoiseNet \cite{}, which utilizes a constructed ground truth to resolve the consistency issues inherent in manually labeled datasets.
+
+This hardware implementation is supported by a suite of software-guided optimizations, including Batch Normalization fusion\cite{} and fixed-point quantization\cite{}. Together, these enhancements significantly improve hardware efficiency without compromising model accuracy.
+
