@@ -156,8 +156,8 @@ def main():
 
         # Test 6: Complex scenario
         run_test("TEST 6: Complex Scenario",
-                 input_channels=1, temporal_length=512, kernel_size=16,
-                 filter_number=32, stride=2, padding=7, file_handle=f)
+                 input_channels=16, temporal_length=512, kernel_size=7,
+                 filter_number=1, stride=1, padding=3, file_handle=f)
 
         # Test 7: Block-based weight loading
         run_test("TEST 7: Block-based Weight Loading (70 channels)",

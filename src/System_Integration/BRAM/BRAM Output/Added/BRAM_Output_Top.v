@@ -62,7 +62,8 @@ module BRAM_Output_Top #(
 
     // 1DCONV Adder control
     input  wire                              conv_en_reg_adder,      // Enable adder register
-    input  wire                              conv_output_reg_rst,    // Reset output register
+    input  wire                              conv_output_systolic_reg_rst,      // Reset Systolic Register
+    input  wire                              conv_output_adder_reg_rst,         // Reset Adder Register
 
     // 1DCONV Output demux control
     input  wire                              conv_output_bram_dest,  // 0=to adder, 1=to external
@@ -149,7 +150,7 @@ module BRAM_Output_Top #(
         .WIDTH(DW * NUM_BRAMS)
     ) u_conv_systolic_reg (
         .clk (clk),
-        .rst (conv_output_reg_rst),
+        .rst (conv_output_systolic_reg_rst),
         .en  (conv_out_new_val_sign),
         .d   (conv_systolic_output),
         .q   (conv_systolic_reg)
@@ -162,7 +163,7 @@ module BRAM_Output_Top #(
         .WIDTH(DW * NUM_BRAMS)
     ) u_conv_bram_to_adder_reg (
         .clk (clk),
-        .rst (conv_output_reg_rst),
+        .rst (conv_output_adder_reg_rst),
         .en  (conv_en_reg_adder),
         .d   (conv_bram_to_adder),
         .q   (conv_bram_to_adder_reg)
@@ -252,9 +253,9 @@ module BRAM_Output_Top #(
     generate
         for (i = 0; i < NUM_BRAMS; i = i + 1) begin : BRAM_ARRAY
 
-            simple_dual_two_clocks #(
-                .DW            (DW),
-                .ADDRESS_LENGTH(ADDR_WIDTH),
+            simple_dual_two_clocks_512x16 #(
+                .DATA_WIDTH            (DW),
+                .ADDR_WIDTH(ADDR_WIDTH),
                 .DEPTH         (DEPTH)
             ) bram_i (
                 // WRITE PORT

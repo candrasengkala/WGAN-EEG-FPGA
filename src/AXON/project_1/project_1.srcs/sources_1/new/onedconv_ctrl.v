@@ -523,7 +523,7 @@ module onedconv_ctrl #(
                 S_RESTART_MICROSEQUENCER_SET_ADDRESS: begin
                     // Calculate input address accounting for padding:
                     // input_pos = (output_pos * stride) - padding, clamped to [0, temporal_length-1]
-                    temp_ifmap_start = $signed((kernel_size)*needed_amount_count*stride - padding);
+                    temp_ifmap_start = $signed((((kernel_size*Dimension) - (((kernel_size - 1)/stride_val)*Dimension))*needed_amount_count) - padding);
                     if (temp_ifmap_start < $signed(0))
                         ifmap_counter_start_val = base_addr_ifmap;
                     else if (temp_ifmap_start >= $signed({1'b0, temporal_length}))

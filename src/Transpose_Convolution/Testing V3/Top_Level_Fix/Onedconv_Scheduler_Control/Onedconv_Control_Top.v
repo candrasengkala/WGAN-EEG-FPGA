@@ -4,7 +4,7 @@
 // 
 // This module combines three control layers into a single block:
 // 1. Auto Scheduler - Layer sequencing and dependency tracking
-// 2. Scheduler FSM - AXI handshaking and layer configuration
+// 2. Scheduler FSM - AXI handshaking and layer configuration (with ROM)
 // 3. Control Wrapper - Datapath control (counters, FSMs, systolic array)
 //
 // Direct interface with:
@@ -24,20 +24,16 @@ module Onedconv_Control_Top #(
     // ============================================================
     // Global Control Interface
     // ============================================================
-    input  wire global_start,   // Start entire 9-layer sequence
-    output wire global_done,    // All 9 layers complete
+    input  wire global_start,   // Start entire 10-layer sequence (optional override)
+    output wire global_done,    // All 10 layers complete
     
     // ============================================================
     // AXI Interface
     // ============================================================
-    input  wire write_done,     // AXI write complete (weight or ifmap)
-    input  wire read_done,      // AXI read complete
-    input  wire transmission_active,  // Optional: set to 1'b0 if unused
-    
-    // AXI control outputs
-    output wire weight_read_req,      // Request weight data from DDR
-    output wire ifmap_read_req,       // Request ifmap data from DDR
-    output wire ofmap_write_req,      // Request to write ofmap to DDR
+    input  wire weight_write_done,    // AXI weight write complete
+    input  wire ifmap_write_done,     // AXI ifmap write complete
+    input  wire read_done,            // AXI read complete
+    input  wire transmission_active,  // Output Manager is sending data
     
     // ============================================================
     // Matrix Multiplication Datapath Inputs
@@ -103,7 +99,16 @@ module Onedconv_Control_Top #(
     output wire layer_processing,
     output wire [3:0] scheduler_state,
     output wire done_count_top,
-    output wire done_top
+    output wire done_top,
+    
+    // ============================================================
+    // Auto Scheduler Status Outputs (optional, for debugging)
+    // ============================================================
+    output wire all_layers_complete,
+    output wire layer_transition,
+    output wire clear_output_bram,
+    output wire auto_start_active,
+    output wire data_load_ready
 );
 
     // ============================================================
@@ -115,12 +120,6 @@ module Onedconv_Control_Top #(
     
     // Auto Scheduler <-> Scheduler FSM
     wire auto_to_fsm_start;
-    wire [1:0] auto_stride;
-    wire [2:0] auto_padding;
-    wire [4:0] auto_kernel_size;
-    wire [9:0] auto_input_channels;
-    wire [9:0] auto_filter_number;
-    wire [9:0] auto_temporal_length;
     wire [3:0] auto_layer_id;
     
     wire fsm_to_auto_layer_complete;
@@ -154,79 +153,78 @@ module Onedconv_Control_Top #(
     assign fsm_to_auto_layer_complete = done_all_pulse;
     
     // Status outputs
-    assign current_layer_id = auto_layer_id;
     assign scheduler_state = 4'b0;  // Can connect to FSM state if needed
+    assign layer_processing = ~all_layers_complete;
+    assign global_done = all_layers_complete;
     
     // ============================================================
     // Layer 1: Auto Scheduler
-    // Manages 9-layer sequence (Layer 0-8)
+    // Manages 10-layer sequence (Layer 0-9) with automatic data dependency tracking
     // ============================================================
-    Onedconv_Auto_Scheduler auto_scheduler_inst (
+    Onedconv_Auto_Scheduler #(
+        .DW(DW)
+    ) auto_scheduler_inst (
         .clk(clk),
         .rst_n(rst_n),
         
-        // Global control
-        .global_start(global_start),
-        .global_done(global_done),
+        // Data Load Status (From AXI Write Operations)
+        .weight_write_done(weight_write_done),
+        .ifmap_write_done(ifmap_write_done),
         
-        // Layer completion from FSM
-        .layer_complete(fsm_to_auto_layer_complete),
+        // External Controls (Optional Override)
+        .ext_scheduler_start(global_start),
+        .external_layer_id(4'd0),  // Not used when using automatic sequencing
         
-        // Layer configuration outputs to FSM
-        .layer_start(auto_to_fsm_start),
-        .stride(auto_stride),
-        .padding(auto_padding),
-        .kernel_size(auto_kernel_size),
-        .input_channels(auto_input_channels),
-        .filter_number(auto_filter_number),
-        .temporal_length(auto_temporal_length),
-        .layer_id(auto_layer_id),
+        // Execution Status (From Main Scheduler via pulse)
+        .layer_complete_signal(fsm_to_auto_layer_complete),
         
-        // Status
-        .layer_processing(layer_processing)
+        // Output Controls
+        .final_start_signal(auto_to_fsm_start),
+        .current_layer_id(current_layer_id),
+        .all_layers_complete(all_layers_complete),
+        .layer_transition(layer_transition),
+        .clear_output_bram(clear_output_bram),
+        .auto_start_active(auto_start_active),
+        .data_load_ready(data_load_ready)
     );
     
     // ============================================================
     // Layer 2: Scheduler FSM
     // Handles AXI handshaking and layer execution
+    // Layer configurations stored in internal ROM
     // ============================================================
-    Onedconv_Scheduler_FSM scheduler_fsm_inst (
+    Onedconv_Scheduler_FSM #(
+        .DW(DW),
+        .CHANNELS_PER_BATCH(64)
+    ) scheduler_fsm_inst (
         .clk(clk),
         .rst_n(rst_n),
         
-        // Layer configuration from Auto Scheduler
-        .layer_start(auto_to_fsm_start),
-        .stride(auto_stride),
-        .padding(auto_padding),
-        .kernel_size(auto_kernel_size),
-        .input_channels(auto_input_channels),
-        .filter_number(auto_filter_number),
-        .temporal_length(auto_temporal_length),
-        .layer_id(auto_layer_id),
+        // Trigger from Auto Scheduler
+        .start(auto_to_fsm_start),
+        
+        // Layer Context from Auto Scheduler
+        .current_layer_id(current_layer_id),
         
         // AXI interface
-        .write_done(write_done),
+        .write_done(weight_write_done | ifmap_write_done),  // Combined for FSM
         .read_done(read_done),
         .transmission_active(transmission_active),
         
-        .weight_read_req(weight_read_req),
-        .ifmap_read_req(ifmap_read_req),
-        .ofmap_write_req(ofmap_write_req),
-        
         // Control Wrapper interface
-        .start_compute(fsm_to_wrapper_start),
-        .compute_done_all(wrapper_to_fsm_done_all),
-        .compute_done_filter(wrapper_to_fsm_done_filter),
+        .done_all(wrapper_to_fsm_done_all),
+        .done_filter(wrapper_to_fsm_done_filter),
         .weight_req_top(wrapper_to_fsm_weight_req),
         .weight_ack_top(fsm_to_wrapper_weight_ack),
+        .start_whole(fsm_to_wrapper_start),
         
-        // Pass-through parameters to wrapper
-        .stride_out(fsm_stride),
-        .padding_out(fsm_padding),
-        .kernel_size_out(fsm_kernel_size),
-        .input_channels_out(fsm_input_channels),
-        .filter_number_out(fsm_filter_number),
-        .temporal_length_out(fsm_temporal_length)
+        // Configuration outputs to wrapper (from internal ROM)
+        .stride(fsm_stride),
+        .padding(fsm_padding),
+        .kernel_size(fsm_kernel_size),
+        .input_channels(fsm_input_channels),
+        .filter_number(fsm_filter_number),
+        .temporal_length(fsm_temporal_length)
     );
     
     // ============================================================

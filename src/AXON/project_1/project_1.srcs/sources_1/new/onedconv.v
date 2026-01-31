@@ -297,7 +297,7 @@ module onedconv #(
         end
     endgenerate
     
-    wire [Dimension*DW-1:0] systolic_output_before_adder;
+    wire [(Dimension*DW)-1:0] systolic_output_before_adder;
     // ----------------------------------------
     // ADD CHANNEL DEMUX
     // ----------------------------------------
@@ -345,10 +345,10 @@ module onedconv #(
     end
 
     wire out_new_val_sign; // CONTROL INPUT
-    wire [Dimension*DW-1:0] systolic_output_before_adder_after_reg;
+    wire [(Dimension*DW)-1:0] systolic_output_before_adder_after_reg;
     wire rst_top;   //CONTROL OUTPUT
     reg_en_rst #(
-        .WIDTH(DW * Dimension)
+        .WIDTH(DW*Dimension)
     ) output_systolic_reg (
         .clk(clk), 
         .rst(rst_top), //Active low reset

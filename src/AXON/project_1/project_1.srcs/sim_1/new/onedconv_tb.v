@@ -1,11 +1,33 @@
 `timescale 1ns/1ps
 
+// =============================================================================
+// FILE PATH CONFIGURATION
+// =============================================================================
+// Modify these paths to match your file locations.
+// 
+// Option 1: Place files in simulation working directory (usually project_1.sim/sim_1/behav/xsim/)
+// //           and use simple filenames:
+// `define INPUT_FILE "input.txt"
+// `define WEIGHT_FILE "weight.txt"
+// `define BIAS_FILE "bias.txt"
+// //
+// Option 2: Use relative paths from simulation directory:
+// `define INPUT_FILE "../../../input.txt"
+// `define WEIGHT_FILE "../../../weight.txt"  
+// `define BIAS_FILE "../../../bias.txt"
+//
+// Option 3: Use absolute paths:
+`define INPUT_FILE "D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/input.txt"
+`define WEIGHT_FILE "D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/weight.txt"
+`define BIAS_FILE "D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/bias.txt"
+// =============================================================================
+
 module onedconv_tb;
 
     // ========================================================
     // Parameters
     // ========================================================
-    parameter DW = 16;
+    parameter DW = 24;
     parameter Dimension = 16;
     parameter ADDRESS_LENGTH = 10;
     parameter BRAM_Depth = 1024;
@@ -367,22 +389,117 @@ module onedconv_tb;
         end
     endtask
     
-    // Task: Initialize input data for testing
+    // Task: Read and display results in table format
+    task read_results;
+        input [9:0] expected_output_length;
+        integer i, f, max_filters;
+        reg signed [DW-1:0] filter_val;
+        reg [DW*Dimension-1:0] output_data [0:511];  // Store output data
+        begin
+            $display("\n========================================");
+            $display("  OUTPUT RESULTS (Hexadecimal)");
+            $display("========================================");
+            $display("Reading %0d output values for %0d filter(s)...\n",
+                     expected_output_length, filter_number);
+
+            // Read all output values from BRAM
+            for (i = 0; i < expected_output_length; i = i + 1) begin
+                read_output_bram(i);
+                output_data[i] = output_result;
+            end
+
+            // Disable read mode
+            read_mode_output_result = 1'b0;
+            enb_output_result = {Dimension{1'b0}};
+
+            // Determine how many filters to display
+            max_filters = (filter_number > Dimension) ? Dimension : filter_number;
+
+            // Print table header
+            $write("Time |");
+            for (f = 0; f < max_filters; f = f + 1) begin
+                $write(" Filter %2d |", f);
+            end
+            $write("\n");
+
+            // Print separator
+            $write("-----|");
+            for (f = 0; f < max_filters; f = f + 1) begin
+                $write("-----------|");
+            end
+            $write("\n");
+
+            // Print data rows
+            for (i = 0; i < expected_output_length; i = i + 1) begin
+                $write(" %3d |", i);
+                for (f = 0; f < max_filters; f = f + 1) begin
+                    filter_val = extract_filter_value(output_data[i], f);
+                    $write("    0x%04h |", filter_val);
+                end
+                $write("\n");
+            end
+
+            $display("========================================");
+
+            // DEBUG: Show first output value details for debugging
+            if (expected_output_length > 0 && max_filters >= 5) begin
+                $display("\nDEBUG: First 5 filter outputs at Time 0:");
+                for (f = 0; f < 5; f = f + 1) begin
+                    filter_val = extract_filter_value(output_data[0], f);
+                    $display("  Filter %0d: 0x%0h (%0d)", f, filter_val, filter_val);
+                end
+            end
+
+            $display("\n");
+        end
+    endtask
+
+    // Task: Initialize input data for testing (read from input.txt file in hex format)
+    // File format: Each COLUMN is a channel, each ROW is a time step
     task init_input_data;
         input [9:0] channels;
         input [9:0] temp_len;
         integer ch, t, bram_idx, slot;
         reg [ADDRESS_LENGTH-1:0] base_addr;
         reg [DW-1:0] value;
+        integer file;
+        integer scan_result;
+        reg [DW-1:0] row_data [0:1023];  // Store one row at a time (max 1024 channels)
+        integer num_values_in_row;
         begin
-            $display("Initializing input data: %0d channels, %0d temporal length", channels, temp_len);
-            for (ch = 0; ch < channels; ch = ch + 1) begin
-                bram_idx = ch % 16;
-                slot = ch / 16;
-                base_addr = slot * temp_len;
+            $display("Initializing input data from input.txt: %0d channels, %0d temporal length", channels, temp_len);
+            
+            // Open input file
+            file = $fopen(`INPUT_FILE, "r");
+            if (file == 0) begin
+                $display("ERROR: Could not open %s", `INPUT_FILE);
+                $display("Please ensure the file exists in the simulation working directory");
+                $display("Or update the `INPUT_FILE define at the top of the testbench");
+                $finish;
+            end
 
-                for (t = 0; t < temp_len; t = t + 1) begin
-                    value = ((ch + t) % 5) + 1;  // Small pattern: ((ch + t) % 5) + 1
+            // Read file row by row (each row = one time step for all channels)
+            for (t = 0; t < temp_len; t = t + 1) begin
+                // Read entire row into array
+                num_values_in_row = 0;
+                while (num_values_in_row < channels) begin
+                    scan_result = $fscanf(file, "%h", row_data[num_values_in_row]);
+                    if (scan_result != 1) begin
+                        $display("ERROR: Failed to read input value at time=%0d, channel=%0d", t, num_values_in_row);
+                        $fclose(file);
+                        $finish;
+                    end
+                    num_values_in_row = num_values_in_row + 1;
+                end
+
+                // Now write each channel's value at this time step
+                for (ch = 0; ch < channels; ch = ch + 1) begin
+                    bram_idx = ch % 16;
+                    slot = ch / 16;
+                    base_addr = slot * temp_len;
+                    
+                    value = row_data[ch];
+
                     write_inputdata_bram(
                         base_addr + t,
                         {Dimension{value}},  // Replicate to all lanes
@@ -390,22 +507,21 @@ module onedconv_tb;
                     );
                 end
 
-                // DEBUG: Print first few channels' data pattern
-                if (ch < 4) begin
-                    $display("  Ch %0d -> BRAM %0d, slot %0d, addr %0d-%0d, pattern: t=0:%0d, t=1:%0d, t=2:%0d",
-                             ch, bram_idx, slot, base_addr, base_addr + temp_len - 1,
-                             ((ch + 0) % 5) + 1,
-                             ((ch + 1) % 5) + 1,
-                             ((ch + 2) % 5) + 1);
+                // DEBUG: Print first few time steps
+                if (t < 3) begin
+                    $display("  Time %0d -> First 4 channels: Ch0=0x%h, Ch1=0x%h, Ch2=0x%h, Ch3=0x%h",
+                             t, row_data[0], row_data[1], row_data[2], row_data[3]);
                 end
             end
+
+            $fclose(file);
 
             // CRITICAL: Ensure all input data write signals are cleared after initialization
             ena_inputdata_input_bram = {Dimension{1'b0}};
             wea_inputdata_input_bram = {Dimension{1'b0}};
             repeat(3) @(posedge clk);  // Allow signals to settle
 
-            $display("Input data initialization complete");
+            $display("Input data initialization complete: read %0d time steps x %0d channels", temp_len, channels);
         end
     endtask
 
@@ -434,19 +550,48 @@ module onedconv_tb;
         end
     endtask
 
-    // Task: Initialize bias (clear output BRAM by writing zeros)
+    // Task: Initialize bias (read from bias.txt file in hex format)
     task init_bias;
         input [9:0] max_output_length;
-        integer addr;
+        integer addr, f;
+        reg [DW-1:0] bias_value;
+        reg [DW*Dimension-1:0] bias_data;
+        integer file;
+        integer scan_result;
         begin
-            $display("Initializing bias (clearing output BRAM)...");
+            $display("Initializing bias values from bias.txt...");
             input_bias = 1'b1;  // Enable bias mode
 
-            // Write zeros to all output addresses
+            // Open bias file
+            file = $fopen(`BIAS_FILE, "r");
+            if (file == 0) begin
+                $display("ERROR: Could not open %s", `BIAS_FILE);
+                $display("Please ensure the file exists in the simulation working directory");
+                $display("Or update the `BIAS_FILE define at the top of the testbench");
+                $finish;
+            end
+
+            // Read bias value (only one value in the file)
+            scan_result = $fscanf(file, "%h", bias_value);
+            if (scan_result != 1) begin
+                $display("ERROR: Failed to read bias value from bias.txt");
+                $fclose(file);
+                $finish;
+            end
+            $fclose(file);
+
+            $display("  Bias value read: 0x%h (%0d)", bias_value, bias_value);
+
+            // Write the same bias value to all output addresses and all filters
             for (addr = 0; addr < max_output_length; addr = addr + 1) begin
+                // Replicate bias value for all filters
+                for (f = 0; f < Dimension; f = f + 1) begin
+                    bias_data[f*DW +: DW] = bias_value;
+                end
+                
                 @(posedge clk);
                 bias_output_bram_addr = addr;
-                bias_output_bram = {DW*Dimension{1'b0}};  // All zeros
+                bias_output_bram = bias_data;
                 ena_bias_output_bram = {Dimension{1'b1}}; // Enable all BRAMs
                 wea_bias_output_bram = {Dimension{1'b1}}; // Write enable all
             end
@@ -456,11 +601,12 @@ module onedconv_tb;
             input_bias = 1'b0;
             ena_bias_output_bram = {Dimension{1'b0}};
             wea_bias_output_bram = {Dimension{1'b0}};
-            $display("Bias initialization complete (wrote %0d zeros)", max_output_length);
+            $display("Bias initialization complete (wrote %0d addresses)", max_output_length);
         end
     endtask
 
-    // Task: Initialize weights for testing (for first 64 channels only)
+    // Task: Initialize weights for testing (read from weight.txt file in hex format)
+    // File format: Each COLUMN is a filter
     // This loads weights for the first batch of up to 16 filters, for the first 64 input channels
     task init_weights;
         input [4:0] k_size;
@@ -470,24 +616,51 @@ module onedconv_tb;
         integer num_channels_to_load;
         reg [DW-1:0] value;
         reg [ADDRESS_LENGTH-1:0] addr;
+        integer file;
+        integer scan_result;
+        integer row_idx;
+        reg [DW-1:0] row_data [0:1023];  // Store one row at a time
+        integer num_filters_to_read;
         begin
-            $display("Initializing weights: kernel_size=%0d, filters=%0d, input_channels=%0d",
+            $display("Initializing weights from weight.txt: kernel_size=%0d, filters=%0d, input_channels=%0d",
                      k_size, num_filters, input_channels);
+
+            // Open weight file
+            file = $fopen(`WEIGHT_FILE, "r");
+            if (file == 0) begin
+                $display("ERROR: Could not open %s", `WEIGHT_FILE);
+                $display("Please ensure the file exists in the simulation working directory");
+                $display("Or update the `WEIGHT_FILE define at the top of the testbench");
+                $finish;
+            end
 
             // Determine how many channels to load (up to 64)
             num_channels_to_load = (input_channels > 64) ? 64 : input_channels;
+            
+            // Determine how many filters to read (up to 16 for first batch)
+            num_filters_to_read = (num_filters < Dimension) ? num_filters : Dimension;
 
-            // Load weights for first block of channels (0-63) for first batch of filters (0-15)
-            for (f = 0; f < num_filters && f < Dimension; f = f + 1) begin
-                bram_idx = f % Dimension;  // Select BRAM based on filter index
-
-                // For each input channel in the first block
-                for (ch = 0; ch < num_channels_to_load; ch = ch + 1) begin
-                    // For each kernel position
-                    for (k = 0; k < k_size; k = k + 1) begin
-                        // Address = local_channel_index * kernel_size + k
+            // Each row contains: all filters for one (channel, kernel_position) pair
+            // Total rows = num_channels * kernel_size
+            row_idx = 0;
+            for (ch = 0; ch < num_channels_to_load; ch = ch + 1) begin
+                for (k = 0; k < k_size; k = k + 1) begin
+                    // Read entire row (one value per filter)
+                    for (f = 0; f < num_filters_to_read; f = f + 1) begin
+                        scan_result = $fscanf(file, "%h", row_data[f]);
+                        if (scan_result != 1) begin
+                            $display("ERROR: Failed to read weight at row=%0d, filter=%0d (ch=%0d, k=%0d)",
+                                     row_idx, f, ch, k);
+                            $fclose(file);
+                            $finish;
+                        end
+                    end
+                    
+                    // Write to appropriate BRAMs
+                    for (f = 0; f < num_filters_to_read; f = f + 1) begin
+                        bram_idx = f % Dimension;
                         addr = (ch * k_size) + k;
-                        value = ((f + k) % 5) + 1;  // Small pattern
+                        value = row_data[f];
 
                         write_weight_bram(
                             addr,
@@ -495,20 +668,25 @@ module onedconv_tb;
                             (1 << bram_idx)
                         );
                     end
+                    
+                    row_idx = row_idx + 1;
                 end
             end
+
+            $fclose(file);
 
             // CRITICAL: Ensure all weight write signals are cleared after initialization
             ena_weight_input_bram = {Dimension{1'b0}};
             wea_weight_input_bram = {Dimension{1'b0}};
             repeat(3) @(posedge clk);  // Allow signals to settle
 
-            $display("Weight initialization complete: loaded %0d channels for %0d filters",
-                     num_channels_to_load, (num_filters < Dimension) ? num_filters : Dimension);
+            $display("Weight initialization complete: loaded %0d channels x %0d kernel for %0d filters",
+                     num_channels_to_load, k_size, num_filters_to_read);
         end
     endtask
 
-    // Task: Dynamic Weight Loading (Block-based)
+    // Task: Dynamic Weight Loading (Block-based, read from weight.txt file in hex format)
+    // File format: Each COLUMN is a filter, each ROW is a (channel, kernel_position) pair
     task load_dynamic_weights;
         input integer batch_idx;
         integer f, k, local_ch;
@@ -520,8 +698,23 @@ module onedconv_tb;
         integer bram_idx;
         reg [DW-1:0] value;
         reg [ADDRESS_LENGTH-1:0] addr;
+        integer file;
+        integer scan_result;
+        integer rows_to_skip;
+        integer row_idx;
+        integer i;
+        reg [DW-1:0] row_data [0:1023];
+        integer num_filters_in_batch;
         begin
             $display("[TB] Loading Dynamic Weights for Request #%0d", batch_idx);
+
+            // Open weight file
+            file = $fopen(`WEIGHT_FILE, "r");
+            if (file == 0) begin
+                $display("ERROR: Could not open %s", `WEIGHT_FILE);
+                $display("Please ensure the file exists in the simulation working directory");
+                $finish;
+            end
 
             // Calculate which batch of filters and which block of channels this request corresponds to
             num_ch_blocks = (input_channels + 63) / 64;
@@ -535,24 +728,55 @@ module onedconv_tb;
             if (end_filter > filter_number) end_filter = filter_number;
 
             start_ch = current_ch_block * 64;
+            num_filters_in_batch = end_filter - start_filter;
 
             $display("[TB]   -> Filter Batch %0d (Filters %0d-%0d)", current_filter_batch, start_filter, end_filter-1);
             $display("[TB]   -> Channel Block %0d (Channels %0d-%0d)", current_ch_block, start_ch, start_ch+63);
 
-            for (f = start_filter; f < end_filter; f = f + 1) begin
-                bram_idx = f % Dimension;
+            // Calculate how many rows to skip
+            // Each row = one (channel, kernel_position) pair for all filters
+            // Total rows before current position = start_ch * kernel_size
+            rows_to_skip = start_ch * kernel_size;
 
-                for (local_ch = 0; local_ch < 64; local_ch = local_ch + 1) begin
-                    // Only write if channel is within valid range
-                    if ((start_ch + local_ch) < input_channels) begin
-                        for (k = 0; k < kernel_size; k = k + 1) begin
+            // Skip rows by reading and discarding
+            for (i = 0; i < rows_to_skip; i = i + 1) begin
+                // Read entire row (all filter columns) and discard
+                for (f = 0; f < filter_number; f = f + 1) begin
+                    scan_result = $fscanf(file, "%h", value);
+                    if (scan_result != 1) begin
+                        $display("ERROR: Failed to skip row %0d in weight file", i);
+                        $fclose(file);
+                        $finish;
+                    end
+                end
+            end
+
+            // Now read the weights for this channel block
+            row_idx = 0;
+            for (local_ch = 0; local_ch < 64; local_ch = local_ch + 1) begin
+                // Check if this channel is within valid range
+                if ((start_ch + local_ch) < input_channels) begin
+                    for (k = 0; k < kernel_size; k = k + 1) begin
+                        // Read entire row (one value per filter from all filters)
+                        for (f = 0; f < filter_number; f = f + 1) begin
+                            scan_result = $fscanf(file, "%h", row_data[f]);
+                            if (scan_result != 1) begin
+                                $display("ERROR: Failed to read weight at ch=%0d, k=%0d, filter=%0d",
+                                         start_ch + local_ch, k, f);
+                                $fclose(file);
+                                $finish;
+                            end
+                        end
+
+                        // Write only the filters in current batch to BRAMs
+                        for (f = start_filter; f < end_filter; f = f + 1) begin
+                            bram_idx = f % Dimension;
                             addr = (local_ch * kernel_size) + k;
-                            // Value pattern: ((FilterID + KernelIndex) % 5) + 1
-                            value = ((f + k) % 5) + 1;
+                            value = row_data[f];
 
                             // DEBUG: Print first few weights for first filter in batch
                             if ((f == start_filter) && (local_ch < 2) && (k < 3)) begin
-                                $display("[TB]     DEBUG: Filter %0d, Ch %0d, k=%0d: addr=%0d, value=%0d (to BRAM %0d)",
+                                $display("[TB]     DEBUG: Filter %0d, Ch %0d, k=%0d: addr=%0d, value=0x%h (to BRAM %0d)",
                                          f, start_ch + local_ch, k, addr, value, bram_idx);
                             end
 
@@ -562,24 +786,27 @@ module onedconv_tb;
                                 (1 << bram_idx)
                             );
                         end
+
+                        row_idx = row_idx + 1;
+                    end
+                end else begin
+                    // Skip rows for channels beyond input_channels
+                    for (k = 0; k < kernel_size; k = k + 1) begin
+                        for (f = 0; f < filter_number; f = f + 1) begin
+                            scan_result = $fscanf(file, "%h", value);
+                        end
                     end
                 end
-
-                // DEBUG: Print weight pattern summary for each filter
-                $display("[TB]   Loaded Filter %0d -> BRAM %0d, weight pattern: k=0:%0d, k=1:%0d, k=2:%0d, k=3:%0d, k=4:%0d",
-                         f, bram_idx,
-                         ((f + 0) % 5) + 1,
-                         ((f + 1) % 5) + 1,
-                         ((f + 2) % 5) + 1,
-                         ((f + 3) % 5) + 1,
-                         ((f + 4) % 5) + 1);
             end
+
+            $fclose(file);
 
             // CRITICAL: Ensure all weight write signals are cleared after loading
             ena_weight_input_bram = {Dimension{1'b0}};
             wea_weight_input_bram = {Dimension{1'b0}};
 
-            $display("[TB] Dynamic Weight Load Complete");
+            $display("[TB] Dynamic Weight Load Complete: loaded %0d rows for filters %0d-%0d",
+                     row_idx, start_filter, end_filter-1);
         end
     endtask
     
@@ -626,79 +853,25 @@ module onedconv_tb;
         end
     endtask
     
-    // Task: Read and display results in table format
-    task read_results;
-        input [9:0] expected_output_length;
-        integer i, f, max_filters;
-        reg signed [DW-1:0] filter_val;
-        reg [DW*Dimension-1:0] output_data [0:511];  // Store output data
-        begin
-            $display("\n========================================");
-            $display("  OUTPUT RESULTS (Signed Decimal)");
-            $display("========================================");
-            $display("Reading %0d output values for %0d filter(s)...\n",
-                     expected_output_length, filter_number);
-
-            // Read all output values from BRAM
-            for (i = 0; i < expected_output_length; i = i + 1) begin
-                read_output_bram(i);
-                output_data[i] = output_result;
-            end
-
-            // Disable read mode
-            read_mode_output_result = 1'b0;
-            enb_output_result = {Dimension{1'b0}};
-
-            // Determine how many filters to display
-            max_filters = (filter_number > Dimension) ? Dimension : filter_number;
-
-            // Print table header
-            $write("Time |");
-            for (f = 0; f < max_filters; f = f + 1) begin
-                $write(" Filter %2d |", f);
-            end
-            $write("\n");
-
-            // Print separator
-            $write("-----|");
-            for (f = 0; f < max_filters; f = f + 1) begin
-                $write("-----------|");
-            end
-            $write("\n");
-
-            // Print data rows
-            for (i = 0; i < expected_output_length; i = i + 1) begin
-                $write(" %3d |", i);
-                for (f = 0; f < max_filters; f = f + 1) begin
-                    filter_val = extract_filter_value(output_data[i], f);
-                    $write(" %9d |", filter_val);
-                end
-                $write("\n");
-            end
-
-            $display("========================================");
-
-            // DEBUG: Show first output value details for debugging
-            if (expected_output_length > 0 && max_filters >= 5) begin
-                $display("\nDEBUG: First 5 filter outputs at Time 0:");
-                for (f = 0; f < 5; f = f + 1) begin
-                    filter_val = extract_filter_value(output_data[0], f);
-                    $display("  Filter %0d: %0d (0x%0h)", f, filter_val, filter_val);
-                end
-            end
-
-            $display("\n");
-        end
-    endtask
-
     // ========================================================
     // Test Scenarios
     // ========================================================
+    
+    // File paths - modify these to match your file locations
+    // You can use either:
+    // 1. Relative paths (files in simulation working directory): "input.txt"
+    // 2. Absolute paths: "D:/path/to/input.txt"
+    // 3. Relative to project: "../../../input.txt"
     
     initial begin
         // Initialize waveform dump
         $dumpfile("onedconv_tb.vcd");
         $dumpvars(0, onedconv_tb);
+        
+        // Display current working directory
+        $display("Current working directory: Use $pwd or check simulator settings");
+        $display("Looking for files: input.txt, weight.txt, bias.txt");
+        $display("If files not found, copy them to simulation directory or update paths in testbench");
         
         // Initialize signals
         rst = 1'b0;
@@ -862,12 +1035,12 @@ module onedconv_tb;
         $display("    Expect 4 Weight Requests for 64 filters in batches of 16");
         rst = 1'b0; repeat(5) @(posedge clk); rst = 1'b1; repeat(5) @(posedge clk);
 
-        stride = 2'd2;          // stride=2
-        padding = 3'd7;         // padding=1
-        kernel_size = 5'd16;    // kernel_size=16
-        input_channels = 10'd1; // 64 channels (exactly 1 block)
+        stride = 2'd1;          // stride=2
+        padding = 3'd3;         // padding=1
+        kernel_size = 5'd7;    // kernel_size=16
+        input_channels = 10'd16; // 64 channels (exactly 1 block)
         temporal_length = 10'd512;
-        filter_number = 10'd32; // 64 filters (requires 4 filter batches)
+        filter_number = 10'd1; // 64 filters (requires 4 filter batches)
 
         dynamic_weight_loading_en = 1; // Enable dynamic loading
         weight_batch_count = 0;
@@ -880,7 +1053,7 @@ module onedconv_tb;
         // Use special comparison task for Test 6
         read_and_compare_test6(10'd32);   // Expected: floor((64+2*1-16)/2)+1=26
         // Also show full table
-        read_results(10'd32);
+        read_results(10'd512);
 
         dynamic_weight_loading_en = 0; // Disable for safety
 

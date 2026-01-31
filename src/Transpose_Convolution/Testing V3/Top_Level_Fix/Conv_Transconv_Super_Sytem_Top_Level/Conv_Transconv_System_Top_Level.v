@@ -15,7 +15,7 @@
  *   - After transconv_scheduler_done: Entire sequence complete
  *
  * NO EXTERNAL START SIGNAL:
- *   - Onedconv_Control_System waits for AXI write_done (data arrival)
+ *   - Onedconv_Control_Top waits for AXI write_done (data arrival)
  *   - When data arrives, CONV processing begins automatically
  *   - When CONV completes, system switches to TRANSCONV mode
  *   - Transpose_Control_Top waits for its data and processes
@@ -264,7 +264,7 @@ module Conv_Transconv_System_Top_Level_Auto_Sequenced #(
     // ========================================================================
     
     // CONV: Always enabled (waits for AXI data internally)
-    // The Onedconv_Control_System has global_start tied HIGH, so it starts
+    // The Onedconv_Control_Top has global_start tied HIGH, so it starts
     // automatically when AXI write_done signals arrive
     wire conv_auto_start = 1'b1;  // Always active, waits for data internally
     
@@ -559,7 +559,7 @@ module Conv_Transconv_System_Top_Level_Auto_Sequenced #(
     //   - After 9 layers complete, global_done pulses
     //   - This triggers mode transition to TRANSCONV
     // ========================================================================
-    Onedconv_Control_System #(
+    Onedconv_Control_Top #(
         .DW(DW),
         .Dimension(Dimension),
         .ADDRESS_LENGTH(I_ADDR_W),

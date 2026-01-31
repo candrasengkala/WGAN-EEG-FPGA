@@ -5,33 +5,33 @@ Running: C:/Xilinx/2025.1/Vivado/bin/unwrapped/win64.o/xelab.exe --incr --debug 
 Using 2 slave threads.
 Starting static elaboration
 Pass Through NonSizing Optimizer
-WARNING: [VRFC 10-2861] module 'onedconv' does not have a parameter named MAX_COUNT [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sim_1/new/onedconv_tb.v:74]
+WARNING: [VRFC 10-2861] module 'onedconv' does not have a parameter named MAX_COUNT [D:/SEMESTER1_20252026/VLSI/WGAN-EEG-FPGA/src/AXON/project_1/project_1.srcs/sim_1/new/onedconv_tb.v:96]
 Completed static elaboration
 Starting simulation data flow analysis
 Completed simulation data flow analysis
 Time Resolution for simulation is 1ps
 Compiling module xil_defaultlib.counter_axon_addr_inputdata(ADDR...
 Compiling module xil_defaultlib.counter_axon_addr_weight(ADDRESS...
-Compiling module xil_defaultlib.simple_dual_two_clocks(ADDRESS_L...
-Compiling module xil_defaultlib.mux_between_channels(Inputs=16,S...
-Compiling module xil_defaultlib.reg_en_rst(WIDTH=256)
-Compiling module xil_defaultlib.dmux_out
-Compiling module xil_defaultlib.systolic_out_adder_default
+Compiling module xil_defaultlib.simple_dual_two_clocks(DW=24,ADD...
+Compiling module xil_defaultlib.mux_between_channels(DW=24,Input...
+Compiling module xil_defaultlib.reg_en_rst(WIDTH=384)
+Compiling module xil_defaultlib.dmux_out(DW=24)
+Compiling module xil_defaultlib.systolic_out_adder(DW=24)
 Compiling module xil_defaultlib.counter_input_default
 Compiling module xil_defaultlib.counter_output_default
-Compiling module xil_defaultlib.shift_reg_input(Depth_added=17)
+Compiling module xil_defaultlib.shift_reg_input(DW=24,Depth_adde...
 Compiling module xil_defaultlib.counter_top_lvl_default
 Compiling module xil_defaultlib.PE_H
-Compiling module xil_defaultlib.PE_D
-Compiling module xil_defaultlib.top_lvl_default
-Compiling module xil_defaultlib.top_lvl_with_mem_default
-Compiling module xil_defaultlib.matrix_mult_control
-Compiling module xil_defaultlib.top_lvl_io_control
-Compiling module xil_defaultlib.input_microsequencer
-Compiling module xil_defaultlib.filter_microsequencer
-Compiling module xil_defaultlib.output_microsequencer
-Compiling module xil_defaultlib.onedconv_ctrl
-Compiling module xil_defaultlib.onedconv(BRAM_Depth=1024)
+Compiling module xil_defaultlib.PE_D(DW=24)
+Compiling module xil_defaultlib.top_lvl(DW=24)
+Compiling module xil_defaultlib.top_lvl_with_mem(DW=24)
+Compiling module xil_defaultlib.matrix_mult_control(DW=24)
+Compiling module xil_defaultlib.top_lvl_io_control(DW=24)
+Compiling module xil_defaultlib.input_microsequencer(DW=24)
+Compiling module xil_defaultlib.filter_microsequencer(DW=24)
+Compiling module xil_defaultlib.output_microsequencer(DW=24)
+Compiling module xil_defaultlib.onedconv_ctrl(DW=24)
+Compiling module xil_defaultlib.onedconv(DW=24,BRAM_Depth=1024)
 Compiling module xil_defaultlib.onedconv_tb
 Compiling module xil_defaultlib.glbl
 Built simulation snapshot onedconv_tb_behav
