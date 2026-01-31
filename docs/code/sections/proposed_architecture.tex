@@ -20,21 +20,13 @@
 
 \subsection{GAN Overview}
 % GAN in general
-Denoising EEG can be formulated as a conditional signal-to-signal reconstruction problem, in which a model learns to map a noisy EEG input to a clean EEG output. 
-While this task can be addressed using conventional regression-based models trained with pointwise loss functions (e.g., L1 or L2 loss), such approaches tend to produce over-smoothed reconstructions that fail to preserve high-frequency temporal structures that are critical for EEG analysis.
+Denoising EEG is effectively formulated as a conditional signal-to-signal reconstruction problem. 
+While conventional regression models (using L1/L2 loss) often yield over-smoothed results, Generative Adversarial Networks (GANs) overcome this by modeling the conditional distribution of clean signals. 
+The adversarial objective forces the generator to preserve high-frequency structures and realistic signal characteristics, handling the inherent ambiguity of reconstructing clean EEG from noisy observations.
 
-Generative Adversarial Networks (GANs) provide a suitable framework for this task by modeling the conditional distribution of clean EEG signals given noisy observations. 
-In a GAN-based denoising setup, a generator is trained to reconstruct clean EEG signals from noisy inputs, while a discriminator learns to distinguish between generated synthetic signals and ground-truth clean EEG. 
-The adversarial objective encourages the generator to produce outputs that not only minimize reconstruction error, but also to consider the realism of the generated signals. 
-This property is particularly important for EEG denoising, as the notion of a single “correct” clean signal is inherently ambiguous. Multiple plausible clean EEG realizations may exist for a given noisy input.
-
-To capture the temporal patterns in EEG signals effectively, convolutional neural networks (CNNs) were used rather than fully connected layers. EEG signals exhibit strong local temporal correlations, and convolutions naturally exploit this locality by learning filters that detect meaningful patterns across short temporal windows. 
-CNNs also reduce the number of parameters compared to fully connected layers, improving training stability and reducing the risk of overfitting, which is especially important when working with limited EEG datasets. 
-Furthermore, convolutional architectures are well-suited to hierarchical feature extraction, allowing the model to capture both fine-grained and longer-range temporal dependencies essential for accurate denoising. 
-The reduced parameter count also makes CNNs more suitable for deployment on hardware with limited memory for real-time EEG denoising.
-
-Furthermore, GANs offer practical advantages in terms of computational efficiency. Once trained, the generator produces denoised EEG signals in a single forward pass, making GAN-based models suitable for real-time or near–real-time applications. 
-These characteristics make GANs a suitable choice for wearable EEG motion artifact removal.
+To capture the strong local temporal correlations in EEG, we employ Convolutional Neural Networks (CNNs) rather than fully connected layers. 
+CNNs naturally exploit temporal locality through learnable filters and enable hierarchical feature extraction for both fine-grained and long-range dependencies. 
+Additionally, their parameter efficiency reduces overfitting risks and memory usage, making them ideal for hardware deployment. Once trained, the generator performs denoising in a single forward pass, ensuring the low latency required for real-time applications.
 
 \subsection{Generator and Critic Structure}
 Using a GAN-Based model, the generator model will be unique compared to the traditional models\cite{anotherPaper2020} that generates based on a seed. The generator will need to accept a complete noisy EEG as an input for it to fully denoise motion artifact, while the output will be the clean EEG. 
@@ -112,15 +104,12 @@ We implemented the framework using the PyTorch library. The network parameters w
 \subsection{Normalization Strategy}
 % BN over GN motivation
 % Design level table
-To effectively stabilize model training, normalization is needed to control training values to make learning rate effective. 
-For EEG datasets, the usual choice for normalization would be GroupNorm\cite{somepaper} as it normalizes within a sample's channels to capture the relatively lower variance of data within a single sample which is more stable.
-
-However, for our implementation, BatchNorm was used. 
-BatchNorm has the exact same normalization equation as GroupNorm, with the biggest difference being that it gathers statistics from different samples. 
-This is not ideal for EEG datasets that usually have high variance across different samples. 
-Despite that, for the model implementation, BatchNorm brings considerable benefits. 
-One of which is the unique trait that BatchNorm statistics are constant after training and is utilized to fuse normalization with Convolution as explained in the next section.
-\begin{table}[H] % <--- The H forces it to stay right here
+Normalization is essential to stabilize training dynamics. 
+For EEG datasets, GroupNorm\cite{somepaper} is typically preferred as it normalizes within individual samples to mitigate the high variance often observed across different subjects. 
+However, our implementation utilizes Batch Normalization due to its significant advantages for hardware deployment.
+Although BatchNorm gathers statistics across samples, which is theoretically less robust for EEG, it possesses the unique property of having constant statistics during inference.
+This allows the normalization operations to be mathematically fused with the preceding convolution layers (as detailed in Subsection \ref{subsec:batchnorm_fusion}), thereby eliminating the runtime computational cost while still preserving the necessary training stability.
+\begin{table}[H]
     \centering
     \caption{Comparison of GroupNorm and BatchNorm for Hardware Implementation}
     \begin{tabular}{lccc}
@@ -137,6 +126,7 @@ Aside from that, we have tested the performance between GroupNorm and BatchNorm,
 From those results it can be seen that BatchNorm does not bring much detriment to the model's performance.
 
 \subsection{BatchNorm Fusion}
+\label{subsec:batchnorm_fusion}
 % Mathematical derivation and just explain why
 As mentioned earlier, Batch Normalization utilizes fixed statistics (mean and variance) derived from training. 
 In the generator architecture, these normalization blocks invariably follow a linear projection (whether standard or transposed convolution), allowing them to be absorbed into the preceding operation.
