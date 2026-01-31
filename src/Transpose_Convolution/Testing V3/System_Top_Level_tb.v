@@ -8,8 +8,8 @@ module System_Level_Top_tb();
     // ========================================================================
     // 1. PARAMETERS
     // ========================================================================
-    parameter WEIGHT_MEM_FILE = "G_d5_Q10.10_decoder_weight.mem";
-    parameter BIAS_MEM_FILE   = "G_d5_Q10.10_decoder_bias.mem";
+    parameter WEIGHT_MEM_FILE = "G_d5_Q9.14_decoder_weight.mem";
+    parameter BIAS_MEM_FILE   = "G_d5_Q9.14_decoder_bias.mem";
     parameter IFMAP_MEM_FILE  = "decoder_last_input.mem";
     
     parameter WEIGHT_MEM_DEPTH = 217088;
