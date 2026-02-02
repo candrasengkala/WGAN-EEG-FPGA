@@ -1,5 +1,4 @@
 `timescale 1ns / 1ps
-//tucadonka - FIXED VERSION
 module System_Level_Top_tb();
 
     localparam T = 10;
