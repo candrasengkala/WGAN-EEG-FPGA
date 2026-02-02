@@ -1,5 +1,4 @@
 `timescale 1ns / 1ps
-//tucadonka - FIXED VERSION
 module System_Level_Top_tb();
 
     localparam T = 10;
@@ -154,19 +153,14 @@ module System_Level_Top_tb();
                     if (rx0_count < 6) notif_header[rx0_count] <= m0_axis_tdata;
                     if (m0_axis_tlast) begin
                         if (notif_header[0][15:0] == 16'hC0DE) begin
-                            $display("[%0t] [M0] NOTIF: Batch %0d Complete (Cycle: %0d)", $time, notif_header[2][2:0], cycle_count);
                             notif_detected <= 1;
                         end
                         rx0_count <= 0;
-                    end else if (rx0_count == 5) begin 
+                    end else if (rx0_count == 5) begin
                         in_data_phase <= 1; rx0_count <= rx0_count + 1; rx0_data_count <= 0;
                         m0_cnt <= 0; m0_done <= 0;
                         if (notif_header[0][15:0] == 16'hDA7A) begin
-                            $display("[%0t] [M0] === FULL DATA DUMP STARTED ===", $time);
                             is_layer3_output <= (notif_header[2][1:0] == 2'd3);
-                            if (notif_header[2][1:0] == 2'd3) begin
-                                $display("[%0t] [M0] *** LAYER 3 OUTPUT - Buffering m0_axis ***", $time);
-                            end
                         end
                     end else rx0_count <= rx0_count + 1;
                 end else begin
@@ -174,11 +168,6 @@ module System_Level_Top_tb();
                     if (is_layer3_output && in_data_phase) begin  // ← TAMBAH && in_data_phase
                         m0_buf[m0_cnt] <= m0_axis_tdata;
                         m0_cnt <= m0_cnt + 1;
-                    end else begin
-                        if (rx0_data_count < 20) begin
-                            $display("[%0t] [M0] DATA[%0d] = 0x%06h (%0d)", 
-                                $time, rx0_data_count, m0_axis_tdata, $signed(m0_axis_tdata));
-                        end
                     end
                     
                     rx0_data_count <= rx0_data_count + 1; 
@@ -186,15 +175,12 @@ module System_Level_Top_tb();
                     
                     if (m0_axis_tlast) begin
                         if (is_layer3_output) begin
-                            $display("[%0t] [M0] m0_axis complete: %0d words", $time, m0_cnt);
                             m0_done <= 1;
                         end else begin
-                            $display("[%0t] [M0] === FULL DATA DUMP COMPLETE ===", $time);
                             layer_readout_done <= 1;
                         end
-                        $display("[%0t] [M0] Total data words: %0d", $time, rx0_data_count + 1);
-                        rx0_count <= 0; 
-                        rx0_data_count <= 0; 
+                        rx0_count <= 0;
+                        rx0_data_count <= 0;
                         in_data_phase <= 0;
                         if (!is_layer3_output) is_layer3_output <= 0;
                     end
@@ -212,7 +198,6 @@ module System_Level_Top_tb();
                 m1_cnt <= m1_cnt + 1;
                 if (m1_axis_tlast) begin
                     m1_done <= 1;
-                    $display("[%0t] [M1] Layer3 stream m1 buffered: %0d words", $time, m1_cnt);
                 end
             end
         end
@@ -246,7 +231,36 @@ module System_Level_Top_tb();
             end
             
             $display("=============================================================");
-            $display("[%0t] [M0] === LAYER 3 TABLE COMPLETE ===", $time);
+
+            // ============================================================
+            // FILE EXPORT: Per-Channel Format -> decoder_output_perchannel.txt
+            // ============================================================
+            file_handle = $fopen("decoder_output_perchannel.txt", "w");
+
+            $fwrite(file_handle, "=============================================================\n");
+            $fwrite(file_handle, "DECODER OUTPUT D5 - PER CHANNEL DUMP\n");
+            $fwrite(file_handle, "Format: Channel -> 512 Posisi\n");
+            $fwrite(file_handle, "=============================================================\n");
+
+            // Channel 0-7 (from m0_buf)
+            for (pch = 0; pch < 8; pch = pch + 1) begin
+                $fwrite(file_handle, "\n=== CHANNEL %0d ===\n", pch);
+                for (ppos = 0; ppos < 512; ppos = ppos + 1) begin
+                    $fwrite(file_handle, "%0d\n", $signed(m0_buf[pch*512 + ppos]));
+                end
+            end
+
+            // Channel 8-15 (from m1_buf)
+            for (pch = 0; pch < 8; pch = pch + 1) begin
+                $fwrite(file_handle, "\n=== CHANNEL %0d ===\n", pch + 8);
+                for (ppos = 0; ppos < 512; ppos = ppos + 1) begin
+                    $fwrite(file_handle, "%0d\n", $signed(m1_buf[pch*512 + ppos]));
+                end
+            end
+
+            $fwrite(file_handle, "\n=============================================================\n");
+            $fclose(file_handle);
+
             layer_readout_done <= 1;
             m0_done <= 0; m1_done <= 0; is_layer3_output <= 0;
         end
@@ -535,7 +549,6 @@ module System_Level_Top_tb();
             end
             
             $fclose(file_handle);
-            $display("[%0t] Layer 3 weights saved to: layer3_weights.txt", $time);
         end
     endtask
 
@@ -575,7 +588,6 @@ module System_Level_Top_tb();
             $fwrite(file_handle, "========================================================================\n");
             
             $fclose(file_handle);
-            $display("[%0t] Layer 3 ifmap FULL dump saved to: layer3_input_ifmap_FULL.txt", $time);
         end
     endtask
 
@@ -606,7 +618,6 @@ module System_Level_Top_tb();
             end
             
             $fclose(file_handle);
-            $display("[%0t] Layer 3 bias FULL dump saved to: layer3_input_bias_FULL.txt", $time);
         end
     endtask
 
@@ -615,8 +626,6 @@ module System_Level_Top_tb();
         integer out_bram, out_addr, out_lin_idx, out_pos, out_ch;
         reg [23:0] out_val;
         begin
-            $display("[%0t] ==================== STARTING OUTPUT DUMP ====================", $time);
-            
             // ========== FILE 1: RAW FULL DUMP ==========
             file_handle = $fopen("layer3_output_RAW_FULL.txt", "w");
             
@@ -645,8 +654,7 @@ module System_Level_Top_tb();
             
             $fwrite(file_handle, "\n================================================================================\n");
             $fclose(file_handle);
-            $display("[%0t] >>> File 1: layer3_output_RAW_FULL.txt created", $time);
-            
+
             // ========== FILE 2: TABLE FORMAT (Position x Channel) ==========
             file_handle = $fopen("layer3_output_TABLE.txt", "w");
             
@@ -692,8 +700,7 @@ module System_Level_Top_tb();
             
             $fwrite(file_handle, "\n================================================================================\n");
             $fclose(file_handle);
-            $display("[%0t] >>> File 2: layer3_output_TABLE.txt created (FULL 256 positions)", $time);
-            
+
             // ========== FILE 3: SUMMARY ==========
             file_handle = $fopen("layer3_output_SUMMARY.txt", "w");
             
@@ -722,13 +729,6 @@ module System_Level_Top_tb();
             
             $fwrite(file_handle, "\n================================================================================\n");
             $fclose(file_handle);
-            $display("[%0t] >>> File 3: layer3_output_SUMMARY.txt created", $time);
-            
-            $display("[%0t] ==================== OUTPUT DUMP COMPLETE ====================", $time);
-            $display("[%0t] Created 3 files:", $time);
-            $display("[%0t]   1. layer3_output_RAW_FULL.txt  - All 8192 values by BRAM", $time);
-            $display("[%0t]   2. layer3_output_TABLE.txt     - 256x16 table format", $time);
-            $display("[%0t]   3. layer3_output_SUMMARY.txt   - First 16 positions detail", $time);
         end
     endtask
 
@@ -743,27 +743,14 @@ module System_Level_Top_tb();
         s2_axis_tdata = 0; s2_axis_tvalid = 0; s2_axis_tlast = 0;
         output_write_ptr = 0; 
 
-        $display("---------------------------------------------------------------");
-        $display("[%0t] Loading memory files...", $time);
         $readmemh(WEIGHT_MEM_FILE, weight_ddr_mem);
         $readmemh(BIAS_MEM_FILE, bias_ddr_mem);
         $readmemh(IFMAP_MEM_FILE, ifmap_ddr_mem);
-        
-        #1; 
-        if (bias_ddr_mem[0] === 32'bx) 
-            $display("[CRITICAL] BIAS MEMORY X (Check Path)");
-        else 
-            $display("[INFO] Bias Loaded. First Data: %h", bias_ddr_mem[0]);
 
         #(T*10); aresetn = 1; #(T*20);
         total_start_time = cycle_count;
 
-        $display("\n==========================================================");
-        $display("ZERO TEST MODE: Layers 0,1,2 = ALL ZEROS, Layer 3 = REAL");
-        $display("==========================================================\n");
-
         // ====================== LAYER 0 (ZEROS) ======================
-        $display("\n[%0t] STARTING LAYER 0 - ZERO MODE (Cycle: %0d)", $time, cycle_count);
         start_time_l0 = cycle_count;
 
         fork
@@ -787,13 +774,11 @@ module System_Level_Top_tb();
         send_packet_weight_zeros(5'd0, 5'd15, 16'd1024); wait_for_notification(3'd6);
         send_packet_weight_zeros(5'd0, 5'd15, 16'd1024); wait_for_notification(3'd7);
 
-        wait(layer_readout_done); 
+        wait(layer_readout_done);
         end_time_l0 = cycle_count;
-        $display("[%0t] >>> LAYER 0 DONE (ZEROS). Latency: %0d cycles <<<", $time, (end_time_l0 - start_time_l0));
-        #(T*100); 
+        #(T*100);
 
         // ====================== LAYER 1 (ZEROS) ======================
-        $display("\n[%0t] STARTING LAYER 1 - ZERO MODE (Cycle: %0d)", $time, cycle_count);
         start_time_l1 = cycle_count;
 
         fork
@@ -815,11 +800,9 @@ module System_Level_Top_tb();
 
         wait(layer_readout_done);
         end_time_l1 = cycle_count;
-        $display("[%0t] >>> LAYER 1 DONE (ZEROS). Latency: %0d cycles <<<", $time, (end_time_l1 - start_time_l1));
         #(T*100);
 
         // ====================== LAYER 2 (ZEROS) ======================
-        $display("\n[%0t] STARTING LAYER 2 - ZERO MODE (Cycle: %0d)", $time, cycle_count);
         start_time_l2 = cycle_count;
 
         fork
@@ -837,11 +820,9 @@ module System_Level_Top_tb();
         wait_for_notification(3'd0);
         wait(layer_readout_done);
         end_time_l2 = cycle_count;
-        $display("[%0t] >>> LAYER 2 DONE (ZEROS). Latency: %0d cycles <<<", $time, (end_time_l2 - start_time_l2));
         #(T*100);
 
         // ====================== LAYER 3 (REAL DATA) ======================
-        $display("\n[%0t] STARTING LAYER 3 - REAL DATA MODE (Cycle: %0d)", $time, cycle_count);
         
         // DISPLAY LAYER 3 INPUT DATA (from DDR memory before sending to BRAMs)
         display_all_layer3_inputs();
@@ -851,80 +832,35 @@ module System_Level_Top_tb();
         fork
             begin
                 send_packet_bias_layer3(BIAS_LAYER_3_OFFSET);
-                $display("[%0t] [PARALLEL] BIAS L3 DONE", $time);
             end
             begin
                 send_ifmap_layer3_stride16();
-                $display("[%0t] [PARALLEL] IFMAP L3 DONE (STRIDE 16)", $time);
             end
             begin
                 send_packet_weight_layer3(212992);
-                $display("[%0t] [PARALLEL] WEIGHT L3 DONE (CORRECTED LAYOUT)", $time);
             end
         join
         
         wait_for_notification(3'd0);
         wait(layer_readout_done);
         end_time_l3 = cycle_count;
-        $display("[%0t] >>> LAYER 3 DONE. Latency: %0d cycles <<<", $time, (end_time_l3 - start_time_l3));
 
-        $display("\n=================================================");
-        $display("ALL LAYERS COMPLETED");
-        $display("Total Cycles: %0d", (cycle_count - total_start_time));
-        $display("=================================================");
+        $display("\n==========================================================");
+        $display(" LATENCY SUMMARY TABLE");
+        $display("==========================================================");
+        $display(" Layer | Mode  | Latency (cycles)");
+        $display("-------|-------|------------------");
+        $display("  d1   | ZERO  | %0d", (end_time_l0 - start_time_l0));
+        $display("  d2   | ZERO  | %0d", (end_time_l1 - start_time_l1));
+        $display("  d3   | ZERO  | %0d", (end_time_l2 - start_time_l2));
+        $display("  d4   | REAL  | %0d", (end_time_l3 - start_time_l3));
+        $display("-------|-------|------------------");
+        $display(" TOTAL |       | %0d", (cycle_count - total_start_time));
+        $display("==========================================================");
         
         #(T*100);
         display_layer3_output();
         $finish;
     end
-
-    // Watchdog
-    initial begin
-        #(T*200000000); 
-        $display("\n[%0t] !!! TIMEOUT WATCHDOG !!!", $time);
-        $finish;
-    end
-
-    wire [10:0] probe_wr_weight_addr = dut.datapath.w_addr_wr_flat[10:0]; 
-    wire [23:0] probe_wr_weight_data_00 = dut.datapath.w_din_flat[23:0];
-
-    // ========================================================================
-    // DEBUG PROBES: INTERNAL PE(0,0) MONITORING
-    // ========================================================================
-    // Probe ini menembus hierarki modul untuk melihat register internal PE
-    // tanpa perlu mengubah kode RTL aslinya.
-    
-    // 1. Akumulator (Hasil penjumlahan sementara)
-    // Jika nilai ini lompat ke -21363, cek clock cycle sebelumnya.
-    wire signed [23:0] probe_pe00_psum;
-    assign probe_pe00_psum = dut.datapath.u_compute_engine.systolic_array.pe_d_0.base_design.psum_reg;
-
-    // 2. Hasil Perkalian (Setelah Slicing Q9.14)
-    // Ini adalah nilai (Ifmap * Weight) >> 14 yang akan ditambahkan ke psum.
-    wire signed [23:0] probe_pe00_mult_sliced;
-    assign probe_pe00_mult_sliced = dut.datapath.u_compute_engine.systolic_array.pe_d_0.base_design.mult_q9_14;
-
-    // 3. Hasil Perkalian MENTAH (48-bit Full Precision)
-    // Cek ini untuk melihat apakah hasil perkalian sebenarnya benar sebelum dipotong.
-    wire signed [47:0] probe_pe00_mult_full;
-    assign probe_pe00_mult_full = dut.datapath.u_compute_engine.systolic_array.pe_d_0.base_design.mult_result_full;
-
-    // 4. Input Data saat ini (Apa yang sedang dikalikan?)
-    wire signed [23:0] probe_pe00_ifmap_curr;
-    assign probe_pe00_ifmap_curr = dut.datapath.u_compute_engine.systolic_array.pe_d_0.base_design.ifmap_out;
-
-    wire signed [23:0] probe_pe00_weight_curr;
-    assign probe_pe00_weight_curr = dut.datapath.u_compute_engine.systolic_array.pe_d_0.base_design.weight_out;
-
-    // 5. Control Signals (Kapan PE aktif?)
-    wire probe_pe00_en_psum;
-    assign probe_pe00_en_psum = dut.datapath.u_compute_engine.systolic_array.pe_d_0.base_design.en_psum;
-
-    wire probe_pe00_clear_psum;
-    assign probe_pe00_clear_psum = dut.datapath.u_compute_engine.systolic_array.pe_d_0.base_design.clear_psum;
-
-   
-
-
 
 endmodule

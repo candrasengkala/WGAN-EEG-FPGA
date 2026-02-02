@@ -67,7 +67,7 @@ module BRAM_Read_Modify_Top #(
     input  wire        [NUM_BRAMS-1:0]       ext_write_en,        // External write enable (per BRAM)
     input  wire        [NUM_BRAMS*ADDR_WIDTH-1:0] ext_write_addr_flat, // External write addresses
     input  wire        [NUM_BRAMS*DW-1:0]    ext_write_data_flat, // External write data (bias values)
-    
+     
     // ======================================================
     // OUTPUT for AXI Stream (READ PORT)
     // ======================================================

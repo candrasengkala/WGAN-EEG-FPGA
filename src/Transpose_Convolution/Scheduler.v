@@ -115,8 +115,8 @@ module Scheduler_FSM #(
                 rows_per_batch       = 7'd63;   // 64 rows
             end
             2'd2: begin
-                max_passes_per_batch = 10'd127;
-                rows_per_batch       = 7'd127;  // 128 rows
+                max_passes_per_batch = 10'd1023; // 1024 passes (128 rows × 8 tiles)
+                rows_per_batch       = 7'd127;   // 128 rows
             end
             2'd3: begin
                 max_passes_per_batch = 10'd1023;  // 1024 passes (256 rows × 4 tiles)
@@ -138,19 +138,19 @@ module Scheduler_FSM #(
     
     always @(*) begin
         // Default initialization
-        tile_in_batch = 2'd0;
-        row_in_tile = 7'd0;
+        tile_in_batch = 3'd0;
+        row_in_tile = 8'd0;
 
         case (current_layer_id)
             2'd0: begin
-                // Layer 0: 32 rows (Row bits [4:0])
-                tile_in_batch = pass_counter[6:5];
-                row_in_tile   = {2'd0, pass_counter[4:0]};
+                // Layer 0: 32 rows (Row bits [4:0]), 4 tiles
+                tile_in_batch = {1'b0, pass_counter[6:5]};
+                row_in_tile   = {3'd0, pass_counter[4:0]};
             end
             2'd1: begin
-                // Layer 1: 64 rows (Row bits [5:0])
-                tile_in_batch = pass_counter[7:6];
-                row_in_tile   = {1'd0, pass_counter[5:0]};
+                // Layer 1: 64 rows (Row bits [5:0]), 4 tiles
+                tile_in_batch = {1'b0, pass_counter[7:6]};
+                row_in_tile   = {2'd0, pass_counter[5:0]};
             end
             default: begin
                 // Layer 2 & 3: Different row counts
@@ -161,8 +161,8 @@ module Scheduler_FSM #(
                     tile_in_batch = {1'b0, pass_counter[9:8]};  // Bits [9:8] → tile 0-3
                     row_in_tile   = pass_counter[7:0];          // Bits [7:0] → row 0-255
                 end else begin
-                    // Layer 2: 128 rows per tile
-                    tile_in_batch = {2'b0, pass_counter[7]};    // Bit [7] → tile 0-1
+                    // Layer 2: 128 rows per tile, 8 tiles
+                    tile_in_batch = pass_counter[9:7];          // Bits [9:7] → tile 0-7
                     row_in_tile   = pass_counter[6:0];          // Bits [6:0] → row 0-127
                 end
             end
@@ -204,8 +204,6 @@ module Scheduler_FSM #(
                 end else begin
                     pass_counter   <= 8'd0;
                     batch_complete <= 1'b1;
-                    $display("[%0t] SCHED: Pass %0d DONE (max=%0d), batch_complete=1", 
-                             $time, pass_counter, max_passes_per_batch);
                 end
             end else if (state == IDLE) begin
                 pass_counter <= 8'd0;
@@ -241,7 +239,7 @@ module Scheduler_FSM #(
     // ========================================================================
     
     // Predictive Decoding for Next Pass
-    reg [1:0] current_pass_tile;
+    reg [2:0] current_pass_tile;  // 3-bit for up to 8 tiles (Layer 2)
     reg [7:0] current_pass_row;  // 8-bit untuk Layer 3
     
     always @(*) begin
@@ -256,9 +254,9 @@ module Scheduler_FSM #(
                 current_pass_tile = (pass_counter + 10'd1) >> 6;          
                 current_pass_row  = {1'd0, (pass_counter + 10'd1) & 10'h3F}; 
             end else if (current_layer_id == 2'd2) begin
-                // Layer 2 (128 rows per tile)
-                current_pass_tile = (pass_counter + 10'd1) >> 7;          
-                current_pass_row  = (pass_counter + 10'd1) & 10'h7F;       
+                // Layer 2 (128 rows per tile, 8 tiles)
+                current_pass_tile = (pass_counter + 10'd1) >> 7;
+                current_pass_row  = (pass_counter + 10'd1) & 10'h7F;
             end else begin
                 // Layer 3 (256 rows per tile)
                 current_pass_tile = (pass_counter + 10'd1) >> 8;          
@@ -266,7 +264,7 @@ module Scheduler_FSM #(
             end
         end else begin
             // Decode CURRENT pass
-            current_pass_tile = tile_in_batch[1:0];
+            current_pass_tile = tile_in_batch;
             current_pass_row  = row_in_tile;
         end
     end
@@ -357,20 +355,34 @@ module Scheduler_FSM #(
                     // *** FIXED: Layer 3 uses 64 addresses per tile ***
                     // --------------------------------------------------------
                     if (current_layer_id == 2'd3) begin
-                        // Layer 3: 64 addresses per tile (4 tiles total)
+                        // Layer 3: 64 addresses per tile (4 tiles)
                         case (current_pass_tile)
-                            2'd0: begin addr_start <= 10'd0;   addr_end <= 10'd63;  end
-                            2'd1: begin addr_start <= 10'd64;  addr_end <= 10'd127; end
-                            2'd2: begin addr_start <= 10'd128; addr_end <= 10'd191; end
-                            2'd3: begin addr_start <= 10'd192; addr_end <= 10'd255; end
+                            3'd0: begin addr_start <= 10'd0;   addr_end <= 10'd63;  end
+                            3'd1: begin addr_start <= 10'd64;  addr_end <= 10'd127; end
+                            3'd2: begin addr_start <= 10'd128; addr_end <= 10'd191; end
+                            3'd3: begin addr_start <= 10'd192; addr_end <= 10'd255; end
+                            default: begin addr_start <= 10'd0; addr_end <= 10'd63; end
+                        endcase
+                    end else if (current_layer_id == 2'd2) begin
+                        // Layer 2: 128 addresses per tile (8 tiles)
+                        case (current_pass_tile)
+                            3'd0: begin addr_start <= 10'd0;   addr_end <= 10'd127;  end
+                            3'd1: begin addr_start <= 10'd128; addr_end <= 10'd255;  end
+                            3'd2: begin addr_start <= 10'd256; addr_end <= 10'd383;  end
+                            3'd3: begin addr_start <= 10'd384; addr_end <= 10'd511;  end
+                            3'd4: begin addr_start <= 10'd512; addr_end <= 10'd639;  end
+                            3'd5: begin addr_start <= 10'd640; addr_end <= 10'd767;  end
+                            3'd6: begin addr_start <= 10'd768; addr_end <= 10'd895;  end
+                            3'd7: begin addr_start <= 10'd896; addr_end <= 10'd1023; end
                         endcase
                     end else begin
-                        // Layer 0/1/2: 256 addresses per tile
+                        // Layer 0/1: 256 addresses per tile (4 tiles)
                         case (current_pass_tile)
-                            2'd0: begin addr_start <= 10'd0;   addr_end <= 10'd255;  end
-                            2'd1: begin addr_start <= 10'd256; addr_end <= 10'd511;  end
-                            2'd2: begin addr_start <= 10'd512; addr_end <= 10'd767;  end
-                            2'd3: begin addr_start <= 10'd768; addr_end <= 10'd1023; end
+                            3'd0: begin addr_start <= 10'd0;   addr_end <= 10'd255;  end
+                            3'd1: begin addr_start <= 10'd256; addr_end <= 10'd511;  end
+                            3'd2: begin addr_start <= 10'd512; addr_end <= 10'd767;  end
+                            3'd3: begin addr_start <= 10'd768; addr_end <= 10'd1023; end
+                            default: begin addr_start <= 10'd0; addr_end <= 10'd255; end
                         endcase
                     end
                     
@@ -387,8 +399,6 @@ module Scheduler_FSM #(
                 
                 DONE_STATE: begin
                     done <= 1'b1;
-                    $display("[%0t] SCHED L%0d: *** BATCH %0d COMPLETE ***", 
-                             $time, current_layer_id, current_batch_id);
                 end
             endcase
         end
