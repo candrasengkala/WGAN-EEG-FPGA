@@ -38,23 +38,6 @@ module accumulation_unit #(
     end
 
     // =========================================================
-    // ADDRESS COMPENSATION FUNCTION
-    // shift = (col_id % 8) + 1
-    // =========================================================
-    function [8:0] addr_fix;
-        input [8:0] addr_in;
-        input [3:0] col;
-        reg   [3:0] shift;
-    begin
-        shift = (col & 4'b0111) + 1;   // periodic every 8 PE
-        if (addr_in > shift)
-            addr_fix = addr_in - shift;
-        else
-            addr_fix = 9'd0;
-    end
-    endfunction
-
-    // =========================================================
     // PIPELINE REGISTERS
     // =========================================================
     reg signed [DW-1:0] partial_s1, partial_s2, partial_s3, partial_s4;
@@ -89,16 +72,13 @@ module accumulation_unit #(
     end
 
     // =========================================================
-    // STAGE 2 — ISSUE READ
+    // STAGE 2 — PIPELINE ADDR & ISSUE READ
     // =========================================================
     reg [8:0] bram_addr_rd [0:NUM_BRAMS-1];
 
     always @(posedge clk or negedge rst_n) begin
         if (!rst_n) begin
-            partial_s2 <= 0;
-            bram_sel_s2 <= 0;
-            addr_s2 <= 0;
-            valid_s2 <= 0;
+            partial_s2 <= 0; bram_sel_s2 <= 0; addr_s2 <= 0; valid_s2 <= 0;
             for (i = 0; i < NUM_BRAMS; i = i + 1)
                 bram_addr_rd[i] <= 0;
         end else begin
@@ -117,10 +97,7 @@ module accumulation_unit #(
     // =========================================================
     always @(posedge clk or negedge rst_n) begin
         if (!rst_n) begin
-            partial_s3 <= 0;
-            bram_sel_s3 <= 0;
-            addr_s3 <= 0;
-            valid_s3 <= 0;
+            partial_s3 <= 0; bram_sel_s3 <= 0; addr_s3 <= 0; valid_s3 <= 0;
         end else begin
             partial_s3 <= partial_s2;
             bram_sel_s3 <= bram_sel_s2;
@@ -134,11 +111,8 @@ module accumulation_unit #(
     // =========================================================
     always @(posedge clk or negedge rst_n) begin
         if (!rst_n) begin
-            partial_s4 <= 0;
-            bram_sel_s4 <= 0;
-            addr_s4 <= 0;
-            bram_data_s4 <= 0;
-            valid_s4 <= 0;
+            partial_s4 <= 0; bram_sel_s4 <= 0; addr_s4 <= 0;
+            bram_data_s4 <= 0; valid_s4 <= 0;
         end else begin
             partial_s4 <= partial_s3;
             bram_sel_s4 <= bram_sel_s3;
@@ -157,10 +131,7 @@ module accumulation_unit #(
     // =========================================================
     always @(posedge clk or negedge rst_n) begin
         if (!rst_n) begin
-            accumulated_s5 <= 0;
-            bram_sel_s5 <= 0;
-            addr_s5 <= 0;
-            valid_s5 <= 0;
+            accumulated_s5 <= 0; bram_sel_s5 <= 0; addr_s5 <= 0; valid_s5 <= 0;
         end else begin
             bram_sel_s5 <= bram_sel_s4;
             addr_s5 <= addr_s4;
@@ -174,7 +145,7 @@ module accumulation_unit #(
     end
 
     // =========================================================
-    // STAGE 6 — WRITE (WITH ADDRESS FIX)
+    // STAGE 6 — WRITE (ADDR & DATA SEFASE)
     // =========================================================
     always @(posedge clk or negedge rst_n) begin
         if (!rst_n) begin
@@ -188,15 +159,13 @@ module accumulation_unit #(
 
             if (valid_s5) begin
                 bram_we[bram_sel_s5] <= 1'b1;
-                bram_addr_wr_flat[bram_sel_s5*9 +: 9]
-                    <= addr_fix(addr_s5, bram_sel_s5);
-                bram_din_flat[bram_sel_s5*DW +: DW]
-                    <= accumulated_s5;
+                bram_addr_wr_flat[bram_sel_s5*9 +: 9] <= addr_s5;
+                bram_din_flat[bram_sel_s5*DW +: DW] <= accumulated_s5;
             end
         end
     end
 
-    // =========================================================
+    // =========================================================//
     // FLATTEN READ ADDR
     // =========================================================
     always @(*) begin
@@ -204,5 +173,4 @@ module accumulation_unit #(
             bram_addr_rd_flat[i*9 +: 9] = bram_addr_rd[i];
     end
 
-endmodule //new
-
+endmodule

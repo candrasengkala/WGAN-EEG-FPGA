@@ -16,7 +16,7 @@
  * and physical memory resources (BRAM banks).
  *
  * MODIFICATION NOTE:
- * ✅ FIXED: DATA_WIDTH is now properly parameterized (default 20 for Q9.10)
+ * FIXED: DATA_WIDTH is now properly parameterized (default 20 for Q9.10)
  * Added Pipelined ReLU Logic on the output path to handle Neural Network
  * activation (Negative -> 0) without violating timing constraints.
  *
@@ -290,21 +290,36 @@ module axis_custom_top #(
     
     
     // ========================================================================
-    // COMBINATIONAL ReLU (NO PIPELINE - BUG FIX)
+    // COMBINATIONAL ReLU
     // ========================================================================
-    // MODIFICATION: Removed pipeline to fix position offset bug
-    // Pipeline delay was causing first data word (address 0) to be dropped
-    // Now using pure combinational logic for ReLU activation
-    // ========================================================================
-
     // ReLU Logic: Check Sign Bit (MSB). If 1 (Negative), force to 0. Else Pass.
     // IMPORTANT: Assuming 2's Complement Signed Data. Header is BYPASSED.
     wire [DATA_WIDTH-1:0] bram_data_relu;
     assign bram_data_relu = (mux_out[DATA_WIDTH-1]) ? {DATA_WIDTH{1'b0}} : mux_out;
 
-    // Direct Combinational Output (No Pipeline Registers)
+    // ========================================================================
+    // BRAM READ LATENCY COMPENSATION (1-CYCLE PIPELINE ON VALID) //NEW NEW
+    // ========================================================================
+    // BRAM has 1-cycle registered read: data appears 1 cycle AFTER address.
+    // Without compensation, the first cycle of READ_WAIT sends stale BRAM data
+    // because dob hasn't latched the new address yet. This causes:
+    //   - 1 extra (stale) word per BRAM bank
+    //   - Cascading position shift: Ch0 +1, Ch1 +2, ..., Ch7 +8
+    //
+    // FIX: Delay the valid signal by 1 cycle to align with BRAM output.
+    // Gate with bram_rd_enable to suppress valid during READ_SETUP transitions.
+    // ========================================================================
+    reg read_valid_pipe;
+    always @(posedge aclk) begin
+        if (!aresetn)
+            read_valid_pipe <= 1'b0;
+        else
+            read_valid_pipe <= bram_rd_enable && rd_counter_enable;
+    end
+
+    // Output Assignments
     assign s2mm_tdata  = sending_header ? header_buffer[header_word_count] : bram_data_relu;
-    assign s2mm_tvalid = sending_header || (bram_rd_enable && rd_counter_enable);
+    assign s2mm_tvalid = sending_header || (read_valid_pipe && bram_rd_enable);
     assign s2mm_tlast  = notification_tlast || auto_read_tlast || normal_read_tlast;
 
     // ========================================================================

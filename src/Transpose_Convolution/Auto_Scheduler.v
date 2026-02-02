@@ -68,12 +68,9 @@ module Auto_Scheduler (
                 else
                     current_layer_id <= 2'd0;
                 layer_changed <= 1'b1;
-                $display("[%0t] [AUTO_SCHED] NEW LAYER: %0d -> %0d", 
-                         $time, current_layer_id, current_layer_id + 2'd1);
             end
             if (all_three_loaded && batch_state == BATCH_IDLE && !first_load_done) begin
                 first_load_done <= 1'b1;
-                $display("[%0t] [AUTO_SCHED] First load (Layer 0)", $time);
             end
         end
     end
@@ -106,27 +103,22 @@ module Auto_Scheduler (
             
             if (ifmap_done_posedge) begin
                 ifmap_loaded <= 1'b1;
-                $display("[%0t] [AUTO_SCHED] ifmap_loaded = 1", $time);
             end
             if (weight_done_posedge) begin
                 weight_loaded <= 1'b1;
-                $display("[%0t] [AUTO_SCHED] weight_loaded = 1", $time);
             end
             if (bias_done_posedge) begin
                 bias_loaded <= 1'b1;
-                $display("[%0t] [AUTO_SCHED] bias_loaded = 1", $time);
             end
             
             // Clear weight every batch start
             if (batch_state == BATCH_WAIT_INITIAL) begin
                 weight_loaded <= 1'b0;
-                $display("[%0t] [AUTO_SCHED] weight_loaded cleared", $time);
                 
                 // Clear ifmap & bias only on layer change
                 if (layer_changed) begin
                     ifmap_loaded <= 1'b0;
                     bias_loaded  <= 1'b0;
-                    $display("[%0t] [AUTO_SCHED] ifmap & bias cleared (new layer)", $time);
                 end
             end
         end
@@ -184,8 +176,6 @@ module Auto_Scheduler (
                 BATCH_NEXT: begin
                     if (weight_only_ready) begin
                         current_batch_id <= current_batch_id + 3'd1;
-                        $display("[%0t] [AUTO_SCHED] Batch %0d -> %0d", 
-                                 $time, current_batch_id, current_batch_id + 3'd1);
                     end
                 end
                 BATCH_ALL_DONE: begin
@@ -203,7 +193,6 @@ module Auto_Scheduler (
             batch_auto_start <= 1'b0;
             if (batch_state == BATCH_WAIT_INITIAL) begin
                 batch_auto_start <= 1'b1;
-                $display("[%0t] [AUTO_SCHED] AUTO-START Batch %0d", $time, current_batch_id);
             end
         end
     end
