@@ -4,7 +4,8 @@
 \usepackage{cite}
 \usepackage{amsmath,amssymb,amsfonts}
 \usepackage{subcaption}
-\usepackage{algorithmic}
+\usepackage{algpseudocode}
+\usepackage{algorithm}
 \usepackage{graphicx}
 \usepackage{textcomp}
 \usepackage{xcolor}
@@ -12,12 +13,13 @@
 \usepackage{booktabs}
 \usepackage{multirow}
 \usepackage{colortbl}
+\raggedbottom
 \usepackage[numbers]{natbib}
 \def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
     T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
 \begin{document}
 
-\title{A Systolic Array Architecture for GAN-Based Real-Time EEG Artifact Removal\\
+\title{Area-Efficient Unified Systolic Array for GAN-Based EEG Artifact Removal\\
 }
 
 \author{\IEEEauthorblockN{Dharma Anargya Jowandy}
@@ -60,36 +62,21 @@ Bandung, Indonesia \\
 \maketitle
 
 \begin{abstract}
-Electroencephalography (EEG) denoising is a critical preprocessing step for reliable neural signal analysis in applications such as medical diagnostics and brain--computer interfaces. While deep learning approaches have shown strong performance, their high computational complexity and reliance on manually curated datasets limit their suitability for real-time, resource-constrained systems. 
+In this work, we present a specialized hardware architecture for EEG artifact removal based on a GAN-driven temporal U-Net model. The proposed design features a unified systolic array core capable of executing both one-dimensional convolution and transposed convolution, enabling efficient support for encoder–decoder architectures without runtime reconfiguration. To improve hardware efficiency, Batch Normalization is fused into convolution operations, eliminating inference-time overhead, and a Q9.14 fixed-point quantization scheme is adopted to reduce complexity while preserving numerical fidelity.
 
-In this work, we present a specialized hardware architecture for real-time EEG artifact removal based on a GAN-driven temporal U-Net model. The proposed design features a unified systolic array core capable of executing both one-dimensional convolution and transposed convolution, enabling efficient support for encoder--decoder architectures without runtime reconfiguration. To improve hardware efficiency, Batch Normalization is fused into convolution operations, eliminating inference-time overhead, and a Q9.14 fixed-point quantization scheme is adopted to reduce complexity while preserving numerical fidelity.
-
-The architecture employs mode-multiplexed datapaths governed by hierarchical finite state machines, removing the need for dynamic parameter loading. Implemented on the Pynq-Z1 platform, the system achieves high hardware utilization and low latency suitable for real-time EEG processing. Experimental evaluation against floating-point software models demonstrates high accuracy, achieving a correlation coefficient of 0.9874 and an RRMSE of 0.1267. Using the EEGdenoiseNet benchmark with constructed ground truth, the system exhibits robust generalization across multiple artifact types, including EOG and EMG signals. These results validate the proposed architecture as an efficient and accurate solution for real-time EEG denoising in embedded hardware environments.
+The architecture employs mode-multiplexed datapaths controlled by hierarchical finite state machines, removing the need for dynamic parameter loading. Implemented on the Pynq-Z1 platform, the unified accelerator achieves high hardware utilization with full DSP usage while consuming only 25\% of available Block RAM, drawing an estimated 0.793 W of on-chip power. Experimental evaluation against floating-point software models demonstrates high similarity indicated by Pearson correlation and low RRMSE across both convolution and transposed convolution layers. Using the EEGdenoiseNet benchmark with constructed ground truth, the system exhibits robust generalization across multiple artifact types, including EOG and EMG signals. These results validate the proposed architecture as an efficient solution for EEG denoising in embedded hardware environments. 
 \end{abstract}
 
 \begin{IEEEkeywords}
-Generative Adversarial Network, IC Design, Systolic Array, EEG artifact Removal
+Generative Adversarial Network, Systolic Array, EEG artifact Removal
 \end{IEEEkeywords}
 
 \section{Introduction}
-Electroencephalography (EEG) is a widely used method to record an electrogram of the spontaneous electrical activity of the brain. 
-It has been widely used across a broad range of applications, from medical diagnostics and brain-computer interfaces (BCIs) to sleep analysis \cite{niedermeyer2011} \cite{wolpaw2002bci}.
-A critical challenge in deploying EEG systems is the extraction of clean neural signals, which requires filtering out various noise sources and artifacts that can obscure pure brain activity \cite{uriguen2015artifact}.
+Electroencephalography (EEG) is a widely used method to record electrical activity of the brain, spanning applications from medical diagnostics and brain-computer interfaces (BCIs) to sleep analysis \cite{niedermeyer2011}, \cite{wolpaw2002bci}. However, a critical bottleneck in deploying EEG systems is the extraction of clean neural signals, which requires filtering out various noise sources and artifacts that often obscure pure brain activity \cite{uriguen2015artifact}. Traditionally, data denoising relies on manual expert analysis, which is labor-intensive, inherently subjective, and unscalable for real-time applications. While numerous machine learning models have emerged to automate this process \cite{jiang2019deep}, they face significant challenges: the lack of deterministic "ground truth" in manually cleaned datasets, the diverse characteristics of EEG artifacts \cite{islam2016artifact}, and the high computational power needed for state-of-the-art models \cite{roy2019deep} makes them unsuitable for resource-constrained edge devices. To address these problems, we propose a Generative Adversarial Network (GAN) driven temporal U-Net to perform signal reconstruction. The network is then implemented on hardware level to support on edge-device application.
 
-Traditionally, data denoising relies on expert analysis, where professionals manually inspect the signal to identify and remove noise. 
-However, this approach is labor-intensive and inherently subjective; the results often vary significantly depending on the individual performing the task.
-In recent years, numerous machine learning models have emerged to automate this process \cite{jiang2019deep}, yet they face several challenges.
-First, most existing datasets provide raw signals paired with manually cleaned versions, which, as noted, lack a deterministic "ground truth" necessary for robust model training.
-Second, EEG artifacts exhibit various characteristics \cite{islam2016artifact}, making it difficult to develop a generalized denoiser using standard machine learning approaches.
-Finally, state-of-the-art models are often computationally intensive \cite{roy2019deep}, rendering them unsuitable for real-time applications on resource-constrained devices.
+Previous hardware implementations of U-Net such as \cite{10585793}, \cite{10965410}, \cite{posso2025realtimesemanticsegmentationaerial} typically instantiate separate modules for encoder and decoder paths, prioritizing algorithmic equivalence over architectural considerations. This result in poor scalability and excessive resource consumption. For that reason, we propose a specialized systolic array architecture implemented in hardware, designed to deliver computational efficiency and scalability. Unlike prior implementations that often suffer from scalability issues or excessive resource consumption due to modular redundancy, our design introduces a unified systolic array core capable of executing both one-dimensional convolution and transposed convolution without runtime reconfiguration.
 
-To address these challenges, we propose a specialized systolic array architecture implemented in hardware, designed to deliver high-performance, real-time denoising. This architecture does not pay much attention to algorithmic details and just focuses on architecture, the affect of that the system lacks scalability and customazation.
-
-Our approach utilizes a data-driven model capable of generalizing across a wide array of artifacts, provided that representative data is available for training.
-Furthermore, we adopt the methodology introduced by EEGdenoiseNet \cite{zhang2021eegdenoisenetbenchmarkdatasetendtoend}, which uses a constructed ground truth to resolve the consistency issues inherent in manually labeled datasets.
-
-This hardware implementation is supported by a suite of software-guided optimizations, including Batch Normalization fusion \cite{jacob2018quantization} and fixed-point quantization \cite{jacob2018quantization} \cite{sze2017efficient}. Together, these enhancements significantly improve hardware efficiency without compromising model accuracy.
-
+Our approach leverages a data-driven model capable of generalizing across diverse artifacts, adopting the EEGdenoiseNet \cite{zhang2021eegdenoisenetbenchmarkdatasetendtoend} methodology to resolve consistency issues through constructed ground truth. To bridge the gap between model complexity and hardware constraints, we implement a suite of software-guided optimizations, including Batch Normalization fusion \cite{jacob2018quantization} and fixed-point quantization \cite{jacob2018quantization}, \cite{sze2017efficient}. These enhancements significantly improve hardware efficiency by eliminating inference-time overhead without compromising model accuracy. This paper is organized as follows. Section II discusses the proposed design including algorithm and architectural optimization. Section III discusses hardware architecture and related works,  Section IV discusses implementation, and Section V analyzes the experimental results and performance comparison. Finally, conclusions are drawn in Section IV.  
 \section{Proposed Architecture}
 \begin{figure*}[t]
     \centering
@@ -201,6 +188,16 @@ This allows the normalization operations to be mathematically fused with the pre
 Aside from that, we have tested the performance between GroupNorm and BatchNorm, results can be seen in Table. \ref{tab:norm_heatmap}. 
 From those results it can be seen that BatchNorm does not bring much detriment to the model's performance.
 
+\begin{figure*}[t]
+    \centering
+    \includegraphics[
+        width=0.90\textwidth
+    ]{AXON-Conv_Transconv_Unified_Core_Paper.drawio.png}
+    \caption{Overall view of the WGAN-EEG FPGA accelerator. Systolic array is interfaced with different input buffers and output buffers based on mode given by the architecture FSM. Blue colored paths indicate transposed convolution paths while red colored paths indicate 1D convolution paths. Black colored paths are used by both convolution and transposed convolution operations. Thick lines indicate $Depth \times DW$ (Datawidth) wide signals (flattened BRAM input/output). All non-control modules are controlled by the control logic blocks.}
+    \label{fig:Unified_Core} 
+    \vspace{-15pt}
+\end{figure*}
+
 \subsection{BatchNorm Fusion}
 \label{subsec:batchnorm_fusion}
 As mentioned earlier, Batch Normalization utilizes fixed statistics (mean and variance) derived from training. 
@@ -271,33 +268,26 @@ Thus, the original convolution followed by Batch Normalization can be replaced b
 
 From a hardware perspective, this fusion significantly reduces complexity by eliminating the need for dedicated normalization circuitry. The network effectively retains the benefits of normalization, yet requires no specific hardware logic to execute it.
 
-\subsection{Fixed-Point Representation}
-\label{subsec:fixed_point}
-To optimize hardware resource utilization and minimize latency \cite{jacob2018quantization}, our implementation uses fixed-point arithmetic for inference. We adopted the \textbf{Q9.14} format, which allocates 1 implicit sign bit, 9 bits for the integer part, and 14 bits for the fractional part, resulting in a total bit-width of 24 bits.
-
-This format provides a dynamic range of approximately $\pm 512$ with a resolution of $2^{-14}$ ($\approx 6.1 \times 10^{-5}$). Our range analysis on intermediate network activations indicated that values rarely exceed a magnitude of 10. Consequently, the chosen integer width provides ample headroom to prevent overflow, while the 14-bit fractional precision is sufficient to preserve the model's accuracy.
-
-The primary motivation for using fixed-point representation is hardware efficiency. Unlike floating-point arithmetic, which requires complex logic for exponent alignment and normalization, fixed-point operations can be realized using standard integer adders and multipliers. Furthermore, operations such as scaling and truncation can be efficiently handled in hardware through bit-slicing and wiring, significantly reducing the logic gate count.
-
-The quantization process is modeled in software using Python. We initially compute network parameters in standard 32-bit floating-point (NumPy \texttt{float32}). These values are then quantized to the Q9.14 format and exported as hexadecimal strings into \texttt{.mem} files, which serve as the initialization memory for the Verilog testbench. 
 
 \section{Hardware Architecture}
 
-\subsection{Related Works}
-Several related works on hardware implementations of U-Net focus primarily on algorithmic equivalence and functional correctness, rather than on explicit architectural design considerations. Implementations such as \cite{10965410} and \cite{posso2025realtimesemanticsegmentationaerial} rely on High-Level Synthesis (HLS) to translate the computational model into hardware, but provide limited architectural discussion on architectural aspects such as dataflow organization, memory hierarchy, and resource reuse. In particular, \cite{10585793} adopts a direct algorithm-to-hardware mapping approach, where each network layer is instantiated as a dedicated hardware block, resulting in a one-layer–to–one-hardware mapping without further architectural optimization. While \cite{CHENG2022105492} includes architectural discussions, it does not address implementation considerations for transposed convolution operations or layers.
-% Make an outline after introductio (i.e. which part is about what).
+\subsection{Related Works} \label{subsec: related works}
+Several related works on hardware implementations of U-Net focus primarily on algorithmic equivalence and functional correctness, rather than on explicit architectural design considerations. Implementations such as \cite{10965410} and \cite{posso2025realtimesemanticsegmentationaerial} rely on High-Level Synthesis (HLS) to translate the computational model into hardware, but provide limited architectural discussion on architectural aspects such as data flow organization, memory hierarchy, and resource reuse. In particular, \cite{10585793} adopts a direct algorithm-to-hardware mapping approach, where each network layer is instantiated as a dedicated hardware block, resulting in a one-layer–to–one-hardware mapping without further architectural optimization. While \cite{CHENG2022105492} includes architectural discussions, it does not address implementation considerations for transposed convolution operations or layers.
+
 Furthermore, there is a lack of literature on hardware implementations of U-Net architectures for temporal data that employ both one-dimensional convolution and one-dimensional transposed convolution layers. To address this gap, we propose a unified architecture capable of efficiently support both convolutional and transposed convolutional operations within a temporal U-Net framework.
+
+
 \subsection{Overview of Proposed Hardware Design}
-\begin{figure}[t]
+
+\begin{figure*}[t]
     \centering
-    \includegraphics[
-        width=\linewidth,
-        trim=0 0 0 0,
-        clip
-    ]{AXON-Conv_Transconv_Unified_Core_Paper.jpg}
-    \caption{Systolic array is interfaced with different input buffers and output buffers based on mode given by system FSM. Blue colored paths indicates transpose convolution paths while red colored paths indicates convolution paths. Black colored paths are used by both convolution and transposed convolution operations. Thick layers indicates $Depth\times DW (Data witdh)$ wide signals (flattened BRAM input/output). All of non-control modules and controlled by control logics.}
-    \label{fig:Unified_Core} 
-\end{figure}
+    \includegraphics[width=0.9\textwidth]{Matrix Multiplicator.jpg}
+    \caption{AXON \cite{nayan2025axonnovelsystolicarray} output-stationary systolic array and processing element (PE). The $D$ array denotes diagonal processing units, while $H$ denotes horizontal units. The illustration shows a $4 \times 4$ array, whereas the proposed system employs a $16 \times 16$ array. Yellow paths indicate control paths. On systolic array illustration, black paths indicate weight and ifmap values propagation direction.}
+    \label{fig:Matrix_Multiplicator}
+    \vspace{-15pt}
+\end{figure*}
+
+
 Our design implements the generator part of the GAN network mentioned earlier. The design is based on the output-stationary AXON systolic array \cite{nayan2025axonnovelsystolicarray}, which is tailored specifically for both convolutional and transposed convolutional layers. For convolutional operations, the systolic array multiplies input feature maps (IFMAPs) and kernels, with IFMAP formation (\textit{im2col}) performed in the Programmable Logic. This \textit{im2col} approach reduces computation in the Processing System.
 
 Our system implements the U-Net architecture directly within the system control logic. As a result, no convolution or transposed convolution parameters (e.g., padding, input length, kernel size) are provided by the Processing System (PS). Instead, these parameters are stored internally and managed by finite state machines (FSMs) that configure the system according to the required operation.
@@ -316,73 +306,188 @@ While AXON is originally optimized for two-dimensional convolution with a stride
 
 The unified core employs a $16 \times 16$ AXON-based matrix systolic array with separate buffers, interfaces, and control units for convolution and transposed convolution modes. The $16 \times 16$ dimension is selected because 16 is the largest kernel size used in the U-Net architecture. For convolution operations, each kernel can therefore fit entirely within the systolic array, with smaller kernels zero-padded as needed. The same matrix multiplier is reused for the transposed convolution process by activating only the diagonal PEs, with input feature map values injected from the left-most PE (corresponding to coordinate $(0,0)$ in Fig.~\ref{fig:Matrix_Multiplicator}). The datapaths involved in convolution and transposed convolution operations are described in Sections~\ref{sec:DatapathConvolution} and~\ref{sec:DatapathTransposeConvolution}, respectively.
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\linewidth]{Matrix Multiplicator.jpg}
-    \caption{AXON \cite{nayan2025axonnovelsystolicarray} output-stationary systolic array and processing element (PE). The $D$ array denotes diagonal processing units, while $H$ denotes horizontal units. The illustration shows a $4 \times 4$ array, whereas the proposed system employs a $16 \times 16$ array.}
-    \label{fig:Matrix_Multiplicator}
-\end{figure}
-
 \subsection{Datapath for Convolution Process}
 \label{sec:DatapathConvolution}
 
 Convolution is performed in batches of 64 input channels. Upon completion of each batch, the system requests a new set of filter weights from the Processing System. A new weight batch is also requested after processing every group of 16 filters. The sequencer first waits for the AXI interface to confirm that all required input channels have been loaded into the BRAMs before requesting the initial weight batch. Subsequent weight batches are processed without reloading the input channels, making the design constrained by the available input BRAM capacity.
 
 Each BRAM stores a subset of input channels according to the following pattern: BRAM[0] stores $\{\text{channel}[0], \text{channel}[16], \text{channel}[32]\}$, BRAM[1] stores $\{\text{channel}[1], \text{channel}[17], \text{channel}[33]\}$, and so on until the final BRAM. As a result, the number of operable input channels is limited by the temporal length of each channel. For correct operation, the system must satisfy the constraint
-\[
-\text{num\_channels} \times \text{temporal\_length} \leq \text{BRAM\_depth} \times \text{num\_BRAMs}.
-\]
+$num\_channels \times temporal\_length \leq BRAM\_depth \times num\_BRAMs$.
 
-The \textit{im2col} transformation is performed internally by streaming input channels through shift registers whose enable signals follow a predefined pattern. The enable signal is derived from a dimension-wide ghost shift register according to
-\[
-\text{en\_shift\_reg} = \text{en\_shift\_reg\_ghost}[2 \times \text{Dimension} - 1 : \text{Dimension}].
-\]
-The ghost shift register is initialized starting from the first padding value and activated based on the overlap pattern. Specifically, an overlap of one sample is propagated from $\text{en\_shift\_reg\_ghost}[\text{DW}]$ to $\text{en\_shift\_reg\_ghost}[\text{DW} - (\text{overlap} - 1)]$, where the overlap is defined as
-\[
-\text{overlap} = \frac{\text{kernel\_size}}{\text{stride}}.
-\]
-
-Due to this design, the convolution engine supports only configurations in which the kernel size divided by the stride yields an integer value. Additionally, the system cannot support kernel sizes larger than 16. Bias values are applied as initial output values, with all subsequent systolic array outputs accumulated onto these initialized values.
+The \textit{im2col} is performed internally by streaming input channels through shift registers whose enable signals follow a shifting of predefined pattern. The enable signal is derived from a "ghost" shift register according to $en\_shift\_reg = en\_shift\_reg\_ghost[2 \times Dimension - 1 : Dimension]$ with ghost shift register initialized starting from the first padding value and is shifted every stride amount of input based on the overlap pattern. Specifically, an overlap of one sample set from $\text{en\_shift\_reg\_ghost}[\text{DW}]$ to $\text{en\_shift\_reg\_ghost}[\text{DW} - (\text{overlap} - 1)]$, where the overlap is defined as $overlap = \frac{kernel\_size}{stride}$ (i.e., all values on these indices are made one, shown in Table.~\ref{tab:timing_sequence}). As such, due the design, the convolution engine supports only configurations in which the kernel size divided by the stride yields an integer value. Additionally, the system cannot support kernel sizes larger than 16. Bias values are applied as initial output values, with all subsequent systolic array outputs accumulated onto these initialized values.
 
 \begin{figure}[H]
     \centering
     \includegraphics[
-        width=0.5\linewidth
-    ]{AXON-Input_Buffer.jpg}
-    \caption{Illustration of the \textit{im2col} operation implemented in the input buffer. The signal $en\_shift\_reg\_ghost$ is asserted once for every \emph{stride} input samples, causing the shift register to advance accordingly.}
+        width=0.7\linewidth
+    ]{AXON-Input_Buffer_Diagram.jpg}
+    \caption{\textit{im2col} supporting hardware. The enable signals are shifted as shown in Table.~\ref{tab:timing_sequence}.}
     \label{fig:Input_Buffer}
 \end{figure}
-After 16 ifmaps are evaluated, the system is then designed to start its calculation appropriately, according to last streamed value of an input channel. The input channel transition is done control algorithm accounting for "stacks" available on the BRAMs.
-\subsection{Datapath for Transpose Convolution Process} \label{sec: Datapath for Transpose Convolution Process}
-In the implementations of transpose convolution process, we utilize diagonal Processing Elements (PEs) in the proposed design. Unlike conventional Weight Stationary designs where data propagates through neighbor connections, this architecture injects inputs directly from on-chip BRAMs into each diagonal PEs. The scheduler manages this injection via a deterministic staggered activation scheme, effectively bypassing the standard systolic propagation path. To accommodate the resulting time-skewed output wavefront, the Memory-Mapped-to-Image (MM2IM) Mapper employs a linear FIFO delay that aligns write addresses with valid data arrival. Finally, the Accumulation Unit integrates bias addition within a pipelined read-modify-write cycle, using pre-loaded biases as initial partial sums to eliminate additional latency.
 
-For the transpose convolution process, we implement MM2IM mapper that operates synchronously with the scheduler and generates one mapping vector per cycle corresponding to the active transposed-convolution row and tile. Each processing element independently computes its target output channel and temporal position, which are then translated into a BRAM bank index and intra-bank address using fixed channel interleaving. The resulting CMAP signal explicitly gates accumulation, ensuring that only valid mapper outputs contribute to BRAM updates. This approach guarantees deterministic alignment between systolic array latency, accumulation timing, and multi-bank output memory addressing. MM2IM mapper algorithm is as follows:
-\begin{figure}[H]
-    \centering
-    \vspace{-10pt} % Tighten top margin
-    \includegraphics[width=0.8\linewidth]{MM2IM_Algo.jpeg} % Rescaled to 80% to save vertical space
-    \vspace{-5pt} % Pull caption closer to image
-    \caption{Algorithm used for MM2IM Process.}
-    \label{fig:MM2IM Algorithm}
-    \vspace{-10pt} % Pull text below closer
-\end{figure}
+\begin{table}[H]
+\caption{Timed Sequence for Data Streaming and Shift Register Enable (LSB denotes enable signal for 0th shift register in Fig.~\ref{fig:Input_Buffer})}
+\label{tab:timing_sequence}
+\centering
+\small
+\begin{tabular}{@{}ccc@{}}
+\toprule
+\textbf{Time} & \textbf{Data Streamed} & \textbf{Shift Register Enable} \\ \midrule
+$t$           & 1                      & 00000001                       \\
+$t+1$         & 2                      & 00000001                       \\
+$t+2$         & 3                      & 00000011                       \\
+$t+3$         & 4                      & 00000011                       \\
+$t+4$         & 5                      & 00000110                       \\
+$t+5$         & 6                      & 00000110                       \\
+$t+6$         & 7                      & 00001100                       \\
+$t+7$         & 8                      & 00001100                       \\
+$t+8$         & 9                      & 00011000                       \\
+$t+9$         & 10                     & 00011000                       \\ \bottomrule
+\end{tabular}
+\end{table}
+
+After 16 ifmaps are evaluated, the system is then designed to start its calculation appropriately, according to last streamed value of an input channel. The input channel transition is done control algorithm accounting for "stacks" available on the BRAMs.
+
+\subsection{Datapath for Transpose Convolution Process} 
+\label{sec:DatapathTransposeConvolution}
+
+In the implementation of the transpose convolution process, we utilize diagonal Processing Elements (PEs) in the proposed design. Unlike conventional Weight Stationary designs where data propagates through neighbor connections, this architecture injects inputs directly from on-chip BRAMs into each diagonal PE. The scheduler manages this injection via a deterministic staggered activation scheme, effectively bypassing the standard systolic propagation path. Weight addresses are generated through a wavefront pipeline with jumpstart logic, where each successive BRAM is activated one cycle after the previous, eliminating startup dead cycles and achieving full utilization within 16 clock cycles. Meanwhile, the ifmap counter activates only a single selected BRAM bank per pass, reducing dynamic power consumption during transpose convolution operation. To accommodate the resulting time-skewed output wavefront, the Memory-Mapped-to-Image (MM2IM) Mapper employs a linear FIFO delay that aligns write addresses with valid data arrival. Finally, the Accumulation Unit integrates bias addition within a pipelined read-modify-write cycle, using pre-loaded biases as initial partial sums to eliminate additional latency. The accumulation operates as a six-stage pipeline — latch, address setup, alignment, read return, accumulate, and write-back — hiding BRAM read latency while maintaining single-cycle throughput.
+
+For the transpose convolution process, we implement the MM2IM mapper that operates synchronously with the scheduler and generates one mapping vector per cycle corresponding to the active transposed-convolution row and tile. Each processing element independently computes its target output channel and temporal position, which are then translated into a BRAM bank index and intra-bank address using fixed channel interleaving. The resulting CMAP signal explicitly gates accumulation, ensuring that only valid mapper outputs contribute to BRAM updates. This approach guarantees deterministic alignment between systolic array latency, accumulation timing, and multi-bank output memory addressing. The mapper supports four decoder layers with different output dimensions — ranging from 64 to 512 time steps and 128 down to 16 channels — through layer-aware combinational parameter selection that requires no reconfiguration overhead between layers. The MM2IM mapper algorithm is shown in Algorithm \ref{alg:mm2im}.
+
+% \clearpage
+\begin{algorithm}[H]
+    \caption{MM2IM Mapper Algorithm}
+    \label{alg:mm2im}
+    \small % Shrinks font to prevent wrapping
+    \begin{algorithmic}[1]
+        \State \textbf{Input:} $layer_{id}, row_{id}, tile_{id}$ \textbf{Output:} $CMap, OMap$
+        \Statex
+        \Procedure{MM2IMMapper}{$layer_{id}, row_{id}, tile_{id}$}
+            \State \textbf{load} $\{O_{h}, O_{c}, T_{max}\}$ for $layer_{id}$
+            \For{$i = 0$ \textbf{to} $15$} \Comment{Iterate through PEs}
+                \State $k \gets i \pmod 4, \ offset \gets \lfloor i/4 \rfloor$
+                \State $ch \gets (tile_{id} \times 4) + offset, \ t_{pos} \gets base_{pos} + k$
+                
+                \State \textbf{let} $v \gets (tile_{id} < T_{max}) \land (ch < O_{h}) \land (0 \le t_{pos} < O_{h})$
+                
+                \If{$v$}
+                    \State $bank \gets ch \pmod{16}, \ page \gets \lfloor ch/16 \rfloor$
+                    \State $addr \gets (page \times O_{h}) + t_{pos}$
+                    \State $CMap_{i} \gets \text{VAL}, \ OMap_{i} \gets \{bank, addr\}$ 
+                \Else
+                    \State $CMap_{i} \gets \text{INV}, \ OMap_{i} \gets \text{NULL}$
+                \EndIf
+            \EndFor
+            \State \textbf{return} $CMap, OMap$
+        \EndProcedure
+    \end{algorithmic}
+\end{algorithm}
 
 \section{Implementation}
 \subsection{Utilization Report}
 We implement our design using Pynq-Z1. Our synthesis result is as follows: 
 
-\begin{figure}[H]
-    \centering
-    \vspace{-10pt}
-    \includegraphics[width=0.8\linewidth]{Implementation_Result.jpeg} % Rescaled to 80%
-    \vspace{-5pt}
-    \caption{Resource utilization report obtained from Vivado after synthesis on the Pynq-Z1 platform.}
-    \label{fig:Utilization_Report}
-    \vspace{-10pt}
-\end{figure}
+\begin{table}[H]
+\centering
+\caption{FPGA Resource Utilization}
+\begin{tabular}{lrrr}
+\hline
+\textbf{Resource} & \textbf{Estimation} & \textbf{Available} & \textbf{Utilization (\%)} \\
+\hline
+LUT     & 27091 & 53200  & 50.92 \\
+LUTRAM  & 537   & 17400  & 3.09  \\
+FF      & 18735 & 106400 & 17.61 \\
+BRAM    & 35    & 140    & 25.00 \\
+DSP     & 220   & 220    & 100.00 \\
+\hline
+\end{tabular}
+\label{tab:resource_utilization}
+\end{table}
+Table.~\ref{tab:resource_utilization} shows integrated Convolution and Transpose Convolution system utilization report on Pynq-Z1 board. Other implementation parameters are presented modularity. 
+\subsection{Convolution System Implementation Parameters}
+\subsubsection{Latency}
+Convolution is done per "block" of 64 input channels with new filter weights reloaded after the process is completed or during filter change as the system operates 16 filters at the same time. As such, convolution latency can be measured as the amount of "blocks" needed for a convolution process. Time needed for an entire block of convolution is 0.00359ms for an entire process with 0.00343ms loading process time both without AXI interface assuming that \textbf{all} input channels are loaded. 
+\subsubsection{Timing Constrain}
+For the convolution process, timing is constrained at 12ns clock period with results as follows:
+\begin{table}[H]
+\centering
+\caption{Convolution Timing Analysis Summary}
+\begin{tabular}{lrrr}
+\hline
+\textbf{Metric} & \textbf{Setup} & \textbf{Hold} \\
+\hline
+Worst Negative Slack (WNS)        & 1.211 ns  & --- \\
+Worst Hold Slack (WHS)             & ---       & 0.137 ns  \\
+\hline
+\end{tabular}
+\label{tab:timing_analysis}
+\end{table}
 
+\textbf{All user specified timing constraints are met.}
+\subsubsection{Power Consumption}
+Power analysis result done after synthesis for convolution system: \textbf{0.577W}.
+
+\subsection{Transpose Convolution Process}
+\subsubsection{Latency}
+For transpose convolutino process, latency is measured as the time needed for the entire decoder process to be done including AXI interface. The results are as follows:
+\begin{table}[H]
+\centering
+\caption{Latency Summary Table}
+\begin{tabular}{lll}
+\hline
+\textbf{Layer} & \textbf{Latency (cycles)} \\
+\hline
+d1    & 419311  \\
+d2    & 353543  \\
+d3    & 171100  \\
+d4    & 107613  \\
+\hline
+TOTAL & 1051864 \\
+\hline
+\end{tabular}
+\label{tab:latency_summary}
+\end{table}
+\subsubsection{Timing Constrain}
+For the transpose convolution process, timing is constrained at 10ns clock period. Results as follows:
+\begin{table}[H]
+\centering
+\caption{Transpose Convolution Timing Analysis Summary}
+\begin{tabular}{lrrr}
+\hline
+\textbf{Metric} & \textbf{Setup} & \textbf{Hold} \\
+\hline
+Worst Negative Slack (WNS)        & 1.892 ns  & ---         \\
+Worst Hold Slack (WHS)             & ---       & 0.045 ns  
+\hline
+\end{tabular}
+\label{tab:timing_analysis}
+\end{table}
+
+\subsubsection{Power Consumption}
+Power analysis result done after synthesis for transpose convolution system: \textbf{0.216W}.
+\subsection{Analysis}
+Compared to implementations \cite{10585793} and \cite{10965410}, our implementation results in lower power consumption and utilization. At the same time, latency and clock speed worsen. This is due to the fact that our design highly configurable and scalable as it doesn't implement U-Net as layer-by-layer algorithmic equivalence.
+\begin{table}[H]
+\centering
+\caption{Performance Comparison}
+\begin{tabular}{lrrr}
+\hline
+\textbf{Metric} & & \textbf{\cite{10965410}} & \textbf{\cite{10585793}} \\
+                & \textbf{Current Work} & \textbf{(Rui Ma et al.)} & \textbf{(Khalil et al.)} \\
+\hline
+Target Device      & Xilinx Pynq-Z1 & Xilinx Artix-7 & Altera FPGA \\
+Logic (LUT)        & 27,068         & 653,670        & 10,417      \\
+Registers (FF)     & 18,759         & 923,059        & 2,657       \\
+Arithmetic (DSP)   & 220            & 11,830         & 168         \\
+Memory (BRAM)      & 35             & 38,108         & 173         \\
+Est. Slices        & 29,295         & 1,374,810      & 19,807      \\
+\hline
+\end{tabular}
+\label{tab:performance_comparison}
+\end{table}
 \section{Evaluation}
-\label{sec:evaluation}
+\label{sec:conv_evaluation}
 
 To comprehensively evaluate the performance of the proposed EEG denoising model, two complementary evaluation metrics were employed: Pearson correlation accuracy (ACC) and relative root mean square error (RRMSE).
 
@@ -417,9 +522,9 @@ By experimenting with both normalization strategies, the following results were 
     \vspace{-10pt}
 \end{table}
 
-As discussed in Section~\ref{subsec:normalization_strat}, the test data were generated according to the selected data modes (1--5) alongside the training dataset. The numerical results demonstrate consistently satisfactory performance across all modes. Notably, Mode~5 includes both EEG and EOG artifacts, yet the model is still able to reliably detect and suppress noise, achieving Pearson correlation values exceeding 0.8.
+As discussed in Section~\ref{subsec:normalization_strat}, the test data were generated according to the selected data modes (1--5) alongside the training dataset. The numerical results demonstrate consistently satisfactory performance across all modes. Notably, Mode~5 includes both EEG and EOG artifacts, yet the model is still able to reliably detect and suppress noise, achieving Pearson correlation values exceeding 0.8, this demonstrates that BatchNorm is a valid replacement for GroupNorm.
 
-In addition to numerical evaluation, Fig.~\ref{fig:model_out} illustrates representative examples comparing clean, noisy, and generated EEG signals.
+In addition to numerical evaluation, Fig.~\ref{fig:model_out} illustrates representative examples comparing clean, noisy, and generated EEG signals from the software models using BatchNorm which shows that the generated EEG is very close the the original EEG without the noise.
 
 \begin{figure}[H]
     \centering
@@ -431,64 +536,63 @@ In addition to numerical evaluation, Fig.~\ref{fig:model_out} illustrates repres
     \vspace{-10pt}
 \end{figure}
 
-\subsection{Q9.14 Representation Difference with Original Model}
+\subsection{Hardware vs Software Model}
 
-We compare the software outputs obtained using fixed-point and floating-point number representations. The difference is quantified using RRMSE and ACC, with the resulting error metrics summarized in Table~\ref{tab:error_metrics}.
+To validate the hardware implementation, we compare
+the hardware output with the original software model output for ten different data using the evaluation metric ACC and RRMSE as mentioned above. 
 
-\begin{table}[H]
-    \centering
-    \vspace{-5pt}
-    \caption{Error metrics between floating-point and Q9.14 fixed-point representations.}
-    \label{tab:error_metrics}
-    \begin{tabular}{ccc}
-    \toprule
-    \textbf{Max Diff} & \textbf{Mean Diff} & \textbf{RMSE} \\
-    \midrule
-    $2.59 \times 10^{-2}$ & $5.74 \times 10^{-3}$ & $1.39 \times 10^{-2}$ \\
-    \bottomrule
-    \end{tabular}
-    \vspace{-10pt}
+To evaluate the hardware, we tested transpose convolution layer C4 followed by convolution layer D1 (see Fig.~\ref{fig:gen_critic_structure_full}). We provide a standalone output comparison for C4 to validate individual layer performance, followed by the integrated results of the C4-D1 pipeline.
+
+\begin{table}[htbp]
+\caption{TransConv(C4): Similarity Comparison between Hardware and Software Outputs}
+\label{tab:d4_metrics}
+\centering
+\begin{tabular}{@{}lcc@{}}
+\toprule
+\textbf{Seed ID} & \textbf{Mean RRMSE} & \textbf{Mean Correlation} \\ \midrule
+1234             & 0.102               & 0.991                     \\
+420              & 0.111               & 0.990                     \\
+67               & 0.112               & 0.990                     \\
+69               & 0.118               & 0.988                     \\
+13523100         & 0.106               & 0.990                     \\
+13223051         & 0.104               & 0.991                     \\
+13223075         & 0.106               & 0.991                     \\
+42               & 0.111               & 0.990                     \\
+21               & 0.104               & 0.991                     \\
+20               & 0.115               & 0.989                     \\ \midrule
+\textbf{Overall Mean} & \textbf{0.109}      & \textbf{0.990}            \\ \bottomrule
+\end{tabular}
 \end{table}
 
-\subsection{Transposed Convolution: Hardware vs Software Model}
-
-To validate the hardware implementation, the output of the transposed convolution layer executed on the systolic array was compared against the software golden model. Performance was evaluated using RRMSE and ACC, as summarized in Table~\ref{tab:hw_sw_results}.
-
-\begin{table}[H]
-    \centering
-    \vspace{-5pt}
-    \caption{Performance comparison between hardware and software implementations.}
-    \label{tab:hw_sw_results}
-    \begin{tabular}{lcc}
-        \toprule
-        \textbf{Metric} & \textbf{Value} & \textbf{Interpretation} \\
-        \midrule
-        RRMSE & 0.1267 & Lower is better (Low Error) \\
-        ACC   & 0.9874 & Higher is better (High Fidelity) \\
-        \bottomrule
-    \end{tabular}
-    \vspace{-10pt}
+\begin{table}[htbp]
+\caption{Conv(C4-D1): Similarity Comparison between Hardware and Software Outputs}
+\label{tab:c4_d1_metrics}
+\centering
+\begin{tabular}{@{}lcc@{}}
+\toprule
+\textbf{Seed ID} & \textbf{Mean RRMSE} & \textbf{Mean Correlation} \\ \midrule
+1234             & 0.077               & 0.996                     \\
+420              & 0.086               & 0.996                     \\
+67               & 0.076               & 0.996                     \\
+69               & 0.097               & 0.995                     \\
+13523100         & 0.085               & 0.996                     \\
+13223051         & 0.084               & 0.996                     \\
+13223075         & 0.082               & 0.996                     \\
+42               & 0.087               & 0.996                     \\
+21               & 0.083               & 0.996                     \\
+20               & 0.086               & 0.995                     \\ \midrule
+\textbf{Overall Mean} & \textbf{0.084}      & \textbf{0.996}            \\ \bottomrule
+\end{tabular}
 \end{table}
 
-\begin{figure}[H]
-    \centering
-    \vspace{-5pt}
-    \includegraphics[width=0.85\linewidth]{transconv_out.png} % Rescaled
-    \vspace{-5pt}
-    \caption{Comparison between hardware and software transposed convolution outputs.}
-    \label{fig:transconv_out}
-    \vspace{-5pt}
-\end{figure}
 
-The hardware implementation demonstrates high fidelity to the software model, achieving an accuracy of \textbf{0.9874} and an RRMSE of \textbf{0.1267}. These results confirm that quantization noise remains within acceptable limits. However, such near-perfect agreement warrants caution, as it may indicate potential overfitting, suggesting that the underlying model could be overly specialized to the evaluated dataset rather than capturing a fully generalized signal representation.
+The hardware implementation demonstrates high fidelity to the software model, achieving a high mean Pearson Correlation score of 0.990 and 0.996, and a low RRMSE of 0.109 and 0.084, respectively for Transpose Convolution and Convolution. These results confirm that quantization noise remains within acceptable limits even when implemented in hardware.
 
 \section{Conclusion}
 
-Here is a condensed version that retains all key technical specifications and contributions while improving flow.
+This work presented a specialized, unified systolic array architecture for the removal of EEG artifacts using a GAN-based model. We introduce a unified  hardware core capable of efficiently executing both 1D convolution and transposed convolution, effectively supporting temporal U-Net architectures. Our contributions include the validation of Batch Normalization fusion to eliminate runtime overhead and a hardware-efficient Q9.14 fixed-point design that fidelity (using RRMSE and ACC as metrics) while reducing complexity. The architecture utilizes mode-multiplexed datapaths controlled by hierarchical FSMs, eliminating the need for runtime parameter configuration. 
 
-This work presents a specialized systolic array architecture for real-time EEG artifact removal using a GAN-based model. We introduce a unified  hardware core capable of efficiently executing both 1D convolution and transposed convolution, effectively supporting temporal U-Net architectures. Our contributions include the validation of Batch Normalization fusion to eliminate runtime overhead (achieving  correlation) and a hardware-efficient Q9.14 fixed-point design that preserves accuracy (RMSE ) while reducing complexity. The architecture utilizes mode-multiplexed datapaths controlled by hierarchical FSMs, eliminating the need for runtime parameter configuration.
-
-Implemented on the Pynq-Z1 platform, the design demonstrates high hardware utilization and the low latency required for real-time applications. Verification against software models confirms exceptional fidelity (ACC: 0.9874, RRMSE: 0.1267). Furthermore, our data-driven methodology, leveraging the EEGdenoiseNet benchmark, enables robust generalization across diverse artifacts (EOG, EMG), successfully handling complex scenarios with high correlation accuracy. Future work will focus on scaling for larger temporal sequences, exploring dynamic precision for energy efficiency, and integrating the system into closed-loop brain-computer interfaces.
+The implementation achieves exceptional fidelity compared to software-based golden models; experimental results demonstrate a high mean Pearson Correlation of 0.990 and 0.996, alongside low RRMSE scores of 0.109 and 0.084 for transposed convolution and convolution layers, respectively. These metrics confirm that the proposed hardware core maintains high signal integrity while providing the low-latency execution required for closed-loop brain-computer interfaces. Future iterations will explore dynamic precision scaling and multi-core synchronization to further extend the system’s capacity for high-density EEG arrays.
 
 \bibliographystyle{IEEEtranN}
 \bibliography{reference}
