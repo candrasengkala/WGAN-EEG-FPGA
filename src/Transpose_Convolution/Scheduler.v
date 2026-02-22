@@ -2,8 +2,8 @@
 
 /******************************************************************************
  * Module      : Scheduler_FSM fix
- * Author      : Dharma Anargya Jowandy (Fixed Version 2)
- * Date        : January 2026
+ * Author      : Dharma Anargya Jowandy (Fixed Version 3)
+ * Date        : February 2026
  *
  * Description :
  * Finite State Machine that orchestrates the computation flow for a single
@@ -13,14 +13,31 @@
  * Key Feature :
  * - Layer-Aware Pass Decoding
  * Interprets the pass counter based on active layer configuration:
- * • Layer 0 : 32 rows per tile (5-bit row index)
- * • Layer 1 : 64 rows per tile (6-bit row index)
- * • Layer 2/3 : 128 rows per tile (7-bit row index)
+ *   Layer 0 : 32 rows per tile (5-bit row index)
+ *   Layer 1 : 64 rows per tile (6-bit row index)
+ *   Layer 2  : 128 rows per tile (7-bit row index)
+ *   Layer 3  : 256 rows per tile (8-bit row index)
  *
- * Functionality :
- * - Generates start pulses for Mapper, Weight, Ifmap, and Transpose modules
- * - Computes address ranges for memory accesses per pass
- * - Manages state progression: Data Load -> Compute -> Transpose
+ * BUG FIX (v3) - absolute_tile_id:
+ *   SEBELUMNYA: wire [5:0] absolute_tile_id = {current_batch_id, tile_in_batch};
+ *   MASALAH   : tile_in_batch adalah 3-bit tapi untuk Layer 0/1/3 hanya
+ *               menggunakan 2-bit efektif (MSB selalu 0). Concatenation
+ *               {3-bit batch, 3-bit tile} menghasilkan lompatan per-batch
+ *               sebesar 8, bukan 4.
+ *               Contoh Layer 1:
+ *                 Batch 0: {000, 0, 00..11} = 0,1,2,3      (benar)
+ *                 Batch 1: {001, 0, 00..11} = 8,9,10,11    (SALAH, harusnya 4..7)
+ *                 Batch 2: {010, 0, 00..11} = 16,17,18,19  (SALAH, harusnya 8..11)
+ *               Akibat: channel = tile_id*4 → Batch 1 menulis ke Ch 32-47
+ *               padahal seharusnya Ch 16-31. Output batch 1 dan 3 hanya berisi
+ *               nilai bias karena tidak ada yang menulis ke lokasi yang benar.
+ *   FIX       : Gunakan aritmatika perkalian:
+ *               absolute_tile_id = current_batch_id * tiles_per_batch + tile_in_batch
+ *               Contoh Layer 1 (tiles_per_batch=4):
+ *                 Batch 0: 0*4 + 0..3 = 0..3    ✓
+ *                 Batch 1: 1*4 + 0..3 = 4..7    ✓
+ *                 Batch 2: 2*4 + 0..3 = 8..11   ✓
+ *                 Batch 3: 3*4 + 0..3 = 12..15  ✓
  *
  * Parameters :
  * - ADDR_WIDTH : Address bus width (default: 10)
@@ -63,7 +80,7 @@ module Scheduler_FSM #(
     // Transpose/Mapper Parameters
     output reg  [7:0]             Instruction_code_transpose,
     
-    // --- PERBAIKAN: UBAH JADI WIRE AGAR INSTAN ---
+    // num_iterations: combinational agar langsung valid saat layer berganti
     output wire [8:0]             num_iterations,
     
     output reg  [8:0]             row_id,
@@ -76,16 +93,16 @@ module Scheduler_FSM #(
 );
 
     // ========================================================================
-    // PERBAIKAN LOGIC: ASSIGN INSTAN (COMBINATIONAL)
+    // num_iterations: combinational
     // ========================================================================
-    // Nilai ini akan langsung berubah saat current_layer_id berubah, 
-    // sehingga FSM Transpose menerima nilai yang benar (64) sebelum Start.
-    assign num_iterations = (current_layer_id == 2'd3) ? 9'd65 : 
-                            (current_layer_id == 2'd2) ? 9'd127 : 
-                            (current_layer_id == 2'd1) ? 9'd257 : // Asumsi Layer 1 = 256 (sesuaikan jika beda)
-                            9'd257;                               // Default/Layer 0
+    assign num_iterations = (current_layer_id == 2'd3) ? 9'd65  : 
+                            (current_layer_id == 2'd2) ? 9'd129 : 
+                            (current_layer_id == 2'd1) ? 9'd257 :
+                            9'd257;                               // Layer 0 //new
 
+    // ========================================================================
     // State Encoding
+    // ========================================================================
     localparam [2:0]
         IDLE        = 3'd0,
         START_ALL   = 3'd1,
@@ -96,7 +113,7 @@ module Scheduler_FSM #(
         
     reg [2:0] state, next_state;
     reg [1:0] bram_wait_cnt;
-    reg [9:0] pass_counter; // 10-bit counter (0..1023) for Layer 2/3
+    reg [9:0] pass_counter;
 
     // ========================================================================
     // Layer Configuration Logic
@@ -107,20 +124,20 @@ module Scheduler_FSM #(
     always @(*) begin
         case (current_layer_id)
             2'd0: begin
-                max_passes_per_batch = 10'd127; // 128 passes
-                rows_per_batch       = 7'd31;   // 32 rows
+                max_passes_per_batch = 10'd127;  // 128 passes (32 rows × 4 tiles)
+                rows_per_batch       = 7'd31;
             end
             2'd1: begin
-                max_passes_per_batch = 10'd255; // 256 passes
-                rows_per_batch       = 7'd63;   // 64 rows
+                max_passes_per_batch = 10'd255;  // 256 passes (64 rows × 4 tiles)
+                rows_per_batch       = 7'd63;
             end
             2'd2: begin
                 max_passes_per_batch = 10'd1023; // 1024 passes (128 rows × 8 tiles)
-                rows_per_batch       = 7'd127;   // 128 rows
+                rows_per_batch       = 7'd127;
             end
             2'd3: begin
-                max_passes_per_batch = 10'd1023;  // 1024 passes (256 rows × 4 tiles)
-                rows_per_batch       = 7'd63;    // Not used for Layer 3
+                max_passes_per_batch = 10'd1023; // 1024 passes (256 rows × 4 tiles)
+                rows_per_batch       = 7'd63;
             end
             default: begin
                 max_passes_per_batch = 10'd127;
@@ -132,58 +149,66 @@ module Scheduler_FSM #(
     // ========================================================================
     // Pass Counter Decoding (Layer-Aware)
     // ========================================================================
-    
-    reg [2:0] tile_in_batch;  // 3 bits for up to 8 tiles (Layer 2)
-    reg [7:0] row_in_tile;    // 8 bits untuk support 256 rows Layer 3
+    reg [2:0] tile_in_batch;
+    reg [7:0] row_in_tile;
     
     always @(*) begin
-        // Default initialization
         tile_in_batch = 3'd0;
-        row_in_tile = 8'd0;
+        row_in_tile   = 8'd0;
 
         case (current_layer_id)
             2'd0: begin
-                // Layer 0: 32 rows (Row bits [4:0]), 4 tiles
+                // Layer 0: 4 tiles, 32 rows per tile
                 tile_in_batch = {1'b0, pass_counter[6:5]};
-                row_in_tile   = {3'd0, pass_counter[4:0]};
+                row_in_tile   = {3'd0,  pass_counter[4:0]};
             end
             2'd1: begin
-                // Layer 1: 64 rows (Row bits [5:0]), 4 tiles
+                // Layer 1: 4 tiles, 64 rows per tile
                 tile_in_batch = {1'b0, pass_counter[7:6]};
-                row_in_tile   = {2'd0, pass_counter[5:0]};
+                row_in_tile   = {2'd0,  pass_counter[5:0]};
             end
             default: begin
-                // Layer 2 & 3: Different row counts
-                // Layer 2: 128 rows, bit [7] for tile
-                // Layer 3: 64 rows, bits [7:6] for tile
                 if (current_layer_id == 2'd3) begin
-                    // Layer 3: 256 rows per tile, 4 tiles
-                    tile_in_batch = {1'b0, pass_counter[9:8]};  // Bits [9:8] → tile 0-3
-                    row_in_tile   = pass_counter[7:0];          // Bits [7:0] → row 0-255
+                    // Layer 3: 4 tiles, 256 rows per tile
+                    tile_in_batch = {1'b0, pass_counter[9:8]};
+                    row_in_tile   = pass_counter[7:0];
                 end else begin
-                    // Layer 2: 128 rows per tile, 8 tiles
-                    tile_in_batch = pass_counter[9:7];          // Bits [9:7] → tile 0-7
-                    row_in_tile   = pass_counter[6:0];          // Bits [6:0] → row 0-127
+                    // Layer 2: 8 tiles, 128 rows per tile
+                    tile_in_batch = pass_counter[9:7];
+                    row_in_tile   = pass_counter[6:0];
                 end
             end
         endcase
     end
-    
-    wire [5:0] absolute_tile_id = {current_batch_id, tile_in_batch};
 
     // ========================================================================
-    // Main State Machine
+    // FIX: tiles_per_batch untuk aritmatika absolute_tile_id
+    // ========================================================================
+    reg [3:0] tiles_per_batch;
+    always @(*) begin
+        case (current_layer_id)
+            2'd2:    tiles_per_batch = 4'd8; // Layer 2: 8 tiles per batch
+            default: tiles_per_batch = 4'd4; // Layer 0/1/3: 4 tiles per batch
+        endcase
+    end
+
+    // ========================================================================
+    // FIX: absolute_tile_id menggunakan perkalian, bukan bit-concatenation
+    // ========================================================================
+    wire [5:0] absolute_tile_id = current_batch_id * tiles_per_batch + tile_in_batch;
+
+    // ========================================================================
+    // Main State Machine (Sequential)
     // ========================================================================
     always @(posedge clk or negedge rst_n) begin
         if (!rst_n) begin
             state          <= IDLE;
             bram_wait_cnt  <= 2'd0;
-            pass_counter   <= 8'd0;
+            pass_counter   <= 10'd0;
             batch_complete <= 1'b0;
         end else begin
             state <= next_state;
             
-            // Clear pulse
             if (batch_complete)
                 batch_complete <= 1'b0;
 
@@ -197,21 +222,23 @@ module Scheduler_FSM #(
                 bram_wait_cnt <= 2'd0;
             end
             
-            // Pass Counter Increment Logic
+            // Pass Counter
             if (state == WAIT_TRANS && done_transpose == 5'd16) begin
                 if (pass_counter < max_passes_per_batch) begin
-                    pass_counter <= pass_counter + 8'd1;
+                    pass_counter <= pass_counter + 10'd1;
                 end else begin
-                    pass_counter   <= 8'd0;
+                    pass_counter   <= 10'd0;
                     batch_complete <= 1'b1;
                 end
             end else if (state == IDLE) begin
-                pass_counter <= 8'd0;
+                pass_counter <= 10'd0;
             end
         end
     end
     
-    // State Transitions
+    // ========================================================================
+    // State Transitions (Combinational)
+    // ========================================================================
     always @(*) begin
         next_state = state;
         case (state)
@@ -235,69 +262,79 @@ module Scheduler_FSM #(
     end
 
     // ========================================================================
-    // Output Generation Logic
+    // Predictive Decoding (Next Pass Prefetch)
     // ========================================================================
+    reg [2:0] current_pass_tile;
+    reg [7:0] current_pass_row;
     
-    // Predictive Decoding for Next Pass
-    reg [2:0] current_pass_tile;  // 3-bit for up to 8 tiles (Layer 2)
-    reg [7:0] current_pass_row;  // 8-bit untuk Layer 3
-    
+    // Wire bantu untuk next pass (Verilog 2001 compatible)
+    wire [9:0] next_pass = pass_counter + 10'd1;
+
     always @(*) begin
         if (state == WAIT_TRANS && done_transpose == 5'd16 && pass_counter < max_passes_per_batch) begin
-            // Decode NEXT pass
+            // Prefetch: decode pass berikutnya
             if (current_layer_id == 2'd0) begin
-                // Layer 0 (32 rows)
-                current_pass_tile = (pass_counter + 10'd1) >> 5;          
-                current_pass_row  = {2'd0, (pass_counter + 10'd1) & 10'h1F}; 
+                current_pass_tile = next_pass[9:5];
+                current_pass_row  = {3'd0, next_pass[4:0]};
             end else if (current_layer_id == 2'd1) begin
-                // Layer 1 (64 rows)
-                current_pass_tile = (pass_counter + 10'd1) >> 6;          
-                current_pass_row  = {1'd0, (pass_counter + 10'd1) & 10'h3F}; 
+                current_pass_tile = {1'b0, next_pass[9:6]};
+                current_pass_row  = {2'd0, next_pass[5:0]};
             end else if (current_layer_id == 2'd2) begin
-                // Layer 2 (128 rows per tile, 8 tiles)
-                current_pass_tile = (pass_counter + 10'd1) >> 7;
-                current_pass_row  = (pass_counter + 10'd1) & 10'h7F;
+                current_pass_tile = next_pass[9:7];
+                current_pass_row  = {1'd0, next_pass[6:0]};
             end else begin
-                // Layer 3 (256 rows per tile)
-                current_pass_tile = (pass_counter + 10'd1) >> 8;          
-                current_pass_row  = (pass_counter + 10'd1) & 10'hFF;
+                // Layer 3
+                current_pass_tile = {1'b0, next_pass[9:8]};
+                current_pass_row  = next_pass[7:0];
             end
         end else begin
-            // Decode CURRENT pass
+            // Decode pass saat ini
             current_pass_tile = tile_in_batch;
             current_pass_row  = row_in_tile;
         end
     end
     
-    wire [5:0] current_absolute_tile_calc = {current_batch_id, current_pass_tile};
+    // FIX: gunakan tiles_per_batch juga untuk current_absolute_tile_calc
+    wire [5:0] current_absolute_tile_calc = current_batch_id * tiles_per_batch + current_pass_tile;
 
-    // Output Registers Update
+    // ========================================================================
+    // Output Registers
+    // ========================================================================
     always @(posedge clk or negedge rst_n) begin
         if (!rst_n) begin
-            start_Mapper <= 0; start_weight <= 0; start_ifmap <= 0; 
-            start_transpose <= 0; done <= 0;
-            if_addr_start <= 0; if_addr_end <= 0;
-            ifmap_sel_in <= 0;
-            addr_start <= 0; addr_end <= 0;
+            start_Mapper               <= 0;
+            start_weight               <= 0;
+            start_ifmap                <= 0; 
+            start_transpose            <= 0;
+            done                       <= 0;
+            if_addr_start              <= 0;
+            if_addr_end                <= 0;
+            ifmap_sel_in               <= 0;
+            addr_start                 <= 0;
+            addr_end                   <= 0;
             Instruction_code_transpose <= 0; 
-            // num_iterations <= 0; // DIHAPUS
-            row_id <= 0; tile_id <= 0; layer_id <= 0;
+            row_id                     <= 0;
+            tile_id                    <= 0;
+            layer_id                   <= 0;
         end 
         else begin
-            // Default Low Pulse
-            start_Mapper <= 0; start_weight <= 0; start_ifmap <= 0; 
-            start_transpose <= 0; done <= 0;
+            // Default: semua pulse rendah
+            start_Mapper    <= 0;
+            start_weight    <= 0;
+            start_ifmap     <= 0; 
+            start_transpose <= 0;
+            done            <= 0;
             
             case (next_state)
+                // ------------------------------------------------------------
                 START_ALL: begin
-                    row_id       <= {1'd0, current_pass_row};  // 9-bit output 
+                // ------------------------------------------------------------
+                    row_id       <= {1'd0, current_pass_row};
                     tile_id      <= current_absolute_tile_calc;
                     layer_id     <= current_layer_id;
                     ifmap_sel_in <= current_pass_row[3:0];
                     
-                    // --------------------------------------------------------
                     // IFMAP Address Decoding
-                    // --------------------------------------------------------
                     if (current_layer_id == 2'd0) begin
                         if (current_pass_row[4] == 1'b0) begin
                             if_addr_start <= 10'd0;   if_addr_end <= 10'd255;
@@ -326,7 +363,6 @@ module Scheduler_FSM #(
                         endcase
                     end 
                     else if (current_layer_id == 2'd3) begin
-                        // Layer 3: 256 rows, 16 segments (64 addresses each for 64 channels)
                         case (current_pass_row[7:4])
                             4'h0: begin if_addr_start <= 10'd0;   if_addr_end <= 10'd63;   end
                             4'h1: begin if_addr_start <= 10'd64;  if_addr_end <= 10'd127;  end
@@ -350,12 +386,9 @@ module Scheduler_FSM #(
                         if_addr_start <= 10'd0; if_addr_end <= 10'd255;
                     end
                     
-                    // --------------------------------------------------------
-                    // Weight Address Decoding (Based on Tile ID)
-                    // *** FIXED: Layer 3 uses 64 addresses per tile ***
-                    // --------------------------------------------------------
+                    // Weight Address Decoding (berdasarkan tile dalam batch, bukan absolute)
                     if (current_layer_id == 2'd3) begin
-                        // Layer 3: 64 addresses per tile (4 tiles)
+                        // Layer 3: 64 addresses per tile
                         case (current_pass_tile)
                             3'd0: begin addr_start <= 10'd0;   addr_end <= 10'd63;  end
                             3'd1: begin addr_start <= 10'd64;  addr_end <= 10'd127; end
@@ -364,7 +397,7 @@ module Scheduler_FSM #(
                             default: begin addr_start <= 10'd0; addr_end <= 10'd63; end
                         endcase
                     end else if (current_layer_id == 2'd2) begin
-                        // Layer 2: 128 addresses per tile (8 tiles)
+                        // Layer 2: 128 addresses per tile
                         case (current_pass_tile)
                             3'd0: begin addr_start <= 10'd0;   addr_end <= 10'd127;  end
                             3'd1: begin addr_start <= 10'd128; addr_end <= 10'd255;  end
@@ -376,7 +409,7 @@ module Scheduler_FSM #(
                             3'd7: begin addr_start <= 10'd896; addr_end <= 10'd1023; end
                         endcase
                     end else begin
-                        // Layer 0/1: 256 addresses per tile (4 tiles)
+                        // Layer 0/1: 256 addresses per tile
                         case (current_pass_tile)
                             3'd0: begin addr_start <= 10'd0;   addr_end <= 10'd255;  end
                             3'd1: begin addr_start <= 10'd256; addr_end <= 10'd511;  end
@@ -391,15 +424,20 @@ module Scheduler_FSM #(
                     start_ifmap  <= 1'b1;
                 end
                 
+                // ------------------------------------------------------------
                 START_TRANS: begin
+                // ------------------------------------------------------------
                     Instruction_code_transpose <= 8'h03;
-                    // HAPUS ASSIGNMENT num_iterations DI SINI! (Sudah di-handle assign di atas)
-                    start_transpose <= 1'b1;
+                    start_transpose            <= 1'b1;
                 end
                 
+                // ------------------------------------------------------------
                 DONE_STATE: begin
+                // ------------------------------------------------------------
                     done <= 1'b1;
                 end
+                
+                default: ; // do nothing
             endcase
         end
     end
