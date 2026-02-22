@@ -1045,107 +1045,30 @@ module System_Level_Top_tb();
 
 
     task display_layer3_output;
-        integer out_bram, out_addr, out_lin_idx, out_pos, out_ch;
-        reg [23:0] out_val;
+        integer p_ch, p_pos;
         begin
-            // ========== FILE 1: RAW FULL DUMP ==========
-            file_handle = $fopen("layer3_output_RAW_FULL.txt", "w");
-            
-            $fwrite(file_handle, "================================================================================\n");
-            $fwrite(file_handle, "LAYER 3 OUTPUT DATA - RAW FULL DUMP\n");
-            $fwrite(file_handle, "================================================================================\n");
-            $fwrite(file_handle, "16 BRAMs x 512 addresses = 8192 total output values\n");
-            $fwrite(file_handle, "BRAM 0-7 from m0_axis, BRAM 8-15 from m1_axis\n");
-            $fwrite(file_handle, "================================================================================\n\n");
-            
-            for (out_bram = 0; out_bram < 16; out_bram = out_bram + 1) begin
-                $fwrite(file_handle, "\n=== BRAM %2d ===\n", out_bram);
-                
-                for (out_addr = 0; out_addr < 512; out_addr = out_addr + 1) begin
-                    if (out_bram < 8)
-                        out_val = m0_buf[(out_bram * 512) + out_addr];
-                    else
-                        out_val = m1_buf[((out_bram - 8) * 512) + out_addr];
+            file_handle = $fopen("layer3_output_perchannel.txt", "w");
 
-                    $fwrite(file_handle, "  BRAM%02d[%03d]: 0x%06h (%6d)\n",
-                            out_bram, out_addr, out_val, $signed(out_val));
-                end
+            $fwrite(file_handle, "=================================================\n");
+            $fwrite(file_handle, "LAYER 3 (D5) OUTPUT - PER CHANNEL DUMP\n");
+            $fwrite(file_handle, "Format: Channel -> 512 Positions\n");
+            $fwrite(file_handle, "Total: 16 Channels x 512 Positions = 8192 values\n");
+            $fwrite(file_handle, "=================================================\n");
+
+            for (p_ch = 0; p_ch < 8; p_ch = p_ch + 1) begin
+                $fwrite(file_handle, "\n=== CHANNEL %0d ===\n", p_ch);
+                for (p_pos = 0; p_pos < 512; p_pos = p_pos + 1)
+                    $fwrite(file_handle, "%0d\n", $signed(m0_buf[p_ch * 512 + p_pos]));
             end
-            
-            $fwrite(file_handle, "\n================================================================================\n");
+            for (p_ch = 0; p_ch < 8; p_ch = p_ch + 1) begin
+                $fwrite(file_handle, "\n=== CHANNEL %0d ===\n", p_ch + 8);
+                for (p_pos = 0; p_pos < 512; p_pos = p_pos + 1)
+                    $fwrite(file_handle, "%0d\n", $signed(m1_buf[p_ch * 512 + p_pos]));
+            end
+
+            $fwrite(file_handle, "\n=================================================\n");
             $fclose(file_handle);
-
-            // ========== FILE 2: TABLE FORMAT (Position x Channel) ==========
-            file_handle = $fopen("layer3_output_TABLE.txt", "w");
-            
-            $fwrite(file_handle, "================================================================================\n");
-            $fwrite(file_handle, "LAYER 3 OUTPUT - TABLE FORMAT (Position x Channel)\n");
-            $fwrite(file_handle, "================================================================================\n");
-            $fwrite(file_handle, "Layout: 256 Positions x 16 Channels\n");
-            $fwrite(file_handle, "Each row = 1 position, Each column = 1 channel\n");
-            $fwrite(file_handle, "================================================================================\n\n");
-            
-            // Print table header
-            $fwrite(file_handle, "      |");
-            for (out_ch = 0; out_ch < 16; out_ch = out_ch + 1) begin
-                $fwrite(file_handle, "   Ch%02d   |", out_ch);
-            end
-            $fwrite(file_handle, "\n");
-            
-            $fwrite(file_handle, "------+");
-            for (out_ch = 0; out_ch < 16; out_ch = out_ch + 1) begin
-                $fwrite(file_handle, "----------+");
-            end
-            $fwrite(file_handle, "\n");
-            
-            // Print ALL 256 positions x 16 channels
-            for (out_pos = 0; out_pos < 256; out_pos = out_pos + 1) begin
-                $fwrite(file_handle, "Pos%03d|", out_pos);
-                
-                for (out_ch = 0; out_ch < 16; out_ch = out_ch + 1) begin
-                    out_bram = out_ch;
-                    out_addr = out_pos;
-
-                    if (out_bram < 8)
-                        out_val = m0_buf[(out_bram * 512) + out_addr];
-                    else
-                        out_val = m1_buf[((out_bram - 8) * 512) + out_addr];
-
-                    $fwrite(file_handle, " %8d |", $signed(out_val));
-                end
-                $fwrite(file_handle, "\n");
-            end
-            
-            $fwrite(file_handle, "\n================================================================================\n");
-            $fclose(file_handle);
-
-            // ========== FILE 3: SUMMARY ==========
-            file_handle = $fopen("layer3_output_SUMMARY.txt", "w");
-            
-            $fwrite(file_handle, "================================================================================\n");
-            $fwrite(file_handle, "LAYER 3 OUTPUT - SUMMARY\n");
-            $fwrite(file_handle, "================================================================================\n\n");
-            
-            $fwrite(file_handle, "First 16 positions, all 16 channels:\n");
-            $fwrite(file_handle, "------------------------------------------------------------\n");
-            
-            for (out_pos = 0; out_pos < 16; out_pos = out_pos + 1) begin
-                $fwrite(file_handle, "\nPosition %3d:\n", out_pos);
-                for (out_ch = 0; out_ch < 16; out_ch = out_ch + 1) begin
-                    out_bram = out_ch;
-                    out_addr = out_pos;
-
-                    if (out_bram < 8)
-                        out_val = m0_buf[(out_bram * 512) + out_addr];
-                    else
-                        out_val = m1_buf[((out_bram - 8) * 512) + out_addr];
-
-                    $fwrite(file_handle, "  Ch%02d = %6d (0x%06h)\n", out_ch, $signed(out_val), out_val);
-                end
-            end
-            
-            $fwrite(file_handle, "\n================================================================================\n");
-            $fclose(file_handle);
+            $display("[INFO] Layer 3 output saved to layer3_output_perchannel.txt");
         end
     endtask
 

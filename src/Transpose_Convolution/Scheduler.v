@@ -95,7 +95,7 @@ module Scheduler_FSM #(
     // ========================================================================
     // num_iterations: combinational
     // ========================================================================
-    assign num_iterations = (current_layer_id == 2'd3) ? 9'd65  : 
+    assign num_iterations = (current_layer_id == 2'd3) ? 9'd63  : 
                             (current_layer_id == 2'd2) ? 9'd129 : 
                             (current_layer_id == 2'd1) ? 9'd257 :
                             9'd257;                               // Layer 0 //new
