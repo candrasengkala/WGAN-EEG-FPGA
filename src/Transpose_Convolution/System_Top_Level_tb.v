@@ -5,26 +5,50 @@ module System_Level_Top_tb();
     localparam DW = 24; 
     
     // ========================================================================
-    // 1. PARAMETERS
+    // 1. PARAMETERS //ss//jj
     // ========================================================================
+    // Combined Weight & Bias Files (all layers)
     parameter WEIGHT_MEM_FILE = "G_d5_Q9.14_decoder_weight.mem";
     parameter BIAS_MEM_FILE   = "G_d5_Q9.14_decoder_bias.mem";
-    parameter IFMAP_MEM_FILE  = "decoder_last_input_hex.mem";
-    
     parameter WEIGHT_MEM_DEPTH = 217088;
     parameter BIAS_MEM_DEPTH   = 32768;
-    parameter IFMAP_MEM_DEPTH  = 16384;
-    parameter OUTPUT_MEM_DEPTH = 16384;
+
+    // Separate IFMAP Files (per layer)
+    parameter IFMAP_MEM_FILE_l0 = "b3.mem";
+    parameter IFMAP_MEM_FILE_l1 = "d2_in.mem";
+    parameter IFMAP_MEM_FILE_l2 = "d3_in.mem";
+    parameter IFMAP_MEM_FILE_l3 = "d4_in.mem";
+    parameter OUTPUT_MEM_DEPTH  = 16384;
+
+    // ========================================================================
+    // 1b. OFFSET CONSTANTS (from Combined_Memory_Offsets.md)
+    // ========================================================================
+    // Weight Offsets
+    localparam WEIGHT_OFFSET_L0 = 0;
+    localparam WEIGHT_OFFSET_L1 = 131072;
+    localparam WEIGHT_OFFSET_L2 = 196608;
+    localparam WEIGHT_OFFSET_L3 = 212992;
+
+    // Bias Offsets
+    localparam BIAS_OFFSET_L0 = 0;
+    localparam BIAS_OFFSET_L1 = 8192;
+    localparam BIAS_OFFSET_L2 = 16384;
+    localparam BIAS_OFFSET_L3 = 24576;
 
     // ========================================================================
     // 2. GLOBAL VARIABLES (ISOLATED FOR PARALLEL SAFETY)
     // ========================================================================
-    
-    // Memory Arrays
+
+    // Combined Memory Arrays (Weight & Bias)
     reg [31:0] weight_ddr_mem [0:WEIGHT_MEM_DEPTH-1];
     reg [31:0] bias_ddr_mem   [0:BIAS_MEM_DEPTH-1];
-    reg [31:0] ifmap_ddr_mem  [0:IFMAP_MEM_DEPTH-1];
     reg [DW-1:0] output_captured_mem [0:OUTPUT_MEM_DEPTH-1];
+
+    // Separate IFMAP Arrays (per layer)
+    reg [31:0] ifmap_ddr_mem_l0 [0:8191];    // 32 pos × 256 ch = 8192
+    reg [31:0] ifmap_ddr_mem_l1 [0:16383];   // 64 pos × 256 ch = 16384
+    reg [31:0] ifmap_ddr_mem_l2 [0:16383];   // 128 pos × 128 ch = 16384
+    reg [31:0] ifmap_ddr_mem_l3 [0:16383];   // 256 pos × 64 ch = 16384 //fix
     
     // Monitor
     reg [23:0] notif_header [0:5];
@@ -33,6 +57,9 @@ module System_Level_Top_tb();
     integer output_write_ptr, m1_output_ptr;
     integer file_handle;
     reg     is_layer3_output;
+    reg     is_layer0_output;
+    reg     is_layer1_output;
+    reg     is_layer2_output;
     
     // Layer 3 dual stream buffer
     reg [23:0] m0_buf [0:4095];
@@ -59,6 +86,32 @@ module System_Level_Top_tb();
     integer d_bram_id, d_addr, d_lin_idx;
     reg [23:0] d_val;
 
+    // Variables for L0 Tasks
+    integer l0w_bram_id, l0w_k_pos, l0w_oc_in_tile, l0w_tile, l0w_oc_absolute, l0w_ich;
+    integer l0w_ddr_addr, l0w_word_count, l0w_oc_base;
+    integer l0i_bram_id, l0i_pos_group, l0i_position, l0i_channel, l0i_ddr_idx;
+    integer l0i_total_words, l0i_word_count;
+    integer l0b_bram_id, l0b_page, l0b_channel, l0b_pos, l0b_ddr_idx;
+    integer l0b_total_words, l0b_word_count;
+    integer l0_batch_id;
+
+    // Variables for L1 Tasks
+    integer l1w_bram_id, l1w_k_pos, l1w_oc_in_tile, l1w_tile, l1w_oc_absolute, l1w_ich;
+    integer l1w_ddr_addr, l1w_word_count, l1w_oc_base;
+    integer l1i_bram_id, l1i_pos_group, l1i_position, l1i_channel, l1i_ddr_idx;
+    integer l1i_total_words, l1i_word_count;
+    integer l1b_bram_id, l1b_page, l1b_channel, l1b_pos, l1b_ddr_idx;
+    integer l1b_total_words, l1b_word_count;
+    integer l1_batch_id;
+
+    // Variables for L2 Tasks
+    integer l2w_bram_id, l2w_k_pos, l2w_oc_in_tile, l2w_tile, l2w_oc_absolute, l2w_ich;
+    integer l2w_ddr_addr, l2w_word_count;
+    integer l2i_bram_id, l2i_pos_group, l2i_position, l2i_channel, l2i_ddr_idx;
+    integer l2i_total_words, l2i_word_count;
+    integer l2b_bram_id, l2b_page, l2b_channel, l2b_pos, l2b_ddr_idx;
+    integer l2b_total_words, l2b_word_count;
+
     // ========================================================================
     // 3. DUT SIGNALS
     // ========================================================================
@@ -73,27 +126,12 @@ module System_Level_Top_tb();
 
     reg  [DW-1:0]   s2_axis_tdata; reg s2_axis_tvalid; wire s2_axis_tready; reg s2_axis_tlast;
 
-    wire       weight_write_done, ifmap_write_done, bias_write_done, scheduler_done;
-    wire [1:0] current_layer_id;
-    wire [2:0] current_batch_id;
-    wire       all_batches_done;
-    
-    wire       weight_read_done, ifmap_read_done;
-    wire [9:0] weight_mm2s_data_count, ifmap_mm2s_data_count;
-    wire [2:0] weight_parser_state, ifmap_parser_state, bias_parser_state;
-    wire       weight_error_invalid_magic, ifmap_error_invalid_magic, bias_error_invalid_magic;
-    wire       auto_start_active;
-
     reg        layer_readout_done;
+    event      output_complete;       // fired by output handler - no race condition
     reg [63:0] cycle_count;
     reg [63:0] start_time_l0, start_time_l1, start_time_l2, start_time_l3;
     reg [63:0] end_time_l0, end_time_l1, end_time_l2, end_time_l3;
     reg [63:0] total_start_time;
-
-    localparam BIAS_LAYER_0_OFFSET = 0;
-    localparam BIAS_LAYER_1_OFFSET = 8192;
-    localparam BIAS_LAYER_2_OFFSET = 16384;
-    localparam BIAS_LAYER_3_OFFSET = 24576;
 
     // ========================================================================
     // 4. DUT INSTANTIATION
@@ -107,20 +145,7 @@ module System_Level_Top_tb();
         .m0_axis_tdata(m0_axis_tdata), .m0_axis_tvalid(m0_axis_tvalid), .m0_axis_tready(m0_axis_tready), .m0_axis_tlast(m0_axis_tlast),
         .s1_axis_tdata(s1_axis_tdata), .s1_axis_tvalid(s1_axis_tvalid), .s1_axis_tready(s1_axis_tready), .s1_axis_tlast(s1_axis_tlast),
         .m1_axis_tdata(m1_axis_tdata), .m1_axis_tvalid(m1_axis_tvalid), .m1_axis_tready(m1_axis_tready), .m1_axis_tlast(m1_axis_tlast),
-        .s2_axis_tdata(s2_axis_tdata), .s2_axis_tvalid(s2_axis_tvalid), .s2_axis_tready(s2_axis_tready), .s2_axis_tlast(s2_axis_tlast),
-        
-        .ext_start(1'b0), // Use AUTO scheduler
-        .ext_layer_id(2'd0),
-        
-        .weight_write_done(weight_write_done), .ifmap_write_done(ifmap_write_done), .bias_write_done(bias_write_done),
-        .scheduler_done(scheduler_done), .current_layer_id(current_layer_id), .current_batch_id(current_batch_id), .all_batches_done(all_batches_done),
-        
-        .weight_read_done(weight_read_done), .ifmap_read_done(ifmap_read_done), 
-        .weight_mm2s_data_count(weight_mm2s_data_count), .ifmap_mm2s_data_count(ifmap_mm2s_data_count),
-        .weight_parser_state(weight_parser_state), .weight_error_invalid_magic(weight_error_invalid_magic), 
-        .ifmap_parser_state(ifmap_parser_state), .ifmap_error_invalid_magic(ifmap_error_invalid_magic),
-        .bias_parser_state(bias_parser_state), .bias_error_invalid_magic(bias_error_invalid_magic),
-        .auto_start_active(auto_start_active)
+        .s2_axis_tdata(s2_axis_tdata), .s2_axis_tvalid(s2_axis_tvalid), .s2_axis_tready(s2_axis_tready), .s2_axis_tlast(s2_axis_tlast)
     );
 
     // ========================================================================
@@ -145,11 +170,11 @@ module System_Level_Top_tb();
     always @(posedge aclk) begin
         if (!aresetn) begin
             rx0_count <= 0; rx0_data_count <= 0; notif_detected <= 0; in_data_phase <= 0; layer_readout_done <= 0;
-            is_layer3_output <= 0; m0_done <= 0; m0_cnt <= 0;
+            is_layer3_output <= 0; is_layer0_output <= 0; is_layer1_output <= 0; is_layer2_output <= 0; m0_done <= 0; m0_cnt <= 0;
         end else begin
             notif_detected <= 0; layer_readout_done <= 0;
             if (m0_axis_tvalid && m0_axis_tready) begin
-                if (!in_data_phase) begin 
+                if (!in_data_phase) begin
                     if (rx0_count < 6) notif_header[rx0_count] <= m0_axis_tdata;
                     if (m0_axis_tlast) begin
                         if (notif_header[0][15:0] == 16'hC0DE) begin
@@ -161,20 +186,23 @@ module System_Level_Top_tb();
                         m0_cnt <= 0; m0_done <= 0;
                         if (notif_header[0][15:0] == 16'hDA7A) begin
                             is_layer3_output <= (notif_header[2][1:0] == 2'd3);
+                            is_layer0_output <= (notif_header[2][1:0] == 2'd0);
+                            is_layer1_output <= (notif_header[2][1:0] == 2'd1);
+                            is_layer2_output <= (notif_header[2][1:0] == 2'd2);
                         end
                     end else rx0_count <= rx0_count + 1;
                 end else begin
-                    // DATA PHASE - ✅ FIX: TAMBAH CHECK in_data_phase!
-                    if (is_layer3_output && in_data_phase) begin  // ← TAMBAH && in_data_phase
+                    // DATA PHASE - Capture data for Layer 0, 1, 2, or 3
+                    if ((is_layer3_output || is_layer0_output || is_layer1_output || is_layer2_output) && in_data_phase) begin
                         m0_buf[m0_cnt] <= m0_axis_tdata;
                         m0_cnt <= m0_cnt + 1;
                     end
-                    
-                    rx0_data_count <= rx0_data_count + 1; 
+
+                    rx0_data_count <= rx0_data_count + 1;
                     rx0_count <= rx0_count + 1;
-                    
+
                     if (m0_axis_tlast) begin
-                        if (is_layer3_output) begin
+                        if (is_layer3_output || is_layer0_output || is_layer1_output || is_layer2_output) begin
                             m0_done <= 1;
                         end else begin
                             layer_readout_done <= 1;
@@ -182,7 +210,12 @@ module System_Level_Top_tb();
                         rx0_count <= 0;
                         rx0_data_count <= 0;
                         in_data_phase <= 0;
-                        if (!is_layer3_output) is_layer3_output <= 0;
+                        if (!is_layer3_output && !is_layer0_output && !is_layer1_output && !is_layer2_output) begin
+                            is_layer3_output <= 0;
+                            is_layer0_output <= 0;
+                            is_layer1_output <= 0;
+                            is_layer2_output <= 0;
+                        end
                     end
                 end
             end
@@ -193,7 +226,7 @@ module System_Level_Top_tb();
         if (!aresetn) begin
             m1_done <= 0; m1_cnt <= 0;
         end else begin
-            if (m1_axis_tvalid && m1_axis_tready && is_layer3_output) begin
+            if (m1_axis_tvalid && m1_axis_tready && (is_layer3_output || is_layer0_output || is_layer1_output || is_layer2_output)) begin
                 m1_buf[m1_cnt] <= m1_axis_tdata;
                 m1_cnt <= m1_cnt + 1;
                 if (m1_axis_tlast) begin
@@ -205,64 +238,81 @@ module System_Level_Top_tb();
 
     always @(posedge aclk) begin
         if (m0_done && m1_done) begin
-            $display("=============================================================");
-            $display("Position |  Ch0  |  Ch1  |  Ch2  |  Ch3  |  Ch4  |  Ch5  |  Ch6  |  Ch7  |  Ch8  |  Ch9  | Ch10  | Ch11  | Ch12  | Ch13  | Ch14  | Ch15  |");
-            $display("---------|-------|-------|-------|-------|-------|-------|-------|-------|-------|-------|-------|-------|-------|-------|-------|-------|");
-            
-            // Data organization:
-            // m0_buf: [BRAM0_all_512, BRAM1_all_512, ..., BRAM7_all_512]
-            // m1_buf: [BRAM8_all_512, BRAM9_all_512, ..., BRAM15_all_512]
-            // Each BRAM contains one channel: BRAM_n = Ch_n[Pos0-511]
-            
-            for (ppos = 0; ppos < 512; ppos = ppos + 1) begin
-                $write("  %4d   |", ppos);
-                
-                // Ch0-7: BRAM 0-7 (from m0_buf)
-                // BRAM_n data starts at offset n*512
-                for (pch = 0; pch < 8; pch = pch + 1) 
-                    $write(" %5d |", $signed(m0_buf[pch*512 + ppos]));
-                
-                // Ch8-15: BRAM 8-15 (from m1_buf)  
-                // BRAM_n data starts at offset (n-8)*512
-                for (pch = 0; pch < 8; pch = pch + 1) 
-                    $write(" %5d |", $signed(m1_buf[pch*512 + ppos]));
-                
-                $write("\n");
-            end
-            
-            $display("=============================================================");
+            if (is_layer0_output) begin
+                // ============================================================
+                // LAYER 0 OUTPUT PRINT
+                // ============================================================
+                $display("\n=============================================================");
+                $display("LAYER 0 OUTPUT CAPTURED - 128 Ch × 64 Pos");
+                $display("=============================================================");
+                print_layer0_output_to_console();
+                print_layer0_output_perchannel();
+                $display("=============================================================");
 
-            // ============================================================
-            // FILE EXPORT: Per-Channel Format -> decoder_output_perchannel.txt
-            // ============================================================
-            file_handle = $fopen("decoder_output_perchannel.txt", "w");
+            end else if (is_layer1_output) begin
+                // ============================================================
+                // LAYER 1 OUTPUT PRINT
+                // ============================================================
+                $display("\n=============================================================");
+                $display("LAYER 1 OUTPUT CAPTURED - 64 Ch × 128 Pos");
+                $display("=============================================================");
+                print_layer1_output_to_console();
+                print_layer1_output_perchannel();
+                $display("=============================================================");
 
-            $fwrite(file_handle, "=============================================================\n");
-            $fwrite(file_handle, "DECODER OUTPUT D5 - PER CHANNEL DUMP\n");
-            $fwrite(file_handle, "Format: Channel -> 512 Posisi\n");
-            $fwrite(file_handle, "=============================================================\n");
+            end else if (is_layer2_output) begin
+                // ============================================================
+                // LAYER 2 OUTPUT PRINT
+                // ============================================================
+                $display("\n=============================================================");
+                $display("LAYER 2 OUTPUT CAPTURED - 32 Ch × 256 Pos");
+                $display("=============================================================");
+                print_layer2_output_to_console();
+                print_layer2_output_perchannel();
+                $display("=============================================================");
 
-            // Channel 0-7 (from m0_buf)
-            for (pch = 0; pch < 8; pch = pch + 1) begin
-                $fwrite(file_handle, "\n=== CHANNEL %0d ===\n", pch);
+            end else if (is_layer3_output) begin
+                // ============================================================
+                // LAYER 3 OUTPUT PRINT (original code)
+                // ============================================================
+                $display("=============================================================");
+                $display("Position |  Ch0  |  Ch1  |  Ch2  |  Ch3  |  Ch4  |  Ch5  |  Ch6  |  Ch7  |  Ch8  |  Ch9  | Ch10  | Ch11  | Ch12  | Ch13  | Ch14  | Ch15  |");
+                $display("---------|-------|-------|-------|-------|-------|-------|-------|-------|-------|-------|-------|-------|-------|-------|-------|-------|");
+
                 for (ppos = 0; ppos < 512; ppos = ppos + 1) begin
-                    $fwrite(file_handle, "%0d\n", $signed(m0_buf[pch*512 + ppos]));
+                    $write("  %4d   |", ppos);
+                    for (pch = 0; pch < 8; pch = pch + 1)
+                        $write(" %5d |", $signed(m0_buf[pch*512 + ppos]));
+                    for (pch = 0; pch < 8; pch = pch + 1)
+                        $write(" %5d |", $signed(m1_buf[pch*512 + ppos]));
+                    $write("\n");
                 end
+
+                $display("=============================================================");
+
+                file_handle = $fopen("decoder_output_perchannel.txt", "w");
+                $fwrite(file_handle, "=============================================================\n");
+                $fwrite(file_handle, "DECODER OUTPUT D5 - PER CHANNEL DUMP\n");
+                $fwrite(file_handle, "Format: Channel -> 512 Posisi\n");
+                $fwrite(file_handle, "=============================================================\n");
+
+                for (pch = 0; pch < 8; pch = pch + 1) begin
+                    $fwrite(file_handle, "\n=== CHANNEL %0d ===\n", pch);
+                    for (ppos = 0; ppos < 512; ppos = ppos + 1)
+                        $fwrite(file_handle, "%0d\n", $signed(m0_buf[pch*512 + ppos]));
+                end
+                for (pch = 0; pch < 8; pch = pch + 1) begin
+                    $fwrite(file_handle, "\n=== CHANNEL %0d ===\n", pch + 8);
+                    for (ppos = 0; ppos < 512; ppos = ppos + 1)
+                        $fwrite(file_handle, "%0d\n", $signed(m1_buf[pch*512 + ppos]));
+                end
+                $fwrite(file_handle, "\n=============================================================\n");
+                $fclose(file_handle);
             end
 
-            // Channel 8-15 (from m1_buf)
-            for (pch = 0; pch < 8; pch = pch + 1) begin
-                $fwrite(file_handle, "\n=== CHANNEL %0d ===\n", pch + 8);
-                for (ppos = 0; ppos < 512; ppos = ppos + 1) begin
-                    $fwrite(file_handle, "%0d\n", $signed(m1_buf[pch*512 + ppos]));
-                end
-            end
-
-            $fwrite(file_handle, "\n=============================================================\n");
-            $fclose(file_handle);
-
-            layer_readout_done <= 1;
-            m0_done <= 0; m1_done <= 0; is_layer3_output <= 0;
+            -> output_complete;       // event: no race condition with m0 monitor reset
+            m0_done <= 0; m1_done <= 0; m1_cnt <= 0;
+            is_layer3_output <= 0; is_layer0_output <= 0; is_layer1_output <= 0; is_layer2_output <= 0;
         end
     end
 
@@ -344,7 +394,6 @@ module System_Level_Top_tb();
                 end
             end
             
-            wait(weight_write_done); 
             @(posedge aclk);
         end
     endtask
@@ -374,7 +423,6 @@ module System_Level_Top_tb();
                 end
             end
             
-            wait(bias_write_done); 
             @(posedge aclk);
         end
     endtask
@@ -398,89 +446,427 @@ module System_Level_Top_tb();
                         l3_ddr_idx = (l3_position * 64) + l3_channel;
                         l3_word_count = l3_word_count + 1;
                         send_one_word_ifmap(
-                            ifmap_ddr_mem[l3_ddr_idx][23:0], 
+                            ifmap_ddr_mem_l3[l3_ddr_idx][23:0],
                             (l3_word_count == l3_total_words)
                         );
                     end
                 end
             end
             
-            wait(ifmap_write_done); 
             @(posedge aclk);
         end
     endtask
 
     // ========================================================================
-    // ZERO TEST TASKS
+    // LAYER 0 WEIGHT LOADING
     // ========================================================================
-    
-    task send_packet_weight_zeros;
-        input [4:0] start_bram; 
-        input [4:0] end_bram; 
-        input [15:0] num_words; 
+    // DDR Layout: Oc0[k0[Ich0-255], k1[Ich0-255], k2[Ich0-255], k3[Ich0-255]],
+    //             Oc1[...], ..., Oc127[...]
+    // Per OC: 4 × 256 = 1024 values
+    // Total: 128 × 1024 = 131072 values
+    //
+    // BRAM Layout: bram_id[1:0] = kernel, bram_id[3:2] = OC in tile
+    // Each BRAM: 4 tiles × 256 IC = 1024 words
+
+    task send_packet_weight_layer0;
+        input [31:0] batch_id;
         begin
-            send_one_word_weight(24'h00C0DE, 0); 
+            l0w_oc_base = batch_id * 16;  // Starting OC for this batch
+            l0w_word_count = 0;
+
+            send_one_word_weight(24'h00C0DE, 0);
             send_one_word_weight(24'h000001, 0);
-            send_one_word_weight({19'h0, start_bram}, 0); 
-            send_one_word_weight({19'h0, end_bram}, 0);
-            send_one_word_weight(24'd0, 0); 
-            send_one_word_weight({8'h0, num_words}, 0);
-            
-            for (w_j = start_bram; w_j <= end_bram; w_j = w_j + 1) begin
-                for (w_i = 0; w_i < num_words; w_i = w_i + 1) begin
-                    send_one_word_weight(24'h000000, (w_j==end_bram && w_i==num_words-1));
+            send_one_word_weight({19'h0, 5'd0}, 0);
+            send_one_word_weight({19'h0, 5'd15}, 0);
+            send_one_word_weight(24'd0, 0);
+            send_one_word_weight(16'd1024, 0);  // 1024 words per BRAM
+
+            // 16 BRAMs
+            for (l0w_bram_id = 0; l0w_bram_id < 16; l0w_bram_id = l0w_bram_id + 1) begin
+                l0w_k_pos = l0w_bram_id[1:0];        // kernel 0-3
+                l0w_oc_in_tile = l0w_bram_id[3:2];   // OC offset in tile 0-3
+
+                // 4 tiles sequentially in this BRAM
+                for (l0w_tile = 0; l0w_tile < 4; l0w_tile = l0w_tile + 1) begin
+                    l0w_oc_absolute = l0w_oc_base + (l0w_tile * 4) + l0w_oc_in_tile;
+
+                    // 256 input channels
+                    for (l0w_ich = 0; l0w_ich < 256; l0w_ich = l0w_ich + 1) begin
+                        // DDR: OFFSET + (oc × 1024) + (k × 256) + ich
+                        l0w_ddr_addr = WEIGHT_OFFSET_L0 + (l0w_oc_absolute * 1024) + (l0w_k_pos * 256) + l0w_ich;
+                        l0w_word_count = l0w_word_count + 1;
+                        send_one_word_weight(
+                            weight_ddr_mem[l0w_ddr_addr][23:0],
+                            (l0w_word_count == 16384)  // 16 BRAM × 1024 = 16384
+                        );
+                    end
                 end
             end
-            wait(weight_write_done); @(posedge aclk);
+
+            @(posedge aclk);
         end
     endtask
 
-    task send_packet_ifmap_zeros;
-        input [4:0] start_bram; 
-        input [4:0] end_bram; 
-        input [15:0] num_words; 
+    // ========================================================================
+    // LAYER 0 IFMAP LOADING (Stride 16)
+    // ========================================================================
+    // DDR Layout: Pos0[Ch0-255], Pos1[Ch0-255], ..., Pos31[Ch0-255]
+    // Total: 32 × 256 = 8192 values
+    //
+    // BRAM Layout: BRAM_n stores positions n, n+16 (2 groups)
+    // Each BRAM: 2 groups × 256 ch = 512 words
+
+    task send_ifmap_layer0_stride16;
         begin
-            send_one_word_ifmap(24'h00C0DE, 0); 
+            l0i_total_words = 16 * 512;  // 8192 total
+            l0i_word_count = 0;
+
+            send_one_word_ifmap(24'h00C0DE, 0);
             send_one_word_ifmap(24'h000001, 0);
-            send_one_word_ifmap({19'h0, start_bram}, 0); 
-            send_one_word_ifmap({19'h0, end_bram}, 0);
-            send_one_word_ifmap(24'd0, 0); 
-            send_one_word_ifmap({8'h0, num_words}, 0);
-            
-            for (i_j = start_bram; i_j <= end_bram; i_j = i_j + 1) begin
-                for (i_i = 0; i_i < num_words; i_i = i_i + 1) begin
-                    send_one_word_ifmap(24'h000000, (i_j==end_bram && i_i==num_words-1));
+            send_one_word_ifmap({19'h0, 5'd0}, 0);
+            send_one_word_ifmap({19'h0, 5'd15}, 0);
+            send_one_word_ifmap(24'd0, 0);
+            send_one_word_ifmap(16'd512, 0);  // 512 words per BRAM
+
+            for (l0i_bram_id = 0; l0i_bram_id < 16; l0i_bram_id = l0i_bram_id + 1) begin
+                // 2 position groups (32 positions / 16 stride = 2)
+                for (l0i_pos_group = 0; l0i_pos_group < 2; l0i_pos_group = l0i_pos_group + 1) begin
+                    l0i_position = l0i_bram_id + (l0i_pos_group * 16);
+
+                    // 256 channels per position
+                    for (l0i_channel = 0; l0i_channel < 256; l0i_channel = l0i_channel + 1) begin
+                        l0i_ddr_idx = (l0i_position * 256) + l0i_channel;
+                        l0i_word_count = l0i_word_count + 1;
+                        send_one_word_ifmap(
+                            ifmap_ddr_mem_l0[l0i_ddr_idx][23:0],
+                            (l0i_word_count == l0i_total_words)
+                        );
+                    end
                 end
             end
-            wait(ifmap_write_done); @(posedge aclk);
+
+            @(posedge aclk);
         end
     endtask
 
-    task send_packet_bias_zeros;
-        input [1:0] layer_id; 
-        input [31:0] num_channels; 
-        input [31:0] positions_per_ch;
-        integer total_data_per_bram;
+    // ========================================================================
+    // LAYER 0 BIAS LOADING
+    // ========================================================================
+    // DDR Layout: Ch0[Pos0-63], Ch1[Pos0-63], ..., Ch127[Pos0-63]
+    // Total: 128 × 64 = 8192 values
+    //
+    // BRAM Layout (matches MM2IM output mapping):
+    // BRAM_n stores Ch[n, n+16, n+32, ..., n+112] (8 pages)
+    // Each page: 64 positions
+    // Each BRAM: 8 pages × 64 pos = 512 words
+
+    task send_packet_bias_layer0;
         begin
-            total_data_per_bram = (num_channels / 16) * positions_per_ch;
-            
-            send_one_word_bias(24'h00C0DE, 0); 
+            l0b_total_words = 16 * 512;  // 8192 total
+            l0b_word_count = 0;
+
+            send_one_word_bias(24'h00C0DE, 0);
             send_one_word_bias(24'h000001, 0);
             send_one_word_bias({19'h0, 5'd0}, 0);
             send_one_word_bias({19'h0, 5'd15}, 0);
             send_one_word_bias(24'd0, 0);
-            send_one_word_bias({8'h0, total_data_per_bram[15:0]}, 0);
-            
-            for (b_bram_id = 0; b_bram_id < 16; b_bram_id = b_bram_id + 1) begin
-                for (b_word_count = 0; b_word_count < total_data_per_bram; b_word_count = b_word_count + 1) begin
-                    send_one_word_bias(24'h000000, (b_bram_id == 15 && b_word_count == total_data_per_bram-1));
+            send_one_word_bias(16'd512, 0);  // 512 words per BRAM
+
+            for (l0b_bram_id = 0; l0b_bram_id < 16; l0b_bram_id = l0b_bram_id + 1) begin
+                // 8 pages (128 channels / 16 BRAMs = 8 pages)
+                for (l0b_page = 0; l0b_page < 8; l0b_page = l0b_page + 1) begin
+                    l0b_channel = l0b_page * 16 + l0b_bram_id;  // Ch0,16,32,48,64,80,96,112 for BRAM0
+
+                    // 64 positions per channel
+                    for (l0b_pos = 0; l0b_pos < 64; l0b_pos = l0b_pos + 1) begin
+                        l0b_ddr_idx = BIAS_OFFSET_L0 + (l0b_channel * 64) + l0b_pos;
+                        l0b_word_count = l0b_word_count + 1;
+                        send_one_word_bias(
+                            bias_ddr_mem[l0b_ddr_idx][23:0],
+                            (l0b_word_count == l0b_total_words)
+                        );
+                    end
                 end
             end
-            
-            wait(bias_write_done); 
+
             @(posedge aclk);
         end
     endtask
+
+    // ========================================================================
+    // LAYER 1 WEIGHT LOADING
+    // ========================================================================
+    // DDR Layout: Oc0[k0[Ich0-255], k1[Ich0-255], k2[Ich0-255], k3[Ich0-255]],
+    //             Oc1[...], ..., Oc63[...]
+    // Per OC: 4 × 256 = 1024 values
+    // Total: 64 × 1024 = 65536 values
+    //
+    // BRAM Layout: bram_id[1:0] = kernel, bram_id[3:2] = OC in tile
+    // Each BRAM: 4 tiles × 256 IC = 1024 words (FULL DEPTH)
+
+    task send_packet_weight_layer1;
+        input [31:0] batch_id;
+        begin
+            l1w_oc_base = batch_id * 16;  // Starting OC for this batch
+            l1w_word_count = 0;
+
+            send_one_word_weight(24'h00C0DE, 0);
+            send_one_word_weight(24'h000001, 0);
+            send_one_word_weight({19'h0, 5'd0}, 0);
+            send_one_word_weight({19'h0, 5'd15}, 0);
+            send_one_word_weight(24'd0, 0);
+            send_one_word_weight(16'd1024, 0);  // 1024 words per BRAM (FULL)
+
+            // 16 BRAMs
+            for (l1w_bram_id = 0; l1w_bram_id < 16; l1w_bram_id = l1w_bram_id + 1) begin
+                l1w_k_pos = l1w_bram_id[1:0];        // kernel 0-3
+                l1w_oc_in_tile = l1w_bram_id[3:2];   // OC offset in tile 0-3
+
+                // 4 tiles sequentially in this BRAM
+                for (l1w_tile = 0; l1w_tile < 4; l1w_tile = l1w_tile + 1) begin
+                    l1w_oc_absolute = l1w_oc_base + (l1w_tile * 4) + l1w_oc_in_tile;
+
+                    // 256 input channels
+                    for (l1w_ich = 0; l1w_ich < 256; l1w_ich = l1w_ich + 1) begin
+                        // DDR: OFFSET + (oc × 1024) + (k × 256) + ich
+                        l1w_ddr_addr = WEIGHT_OFFSET_L1 + (l1w_oc_absolute * 1024) + (l1w_k_pos * 256) + l1w_ich;
+                        l1w_word_count = l1w_word_count + 1;
+                        send_one_word_weight(
+                            weight_ddr_mem[l1w_ddr_addr][23:0],
+                            (l1w_word_count == 16384)  // 16 BRAM × 1024 = 16384
+                        );
+                    end
+                end
+            end
+
+            @(posedge aclk);
+        end
+    endtask
+
+    // ========================================================================
+    // LAYER 1 IFMAP LOADING (Stride 16)
+    // ========================================================================
+    // DDR Layout: Pos0[Ch0-255], Pos1[Ch0-255], ..., Pos63[Ch0-255]
+    // Total: 64 × 256 = 16384 values
+    //
+    // BRAM Layout: BRAM_n stores positions n, n+16, n+32, n+48 (4 groups)
+    // Each BRAM: 4 groups × 256 ch = 1024 words (FULL DEPTH)
+
+    task send_ifmap_layer1_stride16;
+        begin
+            l1i_total_words = 16 * 1024;  // 16384 total
+            l1i_word_count = 0;
+
+            send_one_word_ifmap(24'h00C0DE, 0);
+            send_one_word_ifmap(24'h000001, 0);
+            send_one_word_ifmap({19'h0, 5'd0}, 0);
+            send_one_word_ifmap({19'h0, 5'd15}, 0);
+            send_one_word_ifmap(24'd0, 0);
+            send_one_word_ifmap(16'd1024, 0);  // 1024 words per BRAM (FULL)
+
+            for (l1i_bram_id = 0; l1i_bram_id < 16; l1i_bram_id = l1i_bram_id + 1) begin
+                // 4 position groups (64 positions / 16 stride = 4)
+                for (l1i_pos_group = 0; l1i_pos_group < 4; l1i_pos_group = l1i_pos_group + 1) begin
+                    l1i_position = l1i_bram_id + (l1i_pos_group * 16);
+
+                    // 256 channels per position
+                    for (l1i_channel = 0; l1i_channel < 256; l1i_channel = l1i_channel + 1) begin
+                        l1i_ddr_idx = (l1i_position * 256) + l1i_channel;
+                        l1i_word_count = l1i_word_count + 1;
+                        send_one_word_ifmap(
+                            ifmap_ddr_mem_l1[l1i_ddr_idx][23:0],
+                            (l1i_word_count == l1i_total_words)
+                        );
+                    end
+                end
+            end
+
+            @(posedge aclk);
+        end
+    endtask
+
+    // ========================================================================
+    // LAYER 1 BIAS LOADING
+    // ========================================================================
+    // DDR Layout: Ch0[Pos0-127], Ch1[Pos0-127], ..., Ch63[Pos0-127]
+    // Total: 64 × 128 = 8192 values
+    //
+    // BRAM Layout (matches MM2IM output mapping):
+    // BRAM_n stores Ch[n, n+16, n+32, n+48] (4 pages)
+    // Each page: 128 positions
+    // Each BRAM: 4 pages × 128 pos = 512 words
+
+    task send_packet_bias_layer1;
+        begin
+            l1b_total_words = 16 * 512;  // 8192 total
+            l1b_word_count = 0;
+
+            send_one_word_bias(24'h00C0DE, 0);
+            send_one_word_bias(24'h000001, 0);
+            send_one_word_bias({19'h0, 5'd0}, 0);
+            send_one_word_bias({19'h0, 5'd15}, 0);
+            send_one_word_bias(24'd0, 0);
+            send_one_word_bias(16'd512, 0);  // 512 words per BRAM
+
+            for (l1b_bram_id = 0; l1b_bram_id < 16; l1b_bram_id = l1b_bram_id + 1) begin
+                // 4 pages (64 channels / 16 BRAMs = 4 pages)
+                for (l1b_page = 0; l1b_page < 4; l1b_page = l1b_page + 1) begin
+                    l1b_channel = l1b_page * 16 + l1b_bram_id;  // Ch0,16,32,48 for BRAM0
+
+                    // 128 positions per channel
+                    for (l1b_pos = 0; l1b_pos < 128; l1b_pos = l1b_pos + 1) begin
+                        l1b_ddr_idx = BIAS_OFFSET_L1 + (l1b_channel * 128) + l1b_pos;
+                        l1b_word_count = l1b_word_count + 1;
+                        send_one_word_bias(
+                            bias_ddr_mem[l1b_ddr_idx][23:0],
+                            (l1b_word_count == l1b_total_words)
+                        );
+                    end
+                end
+            end
+
+            @(posedge aclk);
+        end
+    endtask
+
+    // ========================================================================
+    // LAYER 2 WEIGHT LOADING
+    // ========================================================================
+    // DDR Layout: Oc0[k0[Ich0-127], k1[Ich0-127], k2[Ich0-127], k3[Ich0-127]],
+    //             Oc1[...], ..., Oc31[...]
+    // Per OC: 4 × 128 = 512 values
+    // Total: 32 × 512 = 16384 values
+    //
+    // BRAM Layout: bram_id[1:0] = kernel, bram_id[3:2] = OC in tile
+    // Each BRAM: 8 tiles × 128 IC = 1024 words (FULL DEPTH)
+    // Only 1 batch needed (32 OC = 8 tiles × 4 OC/tile)
+
+    task send_packet_weight_layer2;
+        begin
+            l2w_word_count = 0;
+
+            send_one_word_weight(24'h00C0DE, 0);
+            send_one_word_weight(24'h000001, 0);
+            send_one_word_weight({19'h0, 5'd0}, 0);
+            send_one_word_weight({19'h0, 5'd15}, 0);
+            send_one_word_weight(24'd0, 0);
+            send_one_word_weight(16'd1024, 0);  // 1024 words per BRAM (FULL)
+
+            // 16 BRAMs
+            for (l2w_bram_id = 0; l2w_bram_id < 16; l2w_bram_id = l2w_bram_id + 1) begin
+                l2w_k_pos = l2w_bram_id[1:0];        // kernel 0-3
+                l2w_oc_in_tile = l2w_bram_id[3:2];   // OC offset in tile 0-3
+
+                // 8 tiles sequentially in this BRAM
+                for (l2w_tile = 0; l2w_tile < 8; l2w_tile = l2w_tile + 1) begin
+                    l2w_oc_absolute = (l2w_tile * 4) + l2w_oc_in_tile;
+
+                    // 128 input channels
+                    for (l2w_ich = 0; l2w_ich < 128; l2w_ich = l2w_ich + 1) begin
+                        // DDR: OFFSET + (oc × 512) + (k × 128) + ich
+                        l2w_ddr_addr = WEIGHT_OFFSET_L2 + (l2w_oc_absolute * 512) + (l2w_k_pos * 128) + l2w_ich;
+                        l2w_word_count = l2w_word_count + 1;
+                        send_one_word_weight(
+                            weight_ddr_mem[l2w_ddr_addr][23:0],
+                            (l2w_word_count == 16384)  // 16 BRAM × 1024 = 16384
+                        );
+                    end
+                end
+            end
+
+            @(posedge aclk);
+        end
+    endtask
+
+    // ========================================================================
+    // LAYER 2 IFMAP LOADING (Stride 16)
+    // ========================================================================
+    // DDR Layout: Pos0[Ch0-127], Pos1[Ch0-127], ..., Pos127[Ch0-127]
+    // Total: 128 × 128 = 16384 values
+    //
+    // BRAM Layout: BRAM_n stores positions n, n+16, n+32, ..., n+112 (8 groups)
+    // Each BRAM: 8 groups × 128 ch = 1024 words (FULL DEPTH)
+
+    task send_ifmap_layer2_stride16;
+        begin
+            l2i_total_words = 16 * 1024;  // 16384 total
+            l2i_word_count = 0;
+
+            send_one_word_ifmap(24'h00C0DE, 0);
+            send_one_word_ifmap(24'h000001, 0);
+            send_one_word_ifmap({19'h0, 5'd0}, 0);
+            send_one_word_ifmap({19'h0, 5'd15}, 0);
+            send_one_word_ifmap(24'd0, 0);
+            send_one_word_ifmap(16'd1024, 0);  // 1024 words per BRAM (FULL)
+
+            for (l2i_bram_id = 0; l2i_bram_id < 16; l2i_bram_id = l2i_bram_id + 1) begin
+                // 8 position groups (128 positions / 16 stride = 8)
+                for (l2i_pos_group = 0; l2i_pos_group < 8; l2i_pos_group = l2i_pos_group + 1) begin
+                    l2i_position = l2i_bram_id + (l2i_pos_group * 16);
+
+                    // 128 channels per position
+                    for (l2i_channel = 0; l2i_channel < 128; l2i_channel = l2i_channel + 1) begin
+                        l2i_ddr_idx = (l2i_position * 128) + l2i_channel;
+                        l2i_word_count = l2i_word_count + 1;
+                        send_one_word_ifmap(
+                            ifmap_ddr_mem_l2[l2i_ddr_idx][23:0],
+                            (l2i_word_count == l2i_total_words)
+                        );
+                    end
+                end
+            end
+
+            @(posedge aclk);
+        end
+    endtask
+
+    // ========================================================================
+    // LAYER 2 BIAS LOADING
+    // ========================================================================
+    // DDR Layout: Ch0[Pos0-255], Ch1[Pos0-255], ..., Ch31[Pos0-255]
+    // Total: 32 × 256 = 8192 values
+    //
+    // BRAM Layout (matches MM2IM output mapping):
+    // BRAM_n stores Ch[n, n+16] (2 pages)
+    // Each page: 256 positions
+    // Each BRAM: 2 pages × 256 pos = 512 words
+
+    task send_packet_bias_layer2;
+        begin
+            l2b_total_words = 16 * 512;  // 8192 total
+            l2b_word_count = 0;
+
+            send_one_word_bias(24'h00C0DE, 0);
+            send_one_word_bias(24'h000001, 0);
+            send_one_word_bias({19'h0, 5'd0}, 0);
+            send_one_word_bias({19'h0, 5'd15}, 0);
+            send_one_word_bias(24'd0, 0);
+            send_one_word_bias(16'd512, 0);  // 512 words per BRAM
+
+            for (l2b_bram_id = 0; l2b_bram_id < 16; l2b_bram_id = l2b_bram_id + 1) begin
+                // 2 pages (32 channels / 16 BRAMs = 2 pages)
+                for (l2b_page = 0; l2b_page < 2; l2b_page = l2b_page + 1) begin
+                    l2b_channel = l2b_page * 16 + l2b_bram_id;  // Ch0,16 for BRAM0
+
+                    // 256 positions per channel
+                    for (l2b_pos = 0; l2b_pos < 256; l2b_pos = l2b_pos + 1) begin
+                        l2b_ddr_idx = BIAS_OFFSET_L2 + (l2b_channel * 256) + l2b_pos;
+                        l2b_word_count = l2b_word_count + 1;
+                        send_one_word_bias(
+                            bias_ddr_mem[l2b_ddr_idx][23:0],
+                            (l2b_word_count == l2b_total_words)
+                        );
+                    end
+                end
+            end
+
+            @(posedge aclk);
+        end
+    endtask
+
+    // ========================================================================
+    // UTILITY TASKS
+    // ========================================================================
 
     task wait_for_notification;
         input [2:0] expected_batch;
@@ -571,7 +957,7 @@ module System_Level_Top_tb();
                 
                 for (disp_ch = 0; disp_ch < 64; disp_ch = disp_ch + 1) begin
                     disp_ddr_idx = (disp_pos * 64) + disp_ch;
-                    disp_ifm = ifmap_ddr_mem[disp_ddr_idx][23:0];
+                    disp_ifm = ifmap_ddr_mem_l3[disp_ddr_idx][23:0];
                     
                     $fwrite(file_handle, "  Pos%03d_Ch%02d: DDR[%5d] = 0x%06h (%0d)\n", 
                             disp_pos, disp_ch, disp_ddr_idx, disp_ifm, $signed(disp_ifm));
@@ -609,7 +995,7 @@ module System_Level_Top_tb();
                 $fwrite(file_handle, "\n=== CHANNEL %2d (BRAM %2d) ===\n", disp_bram, disp_bram);
                 
                 for (disp_addr = 0; disp_addr < 512; disp_addr = disp_addr + 1) begin
-                    disp_ddr_idx = BIAS_LAYER_3_OFFSET + (disp_bram * 512) + disp_addr;
+                    disp_ddr_idx = BIAS_OFFSET_L3 + (disp_bram * 512) + disp_addr;
                     disp_bias = bias_ddr_mem[disp_ddr_idx][23:0];
                     
                     $fwrite(file_handle, "  Ch%02d_Pos%03d: DDR[%5d] = 0x%06h (%0d)\n", 
@@ -623,243 +1009,544 @@ module System_Level_Top_tb();
 
 
     task display_layer3_output;
-        integer out_bram, out_addr, out_lin_idx, out_pos, out_ch;
-        reg [23:0] out_val;
+        integer p_ch, p_pos;
         begin
-            // ========== FILE 1: RAW FULL DUMP ==========
-            file_handle = $fopen("layer3_output_RAW_FULL.txt", "w");
-            
-            $fwrite(file_handle, "================================================================================\n");
-            $fwrite(file_handle, "LAYER 3 OUTPUT DATA - RAW FULL DUMP\n");
-            $fwrite(file_handle, "================================================================================\n");
-            $fwrite(file_handle, "16 BRAMs x 512 addresses = 8192 total output values\n");
-            $fwrite(file_handle, "BRAM 0-7 from m0_axis, BRAM 8-15 from m1_axis\n");
-            $fwrite(file_handle, "================================================================================\n\n");
-            
-            for (out_bram = 0; out_bram < 16; out_bram = out_bram + 1) begin
-                $fwrite(file_handle, "\n=== BRAM %2d ===\n", out_bram);
-                
-                for (out_addr = 0; out_addr < 512; out_addr = out_addr + 1) begin
-                    if (out_bram < 8) 
-                        out_lin_idx = (out_bram * 512) + out_addr;
-                    else 
-                        out_lin_idx = ((out_bram - 8) * 512) + out_addr + (OUTPUT_MEM_DEPTH/2);
-                    
-                    out_val = output_captured_mem[out_lin_idx];
-                    
-                    $fwrite(file_handle, "  BRAM%02d[%03d]: 0x%06h (%6d)\n", 
-                            out_bram, out_addr, out_val, $signed(out_val));
-                end
-            end
-            
-            $fwrite(file_handle, "\n================================================================================\n");
-            $fclose(file_handle);
+            file_handle = $fopen("layer3_output_perchannel.txt", "w");
 
-            // ========== FILE 2: TABLE FORMAT (Position x Channel) ==========
-            file_handle = $fopen("layer3_output_TABLE.txt", "w");
-            
-            $fwrite(file_handle, "================================================================================\n");
-            $fwrite(file_handle, "LAYER 3 OUTPUT - TABLE FORMAT (Position x Channel)\n");
-            $fwrite(file_handle, "================================================================================\n");
-            $fwrite(file_handle, "Layout: 256 Positions x 16 Channels\n");
-            $fwrite(file_handle, "Each row = 1 position, Each column = 1 channel\n");
-            $fwrite(file_handle, "================================================================================\n\n");
-            
-            // Print table header
-            $fwrite(file_handle, "      |");
-            for (out_ch = 0; out_ch < 16; out_ch = out_ch + 1) begin
-                $fwrite(file_handle, "   Ch%02d   |", out_ch);
-            end
-            $fwrite(file_handle, "\n");
-            
-            $fwrite(file_handle, "------+");
-            for (out_ch = 0; out_ch < 16; out_ch = out_ch + 1) begin
-                $fwrite(file_handle, "----------+");
-            end
-            $fwrite(file_handle, "\n");
-            
-            // Print ALL 256 positions x 16 channels
-            for (out_pos = 0; out_pos < 256; out_pos = out_pos + 1) begin
-                $fwrite(file_handle, "Pos%03d|", out_pos);
-                
-                for (out_ch = 0; out_ch < 16; out_ch = out_ch + 1) begin
-                    out_bram = out_ch;
-                    out_addr = out_pos;
-                    
-                    if (out_bram < 8) 
-                        out_lin_idx = (out_bram * 512) + out_addr;
-                    else 
-                        out_lin_idx = ((out_bram - 8) * 512) + out_addr + (OUTPUT_MEM_DEPTH/2);
-                    
-                    out_val = output_captured_mem[out_lin_idx];
-                    
-                    $fwrite(file_handle, " %8d |", $signed(out_val));
-                end
-                $fwrite(file_handle, "\n");
-            end
-            
-            $fwrite(file_handle, "\n================================================================================\n");
-            $fclose(file_handle);
+            $fwrite(file_handle, "=================================================\n");
+            $fwrite(file_handle, "LAYER 3 (D5) OUTPUT - PER CHANNEL DUMP\n");
+            $fwrite(file_handle, "Format: Channel -> 512 Positions\n");
+            $fwrite(file_handle, "Total: 16 Channels x 512 Positions = 8192 values\n");
+            $fwrite(file_handle, "=================================================\n");
 
-            // ========== FILE 3: SUMMARY ==========
-            file_handle = $fopen("layer3_output_SUMMARY.txt", "w");
-            
-            $fwrite(file_handle, "================================================================================\n");
-            $fwrite(file_handle, "LAYER 3 OUTPUT - SUMMARY\n");
-            $fwrite(file_handle, "================================================================================\n\n");
-            
-            $fwrite(file_handle, "First 16 positions, all 16 channels:\n");
-            $fwrite(file_handle, "------------------------------------------------------------\n");
-            
-            for (out_pos = 0; out_pos < 16; out_pos = out_pos + 1) begin
-                $fwrite(file_handle, "\nPosition %3d:\n", out_pos);
-                for (out_ch = 0; out_ch < 16; out_ch = out_ch + 1) begin
-                    out_bram = out_ch;
-                    out_addr = out_pos;
-                    
-                    if (out_bram < 8) 
-                        out_lin_idx = (out_bram * 512) + out_addr;
-                    else 
-                        out_lin_idx = ((out_bram - 8) * 512) + out_addr + (OUTPUT_MEM_DEPTH/2);
-                    
-                    out_val = output_captured_mem[out_lin_idx];
-                    $fwrite(file_handle, "  Ch%02d = %6d (0x%06h)\n", out_ch, $signed(out_val), out_val);
-                end
+            for (p_ch = 0; p_ch < 8; p_ch = p_ch + 1) begin
+                $fwrite(file_handle, "\n=== CHANNEL %0d ===\n", p_ch);
+                for (p_pos = 0; p_pos < 512; p_pos = p_pos + 1)
+                    $fwrite(file_handle, "%0d\n", $signed(m0_buf[p_ch * 512 + p_pos]));
             end
-            
-            $fwrite(file_handle, "\n================================================================================\n");
+            for (p_ch = 0; p_ch < 8; p_ch = p_ch + 1) begin
+                $fwrite(file_handle, "\n=== CHANNEL %0d ===\n", p_ch + 8);
+                for (p_pos = 0; p_pos < 512; p_pos = p_pos + 1)
+                    $fwrite(file_handle, "%0d\n", $signed(m1_buf[p_ch * 512 + p_pos]));
+            end
+
+            $fwrite(file_handle, "\n=================================================\n");
             $fclose(file_handle);
+            $display("[INFO] Layer 3 output saved to layer3_output_perchannel.txt");
         end
     endtask
 
+    // ========================================================================
+    // LAYER 0 OUTPUT PRINT TASKS
+    // ========================================================================
+    // Output: 128 channels × 64 positions
+    // BRAM Layout (paged):
+    //   BRAM_ID   = channel % 16
+    //   BRAM_ADDR = (channel / 16) * 64 + position
+
+    task print_layer0_output_to_console;
+        integer p_grp, p_grp_ch, p_grp_start, p_ch, p_pos, p_bram_id, p_page, p_bram_addr;
+        reg [23:0] p_val;
+        begin
+            $display("\n=============================================================");
+            $display("LAYER 0 OUTPUT: 128 Channels x 64 Positions");
+            $display("=============================================================");
+
+            // 16 groups of 8 channels each
+            for (p_grp = 0; p_grp < 16; p_grp = p_grp + 1) begin
+                p_grp_start = p_grp * 8;
+                $display("\n--- Channels %3d - %3d ---", p_grp_start, p_grp_start + 7);
+
+                // Header row
+                $write(" Pos |");
+                for (p_grp_ch = 0; p_grp_ch < 8; p_grp_ch = p_grp_ch + 1)
+                    $write(" Ch%3d |", p_grp_start + p_grp_ch);
+                $write("\n");
+
+                // Separator
+                $write("-----|");
+                for (p_grp_ch = 0; p_grp_ch < 8; p_grp_ch = p_grp_ch + 1)
+                    $write("-------|");
+                $write("\n");
+
+                // Data rows: all 64 positions
+                for (p_pos = 0; p_pos < 64; p_pos = p_pos + 1) begin
+                    $write(" %3d |", p_pos);
+                    for (p_grp_ch = 0; p_grp_ch < 8; p_grp_ch = p_grp_ch + 1) begin
+                        p_ch        = p_grp_start + p_grp_ch;
+                        p_bram_id   = p_ch % 16;
+                        p_page      = p_ch / 16;
+                        p_bram_addr = p_page * 64 + p_pos;
+                        if (p_bram_id < 8)
+                            p_val = m0_buf[p_bram_id * 512 + p_bram_addr];
+                        else
+                            p_val = m1_buf[(p_bram_id - 8) * 512 + p_bram_addr];
+                        $write(" %5d |", $signed(p_val));
+                    end
+                    $write("\n");
+                end
+            end
+            $display("\n=============================================================");
+        end
+    endtask
+
+    task print_layer0_output_perchannel;
+        integer p_ch, p_pos, p_bram_id, p_page, p_bram_addr;
+        reg [23:0] p_val;
+        begin
+            file_handle = $fopen("layer0_output_perchannel.txt", "w");
+
+            $fwrite(file_handle, "=================================================\n");
+            $fwrite(file_handle, "LAYER 0 (D1) OUTPUT - PER CHANNEL DUMP\n");
+            $fwrite(file_handle, "Format: Channel -> 64 Positions\n");
+            $fwrite(file_handle, "Total: 128 Channels × 64 Positions = 8192 values\n");
+            $fwrite(file_handle, "=================================================\n");
+
+            for (p_ch = 0; p_ch < 128; p_ch = p_ch + 1) begin
+                $fwrite(file_handle, "\n=== CHANNEL %0d ===\n", p_ch);
+
+                p_bram_id = p_ch % 16;
+                p_page = p_ch / 16;
+
+                for (p_pos = 0; p_pos < 64; p_pos = p_pos + 1) begin
+                    p_bram_addr = p_page * 64 + p_pos;
+
+                    if (p_bram_id < 8)
+                        p_val = m0_buf[p_bram_id * 512 + p_bram_addr];
+                    else
+                        p_val = m1_buf[(p_bram_id - 8) * 512 + p_bram_addr];
+
+                    $fwrite(file_handle, "%0d\n", $signed(p_val));
+                end
+            end
+
+            $fwrite(file_handle, "\n=================================================\n");
+            $fclose(file_handle);
+            $display("[INFO] Layer 0 output saved to layer0_output_perchannel.txt");
+        end
+    endtask
+
+    task display_layer0_inputs;
+        integer disp_pos, disp_ch, disp_ddr_idx;
+        reg [23:0] disp_val;
+        begin
+            // IFMAP dump
+            file_handle = $fopen("layer0_input_ifmap.txt", "w");
+            $fwrite(file_handle, "========================================\n");
+            $fwrite(file_handle, "LAYER 0 IFMAP: 32 Pos × 256 Ch = 8192\n");
+            $fwrite(file_handle, "========================================\n");
+            for (disp_pos = 0; disp_pos < 32; disp_pos = disp_pos + 1) begin
+                $fwrite(file_handle, "\n=== POSITION %0d ===\n", disp_pos);
+                for (disp_ch = 0; disp_ch < 256; disp_ch = disp_ch + 1) begin
+                    disp_ddr_idx = disp_pos * 256 + disp_ch;
+                    disp_val = ifmap_ddr_mem_l0[disp_ddr_idx][23:0];
+                    $fwrite(file_handle, "%0d\n", $signed(disp_val));
+                end
+            end
+            $fclose(file_handle);
+
+            // BIAS dump
+            file_handle = $fopen("layer0_input_bias.txt", "w");
+            $fwrite(file_handle, "========================================\n");
+            $fwrite(file_handle, "LAYER 0 BIAS: 128 Ch × 64 Pos = 8192\n");
+            $fwrite(file_handle, "========================================\n");
+            for (disp_ch = 0; disp_ch < 128; disp_ch = disp_ch + 1) begin
+                $fwrite(file_handle, "\n=== CHANNEL %0d ===\n", disp_ch);
+                for (disp_pos = 0; disp_pos < 64; disp_pos = disp_pos + 1) begin
+                    disp_ddr_idx = BIAS_OFFSET_L0 + (disp_ch * 64) + disp_pos;
+                    disp_val = bias_ddr_mem[disp_ddr_idx][23:0];
+                    $fwrite(file_handle, "%0d\n", $signed(disp_val));
+                end
+            end
+            $fclose(file_handle);
+
+            $display("[INFO] Layer 0 inputs saved to layer0_input_*.txt");
+        end
+    endtask
 
     // ========================================================================
-    // 8. MAIN SEQUENCE - ZERO TEST MODE WITH INPUT DISPLAY
+    // LAYER 1 OUTPUT PRINT TASKS
+    // ========================================================================
+    // Output: 64 channels × 128 positions
+    // BRAM Layout (paged):
+    //   BRAM_ID   = channel % 16
+    //   BRAM_ADDR = (channel / 16) * 128 + position
+
+    task print_layer1_output_to_console;
+        integer p_grp, p_grp_ch, p_grp_start, p_ch, p_pos, p_bram_id, p_page, p_bram_addr;
+        reg [23:0] p_val;
+        begin
+            $display("\n=============================================================");
+            $display("LAYER 1 OUTPUT: 64 Channels x 128 Positions");
+            $display("=============================================================");
+
+            // 8 groups of 8 channels each
+            for (p_grp = 0; p_grp < 8; p_grp = p_grp + 1) begin
+                p_grp_start = p_grp * 8;
+                $display("\n--- Channels %3d - %3d ---", p_grp_start, p_grp_start + 7);
+
+                // Header row
+                $write(" Pos |");
+                for (p_grp_ch = 0; p_grp_ch < 8; p_grp_ch = p_grp_ch + 1)
+                    $write(" Ch%3d |", p_grp_start + p_grp_ch);
+                $write("\n");
+
+                // Separator
+                $write("-----|");
+                for (p_grp_ch = 0; p_grp_ch < 8; p_grp_ch = p_grp_ch + 1)
+                    $write("-------|");
+                $write("\n");
+
+                // Data rows: all 128 positions
+                for (p_pos = 0; p_pos < 128; p_pos = p_pos + 1) begin
+                    $write(" %3d |", p_pos);
+                    for (p_grp_ch = 0; p_grp_ch < 8; p_grp_ch = p_grp_ch + 1) begin
+                        p_ch        = p_grp_start + p_grp_ch;
+                        p_bram_id   = p_ch % 16;
+                        p_page      = p_ch / 16;
+                        p_bram_addr = p_page * 128 + p_pos;
+                        if (p_bram_id < 8)
+                            p_val = m0_buf[p_bram_id * 512 + p_bram_addr];
+                        else
+                            p_val = m1_buf[(p_bram_id - 8) * 512 + p_bram_addr];
+                        $write(" %5d |", $signed(p_val));
+                    end
+                    $write("\n");
+                end
+            end
+            $display("\n=============================================================");
+        end
+    endtask
+
+    task print_layer1_output_perchannel;
+        integer p_ch, p_pos, p_bram_id, p_page, p_bram_addr;
+        reg [23:0] p_val;
+        begin
+            file_handle = $fopen("layer1_output_perchannel.txt", "w");
+
+            $fwrite(file_handle, "=================================================\n");
+            $fwrite(file_handle, "LAYER 1 (D2) OUTPUT - PER CHANNEL DUMP\n");
+            $fwrite(file_handle, "Format: Channel -> 128 Positions\n");
+            $fwrite(file_handle, "Total: 64 Channels × 128 Positions = 8192 values\n");
+            $fwrite(file_handle, "=================================================\n");
+
+            for (p_ch = 0; p_ch < 64; p_ch = p_ch + 1) begin
+                $fwrite(file_handle, "\n=== CHANNEL %0d ===\n", p_ch);
+
+                p_bram_id = p_ch % 16;
+                p_page = p_ch / 16;
+
+                for (p_pos = 0; p_pos < 128; p_pos = p_pos + 1) begin
+                    p_bram_addr = p_page * 128 + p_pos;
+
+                    if (p_bram_id < 8)
+                        p_val = m0_buf[p_bram_id * 512 + p_bram_addr];
+                    else
+                        p_val = m1_buf[(p_bram_id - 8) * 512 + p_bram_addr];
+
+                    $fwrite(file_handle, "%0d\n", $signed(p_val));
+                end
+            end
+
+            $fwrite(file_handle, "\n=================================================\n");
+            $fclose(file_handle);
+            $display("[INFO] Layer 1 output saved to layer1_output_perchannel.txt");
+        end
+    endtask
+
+    task display_layer1_inputs;
+        integer disp_pos, disp_ch, disp_ddr_idx;
+        reg [23:0] disp_val;
+        begin
+            // IFMAP dump
+            file_handle = $fopen("layer1_input_ifmap.txt", "w");
+            $fwrite(file_handle, "========================================\n");
+            $fwrite(file_handle, "LAYER 1 IFMAP: 64 Pos × 256 Ch = 16384\n");
+            $fwrite(file_handle, "========================================\n");
+            for (disp_pos = 0; disp_pos < 64; disp_pos = disp_pos + 1) begin
+                $fwrite(file_handle, "\n=== POSITION %0d ===\n", disp_pos);
+                for (disp_ch = 0; disp_ch < 256; disp_ch = disp_ch + 1) begin
+                    disp_ddr_idx = disp_pos * 256 + disp_ch;
+                    disp_val = ifmap_ddr_mem_l1[disp_ddr_idx][23:0];
+                    $fwrite(file_handle, "%0d\n", $signed(disp_val));
+                end
+            end
+            $fclose(file_handle);
+
+            // BIAS dump
+            file_handle = $fopen("layer1_input_bias.txt", "w");
+            $fwrite(file_handle, "========================================\n");
+            $fwrite(file_handle, "LAYER 1 BIAS: 64 Ch × 128 Pos = 8192\n");
+            $fwrite(file_handle, "========================================\n");
+            for (disp_ch = 0; disp_ch < 64; disp_ch = disp_ch + 1) begin
+                $fwrite(file_handle, "\n=== CHANNEL %0d ===\n", disp_ch);
+                for (disp_pos = 0; disp_pos < 128; disp_pos = disp_pos + 1) begin
+                    disp_ddr_idx = BIAS_OFFSET_L1 + (disp_ch * 128) + disp_pos;
+                    disp_val = bias_ddr_mem[disp_ddr_idx][23:0];
+                    $fwrite(file_handle, "%0d\n", $signed(disp_val));
+                end
+            end
+            $fclose(file_handle);
+
+            $display("[INFO] Layer 1 inputs saved to layer1_input_*.txt");
+        end
+    endtask
+
+    // ========================================================================
+    // LAYER 2 OUTPUT PRINT TASKS
+    // ========================================================================
+    // Output: 32 channels × 256 positions
+    // BRAM Layout (paged):
+    //   BRAM_ID   = channel % 16
+    //   BRAM_ADDR = (channel / 16) * 256 + position
+
+    task print_layer2_output_to_console;
+        integer p_grp, p_grp_ch, p_grp_start, p_ch, p_pos, p_bram_id, p_page, p_bram_addr;
+        reg [23:0] p_val;
+        begin
+            $display("\n=============================================================");
+            $display("LAYER 2 OUTPUT: 32 Channels x 256 Positions");
+            $display("=============================================================");
+
+            // 4 groups of 8 channels each
+            for (p_grp = 0; p_grp < 4; p_grp = p_grp + 1) begin
+                p_grp_start = p_grp * 8;
+                $display("\n--- Channels %3d - %3d ---", p_grp_start, p_grp_start + 7);
+
+                // Header row
+                $write(" Pos |");
+                for (p_grp_ch = 0; p_grp_ch < 8; p_grp_ch = p_grp_ch + 1)
+                    $write(" Ch%3d |", p_grp_start + p_grp_ch);
+                $write("\n");
+
+                // Separator
+                $write("-----|");
+                for (p_grp_ch = 0; p_grp_ch < 8; p_grp_ch = p_grp_ch + 1)
+                    $write("-------|");
+                $write("\n");
+
+                // Data rows: all 256 positions
+                for (p_pos = 0; p_pos < 256; p_pos = p_pos + 1) begin
+                    $write(" %3d |", p_pos);
+                    for (p_grp_ch = 0; p_grp_ch < 8; p_grp_ch = p_grp_ch + 1) begin
+                        p_ch        = p_grp_start + p_grp_ch;
+                        p_bram_id   = p_ch % 16;
+                        p_page      = p_ch / 16;
+                        p_bram_addr = p_page * 256 + p_pos;
+                        if (p_bram_id < 8)
+                            p_val = m0_buf[p_bram_id * 512 + p_bram_addr];
+                        else
+                            p_val = m1_buf[(p_bram_id - 8) * 512 + p_bram_addr];
+                        $write(" %5d |", $signed(p_val));
+                    end
+                    $write("\n");
+                end
+            end
+            $display("\n=============================================================");
+        end
+    endtask
+
+    task print_layer2_output_perchannel;
+        integer p_ch, p_pos, p_bram_id, p_page, p_bram_addr;
+        reg [23:0] p_val;
+        begin
+            file_handle = $fopen("layer2_output_perchannel.txt", "w");
+
+            $fwrite(file_handle, "=================================================\n");
+            $fwrite(file_handle, "LAYER 2 (D3) OUTPUT - PER CHANNEL DUMP\n");
+            $fwrite(file_handle, "Format: Channel -> 256 Positions\n");
+            $fwrite(file_handle, "Total: 32 Channels × 256 Positions = 8192 values\n");
+            $fwrite(file_handle, "=================================================\n");
+
+            for (p_ch = 0; p_ch < 32; p_ch = p_ch + 1) begin
+                $fwrite(file_handle, "\n=== CHANNEL %0d ===\n", p_ch);
+
+                p_bram_id = p_ch % 16;
+                p_page = p_ch / 16;
+
+                for (p_pos = 0; p_pos < 256; p_pos = p_pos + 1) begin
+                    p_bram_addr = p_page * 256 + p_pos;
+
+                    if (p_bram_id < 8)
+                        p_val = m0_buf[p_bram_id * 512 + p_bram_addr];
+                    else
+                        p_val = m1_buf[(p_bram_id - 8) * 512 + p_bram_addr];
+
+                    $fwrite(file_handle, "%0d\n", $signed(p_val));
+                end
+            end
+
+            $fwrite(file_handle, "\n=================================================\n");
+            $fclose(file_handle);
+            $display("[INFO] Layer 2 output saved to layer2_output_perchannel.txt");
+        end
+    endtask
+
+    task display_layer2_inputs;
+        integer disp_pos, disp_ch, disp_ddr_idx;
+        reg [23:0] disp_val;
+        begin
+            // IFMAP dump
+            file_handle = $fopen("layer2_input_ifmap.txt", "w");
+            $fwrite(file_handle, "========================================\n");
+            $fwrite(file_handle, "LAYER 2 IFMAP: 128 Pos × 128 Ch = 16384\n");
+            $fwrite(file_handle, "========================================\n");
+            for (disp_pos = 0; disp_pos < 128; disp_pos = disp_pos + 1) begin
+                $fwrite(file_handle, "\n=== POSITION %0d ===\n", disp_pos);
+                for (disp_ch = 0; disp_ch < 128; disp_ch = disp_ch + 1) begin
+                    disp_ddr_idx = disp_pos * 128 + disp_ch;
+                    disp_val = ifmap_ddr_mem_l2[disp_ddr_idx][23:0];
+                    $fwrite(file_handle, "%0d\n", $signed(disp_val));
+                end
+            end
+            $fclose(file_handle);
+
+            // BIAS dump
+            file_handle = $fopen("layer2_input_bias.txt", "w");
+            $fwrite(file_handle, "========================================\n");
+            $fwrite(file_handle, "LAYER 2 BIAS: 32 Ch × 256 Pos = 8192\n");
+            $fwrite(file_handle, "========================================\n");
+            for (disp_ch = 0; disp_ch < 32; disp_ch = disp_ch + 1) begin
+                $fwrite(file_handle, "\n=== CHANNEL %0d ===\n", disp_ch);
+                for (disp_pos = 0; disp_pos < 256; disp_pos = disp_pos + 1) begin
+                    disp_ddr_idx = BIAS_OFFSET_L2 + (disp_ch * 256) + disp_pos;
+                    disp_val = bias_ddr_mem[disp_ddr_idx][23:0];
+                    $fwrite(file_handle, "%0d\n", $signed(disp_val));
+                end
+            end
+            $fclose(file_handle);
+
+            $display("[INFO] Layer 2 inputs saved to layer2_input_*.txt");
+        end
+    endtask
+
+    // ========================================================================
+    // 8. MAIN SEQUENCE - ALL 4 LAYERS WITH REAL DATA
     // ========================================================================
     initial begin
         aresetn = 0;
         s0_axis_tdata = 0; s0_axis_tvalid = 0; s0_axis_tlast = 0; m0_axis_tready = 1;
         s1_axis_tdata = 0; s1_axis_tvalid = 0; s1_axis_tlast = 0; m1_axis_tready = 1;
         s2_axis_tdata = 0; s2_axis_tvalid = 0; s2_axis_tlast = 0;
-        output_write_ptr = 0; 
+        output_write_ptr = 0;
 
+        // Load combined weight & bias files
         $readmemh(WEIGHT_MEM_FILE, weight_ddr_mem);
-        $readmemh(BIAS_MEM_FILE, bias_ddr_mem);
-        $readmemh(IFMAP_MEM_FILE, ifmap_ddr_mem);
+        $readmemh(BIAS_MEM_FILE,   bias_ddr_mem);
+
+        // Load per-layer IFMAP files
+        $readmemh(IFMAP_MEM_FILE_l0, ifmap_ddr_mem_l0);
+        $readmemh(IFMAP_MEM_FILE_l1, ifmap_ddr_mem_l1);
+        $readmemh(IFMAP_MEM_FILE_l2, ifmap_ddr_mem_l2);
+        $readmemh(IFMAP_MEM_FILE_l3, ifmap_ddr_mem_l3);
+
+        $display("\n==========================================================");
+        $display(" FULL PIPELINE TESTBENCH - ALL 4 LAYERS (REAL DATA)");
+        $display("==========================================================");
+        $display(" L0/d1: 256ic x 128oc, 32in  -> 64out,  8 batches");
+        $display(" L1/d2: 256ic x  64oc, 64in  -> 128out, 4 batches");
+        $display(" L2/d3: 128ic x  32oc, 128in -> 256out, 1 batch");
+        $display(" L3/d4:  64ic x  16oc, 256in -> 512out, 1 batch");
+        $display("==========================================================\n");
 
         #(T*10); aresetn = 1; #(T*20);
         total_start_time = cycle_count;
 
-        // ====================== LAYER 0 (ZEROS) ======================
+        // ====================== LAYER 0 (D1) - 128 OC, 8 batches ======================
+        $display("[%0t] ===== LAYER 0 START =====", $time);
+        display_layer0_inputs();
         start_time_l0 = cycle_count;
 
         fork
-            begin
-                send_packet_bias_zeros(2'd0, 128, 64);
-            end
-            begin
-                send_packet_ifmap_zeros(5'd0, 5'd15, 16'd1024); 
-            end
-            begin
-                send_packet_weight_zeros(5'd0, 5'd15, 16'd1024); 
-            end
+            begin send_packet_bias_layer0();        end
+            begin send_ifmap_layer0_stride16();     end
+            begin send_packet_weight_layer0(0);     end
         join
-        
         wait_for_notification(3'd0);
-        send_packet_weight_zeros(5'd0, 5'd15, 16'd1024); wait_for_notification(3'd1);
-        send_packet_weight_zeros(5'd0, 5'd15, 16'd1024); wait_for_notification(3'd2);
-        send_packet_weight_zeros(5'd0, 5'd15, 16'd1024); wait_for_notification(3'd3);
-        send_packet_weight_zeros(5'd0, 5'd15, 16'd1024); wait_for_notification(3'd4);
-        send_packet_weight_zeros(5'd0, 5'd15, 16'd1024); wait_for_notification(3'd5);
-        send_packet_weight_zeros(5'd0, 5'd15, 16'd1024); wait_for_notification(3'd6);
-        send_packet_weight_zeros(5'd0, 5'd15, 16'd1024); wait_for_notification(3'd7);
 
-        wait(layer_readout_done);
+        send_packet_weight_layer0(1); wait_for_notification(3'd1);
+        send_packet_weight_layer0(2); wait_for_notification(3'd2);
+        send_packet_weight_layer0(3); wait_for_notification(3'd3);
+        send_packet_weight_layer0(4); wait_for_notification(3'd4);
+        send_packet_weight_layer0(5); wait_for_notification(3'd5);
+        send_packet_weight_layer0(6); wait_for_notification(3'd6);
+        send_packet_weight_layer0(7); wait_for_notification(3'd7);
+
+        @(output_complete);
         end_time_l0 = cycle_count;
+        $display("[%0t] Layer 0 done. Cycles: %0d", $time, end_time_l0 - start_time_l0);
         #(T*100);
 
-        // ====================== LAYER 1 (ZEROS) ======================
+        // ====================== LAYER 1 (D2) - 64 OC, 4 batches ======================
+        $display("[%0t] ===== LAYER 1 START =====", $time);
+        display_layer1_inputs();
         start_time_l1 = cycle_count;
 
         fork
-            begin
-                send_packet_bias_zeros(2'd1, 64, 128);
-            end
-            begin
-                send_packet_ifmap_zeros(5'd0, 5'd15, 16'd1024);
-            end
-            begin
-                send_packet_weight_zeros(5'd0, 5'd15, 16'd1024);
-            end
+            begin send_packet_bias_layer1();        end
+            begin send_ifmap_layer1_stride16();     end
+            begin send_packet_weight_layer1(0);     end
         join
-        
         wait_for_notification(3'd0);
-        send_packet_weight_zeros(5'd0, 5'd15, 16'd1024); wait_for_notification(3'd1);
-        send_packet_weight_zeros(5'd0, 5'd15, 16'd1024); wait_for_notification(3'd2);
-        send_packet_weight_zeros(5'd0, 5'd15, 16'd1024); wait_for_notification(3'd3);
 
-        wait(layer_readout_done);
+        send_packet_weight_layer1(1); wait_for_notification(3'd1);
+        send_packet_weight_layer1(2); wait_for_notification(3'd2);
+        send_packet_weight_layer1(3); wait_for_notification(3'd3);
+
+        @(output_complete);
         end_time_l1 = cycle_count;
+        $display("[%0t] Layer 1 done. Cycles: %0d", $time, end_time_l1 - start_time_l1);
         #(T*100);
 
-        // ====================== LAYER 2 (ZEROS) ======================
+        // ====================== LAYER 2 (D3) - 32 OC, 1 batch ======================
+        $display("[%0t] ===== LAYER 2 START =====", $time);
+        display_layer2_inputs();
         start_time_l2 = cycle_count;
 
         fork
-            begin
-                send_packet_bias_zeros(2'd2, 32, 256);
-            end
-            begin
-                send_packet_ifmap_zeros(5'd0, 5'd15, 16'd1024);
-            end
-            begin
-                send_packet_weight_zeros(5'd0, 5'd15, 16'd1024);
-            end
+            begin send_packet_bias_layer2();        end
+            begin send_ifmap_layer2_stride16();     end
+            begin send_packet_weight_layer2();      end
         join
-        
         wait_for_notification(3'd0);
-        wait(layer_readout_done);
+
+        @(output_complete);
         end_time_l2 = cycle_count;
+        $display("[%0t] Layer 2 done. Cycles: %0d", $time, end_time_l2 - start_time_l2);
         #(T*100);
 
-        // ====================== LAYER 3 (REAL DATA) ======================
-        
-        // DISPLAY LAYER 3 INPUT DATA (from DDR memory before sending to BRAMs)
+        // ====================== LAYER 3 (D4) - 16 OC, 1 batch ======================
+        $display("[%0t] ===== LAYER 3 START =====", $time);
         display_all_layer3_inputs();
-        
         start_time_l3 = cycle_count;
 
         fork
-            begin
-                send_packet_bias_layer3(BIAS_LAYER_3_OFFSET);
-            end
-            begin
-                send_ifmap_layer3_stride16();
-            end
-            begin
-                send_packet_weight_layer3(212992);
-            end
+            begin send_packet_bias_layer3(BIAS_OFFSET_L3);      end
+            begin send_ifmap_layer3_stride16();                  end
+            begin send_packet_weight_layer3(WEIGHT_OFFSET_L3);  end
         join
-        
         wait_for_notification(3'd0);
-        wait(layer_readout_done);
+
+        @(output_complete);
         end_time_l3 = cycle_count;
+        $display("[%0t] Layer 3 done. Cycles: %0d", $time, end_time_l3 - start_time_l3);
+
+        display_layer3_output();
 
         $display("\n==========================================================");
         $display(" LATENCY SUMMARY TABLE");
         $display("==========================================================");
-        $display(" Layer | Mode  | Latency (cycles)");
-        $display("-------|-------|------------------");
-        $display("  d1   | ZERO  | %0d", (end_time_l0 - start_time_l0));
-        $display("  d2   | ZERO  | %0d", (end_time_l1 - start_time_l1));
-        $display("  d3   | ZERO  | %0d", (end_time_l2 - start_time_l2));
-        $display("  d4   | REAL  | %0d", (end_time_l3 - start_time_l3));
-        $display("-------|-------|------------------");
-        $display(" TOTAL |       | %0d", (cycle_count - total_start_time));
+        $display(" Layer | Latency (cycles)");
+        $display("-------|------------------");
+        $display("  d1   | %0d", (end_time_l0 - start_time_l0));
+        $display("  d2   | %0d", (end_time_l1 - start_time_l1));
+        $display("  d3   | %0d", (end_time_l2 - start_time_l2));
+        $display("  d4   | %0d", (end_time_l3 - start_time_l3));
+        $display("-------|------------------");
+        $display(" TOTAL | %0d", (cycle_count - total_start_time));
         $display("==========================================================");
-        
+
         #(T*100);
-        display_layer3_output();
         $finish;
     end
 

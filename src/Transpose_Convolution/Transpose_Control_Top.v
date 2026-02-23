@@ -1,7 +1,7 @@
 `timescale 1ns / 1ps
 
 /******************************************************************************
- * Module      : Transpose_Control_Top (FIXED VERSION)
+ * Module      : Transpose_Control_Top (FIXED VERSION) MOD
  * Author      : Dharma Anargya Jowandy
  * Date        : January 2026
  *
@@ -209,7 +209,7 @@ module Transpose_Control_Top #(
     ) u_transpose_fsm (
         .clk              (clk),
         .rst_n            (rst_n),
-        .start            (start_transpose | start_ifmap | start_weight), // Start when any data load starts
+        .start            (start_transpose), // Start only when transpose is explicitly triggered
         .Instruction_code (Instruction_code),
         .num_iterations   (num_iterations),
         .en_weight_load   (en_weight_load),

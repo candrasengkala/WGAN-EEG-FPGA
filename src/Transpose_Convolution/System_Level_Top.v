@@ -51,36 +51,21 @@ module System_Level_Top #(
     input  wire [DW-1:0]  s2_axis_tdata,
     input  wire           s2_axis_tvalid,
     output wire           s2_axis_tready,
-    input  wire           s2_axis_tlast,
-    
-    // Control & Status
-    input  wire           ext_start,
-    input  wire [1:0]     ext_layer_id,
-    output wire           scheduler_done,
-    output wire [1:0]     current_layer_id,
-    output wire [2:0]     current_batch_id,
-    output wire           all_batches_done,
-    
-    // Status
-    output wire           weight_write_done,
-    output wire           weight_read_done,
-    output wire           ifmap_write_done,
-    output wire           ifmap_read_done,
-    output wire           bias_write_done,
-    output wire [9:0]     weight_mm2s_data_count,
-    output wire [9:0]     ifmap_mm2s_data_count,
-    output wire [2:0]     weight_parser_state,
-    output wire           weight_error_invalid_magic,
-    output wire [2:0]     ifmap_parser_state,
-    output wire           ifmap_error_invalid_magic,
-    output wire [2:0]     bias_parser_state,
-    output wire           bias_error_invalid_magic,
-    output wire           auto_start_active
+    input  wire           s2_axis_tlast
 );
 
     // ========================================================================
     // Internal Wires
     // ========================================================================
+    // Status signals (internal only)
+    wire           weight_write_done;
+    wire           ifmap_write_done;
+    wire           bias_write_done;
+    wire           weight_read_done;
+    wire [1:0]     current_layer_id;
+    wire [2:0]     current_batch_id;
+    wire           all_batches_done;
+    wire           auto_start_active;
     wire [NUM_BRAMS*DW-1:0]      weight_wr_data_flat;
     wire [W_ADDR_W-1:0]          weight_wr_addr;
     wire [NUM_BRAMS-1:0]         weight_wr_en;
@@ -201,9 +186,9 @@ module System_Level_Top #(
 
         .write_done(weight_write_done),
         .read_done(weight_read_done),
-        .mm2s_data_count(weight_mm2s_data_count),
-        .parser_state(weight_parser_state),
-        .error_invalid_magic(weight_error_invalid_magic),
+        .mm2s_data_count(),
+        .parser_state(),
+        .error_invalid_magic(),
 
         .bram_wr_data_flat(weight_wr_data_flat),
         .bram_wr_addr(weight_wr_addr),
@@ -251,10 +236,10 @@ module System_Level_Top #(
         .notification_mode(out_mgr_notification_mode),
 
         .write_done(ifmap_write_done),
-        .read_done(ifmap_read_done),
-        .mm2s_data_count(ifmap_mm2s_data_count),
-        .parser_state(ifmap_parser_state),
-        .error_invalid_magic(ifmap_error_invalid_magic),
+        .read_done(),
+        .mm2s_data_count(),
+        .parser_state(),
+        .error_invalid_magic(),
 
         .bram_wr_data_flat(ifmap_wr_data_flat),
         .bram_wr_addr(ifmap_wr_addr),
@@ -307,8 +292,8 @@ module System_Level_Top #(
         .write_done(bias_write_done),
         .read_done(),  // Unused
         .mm2s_data_count(),  // Unused
-        .parser_state(bias_parser_state),
-        .error_invalid_magic(bias_error_invalid_magic),
+        .parser_state(),
+        .error_invalid_magic(),
         
         // BRAM Write Interface (to Output BRAM)
         .bram_wr_data_flat(bias_wr_data_flat),
@@ -340,8 +325,8 @@ module System_Level_Top #(
         .bias_write_done(bias_write_done), // [FIX 1] Connected for 3-way parallel start
         
         .batch_complete_signal(internal_scheduler_done), // [FIX 2] Use scheduler_done output as feedback
-        .ext_start(ext_start),
-        .ext_layer_id(ext_layer_id),
+        .ext_start(1'b0),
+        .ext_layer_id(2'd0),
         .current_layer_id(current_layer_id),
         .current_batch_id(current_batch_id),
         .scheduler_done(internal_scheduler_done),  // [FIX 2] Capture this output
@@ -448,7 +433,5 @@ module System_Level_Top #(
         .transmission_active(out_mgr_transmission_active)  // FIX: connected for ext_read_mode control
     );
     
-    // Output scheduler_done to external port
-    assign scheduler_done = internal_scheduler_done;
 
 endmodule
