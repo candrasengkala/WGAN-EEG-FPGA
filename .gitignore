@@ -20,3 +20,4 @@ xsim.dir/
 # (Uncomment the line below if you don't need to save simulation setups)
 # *.sim/
 test/io_sample
+test/io_sample_raw
