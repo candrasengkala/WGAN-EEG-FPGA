@@ -126,17 +126,6 @@ module System_Level_Top_tb();
 
     reg  [DW-1:0]   s2_axis_tdata; reg s2_axis_tvalid; wire s2_axis_tready; reg s2_axis_tlast;
 
-    wire       weight_write_done, ifmap_write_done, bias_write_done, scheduler_done;
-    wire [1:0] current_layer_id;
-    wire [2:0] current_batch_id;
-    wire       all_batches_done;
-    
-    wire       weight_read_done, ifmap_read_done;
-    wire [9:0] weight_mm2s_data_count, ifmap_mm2s_data_count;
-    wire [2:0] weight_parser_state, ifmap_parser_state, bias_parser_state;
-    wire       weight_error_invalid_magic, ifmap_error_invalid_magic, bias_error_invalid_magic;
-    wire       auto_start_active;
-
     reg        layer_readout_done;
     event      output_complete;       // fired by output handler - no race condition
     reg [63:0] cycle_count;
@@ -156,20 +145,7 @@ module System_Level_Top_tb();
         .m0_axis_tdata(m0_axis_tdata), .m0_axis_tvalid(m0_axis_tvalid), .m0_axis_tready(m0_axis_tready), .m0_axis_tlast(m0_axis_tlast),
         .s1_axis_tdata(s1_axis_tdata), .s1_axis_tvalid(s1_axis_tvalid), .s1_axis_tready(s1_axis_tready), .s1_axis_tlast(s1_axis_tlast),
         .m1_axis_tdata(m1_axis_tdata), .m1_axis_tvalid(m1_axis_tvalid), .m1_axis_tready(m1_axis_tready), .m1_axis_tlast(m1_axis_tlast),
-        .s2_axis_tdata(s2_axis_tdata), .s2_axis_tvalid(s2_axis_tvalid), .s2_axis_tready(s2_axis_tready), .s2_axis_tlast(s2_axis_tlast),
-        
-        .ext_start(1'b0), // Use AUTO scheduler
-        .ext_layer_id(2'd0),
-        
-        .weight_write_done(weight_write_done), .ifmap_write_done(ifmap_write_done), .bias_write_done(bias_write_done),
-        .scheduler_done(scheduler_done), .current_layer_id(current_layer_id), .current_batch_id(current_batch_id), .all_batches_done(all_batches_done),
-        
-        .weight_read_done(weight_read_done), .ifmap_read_done(ifmap_read_done), 
-        .weight_mm2s_data_count(weight_mm2s_data_count), .ifmap_mm2s_data_count(ifmap_mm2s_data_count),
-        .weight_parser_state(weight_parser_state), .weight_error_invalid_magic(weight_error_invalid_magic), 
-        .ifmap_parser_state(ifmap_parser_state), .ifmap_error_invalid_magic(ifmap_error_invalid_magic),
-        .bias_parser_state(bias_parser_state), .bias_error_invalid_magic(bias_error_invalid_magic),
-        .auto_start_active(auto_start_active)
+        .s2_axis_tdata(s2_axis_tdata), .s2_axis_tvalid(s2_axis_tvalid), .s2_axis_tready(s2_axis_tready), .s2_axis_tlast(s2_axis_tlast)
     );
 
     // ========================================================================
@@ -418,7 +394,6 @@ module System_Level_Top_tb();
                 end
             end
             
-            wait(weight_write_done); 
             @(posedge aclk);
         end
     endtask
@@ -448,7 +423,6 @@ module System_Level_Top_tb();
                 end
             end
             
-            wait(bias_write_done); 
             @(posedge aclk);
         end
     endtask
@@ -479,7 +453,6 @@ module System_Level_Top_tb();
                 end
             end
             
-            wait(ifmap_write_done);
             @(posedge aclk);
         end
     endtask
@@ -530,7 +503,6 @@ module System_Level_Top_tb();
                 end
             end
 
-            wait(weight_write_done);
             @(posedge aclk);
         end
     endtask
@@ -573,7 +545,6 @@ module System_Level_Top_tb();
                 end
             end
 
-            wait(ifmap_write_done);
             @(posedge aclk);
         end
     endtask
@@ -618,7 +589,6 @@ module System_Level_Top_tb();
                 end
             end
 
-            wait(bias_write_done);
             @(posedge aclk);
         end
     endtask
@@ -669,7 +639,6 @@ module System_Level_Top_tb();
                 end
             end
 
-            wait(weight_write_done);
             @(posedge aclk);
         end
     endtask
@@ -712,7 +681,6 @@ module System_Level_Top_tb();
                 end
             end
 
-            wait(ifmap_write_done);
             @(posedge aclk);
         end
     endtask
@@ -757,7 +725,6 @@ module System_Level_Top_tb();
                 end
             end
 
-            wait(bias_write_done);
             @(posedge aclk);
         end
     endtask
@@ -807,7 +774,6 @@ module System_Level_Top_tb();
                 end
             end
 
-            wait(weight_write_done);
             @(posedge aclk);
         end
     endtask
@@ -850,7 +816,6 @@ module System_Level_Top_tb();
                 end
             end
 
-            wait(ifmap_write_done);
             @(posedge aclk);
         end
     endtask
@@ -895,7 +860,6 @@ module System_Level_Top_tb();
                 end
             end
 
-            wait(bias_write_done);
             @(posedge aclk);
         end
     endtask
