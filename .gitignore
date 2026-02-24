@@ -19,5 +19,9 @@ xsim.dir/
 # Recommended: Ignore the entire simulation directory
 # (Uncomment the line below if you don't need to save simulation setups)
 # *.sim/
-test/io_sample
+test/io_sample_conv
+test/io_sample_deconv
 test/io_sample_raw
+
+test/convolution_hardware_output
+test/deconv_hardware_output
