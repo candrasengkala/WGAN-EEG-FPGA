@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<EDKSYSTEM EDWVERSION="1.2" TIMESTAMP="Tue Feb 24 08:14:44 2026" VIVADOVERSION="2025.1">
+<EDKSYSTEM EDWVERSION="1.2" TIMESTAMP="Wed Feb 25 09:42:31 2026" VIVADOVERSION="2025.1">
 
   <SYSTEMINFO ARCH="zynq" BOARD="www.digilentinc.com:pynq-z1:part0:1.0" DEVICE="7z020" NAME="design_1" PACKAGE="clg400" SPEEDGRADE="-1"/>
 
@@ -193,6 +193,14 @@
             <CONNECTION INSTANCE="axi_dma_0" PORT="s_axis_s2mm_tdata"/>
           </CONNECTIONS>
         </PORT>
+        <PORT DIR="O" LEFT="3" NAME="m0_axis_tkeep" RIGHT="0" SIGIS="undef" SIGNAME="System_Level_Top_0_m0_axis_tkeep">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_dma_0" PORT="s_axis_s2mm_tkeep"/>
+          </CONNECTIONS>
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_dma_0" PORT="s_axis_s2mm_tkeep"/>
+          </CONNECTIONS>
+        </PORT>
         <PORT DIR="O" NAME="m0_axis_tlast" SIGIS="undef" SIGNAME="System_Level_Top_0_m0_axis_tlast">
           <CONNECTIONS>
             <CONNECTION INSTANCE="axi_dma_0" PORT="s_axis_s2mm_tlast"/>
@@ -223,6 +231,14 @@
             <CONNECTION INSTANCE="axi_dma_1" PORT="s_axis_s2mm_tdata"/>
           </CONNECTIONS>
         </PORT>
+        <PORT DIR="O" LEFT="3" NAME="m1_axis_tkeep" RIGHT="0" SIGIS="undef" SIGNAME="System_Level_Top_0_m1_axis_tkeep">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_dma_1" PORT="s_axis_s2mm_tkeep"/>
+          </CONNECTIONS>
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_dma_1" PORT="s_axis_s2mm_tkeep"/>
+          </CONNECTIONS>
+        </PORT>
         <PORT DIR="O" NAME="m1_axis_tlast" SIGIS="undef" SIGNAME="System_Level_Top_0_m1_axis_tlast">
           <CONNECTIONS>
             <CONNECTION INSTANCE="axi_dma_1" PORT="s_axis_s2mm_tlast"/>
@@ -251,6 +267,12 @@
             <CONNECTION INSTANCE="axi_dma_0" PORT="m_axis_mm2s_tdata"/>
           </CONNECTIONS>
         </PORT>
+        <PORT DIR="I" LEFT="3" NAME="s0_axis_tkeep" RIGHT="0" SIGIS="undef" SIGNAME="axi_dma_0_m_axis_mm2s_tkeep">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_dma_0" PORT="m_axis_mm2s_tkeep"/>
+            <CONNECTION INSTANCE="axi_dma_0" PORT="m_axis_mm2s_tkeep"/>
+          </CONNECTIONS>
+        </PORT>
         <PORT DIR="I" NAME="s0_axis_tlast" SIGIS="undef" SIGNAME="axi_dma_0_m_axis_mm2s_tlast">
           <CONNECTIONS>
             <CONNECTION INSTANCE="axi_dma_0" PORT="m_axis_mm2s_tlast"/>
@@ -275,6 +297,12 @@
           <CONNECTIONS>
             <CONNECTION INSTANCE="axi_dma_1" PORT="m_axis_mm2s_tdata"/>
             <CONNECTION INSTANCE="axi_dma_1" PORT="m_axis_mm2s_tdata"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" LEFT="3" NAME="s1_axis_tkeep" RIGHT="0" SIGIS="undef" SIGNAME="axi_dma_1_m_axis_mm2s_tkeep">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_dma_1" PORT="m_axis_mm2s_tkeep"/>
+            <CONNECTION INSTANCE="axi_dma_1" PORT="m_axis_mm2s_tkeep"/>
           </CONNECTIONS>
         </PORT>
         <PORT DIR="I" NAME="s1_axis_tlast" SIGIS="undef" SIGNAME="axi_dma_1_m_axis_mm2s_tlast">
@@ -303,6 +331,12 @@
             <CONNECTION INSTANCE="axi_dma_2" PORT="m_axis_mm2s_tdata"/>
           </CONNECTIONS>
         </PORT>
+        <PORT DIR="I" LEFT="3" NAME="s2_axis_tkeep" RIGHT="0" SIGIS="undef" SIGNAME="axi_dma_2_m_axis_mm2s_tkeep">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_dma_2" PORT="m_axis_mm2s_tkeep"/>
+            <CONNECTION INSTANCE="axi_dma_2" PORT="m_axis_mm2s_tkeep"/>
+          </CONNECTIONS>
+        </PORT>
         <PORT DIR="I" NAME="s2_axis_tlast" SIGIS="undef" SIGNAME="axi_dma_2_m_axis_mm2s_tlast">
           <CONNECTIONS>
             <CONNECTION INSTANCE="axi_dma_2" PORT="m_axis_mm2s_tlast"/>
@@ -328,7 +362,7 @@
         <BUSINTERFACE BUSNAME="System_Level_Top_0_m0_axis" NAME="m0_axis" TYPE="INITIATOR" VLNV="xilinx.com:interface:axis:1.0">
           <PARAMETER NAME="CLK_DOMAIN" VALUE="design_1_processing_system7_0_0_FCLK_CLK0"/>
           <PARAMETER NAME="FREQ_HZ" VALUE="83333336"/>
-          <PARAMETER NAME="HAS_TKEEP" VALUE="0"/>
+          <PARAMETER NAME="HAS_TKEEP" VALUE="1"/>
           <PARAMETER NAME="HAS_TLAST" VALUE="1"/>
           <PARAMETER NAME="HAS_TREADY" VALUE="1"/>
           <PARAMETER NAME="HAS_TSTRB" VALUE="0"/>
@@ -341,6 +375,7 @@
           <PARAMETER NAME="TUSER_WIDTH" VALUE="0"/>
           <PORTMAPS>
             <PORTMAP LOGICAL="TDATA" PHYSICAL="m0_axis_tdata"/>
+            <PORTMAP LOGICAL="TKEEP" PHYSICAL="m0_axis_tkeep"/>
             <PORTMAP LOGICAL="TLAST" PHYSICAL="m0_axis_tlast"/>
             <PORTMAP LOGICAL="TREADY" PHYSICAL="m0_axis_tready"/>
             <PORTMAP LOGICAL="TVALID" PHYSICAL="m0_axis_tvalid"/>
@@ -349,7 +384,7 @@
         <BUSINTERFACE BUSNAME="System_Level_Top_0_m1_axis" NAME="m1_axis" TYPE="INITIATOR" VLNV="xilinx.com:interface:axis:1.0">
           <PARAMETER NAME="CLK_DOMAIN" VALUE="design_1_processing_system7_0_0_FCLK_CLK0"/>
           <PARAMETER NAME="FREQ_HZ" VALUE="83333336"/>
-          <PARAMETER NAME="HAS_TKEEP" VALUE="0"/>
+          <PARAMETER NAME="HAS_TKEEP" VALUE="1"/>
           <PARAMETER NAME="HAS_TLAST" VALUE="1"/>
           <PARAMETER NAME="HAS_TREADY" VALUE="1"/>
           <PARAMETER NAME="HAS_TSTRB" VALUE="0"/>
@@ -362,6 +397,7 @@
           <PARAMETER NAME="TUSER_WIDTH" VALUE="0"/>
           <PORTMAPS>
             <PORTMAP LOGICAL="TDATA" PHYSICAL="m1_axis_tdata"/>
+            <PORTMAP LOGICAL="TKEEP" PHYSICAL="m1_axis_tkeep"/>
             <PORTMAP LOGICAL="TLAST" PHYSICAL="m1_axis_tlast"/>
             <PORTMAP LOGICAL="TREADY" PHYSICAL="m1_axis_tready"/>
             <PORTMAP LOGICAL="TVALID" PHYSICAL="m1_axis_tvalid"/>
@@ -370,7 +406,7 @@
         <BUSINTERFACE BUSNAME="axi_dma_0_M_AXIS_MM2S" NAME="s0_axis" TYPE="TARGET" VLNV="xilinx.com:interface:axis:1.0">
           <PARAMETER NAME="CLK_DOMAIN" VALUE="design_1_processing_system7_0_0_FCLK_CLK0"/>
           <PARAMETER NAME="FREQ_HZ" VALUE="83333336"/>
-          <PARAMETER NAME="HAS_TKEEP" VALUE="0"/>
+          <PARAMETER NAME="HAS_TKEEP" VALUE="1"/>
           <PARAMETER NAME="HAS_TLAST" VALUE="1"/>
           <PARAMETER NAME="HAS_TREADY" VALUE="1"/>
           <PARAMETER NAME="HAS_TSTRB" VALUE="0"/>
@@ -383,6 +419,7 @@
           <PARAMETER NAME="TUSER_WIDTH" VALUE="0"/>
           <PORTMAPS>
             <PORTMAP LOGICAL="TDATA" PHYSICAL="s0_axis_tdata"/>
+            <PORTMAP LOGICAL="TKEEP" PHYSICAL="s0_axis_tkeep"/>
             <PORTMAP LOGICAL="TLAST" PHYSICAL="s0_axis_tlast"/>
             <PORTMAP LOGICAL="TREADY" PHYSICAL="s0_axis_tready"/>
             <PORTMAP LOGICAL="TVALID" PHYSICAL="s0_axis_tvalid"/>
@@ -391,7 +428,7 @@
         <BUSINTERFACE BUSNAME="axi_dma_1_M_AXIS_MM2S" NAME="s1_axis" TYPE="TARGET" VLNV="xilinx.com:interface:axis:1.0">
           <PARAMETER NAME="CLK_DOMAIN" VALUE="design_1_processing_system7_0_0_FCLK_CLK0"/>
           <PARAMETER NAME="FREQ_HZ" VALUE="83333336"/>
-          <PARAMETER NAME="HAS_TKEEP" VALUE="0"/>
+          <PARAMETER NAME="HAS_TKEEP" VALUE="1"/>
           <PARAMETER NAME="HAS_TLAST" VALUE="1"/>
           <PARAMETER NAME="HAS_TREADY" VALUE="1"/>
           <PARAMETER NAME="HAS_TSTRB" VALUE="0"/>
@@ -404,6 +441,7 @@
           <PARAMETER NAME="TUSER_WIDTH" VALUE="0"/>
           <PORTMAPS>
             <PORTMAP LOGICAL="TDATA" PHYSICAL="s1_axis_tdata"/>
+            <PORTMAP LOGICAL="TKEEP" PHYSICAL="s1_axis_tkeep"/>
             <PORTMAP LOGICAL="TLAST" PHYSICAL="s1_axis_tlast"/>
             <PORTMAP LOGICAL="TREADY" PHYSICAL="s1_axis_tready"/>
             <PORTMAP LOGICAL="TVALID" PHYSICAL="s1_axis_tvalid"/>
@@ -412,7 +450,7 @@
         <BUSINTERFACE BUSNAME="axi_dma_2_M_AXIS_MM2S" NAME="s2_axis" TYPE="TARGET" VLNV="xilinx.com:interface:axis:1.0">
           <PARAMETER NAME="CLK_DOMAIN" VALUE="design_1_processing_system7_0_0_FCLK_CLK0"/>
           <PARAMETER NAME="FREQ_HZ" VALUE="83333336"/>
-          <PARAMETER NAME="HAS_TKEEP" VALUE="0"/>
+          <PARAMETER NAME="HAS_TKEEP" VALUE="1"/>
           <PARAMETER NAME="HAS_TLAST" VALUE="1"/>
           <PARAMETER NAME="HAS_TREADY" VALUE="1"/>
           <PARAMETER NAME="HAS_TSTRB" VALUE="0"/>
@@ -425,6 +463,7 @@
           <PARAMETER NAME="TUSER_WIDTH" VALUE="0"/>
           <PORTMAPS>
             <PORTMAP LOGICAL="TDATA" PHYSICAL="s2_axis_tdata"/>
+            <PORTMAP LOGICAL="TKEEP" PHYSICAL="s2_axis_tkeep"/>
             <PORTMAP LOGICAL="TLAST" PHYSICAL="s2_axis_tlast"/>
             <PORTMAP LOGICAL="TREADY" PHYSICAL="s2_axis_tready"/>
             <PORTMAP LOGICAL="TVALID" PHYSICAL="s2_axis_tvalid"/>
@@ -1482,6 +1521,12 @@
             <CONNECTION INSTANCE="System_Level_Top_0" PORT="s0_axis_tdata"/>
           </CONNECTIONS>
         </PORT>
+        <PORT DIR="O" LEFT="3" NAME="m_axis_mm2s_tkeep" RIGHT="0" SIGIS="undef" SIGNAME="axi_dma_0_m_axis_mm2s_tkeep">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="System_Level_Top_0" PORT="s0_axis_tkeep"/>
+            <CONNECTION INSTANCE="System_Level_Top_0" PORT="s0_axis_tkeep"/>
+          </CONNECTIONS>
+        </PORT>
         <PORT DIR="O" NAME="m_axis_mm2s_tlast" SIGIS="undef" SIGNAME="axi_dma_0_m_axis_mm2s_tlast">
           <CONNECTIONS>
             <CONNECTION INSTANCE="System_Level_Top_0" PORT="s0_axis_tlast"/>
@@ -1597,6 +1642,14 @@
           </CONNECTIONS>
           <CONNECTIONS>
             <CONNECTION INSTANCE="System_Level_Top_0" PORT="m0_axis_tdata"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" LEFT="3" NAME="s_axis_s2mm_tkeep" RIGHT="0" SIGIS="undef" SIGNAME="System_Level_Top_0_m0_axis_tkeep">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="System_Level_Top_0" PORT="m0_axis_tkeep"/>
+          </CONNECTIONS>
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="System_Level_Top_0" PORT="m0_axis_tkeep"/>
           </CONNECTIONS>
         </PORT>
         <PORT DIR="I" NAME="s_axis_s2mm_tlast" SIGIS="undef" SIGNAME="System_Level_Top_0_m0_axis_tlast">
@@ -1789,6 +1842,7 @@
           <PARAMETER NAME="TUSER_WIDTH" VALUE="0"/>
           <PORTMAPS>
             <PORTMAP LOGICAL="TDATA" PHYSICAL="m_axis_mm2s_tdata"/>
+            <PORTMAP LOGICAL="TKEEP" PHYSICAL="m_axis_mm2s_tkeep"/>
             <PORTMAP LOGICAL="TLAST" PHYSICAL="m_axis_mm2s_tlast"/>
             <PORTMAP LOGICAL="TREADY" PHYSICAL="m_axis_mm2s_tready"/>
             <PORTMAP LOGICAL="TVALID" PHYSICAL="m_axis_mm2s_tvalid"/>
@@ -1797,7 +1851,7 @@
         <BUSINTERFACE BUSNAME="System_Level_Top_0_m0_axis" NAME="S_AXIS_S2MM" TYPE="TARGET" VLNV="xilinx.com:interface:axis:1.0">
           <PARAMETER NAME="CLK_DOMAIN" VALUE="design_1_processing_system7_0_0_FCLK_CLK0"/>
           <PARAMETER NAME="FREQ_HZ" VALUE="83333336"/>
-          <PARAMETER NAME="HAS_TKEEP" VALUE="0"/>
+          <PARAMETER NAME="HAS_TKEEP" VALUE="1"/>
           <PARAMETER NAME="HAS_TLAST" VALUE="1"/>
           <PARAMETER NAME="HAS_TREADY" VALUE="1"/>
           <PARAMETER NAME="HAS_TSTRB" VALUE="0"/>
@@ -1810,6 +1864,7 @@
           <PARAMETER NAME="TUSER_WIDTH" VALUE="0"/>
           <PORTMAPS>
             <PORTMAP LOGICAL="TDATA" PHYSICAL="s_axis_s2mm_tdata"/>
+            <PORTMAP LOGICAL="TKEEP" PHYSICAL="s_axis_s2mm_tkeep"/>
             <PORTMAP LOGICAL="TLAST" PHYSICAL="s_axis_s2mm_tlast"/>
             <PORTMAP LOGICAL="TREADY" PHYSICAL="s_axis_s2mm_tready"/>
             <PORTMAP LOGICAL="TVALID" PHYSICAL="s_axis_s2mm_tvalid"/>
@@ -2875,6 +2930,12 @@
             <CONNECTION INSTANCE="System_Level_Top_0" PORT="s1_axis_tdata"/>
           </CONNECTIONS>
         </PORT>
+        <PORT DIR="O" LEFT="3" NAME="m_axis_mm2s_tkeep" RIGHT="0" SIGIS="undef" SIGNAME="axi_dma_1_m_axis_mm2s_tkeep">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="System_Level_Top_0" PORT="s1_axis_tkeep"/>
+            <CONNECTION INSTANCE="System_Level_Top_0" PORT="s1_axis_tkeep"/>
+          </CONNECTIONS>
+        </PORT>
         <PORT DIR="O" NAME="m_axis_mm2s_tlast" SIGIS="undef" SIGNAME="axi_dma_1_m_axis_mm2s_tlast">
           <CONNECTIONS>
             <CONNECTION INSTANCE="System_Level_Top_0" PORT="s1_axis_tlast"/>
@@ -2990,6 +3051,14 @@
           </CONNECTIONS>
           <CONNECTIONS>
             <CONNECTION INSTANCE="System_Level_Top_0" PORT="m1_axis_tdata"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" LEFT="3" NAME="s_axis_s2mm_tkeep" RIGHT="0" SIGIS="undef" SIGNAME="System_Level_Top_0_m1_axis_tkeep">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="System_Level_Top_0" PORT="m1_axis_tkeep"/>
+          </CONNECTIONS>
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="System_Level_Top_0" PORT="m1_axis_tkeep"/>
           </CONNECTIONS>
         </PORT>
         <PORT DIR="I" NAME="s_axis_s2mm_tlast" SIGIS="undef" SIGNAME="System_Level_Top_0_m1_axis_tlast">
@@ -3182,6 +3251,7 @@
           <PARAMETER NAME="TUSER_WIDTH" VALUE="0"/>
           <PORTMAPS>
             <PORTMAP LOGICAL="TDATA" PHYSICAL="m_axis_mm2s_tdata"/>
+            <PORTMAP LOGICAL="TKEEP" PHYSICAL="m_axis_mm2s_tkeep"/>
             <PORTMAP LOGICAL="TLAST" PHYSICAL="m_axis_mm2s_tlast"/>
             <PORTMAP LOGICAL="TREADY" PHYSICAL="m_axis_mm2s_tready"/>
             <PORTMAP LOGICAL="TVALID" PHYSICAL="m_axis_mm2s_tvalid"/>
@@ -3190,7 +3260,7 @@
         <BUSINTERFACE BUSNAME="System_Level_Top_0_m1_axis" NAME="S_AXIS_S2MM" TYPE="TARGET" VLNV="xilinx.com:interface:axis:1.0">
           <PARAMETER NAME="CLK_DOMAIN" VALUE="design_1_processing_system7_0_0_FCLK_CLK0"/>
           <PARAMETER NAME="FREQ_HZ" VALUE="83333336"/>
-          <PARAMETER NAME="HAS_TKEEP" VALUE="0"/>
+          <PARAMETER NAME="HAS_TKEEP" VALUE="1"/>
           <PARAMETER NAME="HAS_TLAST" VALUE="1"/>
           <PARAMETER NAME="HAS_TREADY" VALUE="1"/>
           <PARAMETER NAME="HAS_TSTRB" VALUE="0"/>
@@ -3203,6 +3273,7 @@
           <PARAMETER NAME="TUSER_WIDTH" VALUE="0"/>
           <PORTMAPS>
             <PORTMAP LOGICAL="TDATA" PHYSICAL="s_axis_s2mm_tdata"/>
+            <PORTMAP LOGICAL="TKEEP" PHYSICAL="s_axis_s2mm_tkeep"/>
             <PORTMAP LOGICAL="TLAST" PHYSICAL="s_axis_s2mm_tlast"/>
             <PORTMAP LOGICAL="TREADY" PHYSICAL="s_axis_s2mm_tready"/>
             <PORTMAP LOGICAL="TVALID" PHYSICAL="s_axis_s2mm_tvalid"/>
@@ -4183,6 +4254,12 @@
             <CONNECTION INSTANCE="System_Level_Top_0" PORT="s2_axis_tdata"/>
           </CONNECTIONS>
         </PORT>
+        <PORT DIR="O" LEFT="3" NAME="m_axis_mm2s_tkeep" RIGHT="0" SIGIS="undef" SIGNAME="axi_dma_2_m_axis_mm2s_tkeep">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="System_Level_Top_0" PORT="s2_axis_tkeep"/>
+            <CONNECTION INSTANCE="System_Level_Top_0" PORT="s2_axis_tkeep"/>
+          </CONNECTIONS>
+        </PORT>
         <PORT DIR="O" NAME="m_axis_mm2s_tlast" SIGIS="undef" SIGNAME="axi_dma_2_m_axis_mm2s_tlast">
           <CONNECTIONS>
             <CONNECTION INSTANCE="System_Level_Top_0" PORT="s2_axis_tlast"/>
@@ -4407,6 +4484,7 @@
           <PARAMETER NAME="TUSER_WIDTH" VALUE="0"/>
           <PORTMAPS>
             <PORTMAP LOGICAL="TDATA" PHYSICAL="m_axis_mm2s_tdata"/>
+            <PORTMAP LOGICAL="TKEEP" PHYSICAL="m_axis_mm2s_tkeep"/>
             <PORTMAP LOGICAL="TLAST" PHYSICAL="m_axis_mm2s_tlast"/>
             <PORTMAP LOGICAL="TREADY" PHYSICAL="m_axis_mm2s_tready"/>
             <PORTMAP LOGICAL="TVALID" PHYSICAL="m_axis_mm2s_tvalid"/>
