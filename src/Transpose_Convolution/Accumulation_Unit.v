@@ -76,7 +76,7 @@ module accumulation_unit #(
     // =========================================================
     reg [8:0] bram_addr_rd [0:NUM_BRAMS-1];
 
-    always @(posedge clk or negedge rst_n) begin
+    always @(posedge clk) begin
         if (!rst_n) begin
             partial_s2 <= 0; bram_sel_s2 <= 0; addr_s2 <= 0; valid_s2 <= 0;
             for (i = 0; i < NUM_BRAMS; i = i + 1)
@@ -147,7 +147,7 @@ module accumulation_unit #(
     // =========================================================
     // STAGE 6 — WRITE (ADDR & DATA SEFASE)
     // =========================================================
-    always @(posedge clk or negedge rst_n) begin
+    always @(posedge clk) begin
         if (!rst_n) begin
             bram_we <= 0;
             bram_addr_wr_flat <= 0;

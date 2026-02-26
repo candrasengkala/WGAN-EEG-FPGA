@@ -49,7 +49,7 @@ module Counter_Weight_BRAM #(
     // ========================================================
     // MAIN FSM
     // ========================================================
-    always @(posedge clk or negedge rst_n) begin
+    always @(posedge clk) begin
         if (!rst_n) begin
             // Reset
             running      <= 1'b0;

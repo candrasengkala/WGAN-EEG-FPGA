@@ -1,5 +1,5 @@
 /******************************************************************************
- * Module      : Counter_Ifmap_BRAM
+ * Module      : Counter_Ifmap_BRAM new
  * Author      : Dharma Anargya Jowandy
  * Date        : January 2026
  *
@@ -67,7 +67,7 @@ module Counter_Ifmap_BRAM #(
     // ========================================================
     // Sequential logic
     // ========================================================
-    always @(posedge clk or negedge rst_n) begin
+    always @(posedge clk) begin
         if (!rst_n) begin
             // Reset
             if_done       <= 1'b0;

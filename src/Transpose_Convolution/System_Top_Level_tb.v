@@ -119,12 +119,17 @@ module System_Level_Top_tb();
     reg             aresetn;
 
     reg  [DW-1:0]   s0_axis_tdata; reg s0_axis_tvalid; wire s0_axis_tready; reg s0_axis_tlast;
+    wire [3:0]      s0_axis_tkeep_tb; assign s0_axis_tkeep_tb = 4'b0111;
     wire [DW-1:0]   m0_axis_tdata; wire m0_axis_tvalid; reg m0_axis_tready; wire m0_axis_tlast;
+    wire [3:0]      m0_axis_tkeep;
 
     reg  [DW-1:0]   s1_axis_tdata; reg s1_axis_tvalid; wire s1_axis_tready; reg s1_axis_tlast;
+    wire [3:0]      s1_axis_tkeep_tb; assign s1_axis_tkeep_tb = 4'b0111;
     wire [DW-1:0]   m1_axis_tdata; wire m1_axis_tvalid; reg m1_axis_tready; wire m1_axis_tlast;
+    wire [3:0]      m1_axis_tkeep;
 
     reg  [DW-1:0]   s2_axis_tdata; reg s2_axis_tvalid; wire s2_axis_tready; reg s2_axis_tlast;
+    wire [3:0]      s2_axis_tkeep_tb; assign s2_axis_tkeep_tb = 4'b0111;
 
     reg        layer_readout_done;
     event      output_complete;       // fired by output handler - no race condition
@@ -141,11 +146,11 @@ module System_Level_Top_tb();
         .W_DEPTH(1024), .I_DEPTH(1024), .O_DEPTH(512), .Dimension(16)
     ) dut (
         .aclk(aclk), .aresetn(aresetn),
-        .s0_axis_tdata(s0_axis_tdata), .s0_axis_tvalid(s0_axis_tvalid), .s0_axis_tready(s0_axis_tready), .s0_axis_tlast(s0_axis_tlast),
-        .m0_axis_tdata(m0_axis_tdata), .m0_axis_tvalid(m0_axis_tvalid), .m0_axis_tready(m0_axis_tready), .m0_axis_tlast(m0_axis_tlast),
-        .s1_axis_tdata(s1_axis_tdata), .s1_axis_tvalid(s1_axis_tvalid), .s1_axis_tready(s1_axis_tready), .s1_axis_tlast(s1_axis_tlast),
-        .m1_axis_tdata(m1_axis_tdata), .m1_axis_tvalid(m1_axis_tvalid), .m1_axis_tready(m1_axis_tready), .m1_axis_tlast(m1_axis_tlast),
-        .s2_axis_tdata(s2_axis_tdata), .s2_axis_tvalid(s2_axis_tvalid), .s2_axis_tready(s2_axis_tready), .s2_axis_tlast(s2_axis_tlast)
+        .s0_axis_tdata(s0_axis_tdata), .s0_axis_tvalid(s0_axis_tvalid), .s0_axis_tready(s0_axis_tready), .s0_axis_tlast(s0_axis_tlast), .s0_axis_tkeep(s0_axis_tkeep_tb),
+        .m0_axis_tdata(m0_axis_tdata), .m0_axis_tvalid(m0_axis_tvalid), .m0_axis_tready(m0_axis_tready), .m0_axis_tlast(m0_axis_tlast), .m0_axis_tkeep(m0_axis_tkeep),
+        .s1_axis_tdata(s1_axis_tdata), .s1_axis_tvalid(s1_axis_tvalid), .s1_axis_tready(s1_axis_tready), .s1_axis_tlast(s1_axis_tlast), .s1_axis_tkeep(s1_axis_tkeep_tb),
+        .m1_axis_tdata(m1_axis_tdata), .m1_axis_tvalid(m1_axis_tvalid), .m1_axis_tready(m1_axis_tready), .m1_axis_tlast(m1_axis_tlast), .m1_axis_tkeep(m1_axis_tkeep),
+        .s2_axis_tdata(s2_axis_tdata), .s2_axis_tvalid(s2_axis_tvalid), .s2_axis_tready(s2_axis_tready), .s2_axis_tlast(s2_axis_tlast), .s2_axis_tkeep(s2_axis_tkeep_tb)
     );
 
     // ========================================================================
