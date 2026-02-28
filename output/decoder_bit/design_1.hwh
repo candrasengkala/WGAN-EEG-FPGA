@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<EDKSYSTEM EDWVERSION="1.2" TIMESTAMP="Wed Feb 25 09:42:31 2026" VIVADOVERSION="2025.1">
+<EDKSYSTEM EDWVERSION="1.2" TIMESTAMP="Sat Feb 28 11:06:52 2026" VIVADOVERSION="2025.1">
 
   <SYSTEMINFO ARCH="zynq" BOARD="www.digilentinc.com:pynq-z1:part0:1.0" DEVICE="7z020" NAME="design_1" PACKAGE="clg400" SPEEDGRADE="-1"/>
 
@@ -267,9 +267,8 @@
             <CONNECTION INSTANCE="axi_dma_0" PORT="m_axis_mm2s_tdata"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" LEFT="3" NAME="s0_axis_tkeep" RIGHT="0" SIGIS="undef" SIGNAME="axi_dma_0_m_axis_mm2s_tkeep">
+        <PORT DIR="I" LEFT="3" NAME="s0_axis_tkeep" RIGHT="0" SIGIS="undef" SIGNAME="System_Level_Top_0_s0_axis_tkeep">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="axi_dma_0" PORT="m_axis_mm2s_tkeep"/>
             <CONNECTION INSTANCE="axi_dma_0" PORT="m_axis_mm2s_tkeep"/>
           </CONNECTIONS>
         </PORT>
@@ -299,9 +298,8 @@
             <CONNECTION INSTANCE="axi_dma_1" PORT="m_axis_mm2s_tdata"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" LEFT="3" NAME="s1_axis_tkeep" RIGHT="0" SIGIS="undef" SIGNAME="axi_dma_1_m_axis_mm2s_tkeep">
+        <PORT DIR="I" LEFT="3" NAME="s1_axis_tkeep" RIGHT="0" SIGIS="undef" SIGNAME="System_Level_Top_0_s1_axis_tkeep">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="axi_dma_1" PORT="m_axis_mm2s_tkeep"/>
             <CONNECTION INSTANCE="axi_dma_1" PORT="m_axis_mm2s_tkeep"/>
           </CONNECTIONS>
         </PORT>
@@ -331,9 +329,8 @@
             <CONNECTION INSTANCE="axi_dma_2" PORT="m_axis_mm2s_tdata"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" LEFT="3" NAME="s2_axis_tkeep" RIGHT="0" SIGIS="undef" SIGNAME="axi_dma_2_m_axis_mm2s_tkeep">
+        <PORT DIR="I" LEFT="3" NAME="s2_axis_tkeep" RIGHT="0" SIGIS="undef" SIGNAME="System_Level_Top_0_s2_axis_tkeep">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="axi_dma_2" PORT="m_axis_mm2s_tkeep"/>
             <CONNECTION INSTANCE="axi_dma_2" PORT="m_axis_mm2s_tkeep"/>
           </CONNECTIONS>
         </PORT>
@@ -1523,7 +1520,6 @@
         </PORT>
         <PORT DIR="O" LEFT="3" NAME="m_axis_mm2s_tkeep" RIGHT="0" SIGIS="undef" SIGNAME="axi_dma_0_m_axis_mm2s_tkeep">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="System_Level_Top_0" PORT="s0_axis_tkeep"/>
             <CONNECTION INSTANCE="System_Level_Top_0" PORT="s0_axis_tkeep"/>
           </CONNECTIONS>
         </PORT>
@@ -2933,7 +2929,6 @@
         <PORT DIR="O" LEFT="3" NAME="m_axis_mm2s_tkeep" RIGHT="0" SIGIS="undef" SIGNAME="axi_dma_1_m_axis_mm2s_tkeep">
           <CONNECTIONS>
             <CONNECTION INSTANCE="System_Level_Top_0" PORT="s1_axis_tkeep"/>
-            <CONNECTION INSTANCE="System_Level_Top_0" PORT="s1_axis_tkeep"/>
           </CONNECTIONS>
         </PORT>
         <PORT DIR="O" NAME="m_axis_mm2s_tlast" SIGIS="undef" SIGNAME="axi_dma_1_m_axis_mm2s_tlast">
@@ -4256,7 +4251,6 @@
         </PORT>
         <PORT DIR="O" LEFT="3" NAME="m_axis_mm2s_tkeep" RIGHT="0" SIGIS="undef" SIGNAME="axi_dma_2_m_axis_mm2s_tkeep">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="System_Level_Top_0" PORT="s2_axis_tkeep"/>
             <CONNECTION INSTANCE="System_Level_Top_0" PORT="s2_axis_tkeep"/>
           </CONNECTIONS>
         </PORT>
