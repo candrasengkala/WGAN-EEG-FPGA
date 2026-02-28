@@ -22,6 +22,7 @@ xsim.dir/
 test/io_sample_conv
 test/io_sample_deconv
 test/io_sample_raw
+test/io_sample_hex
 
 test/convolution_hardware_output
 test/deconv_hardware_output
