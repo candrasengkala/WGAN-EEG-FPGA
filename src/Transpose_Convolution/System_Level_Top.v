@@ -113,8 +113,13 @@ module System_Level_Top #(
 
     assign m0_axis_tdata = {{(32-DW){1'b0}}, m0_axis_tdata_int};
     assign m1_axis_tdata = {{(32-DW){1'b0}}, m1_axis_tdata_int};
-    assign m0_axis_tkeep = {{(4-TKEEP_INT){1'b0}}, m0_axis_tkeep_int};
-    assign m1_axis_tkeep = {{(4-TKEEP_INT){1'b0}}, m1_axis_tkeep_int};
+    // FIX (Feb 2026): TKEEP harus 4'b1111 di setiap beat (termasuk non-TLAST).
+    // Sebelumnya: {{(4-TKEEP_INT){1'b0}}, tkeep_int} → DW=24 menghasilkan 4'b0111
+    // permanen, menyebabkan DMAIntErr di setiap transfer karena AXI-Stream
+    // melarang TKEEP parsial kecuali di beat terakhir (TLAST=1).
+    // Data selalu 32-bit aligned sehingga 4'b1111 valid dan aman.
+    assign m0_axis_tkeep = 4'b1111;
+    assign m1_axis_tkeep = 4'b1111;
 
     wire [15:0] header_word_0;
     wire [15:0] header_word_1;
@@ -123,8 +128,6 @@ module System_Level_Top #(
     wire [15:0] header_word_4;
     wire [15:0] header_word_5;
     wire        send_header;
-    // FIX: M1 hanya terima send_header saat data dump, bukan notification
-    wire        send_header_m1_gated = send_header && !out_mgr_notification_mode;
 
     wire        out_mgr_trigger_read;
     wire [2:0]  out_mgr_rd_bram_start;
@@ -227,7 +230,7 @@ module System_Level_Top #(
         .header_word_3        (header_word_3),
         .header_word_4        (header_word_4),
         .header_word_5        (header_word_5),
-        .send_header          (send_header_m1_gated),  // FIX: data dump saja
+        .send_header          (send_header),  // FIX: data dump saja
         .out_mgr_rd_bram_start(out_mgr_rd_bram_start),
         .out_mgr_rd_bram_end  (out_mgr_rd_bram_end),
         .out_mgr_rd_addr_count(out_mgr_rd_addr_count),
@@ -307,6 +310,9 @@ module System_Level_Top #(
         .batch_complete_signal(internal_scheduler_done),
         .ext_start            (1'b0),
         .ext_layer_id         (2'd0),
+        // FIX: sambungkan output_busy agar scheduler tidak transition layer
+        // saat Output_Manager masih kirim DA7A (mencegah clear_output_bram corrupt)
+        .output_busy          (out_mgr_transmission_active),
         .current_layer_id     (current_layer_id),
         .current_batch_id     (current_batch_id),
         .scheduler_done       (),
@@ -399,6 +405,45 @@ module System_Level_Top #(
         .weight_read_done   (weight_read_done),
         .ifmap_read_done    (ifmap_read_done),
         .transmission_active(out_mgr_transmission_active)
+    );
+
+    ila_0 ila_debug (
+        .clk(aclk),
+
+        // ===== S0 AXIS =====
+        .probe0  (s0_axis_tdata),
+        .probe1  (s0_axis_tkeep),
+        .probe2  (s0_axis_tvalid),
+        .probe3  (s0_axis_tready),
+        .probe4  (s0_axis_tlast),
+
+        // ===== M0 AXIS =====
+        .probe5  (m0_axis_tdata),
+        .probe6  (m0_axis_tkeep),
+        .probe7  (m0_axis_tvalid),
+        .probe8  (m0_axis_tready),
+        .probe9  (m0_axis_tlast),
+
+        // ===== S1 AXIS =====
+        .probe10 (s1_axis_tdata),
+        .probe11 (s1_axis_tkeep),
+        .probe12 (s1_axis_tvalid),
+        .probe13 (s1_axis_tready),
+        .probe14 (s1_axis_tlast),
+
+        // ===== M1 AXIS =====
+        .probe15 (m1_axis_tdata),
+        .probe16 (m1_axis_tkeep),
+        .probe17 (m1_axis_tvalid),
+        .probe18 (m1_axis_tready),
+        .probe19 (m1_axis_tlast),
+
+        // ===== S2 AXIS =====
+        .probe20 (s2_axis_tdata),
+        .probe21 (s2_axis_tkeep),
+        .probe22 (s2_axis_tvalid),
+        .probe23 (s2_axis_tready),
+        .probe24 (s2_axis_tlast)
     );
 
 endmodule

@@ -1,5 +1,5 @@
 /******************************************************************************
- * Module: PE_H
+ * Module: PE_H NEs 
  * * Description:
  * Horizontal Processing Element - Base PE design.
  * Implements output-stationary systolic array architecture with
@@ -108,7 +108,7 @@ module PE_H #(
     wire signed [47:0] mult_result_full;
     assign mult_result_full = ifmap_out * weight_out;
     
-    // Step 2: Extract Q9.14 from Q19.28 result
+    // Step 2: Extract Q9.14 from Q19.28 result with round-to-nearest
     //
     // Logic Calculation:
     // Input Fractional Bits = 14
@@ -121,9 +121,16 @@ module PE_H #(
     // [37]    = New Sign Bit
     // [36:28] = New Integer (9 bits)
     // [27:14] = New Fractional (14 bits)
-    
+    //
+    // Round-to-nearest: add 2^13 (bit [13]) to the full product before
+    // truncating, so the discarded [13:0] rounds up when >= 0.5 LSB.
+    // Use 49 bits to absorb the carry safely before slicing.
+
+    wire signed [48:0] mult_rounded;
+    assign mult_rounded = mult_result_full + 49'sd8192; // 2^13 = round-to-nearest
+
     wire signed [DW-1:0] mult_q9_14;
-    assign mult_q9_14 = mult_result_full[37:14];
+    assign mult_q9_14 = mult_rounded[37:14];
     
     // Step 3: Accumulation with overflow detection
     // Use 25-bit temporary (DW+1) to detect overflow before saturation
