@@ -257,7 +257,7 @@ module axis_custom_top #(
     axis_counter rd_counter_inst (
         .aclk           (aclk),
         .aresetn        (aresetn),
-        .counter_enable (rd_counter_enable && s2mm_tready),
+        .counter_enable (rd_counter_enable),
         .counter_start  (rd_counter_start),
         .start_addr     (rd_start_addr),
         .count_limit    (rd_count_limit),
@@ -338,7 +338,9 @@ module axis_custom_top #(
     assign s2mm_tdata  = sending_header ? header_buffer[header_word_count]
                                         : bram_data_relu;
     assign s2mm_tvalid = sending_header || (read_valid_pipe && bram_rd_enable);
-    assign s2mm_tlast  = notification_tlast || auto_read_tlast || normal_read_tlast;
+    wire s2mm_tlast_raw;
+    assign s2mm_tlast_raw = notification_tlast || auto_read_tlast || normal_read_tlast;
+    assign s2mm_tlast     = s2mm_tlast_raw && s2mm_tvalid; //new fix
 
     // ========================================================================
     // BRAM CONNECTIVITY

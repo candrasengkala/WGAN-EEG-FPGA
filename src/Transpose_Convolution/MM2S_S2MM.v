@@ -9,7 +9,7 @@
 // ENABLE_S2MM=1  → Normal operation, identical to original.
 
 module MM2S_S2MM #(
-    parameter FIFO_DEPTH  = 512,
+    parameter FIFO_DEPTH  = 8192,
     parameter DATA_WIDTH  = 20,
     parameter ENABLE_S2MM = 1,
     parameter TKEEP_WIDTH = (DATA_WIDTH + 7) / 8   // ceiling(DATA_WIDTH/8) //ok
